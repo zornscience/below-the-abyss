@@ -1,0 +1,90 @@
+# Below the Abyss — Game Design Document
+Version 0.1 | 2026-10-25 | Status: preproduction | All names and numerical values provisional
+
+## 1. Product definition
+**Genre:** single-player 2D side-view exploration adventure and environmental mystery. **Platforms:** Windows, Linux, macOS via Steam. **Engine:** Godot 4.x. **Visual style:** modern illustrated 2D with layered parallax, restrained volumetric-like lighting, animated particulate matter and bioluminescence. **Audience:** players who enjoy discovery, atmospheric tension, navigation and narrative exploration. **Campaign target:** 6–10 hours, contingent on playtesting and budget. **Monetization:** premium one-time purchase, no online requirement.
+
+### High concept
+Pilot a small scientific submarine to investigate a vanished deep-sea expedition. Use active sonar to map unseen terrain and passive acoustics to identify threats. Recover research, upgrade the vessel, and descend into an interconnected handcrafted ocean to understand an anomalous signal.
+
+### Player fantasy
+'I am an intrepid submarine pilot and scientist, venturing farther into the unknown with only my instruments, ingenuity, and courage.'
+
+### Design pillars
+1. Curiosity is rewarded: optional discoveries yield story, navigational shortcuts, and research.
+2. Information has a cost: active sonar reveals but broadcasts; passive listening is safer but less precise.
+3. Preparation enables exploration: upgrades unlock routes and choices rather than grind.
+4. Tension comes from uncertainty and understandable threats, not jump scares or unfair instant deaths.
+
+### Non-goals for v1
+No multiplayer, combat-centric progression, base building, hunger/thirst, procedural overworld, crafting trees, or full fluid simulation. No mandatory online AI or network connection.
+
+## 2. Core loop
+At station: select objective, repair/refill, install upgrades → leave station → navigate region, manage battery/oxygen/hull → sonar and scan discoveries → collect logs/samples → return or use unlocked route → research and unlock next destination.
+
+**Target expedition duration:** 10–20 minutes in early game; revisit after testing. **Failure:** on hull destruction or oxygen exhaustion, respawn at most recent station/checkpoint with a clearly explained limited penalty (e.g. loss of unbanked samples); do not delete permanent discoveries. **Accessibility:** adjustable survival pressure and generous checkpointing.
+
+## 3. Controls and camera
+Side-view movement with horizontal and vertical thrust, acceleration, drag, modest inertia. Keyboard: WASD/arrows to thrust, mouse aim for scanner (optional), dedicated sonar, interact, map, light toggle. Full remapping and gamepad equivalents required. Camera follows with dead zone, look-ahead, and smoothing; no camera motion that obscures hazards. All controls must work without mouse precision on gamepad.
+
+## 4. Player vessel and survival
+One starting vessel, NERIS-01 (working name). State: hull integrity, battery charge, oxygen reserve, current depth, crush-depth rating, noise signature, equipment slots, inventory of research samples. Damage sources: collisions, hazards, creatures, excessive depth with warning and grace period. Resources drain predictably; station fully replenishes. Player must have enough reserve to turn back from the first critical discovery. Survival difficulty settings: Story (lower drain), Standard (default), Expedition (higher drain), all with the same narrative.
+
+**Initial prototype tuning values, not canon:** battery 100 units, oxygen 100 units, sonar pulse cost 4 battery, sonar cooldown 4 seconds, hull 100 units, first safe operating depth 300 m. Tune via resources rather than constants.
+
+## 5. Sonar design
+### Active sonar
+Button press sends expanding visible wavefront; a gameplay query determines detections based on distance, occlusion, target reflectivity and region modifiers. Map/contacts are revealed as wavefront reaches them, not instantaneously. Pulse drains battery and produces an acoustic event detectable by creatures. A cooldown prevents spamming. Range and resolution improve through upgrades.
+
+### Passive sonar
+Displays bearings and qualitative signal classes (machinery, fauna, geological, unknown) when acoustic emitters are in range. Passive mode does not reveal solid terrain. Ambiguity is intentional but never should make navigation impossible.
+
+### Player choices
+Quiet travel minimizes detection but reduces speed. Active pulse clarifies a dangerous route but may provoke an investigation. A creature's reaction must have a readable cause: sound cue, HUD contact, animation, or behavior.
+
+### Design guardrails
+Avoid requiring constant repeated pings. Do not make every pulse trigger combat. Provide low-risk spaces and alternatives such as landmarks, lights, and discovered map tiles.
+
+## 6. Handcrafted world
+Interconnected authored scenes, with logical shortcuts and equipment gates. Regions:
+- Continental Shelf (0–300 m, approximate): station, movement tutorial, first sonar contact, safe fauna.
+- Twilight Reef (300–1,000 m): bioluminescence, cave navigation, scanner upgrades.
+- The Graveyard (1,000–2,500 m): wreck fields, expedition records, acoustic predator.
+- Thermal Rift (2,500–4,000 m): vents, currents, navigation under environmental pressure.
+- The Abyss (4,000 m+): anomalous architecture, narrative resolution.
+These ranges are fiction-facing progression targets, not scientific constraints or final level measurements. Reconcile map geography and travel times during level design.
+
+### Region content contract
+Each region requires a primary goal, at least one optional discovery, a navigational landmark, one memorable environmental event, an upgrade gate or alternative route, and a safe return path. Maps persist exploration state; undiscovered secrets are not spoiled by UI.
+
+## 7. Creatures and ecology
+Fauna are primarily environmental characters, not loot dispensers. Example archetypes:
+- Lantern Drifters: passive, respond to illumination.
+- Rift Stalkers: investigate sound, territorial, avoidable with quiet travel.
+- Leviathan: rare scripted encounter and environmental mystery, not a repeatable boss fight.
+AI states: Idle, Patrol, Investigate, Pursue, Flee, Return. Per-creature resources define hearing thresholds, sight, territory and cooldowns. Telegraph threat and offer escape paths.
+
+## 8. Research and upgrades
+Research records include scan subject, location, description, recovered samples, and unlock relationships. Upgrades: pressure hull, battery, propulsion, acoustic array, lighting, scanner/sampling arm, navigation. Each upgrade should change the player's route options or tactics. Avoid currencies that force repetitive harvesting.
+
+## 9. Narrative and missions
+**Act I — The Lost Expedition:** retrieve a missing research beacon and learn of anomalous transmissions. **Act II — The Signal:** investigate the wreck field and thermal rift, discovering that the anomaly affects wildlife and instruments. **Act III — Below the Abyss:** locate the source and resolve the fate of the expedition. Story is delivered through recovered recordings, environmental evidence, brief station dialogue and exploration. No essential clue should exist in only one easily missed collectible.
+
+Mission state model: Locked → Available → Active → Completed/Failed (failure only for optional timed tasks). Objective tracking should be data-driven and resilient to save/load. Main campaign has no permanently missable critical objectives.
+
+## 10. Art and audio direction
+Modern illustrated 2D: crisp painted silhouettes, layered seabed/cave backdrops, cool teal/indigo palette punctuated by warm submarine lights and selective bioluminescence. Assets should be authored at target reference resolution and composed as layers for parallax. Normal maps and Godot 2D lighting where beneficial, but do not sacrifice legibility or low-end performance. Animate submarine thrusters, suspended particles, fauna, and sonar rings. Avoid noisy full-screen effects.
+
+Sound: subdued music, mechanical hull creaks, propeller rumble, distinct passive contacts, strong active sonar pulse. Audio cues must have visual equivalents. Dynamic mix ducks music for critical cues.
+
+## 11. UX, accessibility and quality
+Remappable keyboard/gamepad, scalable text, subtitles, color-independent warnings, reduced flashing, camera shake toggle, adjustable sound mix, pause anywhere outside transitions, manual and autosave, clear resource warnings. UI should remain legible at 1280×800 for Steam Deck. Target 60 FPS on a documented midrange baseline, then profile real hardware.
+
+## 12. Vertical slice: playable definition
+One authored region with station, 20–40 minutes of polished gameplay, a cave navigation challenge, active and passive sonar, one passive creature and one acoustic predator, a recoverable expedition log, one upgrade, a return loop, save/load, and an ending hook. Player can complete it without developer assistance. Conduct at least five external playtests; measure confusion, sonar usage, completion, and whether players want to continue.
+
+## 13. Commercial positioning and validation
+Working price hypothesis: USD $14.99, subject to comparable-title research and playtesting. Create Steam page only after genuine gameplay screenshots and a clear trailer exist. Avoid claiming Steam Deck Verified or macOS support before device testing. Working title 'Below the Abyss' requires trademark and store-name clearance before public branding.
+
+## 14. Open design questions
+Final protagonist identity; scientific realism level; exact nature of anomaly; fail-state penalty; exact map dimensions; dialogue volume; art production pipeline; accessibility presets; final pricing; supported minimum hardware.

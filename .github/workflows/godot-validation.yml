@@ -1,0 +1,56 @@
+name: Godot validation
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Godot 4.6.3 import, parser and smoke
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      CI_LOG_DIR: ${{ github.workspace }}/build/ci-logs
+    steps:
+      - name: Check out project
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Install checksum-verified Godot 4.6.3
+        shell: bash
+        run: |
+          set -euo pipefail
+          export GODOT_BIN="$RUNNER_TEMP/godot/Godot_v4.6.3-stable_linux.x86_64"
+          printf 'GODOT_BIN=%s\n' "$GODOT_BIN" >> "$GITHUB_ENV"
+          mkdir -p "$CI_LOG_DIR" "$(dirname "$GODOT_BIN")"
+          {
+            archive=Godot_v4.6.3-stable_linux.x86_64.zip
+            cd "$(dirname "$GODOT_BIN")"
+            curl --fail --location --retry 3 --connect-timeout 15 --max-time 180 \
+              "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/$archive" \
+              --output "$archive"
+            # Official 4.6.3-stable SHA512-SUMS.txt, pinned rather than fetched at runtime.
+            printf '%s  %s\n' \
+              'a035258da32b77f966a5376f9fa29c30a6adde826a85ba918e1605bd1fc9823eba7d85f1dd5e748956bd2ba72827c0025ffa11bb82aec91128c407a2e723c99c' \
+              "$archive" | sha512sum --check --strict
+            unzip -q "$archive"
+            chmod +x "$GODOT_BIN"
+          } 2>&1 | tee "$CI_LOG_DIR/install.log"
+
+      - name: Validate engine, import, scripts and startup
+        run: python3 tools/validate_godot.py
+
+      - name: Retain validation logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: godot-validation-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/ci-logs/
+          if-no-files-found: warn
+          retention-days: 14

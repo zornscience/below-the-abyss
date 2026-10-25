@@ -2,8 +2,9 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-001**. The project boots an empty `GameRoot` scene.
-Gameplay, controls, settings, assets, CI, and a test framework are not implemented.
+Current milestone: **BTA-002**. The project boots an empty `GameRoot` scene,
+validated by GitHub Actions.
+Gameplay, controls, settings, assets, and a test framework are not implemented.
 
 ## Requirements
 
@@ -81,8 +82,60 @@ docs/{design,decisions,testing}/
 .github/workflows/
 ```
 
-CI and a test harness belong to BTA-002 and BTA-003. No exports or native
-Windows/macOS runtime validation are included in BTA-001.
+A test harness belongs to BTA-003. No exports or native Windows/macOS runtime
+validation are included.
+
+## Continuous integration (BTA-002)
+
+[`godot-validation.yml`](.github/workflows/godot-validation.yml) runs on every
+pull request targeting `main` (including fork PRs) and on pushes to `main`.
+It uses Ubuntu 24.04, read-only repository permissions, and no project secrets.
+The checkout and artifact actions are pinned to full commit SHAs.
+
+The workflow downloads the standard Linux x86_64 **Godot 4.6.3 stable** archive
+from the official `godotengine/godot-builds` release and verifies its SHA-512
+against the pinned entry from that release's
+[`SHA512-SUMS.txt`](https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/SHA512-SUMS.txt).
+The validator logs and requires the exact engine version
+`4.6.3.stable.official.7d41c59c4` and checks `.godot-version` agrees.
+
+Run the same validator locally from the repository root with Godot on PATH:
+
+```sh
+python3 tools/validate_godot.py
+```
+
+Python 3.9+ is required; it uses only the standard library. Set `GODOT_BIN` to
+an executable path if needed. Initialize the writable XDG directories above in
+the managed cloud environment.
+
+The validator runs these engine commands in order:
+
+```sh
+godot --headless --path . --version
+godot --headless --path . --editor --import
+# Repeated for each authored .gd file, including scripts not used by a scene:
+godot --headless --path . --check-only --script res://path/to/script.gd
+godot --headless --path . --quit-after 60
+```
+
+The parser command is an example: this scaffold currently contains no GDScript,
+so the parser log explicitly reports zero script checks. Import still validates
+the project resources; future scripts are discovered automatically.
+
+Nonzero exits, timeouts, and logged Godot errors fail validation, including errors
+Godot reports with exit status zero. Engine operations have time limits, and the
+job has a ten-minute limit. The smoke check runs the configured main scene for
+60 engine iterations; it does not validate gameplay, rendering, input, or audio.
+
+Logs are written under ignored `build/ci-logs/` (override with `CI_LOG_DIR`).
+Open the **Godot validation** Actions run and download its
+`godot-validation-<run_id>-<run_attempt>` artifact for the installation log,
+engine version, import output, parser inventory/per-script results, smoke output,
+and summary. Artifacts are retained for 14 days and uploaded even after failure;
+only phases reached before a failure have logs. Local runs refresh validation
+logs to avoid reporting stale results. CI does not export builds or implement a
+unit test framework.
 
 ## License
 

@@ -1,0 +1,100 @@
+class_name SettingsStore
+extends RefCounted
+## Small, versioned input preferences. Invalid loads leave current state intact.
+
+signal settings_changed
+
+const DEFAULT_PATH: String = "user://settings.json"
+const MAX_BYTES: int = 65536
+var _document: Dictionary = default_document()
+
+
+static func default_document() -> Dictionary:
+	return {"schema_version": 1, "deadzone": 0.25, "bindings": InputBindings.defaults()}
+
+
+static func valid_document(document: Variant) -> bool:
+	if not document is Dictionary or document.size() != 3:
+		return false
+	if not InputBindings.is_integer(document.get("schema_version")) \
+		or float(document["schema_version"]) != 1.0:
+		return false
+	var value: Variant = document.get("deadzone")
+	if typeof(value) != TYPE_FLOAT and typeof(value) != TYPE_INT:
+		return false
+	return is_finite(float(value)) and float(value) >= 0.1 and float(value) <= 0.9 \
+		and InputBindings.valid_bindings(document.get("bindings"))
+
+
+func snapshot() -> Dictionary:
+	return _document.duplicate(true)
+
+
+func reset_defaults() -> void:
+	_document = default_document()
+	settings_changed.emit()
+
+
+func set_deadzone(value: float) -> Error:
+	if not is_finite(value) or value < 0.1 or value > 0.9:
+		return ERR_INVALID_PARAMETER
+	_document["deadzone"] = value
+	settings_changed.emit()
+	return OK
+
+
+func remap(action: StringName, event: InputEvent) -> Error:
+	if action not in InputBindings.ACTIONS:
+		return ERR_INVALID_PARAMETER
+	var replacement: Dictionary = InputBindings.from_event(event)
+	if not InputBindings.valid_descriptor(replacement):
+		return ERR_INVALID_PARAMETER
+	var next: Dictionary = snapshot()
+	var entries: Array[Dictionary] = []
+	for entry: Dictionary in next["bindings"][String(action)]:
+		if (entry["kind"] == "key") != (replacement["kind"] == "key"):
+			entries.append(entry)
+	entries.append(replacement)
+	next["bindings"][String(action)] = entries
+	if not valid_document(next):
+		return ERR_INVALID_PARAMETER
+	_document = next
+	settings_changed.emit()
+	return OK
+
+
+func load_settings(path: String = DEFAULT_PATH) -> Error:
+	if not FileAccess.file_exists(path):
+		return ERR_FILE_NOT_FOUND
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return FileAccess.get_open_error()
+	if file.get_length() > MAX_BYTES:
+		return ERR_INVALID_DATA
+	var json: JSON = JSON.new()
+	if json.parse(file.get_as_text()) != OK or not valid_document(json.data):
+		return ERR_INVALID_DATA
+	_document = {
+		"schema_version": 1,
+		"deadzone": float(json.data["deadzone"]),
+		"bindings": InputBindings.normalized(json.data["bindings"]),
+	}
+	settings_changed.emit()
+	return OK
+
+
+func save_settings(path: String = DEFAULT_PATH) -> Error:
+	var temporary: String = path + ".tmp"
+	var file: FileAccess = FileAccess.open(temporary, FileAccess.WRITE)
+	if file == null:
+		return FileAccess.get_open_error()
+	file.store_string(JSON.stringify(_document, "\t"))
+	file.flush()
+	var error: Error = file.get_error()
+	file.close()
+	if error == OK:
+		error = DirAccess.rename_absolute(
+			ProjectSettings.globalize_path(temporary), ProjectSettings.globalize_path(path))
+	if error != OK:
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(temporary))
+	return error

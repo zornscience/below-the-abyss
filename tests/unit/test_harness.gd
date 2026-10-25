@@ -8,11 +8,12 @@ func test_json_round_trip_preserves_sample_data() -> void:
 	assert_eq(decoded, original, "The harness can compare structured values.")
 
 
-func test_empty_main_scene_can_be_instantiated() -> void:
+func test_main_scene_contains_the_input_test_menu() -> void:
 	var scene: PackedScene = load("res://scenes/main/main.tscn") as PackedScene
 	assert_not_null(scene)
 	if scene == null:
 		return
 	var instance: Node = autofree(scene.instantiate())
 	assert_eq(String(instance.name), "GameRoot")
-	assert_eq(instance.get_child_count(), 0, "BTA-001 scaffold remains empty.")
+	assert_eq(instance.get_child_count(), 1)
+	assert_true(instance.get_node("InputTestMenu") is Control)

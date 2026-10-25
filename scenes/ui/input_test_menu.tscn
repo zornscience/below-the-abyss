@@ -1,0 +1,117 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/input_test_menu.gd" id="1_menu"]
+
+[sub_resource type="Theme" id="Theme_menu"]
+default_font_size = 22
+
+[node name="InputTestMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_menu")
+script = ExtResource("1_menu")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Scroll" type="ScrollContainer" parent="Margin"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="Content" type="VBoxContainer" parent="Margin/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Margin/Scroll/Content"]
+layout_mode = 2
+text = "Below the Abyss — Input & settings test"
+
+[node name="Instructions" type="Label" parent="Margin/Scroll/Content"]
+layout_mode = 2
+text = "Foundation test only. Keyboard: arrows / Tab, Enter. Controller: D-pad / left stick, A. Escape / B cancels. Shoulder buttons cycle focus."
+autowrap_mode = 2
+
+[node name="Activate" type="Button" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Activate test"
+
+[node name="ActionPicker" type="OptionButton" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Bindings" type="Label" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="Rebind" type="Button" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Remap selected action (keyboard or controller)"
+
+[node name="DeadzoneValue" type="Label" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Analog dead zone"
+
+[node name="Deadzone" type="HSlider" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+min_value = 0.1
+max_value = 0.9
+step = 0.05
+value = 0.25
+
+[node name="Save" type="Button" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Save settings"
+
+[node name="Reload" type="Button" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Reload saved settings"
+
+[node name="Reset" type="Button" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Reset to defaults"
+
+[node name="Quit" type="Button" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Quit test"
+
+[node name="Movement" type="Label" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Movement input only"
+
+[node name="Status" type="Label" parent="Margin/Scroll/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2

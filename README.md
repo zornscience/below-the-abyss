@@ -2,10 +2,9 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-003**. The project boots an empty `GameRoot` scene,
-validated by GitHub Actions.
-GUT supplies deterministic sample tests. Gameplay, controls, settings, and assets
-are not implemented.
+Current milestone: **BTA-004**. The project boots an input/settings test menu.
+Keyboard/controller controls, remapping, dead zones, and versioned settings are
+covered by GUT and GitHub Actions. Gameplay and game assets are not implemented.
 
 ## Requirements
 
@@ -39,8 +38,8 @@ For headless startup validation (exits after 60 engine iterations):
 godot --headless --path . --quit-after 60
 ```
 
-Import and smoke commands must exit with status 0 and no Godot errors. A blank
-window is expected; there are no gameplay scripts or interactive elements yet.
+Import and smoke commands must exit with status 0 and no Godot errors. The
+input/settings menu is expected; gameplay systems are not implemented.
 This smoke check validates startup, not gameplay or a unit test suite.
 
 In the managed cloud environment, initialize writable Godot cache paths before
@@ -54,19 +53,23 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
 cd /workspace/below-the-abyss
 ```
 
-## Manual verification
+## Input/settings test menu (BTA-004)
 
-1. Import `project.godot` with Godot 4.6.3 stable.
-2. Open `scenes/main/main.tscn` and confirm its only node is `GameRoot` (Node).
-3. Press **F6** to run this scene, then stop it with **F8**.
-4. Press **F5** to run the configured project main scene. Confirm a blank window
-   appears and the Debugger reports no errors or missing resources.
-5. Close the game window or press **F8** to stop. Confirm `git status --short`
-   shows no generated cache files; `.godot/` is ignored.
+Run `godot --path .`, or press F5 in the editor. Use arrows/Tab and Enter with a
+keyboard; D-pad/left stick and A with a controller. Shoulder buttons cycle focus.
+Escape/B cancels. The menu supports choosing an action, capturing a new binding,
+adjusting the analog dead zone, saving/reloading/resetting settings, and quitting.
+The movement readout and pause/sonar feedback demonstrate inputs only.
 
-Keyboard/gamepad behavior and accessibility flows have no implementation in this
-empty scaffold. Graphical desktop verification is required separately from
-headless validation.
+Settings save explicitly to `user://settings.json`; invalid loads preserve the
+file and use defaults at startup. Menu recovery bindings stay fixed. Rebinding
+replaces one device group and preserves the other; conflicting bindings are
+rejected. Default dead zone is 0.25, configurable from 0.10 to 0.90.
+
+See [input/settings verification](docs/testing/input_settings.md) for the default
+mapping table, model/schema, screenshot, limitations, and complete keyboard-only
+and controller-only manual steps. Desktop hardware/controller validation is
+separate from synthetic automated input tests.
 
 ## Directory layout
 
@@ -183,12 +186,14 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd \
 
 [`.gutconfig.json`](.gutconfig.json) recursively discovers `test_*.gd` in
 `tests/unit/` and `tests/integration/`. Tests extend `GutTest`; test methods start
-with `test_` and use typed GDScript. The sample suite checks a JSON round trip and
-instantiation of the existing empty main scene; it adds no gameplay logic.
+with `test_` and use typed GDScript. The original sample suite checks a JSON round trip and instantiation of the main
+scene. BTA-004 adds settings, binding, and menu integration suites; no gameplay
+logic is implemented.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.
-Expected sample result: **2 passed, 0 failed, 0 skipped**.
+All normal tests must pass; the summary reports the current suite count. The
+original two harness samples remain part of the expanded suite.
 
 Results are in `build/ci-logs/unit-tests.log`, `unit-tests.xml`, and
 `unit-tests-summary.log`. Read the counts to distinguish passed, failed, and
@@ -210,9 +215,9 @@ stays green. To demonstrate a failing CI run, temporarily copy this fixture to
 PR. The existing unit-test step must fail and retain its report; remove the
 copied file afterward and push again. Do not merge the failing demonstration.
 
-These samples prove harness/discovery/assertion/exit-code wiring only. Gameplay
-unit tests belong to the later issues that introduce those systems. No input,
-settings, test GUI, gameplay, exports, or platform runtime work is included here.
+The sample tests prove harness wiring; the BTA-004 suites exercise input,
+settings and the menu. Gameplay unit tests belong to the later issues that
+introduce those systems. Exports and platform certification remain outside scope.
 
 ## License
 

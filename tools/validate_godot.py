@@ -55,16 +55,19 @@ def main() -> None:
         if VERSION not in version.splitlines():
             raise RuntimeError(f"Expected exact engine version {VERSION}")
         run_check("import", ["--editor", "--import"], timeout=180)
-        # Check unreferenced scripts too. Imported/generated build caches are
-        # excluded; authored scripts and any future addons are included.
+        # Check unreferenced authored scripts too. GUT requires its own loader
+        # order (standalone version_numbers.gd initializes a circular dependency).
+        # Its pinned files are exercised by project import and the GUT runner.
         scripts = sorted(
             path for path in ROOT.rglob("*.gd")
             if not {".git", ".godot", "build", "exports"}.intersection(
                 path.relative_to(ROOT).parts
             )
+            and path.relative_to(ROOT).parts[:2] != ("addons", "gut")
         )
         with (LOGS / "parser.log").open("w", encoding="utf-8") as output:
             output.write(f"Discovered {len(scripts)} GDScript file(s).\n")
+            output.write("Pinned addons/gut checked by project import and GUT runner, not standalone parsing.\n")
             if not scripts:
                 output.write("No GDScript files in this empty scaffold; no script checks executed.\n")
             for index, script in enumerate(scripts, start=1):

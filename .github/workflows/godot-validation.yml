@@ -43,8 +43,17 @@ jobs:
             chmod +x "$GODOT_BIN"
           } 2>&1 | tee "$CI_LOG_DIR/install.log"
 
+      - name: Install pinned GUT 9.6.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/install_gut.py 2>&1 | tee "$CI_LOG_DIR/gut-install.log"
+
       - name: Validate engine, import, scripts and startup
         run: python3 tools/validate_godot.py
+
+      - name: Run GDScript unit tests
+        run: python3 tools/run_tests.py
 
       - name: Retain validation logs
         if: always()

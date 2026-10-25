@@ -1,7 +1,8 @@
 # BTA-004 input and settings verification
 
-The main scene hosts an input/settings test menu. It implements no submarine
-physics, sonar, survival, or other gameplay. Pause, sonar, light and map inputs
+The standalone input test scene hosts this menu; the main scene now boots the
+BTA-010 movement prototype and can embed this menu while the motor is stopped.
+The standalone menu implements no submarine physics, sonar, survival, or other gameplay. Pause, sonar, light and map inputs
 produce text feedback only. No new dependency or autoload singleton is added.
 
 ![Input test menu at 1280×800](bta-004-menu.png)
@@ -136,10 +137,9 @@ python3 tools/run_tests.py --failure-demo
 
 ## Manual desktop verification
 
-Launch the project or run the menu independently:
+Run the standalone input test menu:
 
 ~~~sh
-godot --path .
 godot --path . res://scenes/ui/input_test_menu.tscn
 ~~~
 

@@ -153,3 +153,13 @@ ui_focus_prev={
 
 window/size/viewport_width=1280
 window/size/viewport_height=800
+
+[physics]
+
+common/physics_ticks_per_second=60
+common/physics_interpolation=true
+
+[layer_names]
+
+2d_physics/layer_1="Cave walls"
+2d_physics/layer_2="Submarine"

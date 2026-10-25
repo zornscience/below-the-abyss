@@ -2,9 +2,10 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-004**. The project boots an input/settings test menu.
-Keyboard/controller controls, remapping, dead zones, and versioned settings are
-covered by GUT and GitHub Actions. Gameplay and game assets are not implemented.
+Current milestone: **BTA-010**. The project boots a playable submarine movement
+prototype in a placeholder cave. It includes acceleration, coasting, collisions,
+a smooth camera, and the existing keyboard/controller settings. Sonar, survival,
+creatures, missions and later gameplay systems are not implemented.
 
 ## Requirements
 
@@ -39,7 +40,7 @@ godot --headless --path . --quit-after 60
 ```
 
 Import and smoke commands must exit with status 0 and no Godot errors. The
-input/settings menu is expected; gameplay systems are not implemented.
+movement prototype is expected; later gameplay systems are not implemented.
 This smoke check validates startup, not gameplay or a unit test suite.
 
 In the managed cloud environment, initialize writable Godot cache paths before
@@ -53,9 +54,24 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
 cd /workspace/below-the-abyss
 ```
 
+## Movement prototype (BTA-010)
+
+Run `godot --path .`, or press F5. Move with WASD/arrows or left stick/D-pad
+(default bindings). Release to coast; reverse thrust to brake. Escape/P/Start
+opens input settings and stops the motor. Save changes and select Return to
+movement; unsaved edits are discarded on return.
+
+Motion is configured in `resources/balance/prototype_motion.tres`: acceleration
+600 px/s², maximum speed 240 px/s, damping 3 s⁻¹. The reusable CharacterBody2D uses
+fixed 60-Hz physics, swept wall sliding, interpolation and a smoothed Camera2D.
+All cave/submarine visuals are explicitly temporary geometry.
+
+See [movement verification](docs/testing/submarine_movement.md) for the model,
+controls, screenshot, test results and manual keyboard/controller/frame-cap course.
+
 ## Input/settings test menu (BTA-004)
 
-Run `godot --path .`, or press F5 in the editor. Use arrows/Tab and Enter with a
+Run `godot --path . res://scenes/ui/input_test_menu.tscn` independently. Use arrows/Tab and Enter with a
 keyboard; D-pad/left stick and A with a controller. Shoulder buttons cycle focus.
 Escape/B cancels. The menu supports choosing an action, capturing a new binding,
 adjusting the analog dead zone, saving/reloading/resetting settings, and quitting.
@@ -187,8 +203,8 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd \
 [`.gutconfig.json`](.gutconfig.json) recursively discovers `test_*.gd` in
 `tests/unit/` and `tests/integration/`. Tests extend `GutTest`; test methods start
 with `test_` and use typed GDScript. The original sample suite checks a JSON round trip and instantiation of the main
-scene. BTA-004 adds settings, binding, and menu integration suites; no gameplay
-logic is implemented.
+scene. BTA-004 adds settings, binding, and menu integration suites; BTA-010 adds
+submarine velocity and real physics/camera integration suites.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.
@@ -215,9 +231,9 @@ stays green. To demonstrate a failing CI run, temporarily copy this fixture to
 PR. The existing unit-test step must fail and retain its report; remove the
 copied file afterward and push again. Do not merge the failing demonstration.
 
-The sample tests prove harness wiring; the BTA-004 suites exercise input,
-settings and the menu. Gameplay unit tests belong to the later issues that
-introduce those systems. Exports and platform certification remain outside scope.
+The sample tests prove harness wiring; BTA-004 covers input/settings, and
+BTA-010 covers movement and collisions. Other gameplay tests belong to the
+issues that introduce those systems. Exports and platform certification remain outside scope.
 
 ## License
 

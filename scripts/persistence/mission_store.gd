@@ -2,6 +2,8 @@ class_name MissionStore
 extends RefCounted
 ## Mission records only. Backup is a write-ahead checkpoint, not an economic ledger.
 
+var checkpoint_writer: Callable
+var last_result: Error = OK
 signal status_changed
 const DEFAULT_PATH: String = "user://saves/missions.json"
 const MAX_BYTES: int = 16384
@@ -11,6 +13,7 @@ var _writable: bool = false
 
 
 func _report(message: String, result: Error) -> Error:
+	last_result = result
 	status = message
 	status_changed.emit()
 	return result
@@ -84,6 +87,9 @@ func _atomic_write(destination: String, text: String) -> Error:
 
 
 func save_records(records: Dictionary, catalog: MissionCatalog) -> Error:
+	if checkpoint_writer.is_valid():
+		var committed: Error = checkpoint_writer.call(&"missions", records)
+		return _report("Progress committed to expedition checkpoint; legacy file preserved." if committed == OK else "Expedition checkpoint failed (%s); progress not committed." % error_string(committed), committed)
 	if not catalog.valid_records(records):
 		return _report("Invalid mission state; file unchanged.", ERR_INVALID_DATA)
 	if not _writable:
@@ -113,6 +119,9 @@ func save_records(records: Dictionary, catalog: MissionCatalog) -> Error:
 
 
 func recover_backup(catalog: MissionCatalog, current: Dictionary) -> Dictionary:
+	if checkpoint_writer.is_valid():
+		_report("Use Recover expedition backup in the pause menu. Legacy files remain preserved.", ERR_UNAVAILABLE)
+		return {"error": ERR_UNAVAILABLE}
 	var backup: Dictionary = _read(path + ".bak", catalog)
 	if backup.error != OK:
 		_report("Mission backup not recovered (%s); files/progress preserved." % error_string(backup.error), backup.error)
@@ -131,4 +140,4 @@ func recover_backup(catalog: MissionCatalog, current: Dictionary) -> Dictionary:
 
 
 func can_write() -> bool:
-	return _writable
+	return _writable or checkpoint_writer.is_valid()

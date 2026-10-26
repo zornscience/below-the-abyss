@@ -1,0 +1,17 @@
+{
+  "format": "bta-expedition",
+  "schema_version": 1,
+  "region_id": "continental_shelf",
+  "legacy_imported": true,
+  "player": {"position": [760, 480], "hull": 80, "battery": 60, "oxygen": 70},
+  "progress": {
+    "discoveries": ["shelf-navigation-marker"],
+    "research": ["shelf-calibration-plate"],
+    "upgrades": ["sonar-range-1200"],
+    "missions": {
+      "shelf-expedition": {"state": "available", "objectives": []},
+      "shelf-calibration-study": {"state": "claimed", "objectives": ["scan-calibration-plate"]}
+    }
+  },
+  "route": {"stage": 1, "elapsed_seconds": 12.5}
+}

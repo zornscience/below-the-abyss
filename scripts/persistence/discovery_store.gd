@@ -2,6 +2,8 @@ class_name DiscoveryStore
 extends RefCounted
 ## Narrow BTA-023 POI file only. No player/resources/mission/slot serialization.
 
+var checkpoint_writer: Callable
+var last_result: Error = OK
 signal status_changed
 const DEFAULT_PATH: String = "user://saves/discoveries.json"
 const MAX_BYTES: int = 16384
@@ -11,6 +13,7 @@ var _writable: bool = false
 
 
 func _report(message: String, result: Error) -> Error:
+	last_result = result
 	status = message
 	status_changed.emit()
 	return result
@@ -90,6 +93,9 @@ func _atomic_write(destination: String, text: String) -> Error:
 
 
 func save_registry(registry: DiscoveryRegistry) -> Error:
+	if checkpoint_writer.is_valid():
+		var committed: Error = checkpoint_writer.call(&"discoveries", registry.discovered_ids())
+		return _report("Progress committed to expedition checkpoint; legacy file preserved." if committed == OK else "Expedition checkpoint failed (%s); progress not committed." % error_string(committed), committed)
 	if not _writable:
 		return _report("Saving blocked to preserve an unreadable discovery file. Recover backup or inspect the file.", ERR_UNAUTHORIZED)
 	# Revalidate before replacing: an externally corrupted/new-version file is not overwritten.
@@ -108,6 +114,9 @@ func save_registry(registry: DiscoveryRegistry) -> Error:
 
 
 func recover_backup(registry: DiscoveryRegistry) -> Error:
+	if checkpoint_writer.is_valid():
+		_report("Use Recover expedition backup in the pause menu. Legacy files remain preserved.", ERR_UNAVAILABLE)
+		return ERR_UNAVAILABLE
 	var backup: Dictionary = _read(path + ".bak", registry)
 	if backup.error != OK:
 		return _report("Backup not recovered (%s); current discoveries and files preserved." % error_string(backup.error), backup.error)
@@ -124,5 +133,7 @@ func recover_backup(registry: DiscoveryRegistry) -> Error:
 
 
 func retry_save(registry: DiscoveryRegistry) -> Error:
+	if checkpoint_writer.is_valid():
+		return save_registry(registry)
 	var result: Error = load_registry(registry)
 	return save_registry(registry) if result == OK or result == ERR_FILE_NOT_FOUND else result

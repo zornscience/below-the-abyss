@@ -254,3 +254,11 @@ func maximum_radius() -> float:
 
 func is_mutating() -> bool:
 	return _requesting or _advancing
+
+
+func restore_cooldown(seconds: float) -> Error:
+	if not is_finite(seconds) or seconds < 0.0 or seconds > _rules.cooldown_seconds or is_mutating():
+		return ERR_INVALID_PARAMETER
+	_cooldown = seconds
+	state_changed.emit()
+	return OK

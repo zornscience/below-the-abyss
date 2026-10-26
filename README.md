@@ -2,11 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-034**. Shelf Base now offers explicit mission acceptance,
-objective status and persistent acknowledgement claims: one main shelf expedition
-and one optional calibration scan. Existing services, both upgrades, sonar, research,
-discoveries and optional creature encounters remain. Rewards are non-economic records;
-a general save system and narrative campaign remain unimplemented.
+Current milestone: **BTA-035**. The normal shelf game has a canonical expedition
+checkpoint: Continue restores vessel supplies/pose and permanent progress after
+quitting. Pause to save safely, or dock/use station services for a checkpoint.
+New Expedition requires confirmation and retains discoveries, research, missions
+and upgrades. Existing exploration and creature systems remain; no new gameplay,
+economy, region or campaign is added.
 
 ## Requirements
 
@@ -81,6 +82,34 @@ godot --path . res://scenes/main/movement_prototype.tscn
 # That original fixture with optional resource-test controls:
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
+
+## Save and Continue (BTA-035)
+
+Launch with `godot --path .`. Choose **Continue saved expedition** when a validated
+checkpoint exists. After beginning/continuing, pause with Escape/Start and choose
+**Save expedition** from clear terrain outside pressure danger and predator pursuit.
+Docking and successful station operations also save checkpoints. Read the explicit
+success/failure message before exiting; there is no implicit quit autosave.
+
+**New Expedition…** asks for confirmation and resets vessel/temporary route while
+keeping all permanent progress. Cancel leaves the checkpoint alone. **Restart Test
+Route** remains a separate development action. Keyboard and controller navigation
+work in pause/confirmation/station menus.
+
+The normal game now uses `user://saves/expedition.json` (version 2) with a recoverable
+checkpoint backup. Existing narrow save files are validated/imported and preserved;
+their store APIs then delegate writes to the coordinator. Standalone component
+fixtures still use their original stores. Custom isolated settings scenes inject
+`expedition_path` to enable coordinated saves. Corrupt/incompatible data blocks
+starting/writing and offers explicit recovery rather than overwriting progress.
+
+Continue resets temporary echoes, contacts, partial scans and creature pursuit;
+velocity starts at zero and sonar cooldown is restored. Obstructed/out-of-region
+positions recover to clear base without restoring supplies, with a readable notice.
+See [architecture/schema/migration/recovery](docs/decisions/bta-035-general-save-system.md)
+and [complete walkthrough, exact tests and two-process native evidence](docs/testing/expedition_save.md).
+The narrow-store sections below describe their standalone formats; the normal
+shelf game now routes those persistent records through this canonical checkpoint.
 
 ## Mission board (BTA-034)
 
@@ -531,7 +560,7 @@ input/remapping, HUD and frame-rate coverage without removing prior tests.
 BTA-023 adds stable discovery IDs, validated atomic discovery persistence/recovery,
 wavefront/passive isolation, restart/reload, map visibility, remapping, controller
 navigation, responsive layout and 30/60/120-step coverage.
-The wrapper enforces a 240-second timeout and fails on nonzero runner exits,
+The wrapper enforces a 300-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.
 All normal tests must pass; the summary reports the current suite count. The

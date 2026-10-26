@@ -51,3 +51,15 @@ func apply_damage(amount: float, source_id: StringName = &"unspecified") -> floa
 
 func restore_hull(amount: float) -> float:
 	return _hull.replenish(amount)
+
+
+func restore_snapshot(value: float) -> Error:
+	if not is_finite(value) or value < 0.0 or value > max_hull:
+		return ERR_INVALID_PARAMETER
+	var pool: BoundedResource = BoundedResource.new(max_hull)
+	pool.set_value(value)
+	_hull = pool
+	_connect_pool()
+	last_damage_source = &""
+	hull_changed.emit(hull, max_hull)
+	return OK

@@ -1,0 +1,119 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/ui/station_menu.gd" id="1"]
+[ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="2"]
+[node name="StationMenu" type="Control"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2")
+script = ExtResource("1")
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.018, 0.04, 0.06, 1)
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+[node name="Content" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+[node name="StationTitle" type="Label" parent="Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "SHELF BASE / DOCKED"
+[node name="Rules" type="Label" parent="Margin/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+text = "FREE prototype services · Limits apply per activation · Simulation paused\nArrows / Tab / D-pad: navigate · Enter / A: select · Esc / B / Start: back"
+[node name="ServicesPage" type="VBoxContainer" parent="Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+[node name="ServicePreview" type="Label" parent="Margin/Content/ServicesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+[node name="Actions" type="HFlowContainer" parent="Margin/Content/ServicesPage"]
+layout_mode = 2
+[node name="RepairHull" type="Button" parent="Margin/Content/ServicesPage/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Repair hull"
+[node name="ChargeBattery" type="Button" parent="Margin/Content/ServicesPage/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Charge battery"
+[node name="RefillOxygen" type="Button" parent="Margin/Content/ServicesPage/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Refill oxygen"
+[node name="ServiceAll" type="Button" parent="Margin/Content/ServicesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Service all / FREE"
+[node name="ServiceFeedback" type="Label" parent="Margin/Content/ServicesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+[node name="ServicesFooter" type="HBoxContainer" parent="Margin/Content/ServicesPage"]
+layout_mode = 2
+[node name="Undock" type="Button" parent="Margin/Content/ServicesPage/ServicesFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Return to piloting"
+[node name="OpenBoard" type="Button" parent="Margin/Content/ServicesPage/ServicesFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Mission board / notices"
+[node name="BoardPage" type="VBoxContainer" parent="Margin/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+[node name="BoardTitle" type="Label" parent="Margin/Content/BoardPage"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "EXPEDITION NOTICES / INFORMATION ONLY"
+[node name="BoardBody" type="HBoxContainer" parent="Margin/Content/BoardPage"]
+layout_mode = 2
+size_flags_vertical = 3
+[node name="NoticeScroll" type="ScrollContainer" parent="Margin/Content/BoardPage/BoardBody"]
+layout_mode = 2
+custom_minimum_size = Vector2(250, 180)
+horizontal_scroll_mode = 0
+follow_focus = true
+[node name="NoticeList" type="VBoxContainer" parent="Margin/Content/BoardPage/BoardBody/NoticeScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+[node name="DescriptionScroll" type="ScrollContainer" parent="Margin/Content/BoardPage/BoardBody"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+[node name="NoticeText" type="Label" parent="Margin/Content/BoardPage/BoardBody/DescriptionScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+[node name="BackServices" type="Button" parent="Margin/Content/BoardPage"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to station services"

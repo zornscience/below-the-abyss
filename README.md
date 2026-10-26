@@ -2,12 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-031**. A marked optional acoustic-predator pocket now
-provides warning, limited pursuit and a safe downward retreat. It reuses BTA-030
-movement/navigation, cannot block the vessel, and applies modest cooldown-limited
-contact damage through the existing hull API. The harmless observer and required
-exploration/scanning routes remain. Combat, missions, services, upgrades and general
-game saves remain unimplemented.
+Current milestone: **BTA-032**. Shelf Base now offers explicit, free prototype
+repair/refill services and a read-only expedition notice board. Dock with Interact
+inside the marked ring, choose a service, then return to piloting. Passing through
+the base never restores resources. Existing exploration, scientific scanning,
+sonar, records and optional creature encounters remain available. Mission progression,
+rewards, upgrades and general game saves remain unimplemented.
 
 ## Requirements
 
@@ -82,6 +82,25 @@ godot --path . res://scenes/main/movement_prototype.tscn
 # That original fixture with optional resource-test controls:
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
+
+## Station services (BTA-032)
+
+At Shelf Base, slow down inside the docking ring and press **E / controller A**
+(the existing remappable Interact action). Normal piloting prioritizes the station
+inside its radius; outside, Interact still performs scientific scanning. Leave
+development mode off; that mode retains its existing resource debug controls.
+
+Services pause simulation and show resource-before/resource-after previews. Repair,
+charge, refill or Service all explicitly applies FREE prototype service, capped by
+configurable per-activation limits and existing maxima. Full/disabled services show
+why they are unavailable. Merely returning, docking or reading notices changes no
+resources. Arrows/Tab/D-pad navigate, Enter/A selects, Escape/B/Start goes back or
+returns to piloting. The informational mission board has no progression or rewards.
+
+Services retain the expedition route, sonar history and permanent discoveries/research.
+**Restart Test Route** remains a separate development reset. See the
+[API and balancing decisions](docs/decisions/bta-032-station-services.md) and
+[verification commands, native screenshots and manual playtest](docs/testing/station_services.md).
 
 ## Optional predator encounter (BTA-031)
 

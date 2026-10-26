@@ -2,12 +2,13 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-024**. Scientific scanning now requires an intentional
-Interact activation near a sonar-discovered subject, with simulation-time progress,
-cancellation and range interruption. Completed geological/artificial placeholder
-observations appear in a separate research-log page and persist independently of
-temporary sonar echoes and route restarts. Missions, rewards, inventory, progression
-and the general game-save system remain unimplemented.
+Current milestone: **BTA-030**. A harmless placeholder creature in the optional
+overlook now patrols, investigates eligible acoustic events and returns to its
+route. It uses the existing scene-owned acoustic bus and cannot block or damage
+the vessel. Navigation stays bounded and collision-safe. Existing sonar, scanning,
+research/discoveries, saves and the exploration loop remain operational. Threat
+encounters, attacks, missions, rewards, upgrades and general game saves remain
+unimplemented.
 
 ## Requirements
 
@@ -82,6 +83,23 @@ godot --path . res://scenes/main/movement_prototype.tscn
 # That original fixture with optional resource-test controls:
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
+
+## Harmless acoustic creature (BTA-030)
+
+Enter the signed optional overlook near **(1400,400)**, above the main route, and
+press **F / controller X** (existing remappable sonar_ping). The placeholder shows
+PATROL → INVESTIGATE → RETURN → PATROL, reacts to the sampled sound origin and
+cannot chase outside its bounded habitat. Pings still have their normal cost and
+cooldown. Repeated sounds cannot extend one investigation indefinitely. Passive
+listening itself emits nothing and never attracts it.
+
+The creature collides only with terrain; the vessel can pass through it. There
+are no attacks or contact damage. All existing pauses freeze it; Restart restores
+its test state without clearing acoustic history or permanent research/discoveries.
+Movement/perception/patrol timing tune through `resources/creatures/shelf_observer.tres`.
+
+See [commands, actual screenshots and manual playtesting](docs/testing/acoustic_creature.md)
+and [FSM, acoustic arbitration, navigation and lifecycle contracts](docs/decisions/bta-030-acoustic-creature.md).
 
 ## Scientific scanning and research (BTA-024)
 
@@ -160,7 +178,8 @@ Tuning is in `resources/balance/prototype_sonar.tres`; reusable scripts/scenes
 compose the existing AcousticEmitter/AcousticReceiver and battery API. An atomic
 acceptance gate prevents rejected/invalid/duplicate pings from charging energy.
 There is no second dispatcher, occlusion, moving-target interception, terrain
-reveal or AI response. Scientific scanning is a separate intentional action. The BTA-023 registry records selected wavefront
+reveal. The optional harmless creature can observe eligible acoustic events.
+Scientific scanning is a separate intentional action. The BTA-023 registry records selected wavefront
 arrivals independently of temporary echoes. The exploration loop still requires no sonar.
 
 See [contracts, screenshots and manual verification](docs/testing/active_sonar.md)

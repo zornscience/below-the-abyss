@@ -2,6 +2,7 @@ class_name SubmarineController
 extends CharacterBody2D
 ## Omnidirectional submarine motor; collision response is Godot's swept sliding.
 
+signal simulation_enabled_changed(enabled: bool)
 signal collision_occurred(normal: Vector2, approach_speed: float)
 
 @export var motion: SubmarineMotion = SubmarineMotion.new()
@@ -48,3 +49,4 @@ func set_simulation_enabled(value: bool) -> void:
 	set_physics_process(value)
 	passive.set_suspended(not value)
 	scanner.set_suspended(not value)
+	simulation_enabled_changed.emit(value)

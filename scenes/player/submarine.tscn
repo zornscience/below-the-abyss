@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/submarine_controller.gd" id="1_controller"]
 [ext_resource type="Resource" path="res://resources/balance/prototype_motion.tres" id="2_motion"]
+[ext_resource type="Script" path="res://scripts/player/submarine_resource_system.gd" id="3_resources"]
+[ext_resource type="Script" path="res://scripts/player/submarine_hull_system.gd" id="4_hull"]
+[ext_resource type="Resource" path="res://resources/balance/prototype_resources.tres" id="5_config"]
 
 [sub_resource type="CapsuleShape2D" id="Capsule_hull"]
 radius = 16.0
@@ -42,3 +45,11 @@ limit_left = 0
 limit_top = 0
 limit_right = 2400
 limit_bottom = 1600
+
+[node name="ResourceSystem" type="Node" parent="."]
+script = ExtResource("3_resources")
+configuration = ExtResource("5_config")
+
+[node name="HullSystem" type="Node" parent="."]
+script = ExtResource("4_hull")
+configuration = ExtResource("5_config")

@@ -2,10 +2,10 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-010**. The project boots a playable submarine movement
-prototype in a placeholder cave. It includes acceleration, coasting, collisions,
-a smooth camera, and the existing keyboard/controller settings. Sonar, survival,
-creatures, missions and later gameplay systems are not implemented.
+Current milestone: **BTA-011**. The movement prototype now includes configurable
+hull, battery and oxygen components, signal-driven temporary indicators, and
+explicit resource test controls. Depth/collision damage, depletion consequences,
+sonar, creatures, missions and upgrades are not implemented.
 
 ## Requirements
 
@@ -68,6 +68,25 @@ All cave/submarine visuals are explicitly temporary geometry.
 
 See [movement verification](docs/testing/submarine_movement.md) for the model,
 controls, screenshot, test results and manual keyboard/controller/frame-cap course.
+
+## Submarine resources (BTA-011)
+
+Hull, battery and oxygen start at 100 units, configured in
+`resources/balance/prototype_resources.tres`. During active simulation, idle
+battery drains at 0.25 units/second, full thrust adds 1.5 units/second, and oxygen
+drains at 0.5 units/second. Hull changes only through explicit damage/repair APIs.
+Movement remains available at depletion; loss consequences are outside BTA-011.
+
+Press Interact (E/controller A by default) or Tab to focus temporary test buttons.
+Use keyboard arrows/Tab/Enter or controller D-pad/stick/A to consume/repair/refill.
+Focusing test controls stops movement and drains; Return to piloting resumes them.
+Input settings also stop drains. Indicators show numeric values, EMPTY/DEPLETED,
+and one notification per emptying; a positive refill rearms depletion.
+
+See [resource APIs and manual verification](docs/testing/submarine_resources.md)
+for configuration, signal/transfer contracts, screenshots, test results, and the
+keyboard/controller/refill/frame-cap playtest. This is temporary instrumentation,
+not the production HUD or station/game-over system.
 
 ## Input/settings test menu (BTA-004)
 
@@ -204,7 +223,8 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd \
 `tests/unit/` and `tests/integration/`. Tests extend `GutTest`; test methods start
 with `test_` and use typed GDScript. The original sample suite checks a JSON round trip and instantiation of the main
 scene. BTA-004 adds settings, binding, and menu integration suites; BTA-010 adds
-submarine velocity and real physics/camera integration suites.
+submarine velocity and real physics/camera integration suites; BTA-011 adds
+resource transfer, signal, drain and prototype-panel coverage.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.
@@ -232,7 +252,8 @@ PR. The existing unit-test step must fail and retain its report; remove the
 copied file afterward and push again. Do not merge the failing demonstration.
 
 The sample tests prove harness wiring; BTA-004 covers input/settings, and
-BTA-010 covers movement and collisions. Other gameplay tests belong to the
+BTA-010 covers movement and collisions; BTA-011 covers resource state and signals.
+Other gameplay tests belong to the
 issues that introduce those systems. Exports and platform certification remain outside scope.
 
 ## License

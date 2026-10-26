@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/prototype_resource_panel.gd" id="1_panel"]
+
+[sub_resource type="Theme" id="Theme_panel"]
+default_font_size = 20
+
+[sub_resource type="StyleBoxFlat" id="Style_panel"]
+bg_color = Color(0.055, 0.07, 0.08, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+
+[node name="PrototypeResourcePanel" type="PanelContainer"]
+focus_mode = 2
+theme = SubResource("Theme_panel")
+theme_override_styles/panel = SubResource("Style_panel")
+script = ExtResource("1_panel")
+
+[node name="Padding" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Content" type="VBoxContainer" parent="Padding"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Values" type="HBoxContainer" parent="Padding/Content"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Hull" type="Label" parent="Padding/Content/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hull"
+
+[node name="Battery" type="Label" parent="Padding/Content/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Battery"
+
+[node name="Oxygen" type="Label" parent="Padding/Content/Values"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Oxygen"
+
+[node name="Help" type="Label" parent="Padding/Content"]
+layout_mode = 2
+text = "Temporary checks: E / A or Tab to focus. Return to piloting resumes simulation."
+autowrap_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Padding/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TestHull" type="Button" parent="Padding/Content/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Test hull −25"
+
+[node name="TestBattery" type="Button" parent="Padding/Content/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Test battery −25"
+
+[node name="TestOxygen" type="Button" parent="Padding/Content/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Test oxygen −25"
+
+[node name="RefillAll" type="Button" parent="Padding/Content/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Test refill all"
+
+[node name="Pilot" type="Button" parent="Padding/Content/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Return to piloting"
+
+[node name="Depletions" type="Label" parent="Padding/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2

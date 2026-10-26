@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/movement_prototype.gd" id="1_prototype"]
 [ext_resource type="PackedScene" path="res://scenes/regions/movement_cave.tscn" id="2_cave"]
 [ext_resource type="PackedScene" path="res://scenes/player/submarine.tscn" id="3_submarine"]
+[ext_resource type="PackedScene" path="res://scenes/ui/prototype_resource_panel.tscn" id="4_resources"]
 
 [sub_resource type="Theme" id="Theme_diagnostics"]
 default_font_size = 20
@@ -46,7 +47,7 @@ mouse_filter = 2
 
 [node name="Title" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 layout_mode = 2
-text = "BTA-010 — Submarine movement / placeholder geometry"
+text = "BTA-011 — Submarine resources / placeholder geometry"
 
 [node name="Instructions" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 layout_mode = 2
@@ -55,7 +56,7 @@ autowrap_mode = 2
 
 [node name="Scope" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 layout_mode = 2
-text = "Movement test only. No sonar, resources, damage or missions."
+text = "Resource and movement test. No collision/depth damage, loss consequences or missions."
 
 [node name="Diagnostics" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 unique_name_in_owner = true
@@ -76,3 +77,15 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0.12, 0.13, 0.15, 1)
+
+[node name="ResourcePanel" parent="UI" instance=ExtResource("4_resources")]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -185.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_vertical = 0

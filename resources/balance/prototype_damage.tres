@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SubmarineDamageConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/submarine_damage_config.gd" id="1_config"]
+
+[resource]
+script = ExtResource("1_config")
+safe_operating_depth_m = 300.0
+warning_margin_m = 40.0
+pressure_grace_seconds = 2.0
+pressure_damage_per_second = 4.0
+impact_speed_threshold = 150.0
+collision_damage_per_speed = 0.1
+maximum_collision_damage = 20.0
+collision_cooldown_seconds = 0.75

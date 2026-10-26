@@ -5,7 +5,8 @@
 This is a movement/collision test cave, not a production region or vertical slice.
 Walls, obstacles, grid and submarine are authored placeholder geometry. The hull
 has a fixed visual orientation and a symmetric collision capsule; artwork,
-animation, buoyancy, gravity, collision/depth damage and sonar are absent.
+animation, buoyancy, gravity and sonar are absent. BTA-012 now adds pressure
+and severe-impact hull damage; see [depth/damage verification](depth_damage.md).
 BTA-011 now composes resource components and temporary numeric indicators with
 this prototype; see [resource verification](submarine_resources.md). Depletion
 consequences are not implemented. The speed/contact text remains test instrumentation.
@@ -62,7 +63,7 @@ labels may differ from Godot's standard A/B/X/Y notation.
   does not normalize away partial analog input.
 - Physics runs at a fixed **60 Hz**, independent of rendering. Physics
   interpolation is enabled for the moving body. Camera smoothing runs on physics
-  ticks at speed 5 and is constrained to the 2400×1600 cave bounds.
+  ticks at speed 5 and is constrained to the 2400×2300 cave bounds, including the BTA-012 deep shaft.
 - Layer 1 is static cave geometry; layer 2 is the submarine. Swept collision
   motion blocks walls, preserves sliding, and explicitly removes residual inward
   velocity. Small outward components from floating-point contact normals are

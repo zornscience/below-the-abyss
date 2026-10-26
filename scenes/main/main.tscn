@@ -47,7 +47,7 @@ mouse_filter = 2
 
 [node name="Title" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 layout_mode = 2
-text = "BTA-011 — Submarine resources / placeholder geometry"
+text = "BTA-012 — Depth limits & hull damage / placeholder geometry"
 
 [node name="Instructions" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 layout_mode = 2
@@ -56,7 +56,7 @@ autowrap_mode = 2
 
 [node name="Scope" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 layout_mode = 2
-text = "Resource and movement test. No collision/depth damage, loss consequences or missions."
+text = "Deep test shaft: descend at X 200–450. Pressure and severe collisions damage hull."
 
 [node name="Diagnostics" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 unique_name_in_owner = true
@@ -64,6 +64,16 @@ layout_mode = 2
 text = "Speed: 0 px/s"
 
 [node name="SettingsStatus" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="DepthStatus" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="DamageFeedback" type="Label" parent="UI/Margin/Panel/Padding/Text"]
 unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DepthMapping" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/depth_mapping.gd" id="1_mapping"]
+
+[resource]
+script = ExtResource("1_mapping")
+water_surface_local_y = 0.0
+meters_per_unit = 0.25

@@ -4,8 +4,9 @@
 
 The prototype now composes hull, battery and oxygen components with the existing
 movement controller. These numeric indicators and explicit test buttons are
-temporary verification tools. They add no depth/collision damage, creatures,
-missions, upgrades, station gameplay, production HUD, game-over or respawn system.
+temporary verification tools. BTA-012 now supplies pressure and severe-impact
+damage through these interfaces; see [depth/damage verification](depth_damage.md).
+There is no creature, mission, upgrade, station, production HUD, game-over or respawn system.
 Movement remains usable at zero resources so the BTA-010 test course is preserved.
 
 ## Profile and runtime ownership
@@ -25,7 +26,8 @@ SubmarineResourceConfig. Each submarine starts full:
 At half thrust, battery drain is 0.25 + 1.5 × 0.5 = 1 unit/second. Full diagonal
 input is capped at full thrust, not charged twice. Coasting uses the idle rate;
 holding thrust against a wall still consumes thrust battery. Hull has no passive
-drain. These values are prototype tuning, not final balance.
+drain in this resource component; the BTA-012 damage component supplies hull
+loss separately. These values are prototype tuning, not final balance.
 
 SubmarineResourceSystem and SubmarineHullSystem are child Nodes in the reusable
 submarine scene. They own separate runtime values through a BoundedResource
@@ -74,8 +76,8 @@ even when a signal observer subsequently refills the same pool.
 
 Resources drain only while the motor's physics processing is active. Input
 settings and focused test controls stop movement and resource ticks together.
-No resource depletion changes propulsion, applies hull damage, hides the vessel,
-resets the scene or changes the existing settings schema. State is not saved;
+Resource depletion itself does not change propulsion, apply hull damage, hide
+the vessel, reset the scene or change the existing settings schema. State is not saved;
 restarting creates a new full vessel.
 
 ## Signals and indicators
@@ -110,14 +112,14 @@ python3 tools/run_tests.py
 Initialize cloud XDG paths as described in README when applicable. Existing
 Actions commands and 14-day log/JUnit artifacts are unchanged.
 
-Local result: **63 passed, 0 failures, 0 errors, 0 skipped**, including all 39
+BTA-011 validation snapshot: **63 passed, 0 failures, 0 errors, 0 skipped**, including all 39
 existing tests. New suites cover finite/clamped values, actual transfers,
 insufficient discrete costs, zero/invalid amounts, fractional endpoints,
 depletion/refill/rearming, signal parameters/counts, independent vessel state,
 invalid profiles, large finite inputs and 30/60/120-step drain equivalence.
-Prototype integration covers movement/drain, settings suspension, unchanged hull
-on collisions, zero-resource movement, numeric indicators and keyboard/controller
-test-panel operation.
+Prototype integration covers movement/drain, settings suspension, zero-resource
+movement, numeric indicators and keyboard/controller test-panel operation. BTA-012 extends the suite with damage-source coverage and
+updates the wall-contact expectation for severe impacts.
 
 Screenshots and graphical drain/depletion/refill/movement checks use the actual
 Compatibility renderer on Xorg dummy display + Mesa llvmpipe. That display emits
@@ -131,8 +133,8 @@ Deck behavior.
 godot --path .
 ~~~
 
-1. With default controls, move using WASD/arrows or left stick/D-pad. Hull should
-   stay at capacity, oxygen decrease at 0.5 units/second, battery decrease faster
+1. With default controls, move using WASD/arrows or left stick/D-pad. In safe
+   water without severe impacts, hull should stay at capacity. Oxygen should decrease at 0.5 units/second and battery decrease faster
    during thrust than when idle. Check the existing cave course and smooth camera.
 2. Press Interact (E/controller A by default) or Tab to focus the temporary test
    buttons. Focus must be visible; the motor and drains must stop. Navigate with
@@ -140,7 +142,7 @@ godot --path .
 3. Activate **Test hull −25** four times from full. Hull reaches zero, DEPLETED
    appears and the hull event counter becomes one. Activate again: it must stay
    zero and the counter must not repeat. This is explicit test damage; cave
-   collisions and depth do not apply it.
+   impacts/pressure now have their own BTA-012 sources in the cave.
 4. Use **Test battery −25** and **Test oxygen −25** until EMPTY. Each depletion
    counter should increment once; excess consumption must not go negative.
 5. Select **Test refill all**. All three values must return to their capacities.

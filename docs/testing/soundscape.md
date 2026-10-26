@@ -32,10 +32,10 @@ output and JUnit in its 14-day artifact. No test is disabled or relaxed.
 
 - Engine/import/parser/startup validator: **PASS**, exact Godot version above,
   **157 authored script checks**, no Godot errors.
-- Complete local GUT run: **391/391 passing**, **48 scripts**, **24,956 assertions**,
+- Complete local GUT run before the final shared-alarm gate: **391/391 passing**, **48 scripts**, **24,956 assertions**,
   **194.613 seconds**, **0 failures / 0 errors / 0 skipped**.
-- Final focused audio verification after the last accessibility/stream guard edits:
-  **21/21 passing**, **201 assertions**, **3.386 seconds**, no Godot errors.
+- Final focused audio verification including the shared resource/predator alarm gate:
+  **22/22 passing**, **209 assertions**, **3.529 seconds**, no Godot errors.
 - Final 60-iteration headless startup: exit 0, no errors/leaks.
 - Existing actionlint check and `git diff --check`: pass.
 - `tools/synthesize_audio.py`: all **26 source WAVs byte-for-byte reproducible** on
@@ -149,7 +149,7 @@ Native screenshots (Godot X11/GL compatibility, Mesa llvmpipe):
 
 ## Coverage, performance and limits
 
-The new 21 focused tests cover bus routing/imported forward loops, independent
+The new 22 focused tests cover bus routing/imported forward loops, independent
 persistent settings/legacy files/invalid data, safe missing streams, hard voice
 limits/rate suppression, mute, class mapping, fade/crossfade/duck behavior, actual
 ping/echo gating, no recursive acoustics, passive snapshot deduplication, scanner

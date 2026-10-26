@@ -4,6 +4,7 @@ extends Node
 
 signal cue_played(cue_id: StringName, bus: String)
 const BUSES: Array[String] = ["Master", "Music", "Ambience", "Effects", "UI"]
+const ALARMS: Array[StringName] = [&"hull", &"oxygen", &"battery", &"predator_alert", &"predator_pursue"]
 const LOOP_NAMES: Array[String] = ["ocean", "current", "engine", "tension", "scan"]
 @export var configuration: SoundscapeProfile = preload("res://resources/audio/shelf_soundscape.tres")
 var _rules: SoundscapeProfile
@@ -90,6 +91,8 @@ func request(cue_id: StringName) -> bool:
 	var count: int = 0
 	var free_player: AudioStreamPlayer
 	for player: AudioStreamPlayer in _players:
+		if cue_id in ALARMS and float(player.get_meta("remaining", 0.0)) > 0.0 and player.get_meta("cue_id", &"") in ALARMS:
+			return false
 		if float(player.get_meta("remaining", 0.0)) > 0.0 and player.get_meta("cue_id", &"") == cue_id:
 			count += 1
 		elif float(player.get_meta("remaining", 0.0)) <= 0.0 and free_player == null:

@@ -68,7 +68,8 @@ returns may coalesce within a 0.15-second audio interval; every legitimate visua
 reveal still occurs. No audio is emitted for failed energy/cooldown/duplicate pings.
 
 Resource warning priority is hull → oxygen → battery, spaced two presentation
-seconds apart and announced once per low episode; refill above threshold + 5%
+seconds apart and announced once per low episode; resource/predator alarms share a one-at-a-time voice
+gate (no queued stale alarm). Refill above threshold + 5%
 rearms. Muted/dropped warnings are consumed without deferred replay. The low
 threshold defaults to 20% in the soundscape Resource and is shared with the HUD
 badge. A warning never changes drains, depletion, damage or movement.

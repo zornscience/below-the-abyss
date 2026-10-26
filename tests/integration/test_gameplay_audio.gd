@@ -126,6 +126,7 @@ func test_real_predator_warns_pursues_and_disengages_once_per_transition() -> vo
 	assert_eq(_scene.submarine.sonar.request_ping(), OK)
 	for _index: int in range(3):
 		_scene.predator.advance_simulation(1.0)
+		_scene.audio.advance(1.0)
 	assert_eq(_scene.predator.threat.phase, PredatorState.Phase.PURSUE)
 	assert_eq(_heard.count(&"predator_alert"), 1)
 	assert_eq(_heard.count(&"predator_pursue"), 1)

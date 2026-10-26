@@ -180,3 +180,16 @@ func test_echo_duck_is_restrained_and_recovers_smoothly() -> void:
 	assert_gt(_mixer._loops.ocean.volume_linear, before * 0.65)
 	_mixer.advance(10.0)
 	assert_almost_eq(_mixer._loops.ocean.volume_linear, before, 0.0001)
+
+
+func test_resource_and_predator_alarms_never_overlap_or_queue_stale_warnings() -> void:
+	assert_true(_mixer.request(&"hull"))
+	assert_false(_mixer.request(&"oxygen"))
+	assert_false(_mixer.request(&"predator_alert"))
+	_mixer.advance(0.7)
+	assert_eq(_mixer.active_voice_count(), 0, "Suppressed alarms are not queued")
+	assert_true(_mixer.request(&"predator_alert"))
+	assert_false(_mixer.request(&"battery"))
+	assert_false(_mixer.request(&"predator_pursue"))
+	_mixer.advance(1.9)
+	assert_true(_mixer.request(&"predator_pursue"))

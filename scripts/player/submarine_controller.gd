@@ -10,9 +10,13 @@ var depth_region: DepthRegion
 @onready var resource_system: SubmarineResourceSystem = $ResourceSystem
 @onready var hull_system: SubmarineHullSystem = $HullSystem
 @onready var damage_system: SubmarineDamageSystem = $DamageSystem
+@onready var sonar: SonarEmitter = $SonarEmitter
 
 
 func _physics_process(delta: float) -> void:
+	sonar.advance(delta)
+	if Input.is_action_just_pressed("sonar_ping"):
+		sonar.request_ping()
 	var thrust: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	resource_system.advance(delta, thrust.length())
 	velocity = motion.next_velocity(velocity, thrust, delta)

@@ -114,7 +114,7 @@ func history_count() -> int:
 	return _history.size()
 
 
-func dispatch(emitter: AcousticEmitter, event: AcousticEvent) -> Error:
+func check_dispatch(emitter: AcousticEmitter, event: AcousticEvent) -> Error:
 	if _dispatching:
 		return ERR_BUSY
 	if event == null or not event.is_valid() or not is_instance_valid(emitter):
@@ -128,10 +128,26 @@ func dispatch(emitter: AcousticEmitter, event: AcousticEvent) -> Error:
 		return ERR_ALREADY_EXISTS if _history[event.event_id].same_payload(event) else ERR_INVALID_DATA
 	if _history.size() >= _rules.maximum_event_history:
 		return ERR_OUT_OF_MEMORY
+	return OK
+
+
+func dispatch(emitter: AcousticEmitter, event: AcousticEvent, acceptance: Callable = Callable()) -> Error:
+	var validation: Error = check_dispatch(emitter, event)
+	if validation != OK:
+		return validation
+	if not acceptance.is_null() and not acceptance.is_valid():
+		return ERR_INVALID_PARAMETER
 	var frozen: AcousticEvent = event.snapshot()
+	_dispatching = true
+	# Optional atomic producer gate (e.g. try_consume_battery). It runs only after
+	# validation/dedup/capacity, under the existing reentrancy lock, before history.
+	if not acceptance.is_null():
+		var accepted: Variant = acceptance.call()
+		if not accepted is bool or not accepted:
+			_dispatching = false
+			return ERR_UNAVAILABLE
 	# Record before any callback: duplicate IDs cannot reenter this event.
 	_history[frozen.event_id] = frozen.snapshot()
-	_dispatching = true
 	var deliveries: Array[Dictionary] = []
 	var ids: Array[StringName] = _receivers.keys()
 	ids.sort_custom(func(left: StringName, right: StringName) -> bool: return String(left) < String(right))

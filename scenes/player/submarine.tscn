@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/submarine_controller.gd" id="1_controller"]
 [ext_resource type="Resource" path="res://resources/balance/prototype_motion.tres" id="2_motion"]
@@ -7,6 +7,10 @@
 [ext_resource type="Resource" path="res://resources/balance/prototype_resources.tres" id="5_config"]
 [ext_resource type="Script" path="res://scripts/player/submarine_damage_system.gd" id="6_damage"]
 [ext_resource type="Resource" path="res://resources/balance/prototype_damage.tres" id="7_config"]
+
+[ext_resource type="Script" path="res://scripts/sonar/sonar_emitter.gd" id="8_sonar"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_emitter.gd" id="9_acoustic"]
+[ext_resource type="Resource" path="res://resources/balance/prototype_sonar.tres" id="10_profile"]
 
 [sub_resource type="CapsuleShape2D" id="Capsule_hull"]
 radius = 16.0
@@ -59,3 +63,9 @@ configuration = ExtResource("5_config")
 [node name="DamageSystem" type="Node" parent="."]
 script = ExtResource("6_damage")
 configuration = ExtResource("7_config")
+
+[node name="SonarEmitter" type="Node2D" parent="."]
+script = ExtResource("8_sonar")
+configuration = ExtResource("10_profile")
+[node name="AcousticEmitter" type="Node2D" parent="SonarEmitter"]
+script = ExtResource("9_acoustic")

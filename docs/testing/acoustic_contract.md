@@ -1,5 +1,9 @@
 # BTA-020 acoustic contract and verification
 
+> BTA-021 composes this contract for active sonar. Default dispatch/history
+> behavior remains unchanged; see the acceptance extension below and
+> [active sonar verification](active_sonar.md).
+
 Godot **4.6.3.stable.official.7d41c59c4**, typed GDScript, no new dependencies,
 autoloads, input actions or changes to existing gameplay scenes. This module is
 under `scripts/sonar/` to match the TDD directory layout; it does not implement
@@ -43,9 +47,9 @@ godot --path . res://scenes/main/movement_prototype.tscn
 | AcousticEmissionProfile | Resource: event_type, classification, strength, range_units; `is_valid()` |
 | AcousticReceiverProfile | Resource: accepted_event_types, accepted_classifications, excluded_source_ids, maximum_range_units, minimum_strength; `is_valid()` |
 | AcousticDispatchProfile | Resource: NONE/LINEAR attenuation and maximum_event_history; `is_valid()` |
-| AcousticEmitter | Node2D: authored source_id/profile; `bind_bus(bus)`, `emit_event(event_id, simulation_time)`, `get_bus()`; accepted-only `event_emitted(event)` signal |
+| AcousticEmitter | Node2D: authored source_id/profile; `bind_bus(bus)`, `emit_event(event_id, simulation_time)`, `publish(event,acceptance=Callable())`, `get_bus()`; accepted-only `event_emitted(event)` signal |
 | AcousticReceiver | Node2D: authored receiver_id/profile/enabled; `bind_bus(bus)`, `get_bus()`; `event_received(event, received_strength, distance_units)` signal |
-| AcousticBus | Node: configure(profile), register/unregister_emitter/receiver, dispatch(emitter,event), emitter_count(), receiver_count(), history_count(); `event_dispatched(event_id, delivery_count)` signal |
+| AcousticBus | Node: configure(profile), register/unregister_emitter/receiver, check_dispatch(emitter,event), dispatch(emitter,event,acceptance=Callable()), emitter_count(), receiver_count(), history_count(); `event_dispatched(event_id, delivery_count)` signal |
 
 `bind_bus(null)` unbinds. All registrations require live in-tree endpoints and
 bus in the same SceneTree; all calls belong on the main thread. Each endpoint
@@ -137,6 +141,20 @@ retained count is rejected. The bus copies its dispatch profile so mutating a
 shared authored Resource does not silently alter active rules. Receiver settings
 are validated and snapshotted for each event. Invalid events, rejected sources,
 reentrancy and full-ledger rejection do not reserve a new ID.
+
+## BTA-021 atomic acceptance extension
+
+`check_dispatch(emitter,event)` exposes the same validation/source/dedup/capacity
+checks used by dispatch. An optional boolean acceptance Callable runs only after
+those checks, under the reentrancy lock and before ledger insertion/receivers.
+A false result returns ERR_UNAVAILABLE, with no ID reservation or notification.
+The payload is frozen before invoking it. Active sonar supplies the existing
+atomic try_consume_battery API; it never charges on invalid/duplicate/rejected
+publication. This is not a rollback mechanism for arbitrary callback side effects.
+Successful acceptance commits the event. Existing callers without the gate keep
+their original semantics; there is still no eviction, TTL or history reset.
+Focused tests cover false/true gates, duplicate/conflicting IDs, payload freezing
+and reentrant rejection; all original acoustic tests remain enabled.
 
 ## Automated verification
 

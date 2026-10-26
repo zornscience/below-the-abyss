@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/shelf_prototype.gd" id="1_prototype"]
 [ext_resource type="PackedScene" path="res://scenes/regions/continental_shelf.tscn" id="2_cave"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/graybox_route_menu.tscn" id="6_route"]
 
 [ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="7_theme"]
+
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_bus.gd" id="8_acoustic"]
 
 [sub_resource type="Theme" id="Theme_diagnostics"]
 default_font_size = 18
@@ -96,3 +98,7 @@ autowrap_mode = 2
 [node name="RouteLayer" type="CanvasLayer" parent="."]
 layer = 30
 [node name="RouteMenu" parent="RouteLayer" instance=ExtResource("6_route")]
+
+[node name="AcousticBus" type="Node" parent="."]
+script = ExtResource("8_acoustic")
+[node name="WorldEffects" type="Node2D" parent="WorldRoot"]

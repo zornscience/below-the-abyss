@@ -6,6 +6,8 @@ const FEEDBACK_SECONDS: float = 2.5
 var _resources: SubmarineResourceSystem
 var _hull: SubmarineHullSystem
 var _damage: SubmarineDamageSystem
+var _sonar: SonarEmitter
+var _has_sonar: bool = false
 var _connections: Array[Signal] = []
 var _callbacks: Array[Callable] = []
 var _impact_remaining: float = 0.0
@@ -44,6 +46,7 @@ func _listen(event: Signal, callback: Callable) -> void:
 
 
 func clear_sources() -> void:
+	bind_sonar(null)
 	for index: int in range(_connections.size()):
 		var event: Signal = _connections[index]
 		if not event.is_null() and is_instance_valid(event.get_object()) \
@@ -92,6 +95,25 @@ func bind_sources(resources: SubmarineResourceSystem, hull: SubmarineHullSystem,
 	(%DepthPanel as Control).show()
 	(%ConnectionStatus as Label).hide()
 	return OK
+
+
+func bind_sonar(sonar: SonarEmitter) -> void:
+	if is_instance_valid(_sonar) and _sonar.state_changed.is_connected(_refresh_sonar):
+		_sonar.state_changed.disconnect(_refresh_sonar)
+	_sonar = sonar
+	_has_sonar = is_instance_valid(sonar)
+	if is_instance_valid(_sonar):
+		_sonar.state_changed.connect(_refresh_sonar)
+	_refresh_sonar()
+
+
+func _refresh_sonar() -> void:
+	var label: Label = %Sonar
+	if not is_instance_valid(_sonar):
+		label.text = "SONAR / OFFLINE"
+	else:
+		label.text = "SONAR / %s · COST %.1f\nLAST PING / ECHOES %d" % [
+			_sonar.status_text(), _sonar.battery_cost(), _sonar.echo_count()]
 
 
 func _battery_changed(current: float, maximum: float) -> void:
@@ -156,6 +178,8 @@ func _pressure_applied(amount: float) -> void:
 
 
 func _process(delta: float) -> void:
+	if _has_sonar and not is_instance_valid(_sonar):
+		bind_sonar(null)
 	if not _connections.is_empty():
 		if not is_instance_valid(_damage) or not is_instance_valid(_resources) or not is_instance_valid(_hull):
 			clear_sources()

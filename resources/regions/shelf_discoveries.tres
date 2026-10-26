@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DiscoveryCatalog" load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/world/discovery_catalog.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/world/point_of_interest.gd" id="2"]
+[sub_resource type="Resource" id="Shelf"]
+script = ExtResource("2")
+stable_id = &"shelf-navigation-marker"
+sonar_target_id = &"shelf-marker"
+display_name = "Shelf navigation marker"
+map_position = Vector2(760, 480)
+[sub_resource type="Resource" id="Overlook"]
+script = ExtResource("2")
+stable_id = &"shelf-overlook"
+sonar_target_id = &"overlook-marker"
+display_name = "Shelf overlook"
+map_position = Vector2(1750, 240)
+[sub_resource type="Resource" id="Spires"]
+script = ExtResource("2")
+stable_id = &"shelf-twin-spires"
+sonar_target_id = &"spire-marker"
+display_name = "Twin spires"
+map_position = Vector2(3560, 650)
+[resource]
+script = ExtResource("1")
+points = Array[ExtResource("2")]([SubResource("Shelf"), SubResource("Overlook"), SubResource("Spires")])

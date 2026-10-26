@@ -246,3 +246,11 @@ func _exit_tree() -> void:
 			target.reset_reveal()
 			target.echo_received.disconnect(_echo_received)
 	_listeners.clear()
+
+
+func maximum_radius() -> float:
+	return _rules.maximum_radius
+
+
+func is_mutating() -> bool:
+	return _requesting or _advancing

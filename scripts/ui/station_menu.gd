@@ -5,6 +5,7 @@ extends Control
 signal close_requested
 var _station: WeakRef
 @onready var _services: Control = %ServicesPage
+@onready var _upgrades_page: Control = %UpgradesPage
 @onready var _board: Control = %BoardPage
 
 
@@ -12,6 +13,11 @@ func _ready() -> void:
 	(%Undock as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%OpenBoard as Button).pressed.connect(show_board)
 	(%BackServices as Button).pressed.connect(show_services)
+	(%OpenUpgrades as Button).pressed.connect(show_upgrades)
+	(%BackUpgrades as Button).pressed.connect(show_services)
+	(%RecoverUpgrades as Button).pressed.connect(_recover_upgrades)
+	(%InstallSonar as Button).pressed.connect(_install_upgrade.bind(0))
+	(%InstallDepth as Button).pressed.connect(_install_upgrade.bind(1))
 	var names: Array[String] = ["RepairHull", "ChargeBattery", "RefillOxygen", "ServiceAll"]
 	for index: int in range(names.size()):
 		(get_node("%" + names[index]) as Button).pressed.connect(_perform.bind(ServiceStation.SERVICES[index]))
@@ -78,6 +84,7 @@ func _refresh() -> void:
 			else:
 				previews.append(titles[index] + ": " + String(quote.reason))
 	controls.append(%OpenBoard as Control)
+	controls.append(%OpenUpgrades as Control)
 	_wire_focus(controls)
 	(%ServicePreview as Label).text = "\n".join(previews)
 	var focus: Control = get_viewport().gui_get_focus_owner()
@@ -99,6 +106,7 @@ func _perform(kind: StringName) -> void:
 
 
 func show_services() -> void:
+	_upgrades_page.hide()
 	_board.hide()
 	_services.show()
 	_refresh()
@@ -106,6 +114,7 @@ func show_services() -> void:
 
 
 func show_board() -> void:
+	_upgrades_page.hide()
 	_services.hide()
 	_board.show()
 	(%BackServices as Button).grab_focus()
@@ -118,7 +127,7 @@ func _read_notice(title: String, description: String) -> void:
 func _input(event: InputEvent) -> void:
 	if visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")):
 		get_viewport().set_input_as_handled()
-		if _board.visible:
+		if _board.visible or _upgrades_page.visible:
 			show_services()
 		else:
 			close_requested.emit()
@@ -132,3 +141,71 @@ func _process(_delta: float) -> void:
 func _availability_changed() -> void:
 	if visible and _services.visible:
 		_refresh()
+
+
+func show_upgrades() -> void:
+	_services.hide()
+	_board.hide()
+	_upgrades_page.show()
+	(%UpgradeFeedback as Label).text = "Intentional installation only. No prerequisites, materials or currency."
+	_refresh_upgrades()
+	(%BackUpgrades as Button).grab_focus()
+
+
+func _upgrade_source() -> SubmarineUpgrades:
+	var station: ServiceStation = _live_station()
+	return station.upgrades if station != null else null
+
+
+func _refresh_upgrades() -> void:
+	var source: SubmarineUpgrades = _upgrade_source()
+	var previews: PackedStringArray = []
+	var controls: Array[Control] = [%BackUpgrades]
+	var definitions: Array[UpgradeDefinition] = source.definitions() if source != null else [] as Array[UpgradeDefinition]
+	for index: int in range(2):
+		var button: Button = %InstallSonar if index == 0 else %InstallDepth
+		var kind: UpgradeDefinition.Capability = UpgradeDefinition.Capability.SONAR_RADIUS if index == 0 else UpgradeDefinition.Capability.SAFE_DEPTH
+		var found: bool = false
+		for definition: UpgradeDefinition in definitions:
+			if definition.capability != kind:
+				continue
+			found = true
+			var installed: bool = source.is_installed(definition.stable_id)
+			var unit: String = "world units" if index == 0 else "meters"
+			previews.append("%s\n%.0f → %.0f %s · %s" % [definition.display_name, definition.baseline_value,
+				definition.upgraded_value, unit, "INSTALLED / PERSISTENT" if installed else "AVAILABLE / FREE"])
+			button.text = ("Sonar range" if index == 0 else "Pressure hull") + (" / installed" if installed else " / install FREE")
+			button.disabled = installed
+		if not found:
+			button.disabled = true
+		if not button.disabled:
+			controls.append(button)
+	controls.append(%RecoverUpgrades)
+	_wire_focus(controls)
+	(%UpgradePreview as Label).text = "\n\n".join(previews)
+	(%UpgradeSaveStatus as Label).text = source.store.status if source != null else "Upgrade system unavailable. Return to services."
+	var focus: Control = get_viewport().gui_get_focus_owner()
+	if focus == null or (focus is Button and (focus as Button).disabled):
+		(%BackUpgrades as Button).grab_focus()
+
+
+func _install_upgrade(index: int) -> void:
+	var source: SubmarineUpgrades = _upgrade_source()
+	var station: ServiceStation = _live_station()
+	if source == null or station == null:
+		return
+	var kind: UpgradeDefinition.Capability = UpgradeDefinition.Capability.SONAR_RADIUS if index == 0 else UpgradeDefinition.Capability.SAFE_DEPTH
+	for definition: UpgradeDefinition in source.definitions():
+		if definition.capability == kind:
+			var result: Error = station.install_upgrade(definition.stable_id)
+			(%UpgradeFeedback as Label).text = ("INSTALLED / %.0f → %.0f · FREE · Saved locally" % [definition.baseline_value, definition.upgraded_value]) if result == OK else "NOT INSTALLED / " + error_string(result)
+	_refresh_upgrades()
+
+
+func _recover_upgrades() -> void:
+	var station: ServiceStation = _live_station()
+	if station == null:
+		return
+	var result: Error = station.recover_upgrades()
+	(%UpgradeFeedback as Label).text = "Backup restored; capabilities rebuilt from saved IDs." if result == OK else "RECOVERY FAILED / " + error_string(result)
+	_refresh_upgrades()

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UpgradeCatalog" load_steps=7 format=3]
+[ext_resource type="Script" path="res://scripts/equipment/upgrade_catalog.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/equipment/upgrade_definition.gd" id="2"]
+[ext_resource type="Resource" path="res://resources/balance/prototype_sonar.tres" id="3"]
+[ext_resource type="Resource" path="res://resources/balance/prototype_damage.tres" id="4"]
+[sub_resource type="Resource" id="Sonar"]
+script = ExtResource("2")
+stable_id = &"sonar-range-1200"
+display_name = "Acoustic array / extended range"
+capability = 0
+baseline_value = 900.0
+upgraded_value = 1200.0
+[sub_resource type="Resource" id="Hull"]
+script = ExtResource("2")
+stable_id = &"pressure-hull-400"
+display_name = "Pressure hull / deeper operating rating"
+capability = 1
+baseline_value = 300.0
+upgraded_value = 400.0
+[resource]
+script = ExtResource("1")
+stable_id = &"neris-prototype"
+baseline_sonar = ExtResource("3")
+baseline_damage = ExtResource("4")
+upgrades = Array[ExtResource("2")]([SubResource("Sonar"), SubResource("Hull")])

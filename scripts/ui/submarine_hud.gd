@@ -115,8 +115,8 @@ func _refresh_sonar() -> void:
 	if not is_instance_valid(_sonar):
 		label.text = "SONAR / OFFLINE"
 	else:
-		label.text = "SONAR / %s · COST %.1f\nLAST PING / ECHOES %d" % [
-			_sonar.status_text(), _sonar.battery_cost(), _sonar.echo_count()]
+		label.text = "SONAR / %s · COST %.1f\nRANGE %.0f u · ECHOES %d" % [
+			_sonar.status_text(), _sonar.battery_cost(), _sonar.maximum_radius(), _sonar.echo_count()]
 
 
 func bind_passive(receiver: PassiveReceiver) -> void:

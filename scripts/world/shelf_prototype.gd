@@ -2,6 +2,9 @@ class_name ShelfPrototype
 extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
+const UPGRADE_CATALOG: UpgradeCatalog = preload("res://resources/equipment/shelf_upgrades.tres")
+@export var upgrade_path: String = ""
+var upgrades: SubmarineUpgrades
 const RESEARCH_CATALOG: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
 @export var research_path: String = ""
 var research: ResearchRegistry
@@ -91,6 +94,13 @@ func _ready() -> void:
 	route_menu.restart_requested.connect(restart_route)
 	route_check.stage_changed.connect(func(_stage: int) -> void: _refresh_route_status())
 	_refresh_route_status()
+	upgrades = SubmarineUpgrades.new()
+	add_child(upgrades)
+	var upgrades_file: String = upgrade_path if not upgrade_path.is_empty() else (
+		UpgradeStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".upgrades.json")
+	if upgrades.setup(UPGRADE_CATALOG, submarine.sonar, submarine.damage_system, upgrades_file) != OK:
+		push_error("Submarine upgrade setup failed.")
+	station.upgrades = upgrades
 	station_menu.close_requested.connect(close_station)
 	open_route_menu()
 
@@ -235,6 +245,7 @@ func restart_route() -> void:
 	submarine.resource_system.configure(submarine.resource_system.configuration)
 	submarine.hull_system.configure(submarine.hull_system.configuration)
 	submarine.damage_system.configure(submarine.damage_system.configuration)
+	upgrades.reapply()
 	submarine.damage_system.advance(0.0, region.depth_at_world(submarine.global_position), submarine.hull_system)
 	hud.bind_sources(submarine.resource_system, submarine.hull_system, submarine.damage_system)
 	hud.bind_sonar(submarine.sonar)

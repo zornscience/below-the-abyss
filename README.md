@@ -2,12 +2,11 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-032**. Shelf Base now offers explicit, free prototype
-repair/refill services and a read-only expedition notice board. Dock with Interact
-inside the marked ring, choose a service, then return to piloting. Passing through
-the base never restores resources. Existing exploration, scientific scanning,
-sonar, records and optional creature encounters remain available. Mission progression,
-rewards, upgrades and general game saves remain unimplemented.
+Current milestone: **BTA-033**. Shelf Base offers two persistent FREE prototype
+upgrades: sonar radius 900 → 1200 world units and safe operating depth 300 → 400 m.
+Installation is intentional, validated and idempotent. Existing station services,
+exploration, sonar, scientific records and optional creature encounters remain.
+Mission progression, economy and general game saves remain unimplemented.
 
 ## Requirements
 
@@ -82,6 +81,24 @@ godot --path . res://scenes/main/movement_prototype.tscn
 # That original fixture with optional resource-test controls:
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
+
+## Persistent upgrades (BTA-033)
+
+Dock at Shelf Base with **E / controller A**, then choose **Prototype upgrades**.
+Select either FREE installation with arrows/D-pad and Enter/A. The page shows
+baseline/upgraded values, installed state and local-save status. Escape/B/Start
+returns to services, then piloting. No research, materials or currency are required.
+
+The acoustic array increases new ping radius from 900 to 1200 world units while
+keeping cost 4 and cooldown 4 seconds. The pressure hull increases the HUD's safe
+rating to 400 m (CAUTION at 360 m); existing pressure damage still applies beyond
+that rating. Installation never repairs or refills resources. IDs persist separately
+in `user://saves/upgrades.json`; route restart and station services retain them.
+Unreadable files block installation and remain preserved, with explicit backup
+recovery in the upgrades page. Recovery replaces IDs with the last valid backup.
+
+See [API/balancing/save contract](docs/decisions/bta-033-persistent-upgrades.md) and
+[commands, manual playtest and native before/after screenshots](docs/testing/submarine_upgrades.md).
 
 ## Station services (BTA-032)
 

@@ -2,6 +2,7 @@ class_name ExplorationMap
 extends Control
 ## Focusable text equivalent accompanies every graphical landmark.
 
+signal research_requested
 signal close_requested
 var registry: DiscoveryRegistry
 var store: DiscoveryStore
@@ -9,6 +10,7 @@ var store: DiscoveryStore
 
 
 func _ready() -> void:
+	(%OpenResearch as Button).pressed.connect(func() -> void: research_requested.emit())
 	(%CloseMap as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%RetrySave as Button).pressed.connect(func() -> void: store.retry_save(registry))
 	(%RecoverBackup as Button).pressed.connect(func() -> void: store.recover_backup(registry))
@@ -43,6 +45,7 @@ func refresh() -> void:
 	var controls: Array[Control] = [%CloseMap, %RetrySave, %RecoverBackup]
 	for child: Node in list.get_children():
 		controls.append(child as Control)
+	controls.append(%OpenResearch as Control)
 	for index: int in range(controls.size()):
 		var previous: Control = controls[posmod(index - 1, controls.size())]
 		var next: Control = controls[(index + 1) % controls.size()]

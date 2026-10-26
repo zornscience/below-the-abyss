@@ -94,3 +94,8 @@ text = "Retry save"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Recover backup"
+
+[node name="OpenResearch" type="Button" parent="Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Research log"

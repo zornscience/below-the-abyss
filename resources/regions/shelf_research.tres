@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ResearchCatalog" load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/world/research_catalog.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/world/scan_definition.gd" id="2"]
+[sub_resource type="Resource" id="Artificial"]
+script = ExtResource("2")
+stable_id = &"shelf-calibration-plate"
+required_poi_id = &"shelf-navigation-marker"
+classification = "artificial"
+title = "Calibration plate"
+description = "ARTIFICIAL / PLACEHOLDER SPECIMEN\nA manufactured reference plate beside the shelf navigation marker. Prototype observation: regular edges and repeated surface markings. Placeholder reference specimen; material composition has not been measured."
+position = Vector2(760, 480)
+radius = 240.0
+duration = 3.0
+[sub_resource type="Resource" id="Geological"]
+script = ExtResource("2")
+stable_id = &"shelf-overlook-formation"
+required_poi_id = &"shelf-overlook"
+classification = "geological"
+title = "Overlook formation"
+description = "GEOLOGICAL / PLACEHOLDER FORMATION\nAn exposed formation beneath the shelf overlook. Prototype observation: a narrow column with angular faces. Composition and origin remain unspecified in this placeholder observation."
+position = Vector2(1710, 440)
+radius = 240.0
+duration = 4.0
+[resource]
+script = ExtResource("1")
+targets = Array[ExtResource("2")]([SubResource("Artificial"), SubResource("Geological")])

@@ -2,12 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-023**. Active-sonar wavefront arrivals can now discover
-stable authored landmarks permanently. A keyboard/controller exploration map
-shows discovered POIs, the vessel and public survey boundaries; temporary passive
-contacts remain non-discovering. A separate validated, versioned discovery file
-preserves progress across route restart and relaunch. Missions, rewards, scanning,
-upgrades and the broader game-save system remain unimplemented.
+Current milestone: **BTA-024**. Scientific scanning now requires an intentional
+Interact activation near a sonar-discovered subject, with simulation-time progress,
+cancellation and range interruption. Completed geological/artificial placeholder
+observations appear in a separate research-log page and persist independently of
+temporary sonar echoes and route restarts. Missions, rewards, inventory, progression
+and the general game-save system remain unimplemented.
 
 ## Requirements
 
@@ -83,6 +83,28 @@ godot --path . res://scenes/main/movement_prototype.tscn
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
 
+## Scientific scanning and research (BTA-024)
+
+Use normal mode (`godot --path .`). Discover a subject with active sonar, approach
+within its configured radius, then press **E / controller A** (remappable Interact)
+once to start and again to cancel. The HUD reports progress, range/interruption,
+pause and completion. Leaving range resets partial progress; pausing freezes it.
+Scanning preserves movement and sonar controls and has no extra energy cost.
+
+The calibration plate near (760,480) takes 3 seconds; the geological formation
+near the overlook at (1710,440) takes 4 seconds. Both use a 240-unit radius and
+require the corresponding permanent sonar POI. **M / Back-Select → Research log**
+shows only completed records, with keyboard/controller navigation. Completed scans
+are idempotent and remain across Restart/relaunch; partial progress is not saved.
+
+Research uses its own validated version-1 `user://saves/research.json`, with atomic
+writes, previous-valid backup and visible retry/recovery. It does not change the
+discovery schema or implement general game saves. Development mode retains E/A
+for existing resource-test tools; scan using normal mode.
+
+See [commands, actual screenshots and manual playtesting](docs/testing/scientific_scanning.md)
+and [API, timing, persistence, restart decisions and limitations](docs/decisions/bta-024-scientific-scanning.md).
+
 ## Discoveries and exploration map (BTA-023)
 
 Press **M / controller Back-Select** (the existing remappable `open_map` action).
@@ -96,7 +118,7 @@ Discoveries auto-save to `user://saves/discoveries.json`, separate from vessel,
 settings and route state. Invalid/incompatible files are preserved and block
 writes; visible map controls offer retry and explicit backup recovery. Restart
 never clears discoveries. No hidden terrain, secret markers/counts, mission or
-reward is shown on the map.
+reward is shown on the map. Research log is a separate completed-record page.
 
 See [commands, actual screenshots and manual playtesting](docs/testing/discovery_map.md)
 and [registry API, versioned save format, restart/recovery decisions and limitations](docs/decisions/bta-023-discovery-map.md).
@@ -138,7 +160,7 @@ Tuning is in `resources/balance/prototype_sonar.tres`; reusable scripts/scenes
 compose the existing AcousticEmitter/AcousticReceiver and battery API. An atomic
 acceptance gate prevents rejected/invalid/duplicate pings from charging energy.
 There is no second dispatcher, occlusion, moving-target interception, terrain
-reveal, AI response or scanning. The BTA-023 registry records selected wavefront
+reveal or AI response. Scientific scanning is a separate intentional action. The BTA-023 registry records selected wavefront
 arrivals independently of temporary echoes. The exploration loop still requires no sonar.
 
 See [contracts, screenshots and manual verification](docs/testing/active_sonar.md)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/submarine_controller.gd" id="1_controller"]
 [ext_resource type="Resource" path="res://resources/balance/prototype_motion.tres" id="2_motion"]
@@ -13,6 +13,8 @@
 [ext_resource type="Resource" path="res://resources/balance/prototype_sonar.tres" id="10_profile"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/passive_receiver.tscn" id="11_passive"]
+
+[ext_resource type="Script" path="res://scripts/player/scientific_scanner.gd" id="scanner"]
 
 [sub_resource type="CapsuleShape2D" id="Capsule_hull"]
 radius = 16.0
@@ -73,3 +75,6 @@ configuration = ExtResource("10_profile")
 script = ExtResource("9_acoustic")
 
 [node name="PassiveReceiver" parent="." instance=ExtResource("11_passive")]
+
+[node name="ScientificScanner" type="Node2D" parent="."]
+script = ExtResource("scanner")

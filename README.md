@@ -2,12 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-021**. The submarine now has active sonar: battery cost,
-deterministic cooldown, an expanding wave and temporary placeholder echoes that
-appear only at wavefront arrival. It builds on the scene-owned BTA-020 acoustic
-contract and the existing shelf, movement, resources, damage, HUD and settings.
-Passive sonar, creature reactions, scanning, permanent discovery, missions and
-upgrades remain unimplemented.
+Current milestone: **BTA-022**. Passive sonar now listens for temporary ambient
+contacts with approximate relative bearings, strength and acoustic classifications.
+It shares the existing acoustic bus with active sonar, without ping energy costs,
+active pulses or discoveries. The shelf, movement, resources, damage, HUD and
+settings remain operational. Creature reactions, scanning, permanent discovery,
+missions and upgrades remain unimplemented.
 
 ## Requirements
 
@@ -83,6 +83,23 @@ godot --path . res://scenes/main/movement_prototype.tscn
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
 
+## Passive sonar (BTA-022)
+
+Listening is automatic during play, with no extra control or battery cost. The
+HUD shows up to three recent MECHANICAL, GEOLOGICAL or MARINE LIFE contacts,
+relative arrows/signed bearings, approximate strength and an eight-second expiry.
+Station machinery, rock friction and marine ambience publish bounded, stable-ID
+ambient events. Pause freezes their simulation clocks; Restart clears contacts
+and begins a new producer epoch while retaining acoustic duplicate history.
+Passive contacts never reveal world objects or record discoveries.
+
+```sh
+godot --headless --path . res://scenes/main/passive_sonar_example.tscn
+```
+
+See [commands, screenshots and manual acceptance](docs/testing/passive_sonar.md)
+and [API, tuning, memory/time contracts and limitations](docs/decisions/bta-022-passive-sonar.md).
+
 ## Active sonar (BTA-021)
 
 Run `godot --path .`, Begin/Resume and press **F / controller X** (default
@@ -103,7 +120,7 @@ Tuning is in `resources/balance/prototype_sonar.tres`; reusable scripts/scenes
 compose the existing AcousticEmitter/AcousticReceiver and battery API. An atomic
 acceptance gate prevents rejected/invalid/duplicate pings from charging energy.
 There is no second dispatcher, occlusion, moving-target interception, terrain
-reveal, passive sonar, AI response, scanning or permanent discovery system.
+reveal, AI response, scanning or permanent discovery system.
 The exploration loop still requires no sonar.
 
 See [contracts, screenshots and manual verification](docs/testing/active_sonar.md)

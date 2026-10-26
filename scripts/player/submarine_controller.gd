@@ -11,9 +11,11 @@ var depth_region: DepthRegion
 @onready var hull_system: SubmarineHullSystem = $HullSystem
 @onready var damage_system: SubmarineDamageSystem = $DamageSystem
 @onready var sonar: SonarEmitter = $SonarEmitter
+@onready var passive: PassiveReceiver = $PassiveReceiver
 
 
 func _physics_process(delta: float) -> void:
+	passive.advance(delta)
 	sonar.advance(delta)
 	if Input.is_action_just_pressed("sonar_ping"):
 		sonar.request_ping()
@@ -38,3 +40,8 @@ func _physics_process(delta: float) -> void:
 	damage_system.advance(delta, depth, hull_system)
 	# Aggregate the whole swept step: corner/multiple slide contacts are one hit.
 	damage_system.observe_contacts(maximum_approach_speed, collided, hull_system)
+
+
+func set_simulation_enabled(value: bool) -> void:
+	set_physics_process(value)
+	passive.set_suspended(not value)

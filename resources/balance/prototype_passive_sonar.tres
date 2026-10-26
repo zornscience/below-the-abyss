@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveSonarProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/sonar/passive_sonar_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+contact_seconds = 8.0
+maximum_contacts = 3
+strength_reference = 1.0
+strength_quantum = 0.2
+bearing_quantum_degrees = 15.0
+distance_falloff = true

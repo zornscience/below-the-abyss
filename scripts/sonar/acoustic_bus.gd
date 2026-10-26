@@ -3,6 +3,7 @@ extends Node
 ## Synchronous, main-thread, scene-owned dispatch. No singleton or simulation clock.
 
 signal event_dispatched(event_id: StringName, delivery_count: int)
+signal source_removed(source_id: StringName)
 @export var configuration: AcousticDispatchProfile = AcousticDispatchProfile.new()
 var _rules: AcousticDispatchProfile = AcousticDispatchProfile.new()
 var _emitters: Dictionary[StringName, Dictionary] = {}
@@ -56,7 +57,8 @@ func _register(id: StringName, endpoint: Node2D, registry: Dictionary[StringName
 			return ERR_ALREADY_IN_USE
 	_serial += 1
 	var exiting: Callable = _remove.bind(id, _serial, registry)
-	registry[id] = {"node": weakref(endpoint), "serial": _serial, "exiting": exiting}
+	registry[id] = {"node": weakref(endpoint), "serial": _serial, "exiting": exiting,
+		"source": endpoint is AcousticEmitter}
 	endpoint.tree_exiting.connect(exiting, CONNECT_ONE_SHOT)
 	endpoint.set("_bus", weakref(self))
 	return OK
@@ -91,6 +93,8 @@ func _remove(id: StringName, serial: int, registry: Dictionary[StringName, Dicti
 		if endpoint.get_bus() == self:
 			endpoint.set("_bus", null)
 	registry.erase(id)
+	if record["source"]:
+		source_removed.emit(id)
 
 
 func _prune(registry: Dictionary[StringName, Dictionary]) -> void:
@@ -112,6 +116,11 @@ func receiver_count() -> int:
 
 func history_count() -> int:
 	return _history.size()
+
+
+func get_emitter(source_id: StringName) -> AcousticEmitter:
+	_prune(_emitters)
+	return _emitters[source_id]["node"].get_ref() as AcousticEmitter if _emitters.has(source_id) else null
 
 
 func check_dispatch(emitter: AcousticEmitter, event: AcousticEvent) -> Error:

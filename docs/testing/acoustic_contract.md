@@ -2,7 +2,9 @@
 
 > BTA-021 composes this contract for active sonar. Default dispatch/history
 > behavior remains unchanged; see the acceptance extension below and
-> [active sonar verification](active_sonar.md).
+> [active sonar verification](active_sonar.md). BTA-022 also composes this contract
+> for [passive listening](passive_sonar.md), adding read-only `get_emitter(id)`
+> and `source_removed(source_id)` lifecycle notification without changing history.
 
 Godot **4.6.3.stable.official.7d41c59c4**, typed GDScript, no new dependencies,
 autoloads, input actions or changes to existing gameplay scenes. This module is

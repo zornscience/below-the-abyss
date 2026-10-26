@@ -11,6 +11,7 @@ var depth_region: DepthRegion
 @onready var hull_system: SubmarineHullSystem = $HullSystem
 @onready var damage_system: SubmarineDamageSystem = $DamageSystem
 @onready var sonar: SonarEmitter = $SonarEmitter
+@onready var scanner: ScientificScanner = $ScientificScanner
 @onready var passive: PassiveReceiver = $PassiveReceiver
 
 
@@ -38,6 +39,7 @@ func _physics_process(delta: float) -> void:
 			collision_occurred.emit(contact.get_normal(), approach_speed)
 	var depth: float = depth_region.depth_at_world(global_position) if depth_region != null else 0.0
 	damage_system.advance(delta, depth, hull_system)
+	scanner.advance(delta)
 	# Aggregate the whole swept step: corner/multiple slide contacts are one hit.
 	damage_system.observe_contacts(maximum_approach_speed, collided, hull_system)
 
@@ -45,3 +47,4 @@ func _physics_process(delta: float) -> void:
 func set_simulation_enabled(value: bool) -> void:
 	set_physics_process(value)
 	passive.set_suspended(not value)
+	scanner.set_suspended(not value)

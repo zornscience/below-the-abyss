@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/ui/research_log.gd" id="1"]
+[ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="2"]
+[node name="ResearchLog" type="Control"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2")
+script = ExtResource("1")
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.018, 0.04, 0.06, 1)
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+[node name="Content" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="Title" type="Label" parent="Margin/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "RESEARCH LOG / SCIENTIFIC OBSERVATIONS"
+[node name="Help" type="Label" parent="Margin/Content"]
+layout_mode = 2
+text = "Arrows / Tab / D-pad / stick: select · Enter / A: read · Esc / B: map"
+autowrap_mode = 2
+[node name="Body" type="HBoxContainer" parent="Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+[node name="ListScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+layout_mode = 2
+custom_minimum_size = Vector2(230, 180)
+horizontal_scroll_mode = 0
+[node name="ResearchEntries" type="VBoxContainer" parent="Margin/Content/Body/ListScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+[node name="DetailScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+[node name="ResearchDetail" type="Label" parent="Margin/Content/Body/DetailScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+[node name="ResearchSaveStatus" type="Label" parent="Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+[node name="Buttons" type="HBoxContainer" parent="Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 16
+[node name="CloseResearch" type="Button" parent="Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Return to map"
+[node name="RetryResearch" type="Button" parent="Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Retry save"
+[node name="RecoverResearch" type="Button" parent="Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recover backup"

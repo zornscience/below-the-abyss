@@ -2,12 +2,11 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-014**. The default scene is a handcrafted continental-
-shelf exploration graybox: safe base, cave passage, twin-spire landmark, lower
-return route, optional overlook and marked pressure trench. It uses the existing
-submarine, resources, damage, HUD and settings. A paused briefing and explicit
-restart make the test route repeatable. No sonar, scan, creature, mission,
-repair/refill station, upgrade or narrative system is implemented.
+Current milestone: **BTA-020**. A reusable, scene-owned acoustic event contract
+now provides validated events, emitter/receiver registration, deterministic
+spatial/filter dispatch and duplicate suppression. It is demonstrated separately
+from the unchanged continental-shelf graybox. Sonar, reveal, energy costs and
+creature behavior remain unimplemented; the in-game HUD still says so.
 
 ## Requirements
 
@@ -82,6 +81,33 @@ godot --path . res://scenes/main/movement_prototype.tscn
 # That original fixture with optional resource-test controls:
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
+
+## Acoustic event contract (BTA-020)
+
+After import, run the independent text-only example:
+
+```sh
+godot --headless --path . res://scenes/main/acoustic_contract_example.tscn
+```
+
+It exits 0 after delivering one event exactly once to the near and boundary
+receivers, rejecting a duplicate ID, and excluding far/type-filtered receivers.
+The example is also asserted by the normal GUT suite.
+
+`AcousticEvent.create(...)` validates explicit stable IDs, type/classification,
+world position, signal strength, range and caller-owned simulation time. Inject a
+scene-owned `AcousticBus` into generic `AcousticEmitter`/`AcousticReceiver` nodes;
+no autoload or default-gameplay scene changes are required. Configurable Resources
+provide emission values, receiver filters/thresholds/range, optional linear
+attenuation and a bounded event ledger. Delivery follows explicit lexical receiver
+ID order, with snapshot isolation, lifecycle cleanup and no duplicate replay for
+the bus lifetime. Ledger capacity fails explicitly instead of evicting IDs.
+
+See [API contracts, example and verification](docs/testing/acoustic_contract.md)
+and [design decisions](docs/decisions/bta-020-acoustic-contract.md) for exact
+binding/error/identity/attenuation semantics, focused tests, limits and manual checks.
+No sonar visuals, detection/reveal, energy costs, AI, missions or later systems
+are added by this infrastructure milestone.
 
 ## Movement prototype (BTA-010)
 
@@ -315,7 +341,9 @@ depth mapping, warning, pressure and collision-damage coverage; BTA-013 adds
 HUD initial/signal updates, depletion, rebinding, feedback and responsive-layout
 coverage. BTA-014 adds route telemetry, spawn/terrain/depth/connectivity, real input-driven
 exploration/return, restart, settings, camera and menu coverage. All previous
-suites remain enabled against their original course fixture.
+suites remain enabled against their original course fixture. BTA-020 adds event,
+registration, filtering, ordering, duplicate, attenuation and lifecycle suites
+plus an independently launchable headless contract example.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.

@@ -99,6 +99,11 @@ func _draw() -> void:
 	draw_polyline(PackedVector2Array([Vector2(0, -12), Vector2(12, 0),
 		Vector2(0, 12), Vector2(-12, 0), Vector2(0, -12)]), ink, 3.0, true)
 
+	# Four receipt-gated brackets distinguish a resolved echo from a travelling pulse.
+	for corner: Vector2 in [Vector2(-1, -1), Vector2(1, -1), Vector2(1, 1), Vector2(-1, 1)]:
+		var at: Vector2 = corner * 28.0
+		draw_polyline(PackedVector2Array([at - Vector2(corner.x * 7.0, 0), at, at - Vector2(0, corner.y * 7.0)]), ink, 1.5, true)
+
 
 func _exit_tree() -> void:
 	registration_generation += 1

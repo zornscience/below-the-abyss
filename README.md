@@ -2,12 +2,14 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-035**. The normal shelf game has a canonical expedition
-checkpoint: Continue restores vessel supplies/pose and permanent progress after
-quitting. Pause to save safely, or dock/use station services for a checkpoint.
-New Expedition requires confirmation and retains discoveries, research, missions
-and upgrades. Existing exploration and creature systems remain; no new gameplay,
-economy, region or campaign is added.
+Current milestone: **BTA-040**. The shelf now has an original illustrated ocean
+palette, layered parallax, textured solid silhouettes, restrained motes/light,
+a recognizable NERIS survey vessel and consistent instrument controls. This is
+an art-direction study for review, not approved final production artwork.
+Gameplay, collision outlines, navigation, progression and save schema remain intact.
+
+See the [visual style guide](docs/art_direction.md), [provenance](assets/art-provenance.csv)
+and [before/after native screenshots, verification and performance limits](docs/testing/art_direction.md).
 
 ## Requirements
 

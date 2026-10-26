@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/submarine_controller.gd" id="1_controller"]
 [ext_resource type="Resource" path="res://resources/balance/prototype_motion.tres" id="2_motion"]
@@ -16,6 +16,8 @@
 
 [ext_resource type="Script" path="res://scripts/player/scientific_scanner.gd" id="scanner"]
 
+[ext_resource type="Texture2D" path="res://assets/art/submarine/neris.svg" id="art"]
+[ext_resource type="Script" path="res://scripts/visuals/submarine_illustration.gd" id="illustration"]
 [sub_resource type="CapsuleShape2D" id="Capsule_hull"]
 radius = 16.0
 height = 64.0
@@ -34,16 +36,22 @@ rotation = 1.5707964
 shape = SubResource("Capsule_hull")
 
 [node name="Visual" type="Node2D" parent="."]
+script = ExtResource("illustration")
+[node name="NerisIllustration" type="Sprite2D" parent="Visual"]
+texture = ExtResource("art")
 
 [node name="Hull" type="Polygon2D" parent="Visual"]
+visible = false
 polygon = PackedVector2Array(-28, -10, -18, -14, 16, -14, 30, -5, 30, 5, 16, 14, -18, 14, -28, 10)
 color = Color(0.82, 0.85, 0.87, 1)
 
 [node name="Window" type="Polygon2D" parent="Visual"]
+visible = false
 polygon = PackedVector2Array(7, -6, 15, -6, 20, -2, 20, 2, 15, 6, 7, 6, 3, 2, 3, -2)
 color = Color(0.12, 0.18, 0.23, 1)
 
 [node name="Tail" type="Polygon2D" parent="Visual"]
+visible = false
 polygon = PackedVector2Array(-30, -7, -23, -4, -23, 4, -30, 7)
 color = Color(0.45, 0.5, 0.55, 1)
 

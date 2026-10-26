@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/continental_shelf.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/props/graybox_rock.tscn" id="2"]
@@ -14,6 +14,11 @@
 
 [ext_resource type="PackedScene" path="res://scenes/stations/service_station.tscn" id="9_station"]
 
+[ext_resource type="PackedScene" path="res://scenes/visuals/shelf_atmosphere.tscn" id="atmosphere"]
+[ext_resource type="Shader" path="res://assets/shaders/shelf_water.gdshader" id="water_shader"]
+[ext_resource type="Script" path="res://scripts/visuals/shelf_landmark_ink.gd" id="ink"]
+[sub_resource type="ShaderMaterial" id="WaterMaterial"]
+shader = ExtResource("water_shader")
 [sub_resource type="RectangleShape2D" id="Base"]
 size = Vector2(440, 280)
 [sub_resource type="RectangleShape2D" id="Landmark"]
@@ -27,7 +32,9 @@ Label/constants/shadow_outline_size = 5
 [node name="ContinentalShelf" type="Node2D"]
 script = ExtResource("1")
 mapping = ExtResource("3")
+[node name="Atmosphere" parent="." instance=ExtResource("atmosphere")]
 [node name="Water" type="Polygon2D" parent="."]
+material = SubResource("WaterMaterial")
 z_index = -10
 polygon = PackedVector2Array(0, 0, 4100, 0, 4100, 1800, 0, 1800)
 color = Color(0.025, 0.075, 0.11, 1)
@@ -296,3 +303,6 @@ text = "SAFE RETREAT / STAY ON MAIN PASSAGE →\nSAFE AT 115–130 m DEPTH"
 
 [node name="ServiceStation" parent="." instance=ExtResource("9_station")]
 position = Vector2(420, 480)
+
+[node name="LandmarkInk" type="Node2D" parent="."]
+script = ExtResource("ink")

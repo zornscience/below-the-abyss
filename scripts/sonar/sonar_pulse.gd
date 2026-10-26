@@ -100,3 +100,8 @@ func _draw() -> void:
 		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 256, Color(0.42, 0.95, 0.87, fade * 0.9), 3.0, true)
 		if radius > 10.0:
 			draw_arc(Vector2.ZERO, radius - 10.0, 0.0, TAU, 256, Color(0.42, 0.95, 0.87, fade * 0.18), 2.0, true)
+
+		# Sparse range ticks read as an instrument sweep without obscuring navigation.
+		for index: int in range(24):
+			var direction: Vector2 = Vector2.from_angle(index * TAU / 24.0)
+			draw_line(direction * maxf(0.0, radius - 5.0), direction * radius, Color(0.7, 1.0, 0.9, fade * 0.65), 1.0, true)

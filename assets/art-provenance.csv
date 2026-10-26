@@ -1,0 +1,5 @@
+asset,source,authorship,license_status,notes
+assets/art/submarine/neris.svg,original repository SVG,repository-authored BTA-040 study,project license pending,no third-party art or generated image
+assets/shaders/shelf_water.gdshader,original shader source,repository-authored BTA-040 study,project license pending,depth gradient
+assets/shaders/shelf_rock.gdshader,original shader source,repository-authored BTA-040 study,project license pending,arithmetic strata
+scripts/visuals,original vector drawing source,repository-authored BTA-040 study,project license pending,background motes lamp and landmark ink

@@ -17,6 +17,8 @@ var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 @onready var region: ContinentalShelf = $WorldRoot/CurrentRegion
 @onready var route_layer: CanvasLayer = $RouteLayer
 @onready var route_menu: GrayboxRouteMenu = $RouteLayer/RouteMenu
+@onready var station: ServiceStation = $WorldRoot/CurrentRegion/ServiceStation
+@onready var station_menu: StationMenu = $StationLayer/StationMenu
 @onready var predator: PredatorCreature = $WorldRoot/CurrentRegion/ShelfPredator
 @onready var creature: AcousticCreature = $WorldRoot/CurrentRegion/HarmlessObserver
 @onready var ambient: AmbientAcousticField = $WorldRoot/CurrentRegion/AmbientField
@@ -89,11 +91,12 @@ func _ready() -> void:
 	route_menu.restart_requested.connect(restart_route)
 	route_check.stage_changed.connect(func(_stage: int) -> void: _refresh_route_status())
 	_refresh_route_status()
+	station_menu.close_requested.connect(close_station)
 	open_route_menu()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if exploration_map.visible or research_log.visible:
+	if exploration_map.visible or research_log.visible or station_menu.visible:
 		return
 	if _menu == null and not resource_panel.has_test_focus() and not event.is_echo() and event.is_action_pressed("open_map"):
 		open_map()
@@ -108,14 +111,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif not route_layer.visible:
 		if not development_mode and _menu == null and not event.is_echo() and event.is_action_pressed("interact"):
-			submarine.scanner.request_scan()
+			if station.is_in_range(submarine.global_position):
+				open_station()
+			else:
+				submarine.scanner.request_scan()
 			get_viewport().set_input_as_handled()
 		else:
 			super._unhandled_input(event)
 
 
 func open_route_menu() -> void:
-	if _menu != null or exploration_map.visible or research_log.visible:
+	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
 		return
 	submarine.velocity = Vector2.ZERO
 	submarine.set_simulation_enabled(false)
@@ -125,7 +131,7 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
-	if _menu != null or exploration_map.visible or research_log.visible:
+	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
 		return
 	route_layer.hide()
 	($DevelopmentUI/Banner as Control).show()
@@ -141,7 +147,7 @@ func _route_settings_requested() -> void:
 
 
 func open_map() -> void:
-	if _menu != null or exploration_map.visible or research_log.visible or resource_panel.has_test_focus():
+	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible or resource_panel.has_test_focus():
 		return
 	_map_from_route = route_layer.visible
 	route_layer.hide()
@@ -162,8 +168,31 @@ func close_research() -> void:
 	exploration_map.present(region.to_local(submarine.global_position), InputBindings.describe(settings.snapshot()["bindings"], &"open_map"))
 
 
+func open_station() -> Error:
+	if _menu != null or route_layer.visible or exploration_map.visible or research_log.visible or station_menu.visible or resource_panel.has_test_focus():
+		return ERR_BUSY
+	var result: Error = station.interact(submarine)
+	if result != OK:
+		_refresh_scan_status()
+		return result
+	submarine.velocity = Vector2.ZERO
+	submarine.set_simulation_enabled(false)
+	station_menu.present(station)
+	return OK
+
+
+func close_station() -> void:
+	if is_instance_valid(station) and station.end_interaction() != OK:
+		return
+	station_menu.hide()
+	resume_route()
+
+
 func _refresh_scan_status() -> void:
-	(%ScanStatus as Label).text = String(submarine.scanner.snapshot().text)
+	if development_mode and station.is_in_range(submarine.global_position):
+		(%ScanStatus as Label).text = "DEVELOPMENT / Interact: resource tools · Services use normal mode"
+	else:
+		(%ScanStatus as Label).text = station.docking_hint(submarine) if station.is_in_range(submarine.global_position) else String(submarine.scanner.snapshot().text)
 
 
 func close_map() -> void:
@@ -175,11 +204,14 @@ func close_map() -> void:
 
 
 func open_settings() -> void:
-	if not exploration_map.visible and not research_log.visible:
+	if not exploration_map.visible and not research_log.visible and not station_menu.visible:
 		super.open_settings()
 
 
 func restart_route() -> void:
+	if station.end_interaction() != OK:
+		return
+	station_menu.hide()
 	# Discoveries and their store intentionally survive all test-route resets.
 	exploration_map.hide()
 	research_log.hide()

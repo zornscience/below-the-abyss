@@ -171,6 +171,25 @@ func test_real_input_flight_completes_the_outbound_and_lower_return_with_reserve
 		_scene.route_check.elapsed_seconds, float(_flight_steps) / Engine.physics_ticks_per_second, _scene.submarine.resource_system.battery,
 		_scene.submarine.resource_system.oxygen, _scene.submarine.hull_system.hull])
 
+	# BTA-032 extends the existing real flight with explicit services, without
+	# weakening the pre-service no-auto-refill/reserve/route assertions above.
+	await _tap(_key(KEY_E))
+	assert_true(_scene.station_menu.visible)
+	var history: int = (_scene.get_node("AcousticBus") as AcousticBus).history_count()
+	var elapsed: float = _scene.route_check.elapsed_seconds
+	var position: Vector2 = _scene.submarine.global_position
+	(_scene.station_menu.get_node("%ServiceAll") as Button).pressed.emit()
+	assert_eq(_scene.submarine.resource_system.battery, 100.0)
+	assert_eq(_scene.submarine.resource_system.oxygen, 100.0)
+	assert_eq(_scene.submarine.hull_system.hull, 100.0)
+	assert_eq(_scene.route_check.stage, GrayboxRouteCheck.Stage.COMPLETE)
+	assert_eq(_scene.route_check.elapsed_seconds, elapsed)
+	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).history_count(), history)
+	assert_eq(_scene.submarine.global_position, position)
+	_scene.close_station()
+	assert_true(_scene.submarine.is_physics_processing())
+	gut.p("BTA032 depart-explore-return-service loop: full resources, route/history retained")
+
 
 func test_camera_bounds_follow_the_region_and_smoothing_tracks_interior_movement() -> void:
 	var camera: Camera2D = _scene.submarine.get_node("Camera2D") as Camera2D

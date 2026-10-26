@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="StationProfile" load_steps=5 format=3]
+[ext_resource type="Script" path="res://scripts/stations/station_profile.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/stations/station_notice.gd" id="2"]
+[sub_resource type="Resource" id="Research"]
+script = ExtResource("2")
+stable_id = &"shelf-research-bulletin"
+title = "Shelf research bulletin"
+description = "The shelf supports optional observations of exposed formations and the station calibration specimen. Scientific records are available in the research log after deliberate scanning."
+[sub_resource type="Resource" id="Navigation"]
+script = ExtResource("2")
+stable_id = &"shelf-navigation-advisory"
+title = "Navigation advisory"
+description = "The main passage remains the safe return route. The pressure trench and acoustic-predator pocket are optional and marked. Station services are available after an explicit docking interaction."
+[resource]
+script = ExtResource("1")
+display_name = "01 / SHELF BASE"
+docking_radius = 140.0
+maximum_docking_speed = 40.0
+hull_per_service = 100.0
+battery_per_service = 100.0
+oxygen_per_service = 100.0
+notices = Array[ExtResource("2")]([SubResource("Research"), SubResource("Navigation")])

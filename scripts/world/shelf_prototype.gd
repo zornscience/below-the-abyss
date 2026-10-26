@@ -2,6 +2,12 @@ class_name ShelfPrototype
 extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
+const DISCOVERY_CATALOG: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
+@export var discovery_path: String = ""
+var discoveries: DiscoveryRegistry
+var discovery_store: DiscoveryStore = DiscoveryStore.new()
+var _map_from_route: bool = false
+@onready var exploration_map: ExplorationMap = $MapLayer/ExplorationMap
 var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 @onready var region: ContinentalShelf = $WorldRoot/CurrentRegion
 @onready var route_layer: CanvasLayer = $RouteLayer
@@ -21,6 +27,20 @@ func _ready() -> void:
 		var target: SonarRevealTarget = node as SonarRevealTarget
 		if target.bind_bus(bus) != OK or submarine.sonar.listen_to(target) != OK:
 			push_error("Shelf sonar target registration failed.")
+	discoveries = DiscoveryRegistry.new()
+	add_child(discoveries)
+	if discoveries.configure(DISCOVERY_CATALOG) != OK:
+		push_error("Invalid discovery catalog.")
+	for node: Node in region.get_node("SonarTargets").get_children():
+		var result: Error = discoveries.connect_sonar_target(node as SonarRevealTarget)
+		if result != OK and result != ERR_DOES_NOT_EXIST:
+			push_error("Discovery target binding failed.")
+	discovery_store.path = discovery_path if not discovery_path.is_empty() else (
+		DiscoveryStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".discoveries.json")
+	discovery_store.load_registry(discoveries)
+	discoveries.point_discovered.connect(func(_id: StringName) -> void: discovery_store.save_registry(discoveries))
+	exploration_map.setup(discoveries, discovery_store)
+	exploration_map.close_requested.connect(close_map)
 	hud.bind_sonar(submarine.sonar)
 	if submarine.passive.bind_bus(bus) != OK or ambient.bind_bus(bus) != OK:
 		push_error("Shelf passive sonar setup failed.")
@@ -35,6 +55,12 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if exploration_map.visible:
+		return
+	if _menu == null and not resource_panel.has_test_focus() and not event.is_echo() and event.is_action_pressed("open_map"):
+		open_map()
+		get_viewport().set_input_as_handled()
+		return
 	if _menu == null and not event.is_echo() \
 		and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
 		if route_layer.visible:
@@ -47,7 +73,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func open_route_menu() -> void:
-	if _menu != null:
+	if _menu != null or exploration_map.visible:
 		return
 	submarine.velocity = Vector2.ZERO
 	submarine.set_simulation_enabled(false)
@@ -57,7 +83,7 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
-	if _menu != null:
+	if _menu != null or exploration_map.visible:
 		return
 	route_layer.hide()
 	($DevelopmentUI/Banner as Control).show()
@@ -72,7 +98,32 @@ func _route_settings_requested() -> void:
 	open_settings()
 
 
+func open_map() -> void:
+	if _menu != null or exploration_map.visible or resource_panel.has_test_focus():
+		return
+	_map_from_route = route_layer.visible
+	route_layer.hide()
+	submarine.velocity = Vector2.ZERO
+	submarine.set_simulation_enabled(false)
+	exploration_map.present(region.to_local(submarine.global_position), InputBindings.describe(settings.snapshot()["bindings"], &"open_map"))
+
+
+func close_map() -> void:
+	exploration_map.hide()
+	if _map_from_route:
+		open_route_menu()
+	else:
+		resume_route()
+
+
+func open_settings() -> void:
+	if not exploration_map.visible:
+		super.open_settings()
+
+
 func restart_route() -> void:
+	# Discoveries and their store intentionally survive all test-route resets.
+	exploration_map.hide()
 	# A complete test-session reset, never a station-entry repair/refill service.
 	# Keep component identities so existing HUD/debug signal subscriptions survive.
 	if _menu != null:

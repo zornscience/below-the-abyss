@@ -2,12 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-022**. Passive sonar now listens for temporary ambient
-contacts with approximate relative bearings, strength and acoustic classifications.
-It shares the existing acoustic bus with active sonar, without ping energy costs,
-active pulses or discoveries. The shelf, movement, resources, damage, HUD and
-settings remain operational. Creature reactions, scanning, permanent discovery,
-missions and upgrades remain unimplemented.
+Current milestone: **BTA-023**. Active-sonar wavefront arrivals can now discover
+stable authored landmarks permanently. A keyboard/controller exploration map
+shows discovered POIs, the vessel and public survey boundaries; temporary passive
+contacts remain non-discovering. A separate validated, versioned discovery file
+preserves progress across route restart and relaunch. Missions, rewards, scanning,
+upgrades and the broader game-save system remain unimplemented.
 
 ## Requirements
 
@@ -83,6 +83,24 @@ godot --path . res://scenes/main/movement_prototype.tscn
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
 
+## Discoveries and exploration map (BTA-023)
+
+Press **M / controller Back-Select** (the existing remappable `open_map` action).
+Close with the same action or Escape/B/Start; navigate using arrows/Tab/D-pad/stick
+and select with Enter/A. The map pauses simulation and returns to the previous
+piloting/briefing state. Only landmarks reached by an eligible active-sonar
+wavefront appear. Passive contacts, proximity and route completion never discover.
+Permanent landmarks remain after temporary echoes fade and after Restart.
+
+Discoveries auto-save to `user://saves/discoveries.json`, separate from vessel,
+settings and route state. Invalid/incompatible files are preserved and block
+writes; visible map controls offer retry and explicit backup recovery. Restart
+never clears discoveries. No hidden terrain, secret markers/counts, mission or
+reward is shown on the map.
+
+See [commands, actual screenshots and manual playtesting](docs/testing/discovery_map.md)
+and [registry API, versioned save format, restart/recovery decisions and limitations](docs/decisions/bta-023-discovery-map.md).
+
 ## Passive sonar (BTA-022)
 
 Listening is automatic during play, with no extra control or battery cost. The
@@ -120,8 +138,8 @@ Tuning is in `resources/balance/prototype_sonar.tres`; reusable scripts/scenes
 compose the existing AcousticEmitter/AcousticReceiver and battery API. An atomic
 acceptance gate prevents rejected/invalid/duplicate pings from charging energy.
 There is no second dispatcher, occlusion, moving-target interception, terrain
-reveal, AI response, scanning or permanent discovery system.
-The exploration loop still requires no sonar.
+reveal, AI response or scanning. The BTA-023 registry records selected wavefront
+arrivals independently of temporary echoes. The exploration loop still requires no sonar.
 
 See [contracts, screenshots and manual verification](docs/testing/active_sonar.md)
 and [design decisions](docs/decisions/bta-021-active-sonar.md). Reproduce screenshots:
@@ -395,6 +413,9 @@ registration, filtering, ordering, duplicate, attenuation and lifecycle suites
 plus an independently launchable headless contract example. BTA-021 adds sonar
 cost/acceptance/cooldown, wavefront timing, reveal/range/lifecycle, restart,
 input/remapping, HUD and frame-rate coverage without removing prior tests.
+BTA-023 adds stable discovery IDs, validated atomic discovery persistence/recovery,
+wavefront/passive isolation, restart/reload, map visibility, remapping, controller
+navigation, responsive layout and 30/60/120-step coverage.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.

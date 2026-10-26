@@ -31,8 +31,8 @@ text = "CONTINENTAL SHELF / GRAYBOX"
 layout_mode = 2
 text = "Test loop: leave 01 Base, follow the upper passage through 02 Cave to 03 Twin Spires, then return west below the rock shelf.
 Move: WASD / arrows or left stick / D-pad (default bindings).
-Active sonar: F / controller X (defaults), temporary echo markers.\nOptional: overlook and marked pressure trench. Sonar not required.
-No station services, missions or scanning. Restart resets this test session; it is not a repair service."
+Active sonar: F / controller X (defaults), temporary echo markers.\nMap: M / Back-Select (defaults); permanent sonar discoveries.\nOptional: overlook and marked pressure trench. Sonar not required.
+No station services, missions or scanning. Restart resets vessel/route; permanent discoveries are preserved."
 autowrap_mode = 2
 [node name="Resume" type="Button" parent="Center/Panel/Content"]
 unique_name_in_owner = true

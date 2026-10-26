@@ -1,7 +1,78 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="PackedScene" path="res://scenes/ui/input_test_menu.tscn" id="1_menu"]
+[ext_resource type="Script" path="res://scripts/world/movement_prototype.gd" id="1_prototype"]
+[ext_resource type="PackedScene" path="res://scenes/regions/movement_cave.tscn" id="2_cave"]
+[ext_resource type="PackedScene" path="res://scenes/player/submarine.tscn" id="3_submarine"]
+
+[sub_resource type="Theme" id="Theme_diagnostics"]
+default_font_size = 20
 
 [node name="GameRoot" type="Node"]
+script = ExtResource("1_prototype")
 
-[node name="InputTestMenu" parent="." instance=ExtResource("1_menu")]
+[node name="WorldRoot" type="Node2D" parent="."]
+
+[node name="CurrentRegion" parent="WorldRoot" instance=ExtResource("2_cave")]
+
+[node name="PlayerSubmarine" parent="WorldRoot" instance=ExtResource("3_submarine")]
+position = Vector2(400, 520)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Margin" type="MarginContainer" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = -16.0
+mouse_filter = 2
+theme = SubResource("Theme_diagnostics")
+
+[node name="Panel" type="PanelContainer" parent="UI/Margin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Padding" type="MarginContainer" parent="UI/Margin/Panel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Text" type="VBoxContainer" parent="UI/Margin/Panel/Padding"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+layout_mode = 2
+text = "BTA-010 — Submarine movement / placeholder geometry"
+
+[node name="Instructions" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+layout_mode = 2
+text = "Move: WASD / arrows, left stick / D-pad (defaults). Escape / P / Start: settings."
+autowrap_mode = 2
+
+[node name="Scope" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+layout_mode = 2
+text = "Movement test only. No sonar, resources, damage or missions."
+
+[node name="Diagnostics" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Speed: 0 px/s"
+
+[node name="SettingsStatus" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+
+[node name="SettingsLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="Backdrop" type="ColorRect" parent="SettingsLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.12, 0.13, 0.15, 1)

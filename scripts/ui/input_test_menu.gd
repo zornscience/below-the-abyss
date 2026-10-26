@@ -2,7 +2,10 @@ class_name InputTestMenu
 extends Control
 ## Input/settings demonstration only. No gameplay simulation or global singleton.
 
+signal close_requested
+
 @export var settings_path: String = SettingsStore.DEFAULT_PATH
+@export var embedded: bool = false
 
 var settings: SettingsStore = SettingsStore.new()
 var capturing: bool = false
@@ -26,7 +29,9 @@ func _ready() -> void:
 	(%Save as Button).pressed.connect(_save)
 	(%Reload as Button).pressed.connect(_reload)
 	(%Reset as Button).pressed.connect(_reset)
-	(%Quit as Button).pressed.connect(func() -> void: get_tree().quit())
+	(%Quit as Button).pressed.connect(_exit_menu)
+	if embedded:
+		(%Quit as Button).text = "Return to movement (discard unsaved edits)"
 	settings.settings_changed.connect(_apply_settings)
 	var result: Error = settings.load_settings(settings_path)
 	_apply_settings()
@@ -47,6 +52,13 @@ func _ready() -> void:
 		controls[index].focus_previous = controls[index].get_path_to(previous)
 		controls[index].focus_next = controls[index].get_path_to(next)
 	(%Activate as Button).grab_focus.call_deferred()
+
+
+func _exit_menu() -> void:
+	if embedded:
+		close_requested.emit()
+	else:
+		get_tree().quit()
 
 
 func _apply_settings() -> void:

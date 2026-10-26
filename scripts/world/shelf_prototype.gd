@@ -2,6 +2,9 @@ class_name ShelfPrototype
 extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
+const MISSION_CATALOG: MissionCatalog = preload("res://resources/missions/shelf_missions.tres")
+@export var mission_path: String = ""
+var missions: MissionService
 const UPGRADE_CATALOG: UpgradeCatalog = preload("res://resources/equipment/shelf_upgrades.tres")
 @export var upgrade_path: String = ""
 var upgrades: SubmarineUpgrades
@@ -101,6 +104,16 @@ func _ready() -> void:
 	if upgrades.setup(UPGRADE_CATALOG, submarine.sonar, submarine.damage_system, upgrades_file) != OK:
 		push_error("Submarine upgrade setup failed.")
 	station.upgrades = upgrades
+	missions = MissionService.new()
+	add_child(missions)
+	var missions_file: String = mission_path if not mission_path.is_empty() else (
+		MissionStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".missions.json")
+	if missions.setup(MISSION_CATALOG, discoveries, research, route_check, missions_file) != OK:
+		push_error("Mission framework setup failed.")
+	station.missions = missions
+	missions.missions_changed.connect(_refresh_mission_status)
+	missions.store.status_changed.connect(_refresh_mission_status)
+	_refresh_mission_status()
 	station_menu.close_requested.connect(close_station)
 	open_route_menu()
 
@@ -277,3 +290,7 @@ func _refresh_route_status() -> void:
 			status.text = "LANDMARK REACHED / Follow BASE arrows west via lower passage"
 		GrayboxRouteCheck.Stage.COMPLETE:
 			status.text = "LOOP COMPLETE / %.1f s active piloting · Pause / Start to restart" % route_check.elapsed_seconds
+
+
+func _refresh_mission_status() -> void:
+	(%MissionStatus as Label).text = missions.status_text() if missions.store.can_write() else "MISSIONS / SAVE BLOCKED · Open station mission board for recovery"

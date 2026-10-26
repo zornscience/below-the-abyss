@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 [ext_resource type="Script" path="res://scripts/ui/station_menu.gd" id="1"]
 [ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/mission_board.tscn" id="3_missions"]
 [node name="StationMenu" type="Control"]
 visible = false
 anchors_preset = 15
@@ -94,7 +95,11 @@ size_flags_vertical = 3
 [node name="BoardTitle" type="Label" parent="Margin/Content/BoardPage"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "EXPEDITION NOTICES / INFORMATION ONLY"
+text = "MISSION BOARD / NOTICES"
+[node name="OpenMissions" type="Button" parent="Margin/Content/BoardPage"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Missions / accept objectives and claim acknowledgements"
 [node name="BoardBody" type="HBoxContainer" parent="Margin/Content/BoardPage"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -163,3 +168,6 @@ text = "Recover backup / replace installed IDs"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Back to station services"
+[node name="MissionsPage" parent="Margin/Content" instance=ExtResource("3_missions")]
+unique_name_in_owner = true
+visible = false

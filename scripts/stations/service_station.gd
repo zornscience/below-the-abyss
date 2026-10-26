@@ -5,6 +5,7 @@ extends Node2D
 signal service_applied(result: Dictionary)
 signal availability_changed
 @export var configuration: StationProfile = StationProfile.new()
+var missions: MissionService
 var upgrades: SubmarineUpgrades
 var _rules: StationProfile
 var _player: WeakRef
@@ -180,5 +181,24 @@ func recover_upgrades() -> Error:
 		return ERR_UNCONFIGURED
 	_busy = true
 	var result: Error = upgrades.recover_backup()
+	_busy = false
+	return result
+
+
+func mission_action(action: StringName, id: StringName = &"") -> Error:
+	if _busy:
+		return ERR_BUSY
+	var check: Dictionary = _dock_check(_live_player(), true)
+	if check.error != OK:
+		return check.error
+	if not is_instance_valid(missions):
+		return ERR_UNCONFIGURED
+	_busy = true
+	var result: Error = ERR_INVALID_PARAMETER
+	match action:
+		&"accept": result = missions.accept(id)
+		&"claim": result = missions.claim(id)
+		&"recover": result = missions.recover_backup()
+		&"sync": result = missions.reconcile()
 	_busy = false
 	return result

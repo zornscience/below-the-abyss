@@ -1,9 +1,10 @@
 class_name StationMenu
 extends Control
-## Explicit actions and read-only expedition notices; owns no resource rules.
+## Station page coordinator; domain rules belong to services/upgrades/missions.
 
 signal close_requested
 var _station: WeakRef
+@onready var _missions_page: MissionBoard = %MissionsPage
 @onready var _services: Control = %ServicesPage
 @onready var _upgrades_page: Control = %UpgradesPage
 @onready var _board: Control = %BoardPage
@@ -12,6 +13,8 @@ var _station: WeakRef
 func _ready() -> void:
 	(%Undock as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%OpenBoard as Button).pressed.connect(show_board)
+	(%OpenMissions as Button).pressed.connect(show_missions)
+	_missions_page.back_requested.connect(show_board)
 	(%BackServices as Button).pressed.connect(show_services)
 	(%OpenUpgrades as Button).pressed.connect(show_upgrades)
 	(%BackUpgrades as Button).pressed.connect(show_services)
@@ -50,8 +53,9 @@ func present(station: ServiceStation) -> void:
 		button.focus_entered.connect(_read_notice.bind(notice.title, notice.description))
 		list.add_child(button)
 		controls.append(button)
+	controls.append(%OpenMissions)
 	_wire_focus(controls)
-	(%NoticeText as Label).text = "No notices posted." if notices.is_empty() else "Select an expedition notice to read. Information only; no mission is accepted."
+	(%NoticeText as Label).text = "No notices posted." if notices.is_empty() else "Read an informational notice, or open Missions to intentionally accept objectives."
 	show()
 	show_services()
 
@@ -106,6 +110,7 @@ func _perform(kind: StringName) -> void:
 
 
 func show_services() -> void:
+	_missions_page.hide()
 	_upgrades_page.hide()
 	_board.hide()
 	_services.show()
@@ -114,6 +119,7 @@ func show_services() -> void:
 
 
 func show_board() -> void:
+	_missions_page.hide()
 	_upgrades_page.hide()
 	_services.hide()
 	_board.show()
@@ -127,7 +133,9 @@ func _read_notice(title: String, description: String) -> void:
 func _input(event: InputEvent) -> void:
 	if visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")):
 		get_viewport().set_input_as_handled()
-		if _board.visible or _upgrades_page.visible:
+		if _missions_page.visible:
+			show_board()
+		elif _board.visible or _upgrades_page.visible:
 			show_services()
 		else:
 			close_requested.emit()
@@ -144,6 +152,7 @@ func _availability_changed() -> void:
 
 
 func show_upgrades() -> void:
+	_missions_page.hide()
 	_services.hide()
 	_board.hide()
 	_upgrades_page.show()
@@ -209,3 +218,13 @@ func _recover_upgrades() -> void:
 	var result: Error = station.recover_upgrades()
 	(%UpgradeFeedback as Label).text = "Backup restored; capabilities rebuilt from saved IDs." if result == OK else "RECOVERY FAILED / " + error_string(result)
 	_refresh_upgrades()
+
+
+func show_missions() -> void:
+	var station: ServiceStation = _live_station()
+	if station == null:
+		return
+	_services.hide()
+	_board.hide()
+	_upgrades_page.hide()
+	_missions_page.present(station)

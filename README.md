@@ -2,11 +2,11 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-033**. Shelf Base offers two persistent FREE prototype
-upgrades: sonar radius 900 → 1200 world units and safe operating depth 300 → 400 m.
-Installation is intentional, validated and idempotent. Existing station services,
-exploration, sonar, scientific records and optional creature encounters remain.
-Mission progression, economy and general game saves remain unimplemented.
+Current milestone: **BTA-034**. Shelf Base now offers explicit mission acceptance,
+objective status and persistent acknowledgement claims: one main shelf expedition
+and one optional calibration scan. Existing services, both upgrades, sonar, research,
+discoveries and optional creature encounters remain. Rewards are non-economic records;
+a general save system and narrative campaign remain unimplemented.
 
 ## Requirements
 
@@ -82,6 +82,26 @@ godot --path . res://scenes/main/movement_prototype.tscn
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
 
+## Mission board (BTA-034)
+
+Dock with **E / controller A**, choose **Mission board / notices**, then **Missions**.
+Intentionally accept the main Shelf expedition and optional Calibration study. Use
+arrows/Tab/D-pad and Enter/A; Escape/B/Start backs out one page at a time. Details
+↑/↓ buttons scroll mission text without a mouse. Simulation stays paused while docked.
+
+Scan the nearby calibration plate for the optional objective. Identify Twin Spires
+with active sonar and complete the existing return route for the main expedition.
+The in-expedition HUD shows state and objective counts. Return to the board to
+explicitly claim each completed acknowledgement; there are no economic rewards.
+Earlier permanent discoveries/scans count at acceptance, and current COMPLETE route
+telemetry counts too. Accepted progress and claimed acknowledgements persist through
+restart/reload in separate `user://saves/missions.json` state.
+
+Corrupt/incompatible files block writes and remain preserved. The board provides
+Sync / retry progress and explicit checkpoint recovery, retaining known claims.
+See the [API/evidence/save policy](docs/decisions/bta-034-mission-framework.md) and
+[complete playable walkthrough, test commands and native screenshots](docs/testing/mission_framework.md).
+
 ## Persistent upgrades (BTA-033)
 
 Dock at Shelf Base with **E / controller A**, then choose **Prototype upgrades**.
@@ -112,7 +132,7 @@ charge, refill or Service all explicitly applies FREE prototype service, capped 
 configurable per-activation limits and existing maxima. Full/disabled services show
 why they are unavailable. Merely returning, docking or reading notices changes no
 resources. Arrows/Tab/D-pad navigate, Enter/A selects, Escape/B/Start goes back or
-returns to piloting. The informational mission board has no progression or rewards.
+returns to piloting. Notices remain informational; the separate Missions page provides explicit acceptance and acknowledgement claims.
 
 Services retain the expedition route, sonar history and permanent discoveries/research.
 **Restart Test Route** remains a separate development reset. See the

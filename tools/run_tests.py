@@ -34,7 +34,8 @@ def main() -> None:
             arguments += ["-gconfig=", "-gtest=res://tests/fixtures/intentional_failure.gd"]
         command_error = None
         try:
-            run_check(name, arguments, timeout=240)
+            # The expanded mission/route walkthrough keeps real-time physics coverage.
+            run_check(name, arguments, timeout=300)
         except RuntimeError as error:
             command_error = error
         # Removed before execution: an existing report cannot make a failed or

@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="MissionCatalog" load_steps=9 format=3]
+[ext_resource type="Script" path="res://scripts/missions/mission_catalog.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/missions/mission_definition.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/missions/mission_objective.gd" id="3"]
+[sub_resource type="Resource" id="Discover"]
+script = ExtResource("3")
+stable_id = &"identify-spires"
+kind = 0
+target_id = &"shelf-twin-spires"
+description = "Identify Twin Spires with active sonar"
+[sub_resource type="Resource" id="Return"]
+script = ExtResource("3")
+stable_id = &"return-to-base"
+kind = 2
+target_id = &"continental-shelf-loop"
+description = "Complete the marked expedition and return to base"
+[sub_resource type="Resource" id="Scan"]
+script = ExtResource("3")
+stable_id = &"scan-calibration-plate"
+kind = 1
+target_id = &"shelf-calibration-plate"
+description = "Discover and deliberately scan the calibration plate"
+[sub_resource type="Resource" id="Main"]
+script = ExtResource("2")
+stable_id = &"shelf-expedition"
+title = "Shelf expedition"
+description = "Follow the existing cave route to Twin Spires, identify it with sonar, then return by the lower passage. Claim an acknowledgement at base."
+acknowledgement_id = &"shelf-expedition-ack"
+acknowledgement = "Expedition acknowledged / Twin Spires survey and safe return recorded."
+objectives = Array[ExtResource("3")]([SubResource("Discover"), SubResource("Return")])
+[sub_resource type="Resource" id="Optional"]
+script = ExtResource("2")
+stable_id = &"shelf-calibration-study"
+title = "Calibration study"
+optional = true
+description = "Optional: discover the nearby calibration marker with sonar, then approach the plate and deliberately scan it using Interact outside the docking ring."
+acknowledgement_id = &"shelf-calibration-ack"
+acknowledgement = "Study acknowledged / Calibration observation recorded."
+objectives = Array[ExtResource("3")]([SubResource("Scan")])
+[resource]
+script = ExtResource("1")
+missions = Array[ExtResource("2")]([SubResource("Main"), SubResource("Optional")])

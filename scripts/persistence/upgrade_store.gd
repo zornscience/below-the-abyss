@@ -2,6 +2,8 @@ class_name UpgradeStore
 extends RefCounted
 ## Narrow ID-only BTA-033 save, using the discovery/research preservation policy.
 
+var checkpoint_writer: Callable
+var last_result: Error = OK
 signal status_changed
 const DEFAULT_PATH: String = "user://saves/upgrades.json"
 const MAX_BYTES: int = 4096
@@ -11,6 +13,7 @@ var _writable: bool = false
 
 
 func _report(message: String, result: Error) -> Error:
+	last_result = result
 	status = message
 	status_changed.emit()
 	return result
@@ -88,6 +91,9 @@ func _atomic_write(destination: String, text: String) -> Error:
 
 
 func save_ids(ids: Array[StringName], catalog: UpgradeCatalog) -> Error:
+	if checkpoint_writer.is_valid():
+		var committed: Error = checkpoint_writer.call(&"upgrades", ids)
+		return _report("Progress committed to expedition checkpoint; legacy file preserved." if committed == OK else "Expedition checkpoint failed (%s); progress not committed." % error_string(committed), committed)
 	if not catalog.valid_ids(ids):
 		return _report("Invalid upgrade IDs; file unchanged.", ERR_INVALID_DATA)
 	if not _writable:
@@ -108,6 +114,9 @@ func save_ids(ids: Array[StringName], catalog: UpgradeCatalog) -> Error:
 
 
 func recover_backup(catalog: UpgradeCatalog) -> Dictionary:
+	if checkpoint_writer.is_valid():
+		_report("Use Recover expedition backup in the pause menu. Legacy files remain preserved.", ERR_UNAVAILABLE)
+		return {"error": ERR_UNAVAILABLE}
 	var backup: Dictionary = _read(path + ".bak", catalog)
 	if backup.error != OK:
 		_report("Backup not recovered (%s); current capabilities/files preserved." % error_string(backup.error), backup.error)

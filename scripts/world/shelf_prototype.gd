@@ -2,6 +2,9 @@ class_name ShelfPrototype
 extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
+@export var expedition_path: String = ""
+var saves: SaveCoordinator
+var _expedition_started: bool = false
 const MISSION_CATALOG: MissionCatalog = preload("res://resources/missions/shelf_missions.tres")
 @export var mission_path: String = ""
 var missions: MissionService
@@ -92,7 +95,7 @@ func _ready() -> void:
 	hud.bind_passive(submarine.passive)
 	hud.bind_threat(predator)
 	($DevelopmentUI/Banner as Control).offset_top = 215.0
-	route_menu.resume_requested.connect(resume_route)
+	route_menu.resume_requested.connect(_route_resume_requested)
 	route_menu.settings_requested.connect(_route_settings_requested)
 	route_menu.restart_requested.connect(restart_route)
 	route_check.stage_changed.connect(func(_stage: int) -> void: _refresh_route_status())
@@ -115,6 +118,19 @@ func _ready() -> void:
 	missions.store.status_changed.connect(_refresh_mission_status)
 	_refresh_mission_status()
 	station_menu.close_requested.connect(close_station)
+	route_menu.save_requested.connect(_manual_save)
+	route_menu.recover_requested.connect(_recover_expedition)
+	route_menu.new_expedition_requested.connect(_new_expedition)
+	# Existing isolated component fixtures opt in by injecting an expedition path.
+	if settings_path == SettingsStore.DEFAULT_PATH or not expedition_path.is_empty():
+		saves = SaveCoordinator.new()
+		add_child(saves)
+		saves.status_changed.connect(_save_status)
+		saves.setup(self, expedition_path if not expedition_path.is_empty() else ExpeditionStore.DEFAULT_PATH)
+		_refresh_mission_status()
+		station.service_applied.connect(func(_result: Dictionary) -> void: saves.save_current())
+	else:
+		_save_status()
 	open_route_menu()
 
 
@@ -128,7 +144,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _menu == null and not event.is_echo() \
 		and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
 		if route_layer.visible:
-			resume_route()
+			_route_resume_requested()
 		else:
 			open_route_menu()
 		get_viewport().set_input_as_handled()
@@ -150,12 +166,14 @@ func open_route_menu() -> void:
 	submarine.set_simulation_enabled(false)
 	resource_panel.release_test_focus()
 	route_layer.show()
+	_save_status()
 	route_menu.focus_resume()
 
 
 func resume_route() -> void:
 	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
 		return
+	_expedition_started = true
 	route_layer.hide()
 	($DevelopmentUI/Banner as Control).show()
 	var focus: Control = get_viewport().gui_get_focus_owner()
@@ -201,6 +219,8 @@ func open_station() -> Error:
 	submarine.velocity = Vector2.ZERO
 	submarine.set_simulation_enabled(false)
 	station_menu.present(station)
+	if saves != null:
+		saves.save_current()
 	return OK
 
 
@@ -294,3 +314,38 @@ func _refresh_route_status() -> void:
 
 func _refresh_mission_status() -> void:
 	(%MissionStatus as Label).text = missions.status_text() if missions.store.can_write() else "MISSIONS / SAVE BLOCKED · Open station mission board for recovery"
+
+
+func _save_status() -> void:
+	if saves == null:
+		route_menu.configure_save_ui(false, _expedition_started, false, "Expedition saving not configured for this development fixture.")
+	else:
+		route_menu.configure_save_ui(saves.has_checkpoint(), _expedition_started, saves.can_write(), saves.status)
+		(%MissionStatus as Label).tooltip_text = saves.status
+		var checkpoint_label: Label = station_menu.get_node("%CheckpointStatus") as Label
+		checkpoint_label.show()
+		checkpoint_label.text = saves.status
+
+
+func _route_resume_requested() -> void:
+	if saves != null and not saves.can_write():
+		return
+	if saves != null and saves.has_checkpoint() and not _expedition_started:
+		if saves.continue_expedition() != OK:
+			return
+	resume_route()
+
+
+func _manual_save() -> void:
+	if saves != null and not (saves.has_checkpoint() and not _expedition_started):
+		saves.save_current()
+
+
+func _recover_expedition() -> void:
+	if saves != null:
+		saves.recover_backup()
+
+
+func _new_expedition() -> void:
+	if saves != null and saves.new_expedition() == OK:
+		resume_route()

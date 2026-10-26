@@ -22,17 +22,18 @@ custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 [node name="Content" type="VBoxContainer" parent="Center/Panel"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 6
 [node name="Title" type="Label" parent="Center/Panel/Content"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 text = "CONTINENTAL SHELF / GRAYBOX"
 [node name="Brief" type="Label" parent="Center/Panel/Content"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Test loop: leave 01 Base, follow the upper passage through 02 Cave to 03 Twin Spires, then return west below the rock shelf.
-Move: WASD / arrows or left stick / D-pad (default bindings).
-Active sonar: F / controller X (defaults), temporary echo markers.\nMap: M / Back-Select (defaults); permanent sonar discoveries.\nScience: E / controller A (Interact defaults); discover, approach, scan.\nMap → Research log shows completed records.\nOptional: overlook and marked pressure trench. Sonar not required.
-Interact at base: free station services. Outside: scientific scanning. Restart resets vessel/route; permanent discoveries are preserved."
+text = "Explore Base → Cave → Twin Spires → Base. Move: WASD / stick.
+Sonar: F / X · Interact/scan/station: E / A · Map: M / Back.
+Save while safely paused. Continue resumes your checkpoint.
+New Expedition resets vessel/route and retains permanent progress."
 autowrap_mode = 2
 [node name="Resume" type="Button" parent="Center/Panel/Content"]
 unique_name_in_owner = true
@@ -50,6 +51,48 @@ custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Restart test route (reset vessel and route check)"
 [node name="Help" type="Label" parent="Center/Panel/Content"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Arrows / Tab / D-pad: navigate · Enter / A: select · Esc / B / Start: resume"
+
+[node name="SaveActions" type="HFlowContainer" parent="Center/Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+[node name="SaveExpedition" type="Button" parent="Center/Panel/Content/SaveActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Save expedition"
+[node name="NewExpedition" type="Button" parent="Center/Panel/Content/SaveActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New Expedition…"
+[node name="RecoverExpedition" type="Button" parent="Center/Panel/Content/SaveActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recover expedition backup"
+[node name="ExpeditionSaveStatus" type="Label" parent="Center/Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "No expedition checkpoint yet."
+[node name="NewConfirmation" type="VBoxContainer" parent="Center/Panel/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+[node name="Warning" type="Label" parent="Center/Panel/Content/NewConfirmation"]
+layout_mode = 2
+autowrap_mode = 2
+text = "Replace expedition position/supplies with a fresh departure?
+Discoveries, research, missions and upgrades will be retained."
+[node name="Choices" type="HBoxContainer" parent="Center/Panel/Content/NewConfirmation"]
+layout_mode = 2
+[node name="CancelNew" type="Button" parent="Center/Panel/Content/NewConfirmation/Choices"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cancel / keep expedition"
+[node name="ConfirmNew" type="Button" parent="Center/Panel/Content/NewConfirmation/Choices"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm New Expedition"

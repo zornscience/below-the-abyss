@@ -96,3 +96,18 @@ func advance(delta: float, thrust_strength: float = 0.0) -> Error:
 	_battery.consume(idle_cost + thrust_cost)
 	_oxygen.consume(minf(oxygen, _oxygen_rate * delta))
 	return OK
+
+
+func restore_snapshot(saved_battery: float, saved_oxygen: float) -> Error:
+	if not is_finite(saved_battery) or saved_battery < 0.0 or saved_battery > max_battery or not is_finite(saved_oxygen) or saved_oxygen < 0.0 or saved_oxygen > max_oxygen:
+		return ERR_INVALID_PARAMETER
+	var battery_pool: BoundedResource = BoundedResource.new(max_battery)
+	var oxygen_pool: BoundedResource = BoundedResource.new(max_oxygen)
+	battery_pool.set_value(saved_battery)
+	oxygen_pool.set_value(saved_oxygen)
+	_battery = battery_pool
+	_oxygen = oxygen_pool
+	_connect_pools()
+	battery_changed.emit(battery, max_battery)
+	oxygen_changed.emit(oxygen, max_oxygen)
+	return OK

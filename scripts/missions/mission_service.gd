@@ -181,3 +181,12 @@ func status_text() -> String:
 func _exit_tree() -> void:
 	if _route != null and _route.stage_changed.is_connected(_route_changed):
 		_route.stage_changed.disconnect(_route_changed)
+
+
+func restore_records(records: Dictionary) -> Error:
+	if _busy or _catalog == null or not _catalog.valid_records(records):
+		return ERR_INVALID_DATA
+	_records = records.duplicate(true)
+	# Retain bounded, witnessed returns on same-process recovery; fresh nodes start empty.
+	missions_changed.emit()
+	return OK

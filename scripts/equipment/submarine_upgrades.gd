@@ -102,3 +102,11 @@ func _apply() -> void:
 	_sonar.configure(sonar_profile)
 	_damage.set_maximum_depth_m(depth)
 	capabilities_changed.emit()
+
+
+func restore_installed(ids: Array[StringName]) -> Error:
+	if _busy or _catalog == null or not _catalog.valid_ids(ids) or _sonar.is_mutating():
+		return ERR_INVALID_PARAMETER
+	_installed = ids.duplicate()
+	_apply()
+	return OK

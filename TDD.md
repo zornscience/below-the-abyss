@@ -95,6 +95,21 @@ Store under `user://saves/slot_N.json` using a schema version and separate backu
 ```
 Validate schema, numeric bounds and IDs on load. Write to a temporary file and replace only after successful flush/close; preserve last-known-good backup. Add migration functions for each version change. Do not serialize Godot scene trees or executable objects. Handle malformed saves with user-visible recovery options.
 
+### Implemented BTA-035 checkpoint contract
+The scene-owned SaveCoordinator uses `user://saves/expedition.json`, schema version 2,
+for vessel pose/resources, region, route telemetry and permanent discovery/research/
+mission/upgrade records. Valid legacy stores import monotonically without deleting
+their files; their optional checkpoint-writer port then routes normal-game commits
+to the canonical file. Continue validates before restoration, zeros velocity, clears
+transient effects and falls back to clear base if the saved pose is obstructed.
+Manual saving requires a safe pause; station interactions checkpoint automatically.
+New Expedition requires confirmation and retains permanent records. Latest-checkpoint
+backup recovery preserves rejected files and claims. Version 1 has an explicit
+migration fixture; incompatible versions are blocked, never silently overwritten.
+See [the implemented schema and recovery decisions](docs/decisions/bta-035-general-save-system.md)
+and [verification/walkthrough](docs/testing/expedition_save.md). Slots, arbitrary scene
+serialization and later-region persistence remain unimplemented.
+
 ## 11. Testing and CI
 Headless project import and parser validation on every pull request. Unit tests for energy bounds, sonar cooldown/range, mission idempotence, AI transitions and save migration. Integration tests for ping→contact→creature investigation, upgrade→depth gate, and save→reload→objective state. Maintain a minimal smoke scene for automated startup. Build release exports using pinned Godot binaries/templates; Windows and Linux CI exports, macOS export plus native macOS smoke test and signing/notarization workflow when distribution is ready. CI export success is not evidence of platform runtime correctness.
 

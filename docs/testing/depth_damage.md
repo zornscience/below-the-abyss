@@ -1,5 +1,9 @@
 # BTA-012 depth limits and hull damage
 
+> BTA-013: the current HUD replaces temporary indicators. For resource test
+> controls, launch `godot --path . -- --debug-controls` and press Interact (E/A).
+> Earlier screenshots below show historical instrumentation. See [current HUD](submarine_hud.md).
+
 ![Approaching the operating limit](bta-012-caution.png)
 
 ## Defaults and coordinate reference

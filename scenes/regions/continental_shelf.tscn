@@ -1,0 +1,236 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/continental_shelf.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/props/graybox_rock.tscn" id="2"]
+[ext_resource type="Resource" path="res://resources/regions/continental_shelf_depth.tres" id="3"]
+[ext_resource type="Script" path="res://scripts/world/graybox_route_zone.gd" id="4"]
+[sub_resource type="RectangleShape2D" id="Base"]
+size = Vector2(440, 280)
+[sub_resource type="RectangleShape2D" id="Landmark"]
+size = Vector2(320, 220)
+[sub_resource type="Theme" id="Signs"]
+default_font_size = 20
+Label/colors/font_color = Color(0.89, 0.95, 0.97, 1)
+Label/colors/font_shadow_color = Color(0.02, 0.05, 0.07, 1)
+Label/constants/shadow_outline_size = 5
+
+[node name="ContinentalShelf" type="Node2D"]
+script = ExtResource("1")
+mapping = ExtResource("3")
+[node name="Water" type="Polygon2D" parent="."]
+z_index = -10
+polygon = PackedVector2Array(0, 0, 4100, 0, 4100, 1800, 0, 1800)
+color = Color(0.025, 0.075, 0.11, 1)
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Ceiling" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(0, 0, 4100, 0, 4100, 300, 3780, 260, 3200, 260, 2800, 340, 2200, 340, 2000, 300, 1950, 160, 1450, 160, 1320, 300, 800, 220, 0, 220)
+
+[node name="WestBoundary" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(0, 0, 120, 0, 120, 1800, 0, 1800)
+
+[node name="EastBoundary" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(3980, 0, 4100, 0, 4100, 1800, 3980, 1800)
+
+[node name="SeabedAndTrench" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(0, 1120, 2880, 1120, 2880, 1640, 3280, 1640, 3280, 1120, 4100, 1120, 4100, 1800, 0, 1800)
+
+[node name="CentralShelf" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(1100, 700, 1260, 630, 2100, 630, 2300, 650, 2740, 670, 2840, 750, 2780, 820, 1300, 840, 1120, 800)
+
+[node name="OverlookPillar" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(1640, 360, 1680, 285, 1740, 360, 1710, 440)
+fill = Color(0.31, 0.4, 0.44, 1)
+
+[node name="WestSpire" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(3390, 1120, 3420, 860, 3470, 780, 3510, 900, 3530, 1120)
+fill = Color(0.4, 0.52, 0.57, 1)
+
+[node name="EastSpire" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(3650, 1120, 3670, 840, 3710, 740, 3760, 910, 3780, 1120)
+fill = Color(0.4, 0.52, 0.57, 1)
+
+[node name="StationPlatform" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(180, 690, 660, 690, 660, 730, 180, 730)
+fill = Color(0.55, 0.51, 0.4, 1)
+
+[node name="StationPost" parent="Terrain" instance=ExtResource("2")]
+outline = PackedVector2Array(180, 400, 208, 400, 208, 690, 180, 690)
+fill = Color(0.55, 0.51, 0.4, 1)
+
+[node name="StationSpawn" type="Marker2D" parent="."]
+position = Vector2(420, 480)
+[node name="WaterSurfaceReference" type="Marker2D" parent="."]
+position = Vector2(0, 0)
+[node name="BaseZone" type="Area2D" parent="."]
+position = Vector2(480, 480)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4")
+[node name="Boundary" type="CollisionShape2D" parent="BaseZone"]
+shape = SubResource("Base")
+[node name="PointOfInterestZone" type="Area2D" parent="."]
+position = Vector2(3530, 650)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4")
+[node name="Boundary" type="CollisionShape2D" parent="PointOfInterestZone"]
+shape = SubResource("Landmark")
+[node name="Landmarks" type="Node2D" parent="."]
+
+[node name="StationGuide" type="Line2D" parent="Landmarks"]
+points = PackedVector2Array(210, 400, 210, 370, 690, 370, 690, 420)
+width = 6.0
+default_color = Color(0.92, 0.8, 0.49, 1)
+
+[node name="StationSign" type="Label" parent="Landmarks"]
+offset_left = 240.0
+offset_top = 550.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 22
+text = "01 / SHELF BASE\nSTART & RETURN · NO SERVICES"
+
+[node name="OutboundSign" type="Label" parent="Landmarks"]
+offset_left = 760.0
+offset_top = 360.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 20
+text = "CAVE →\nFOLLOW UPPER PASSAGE"
+
+[node name="CaveGate" type="Line2D" parent="Landmarks"]
+points = PackedVector2Array(2140, 390, 2140, 365, 2440, 365)
+width = 4.0
+default_color = Color(0.44, 0.76, 0.8, 1)
+
+[node name="CaveSign" type="Label" parent="Landmarks"]
+offset_left = 2180.0
+offset_top = 545.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 22
+text = "02 / CAVE →\nTWIN SPIRES AHEAD"
+
+[node name="OverlookSign" type="Label" parent="Landmarks"]
+offset_left = 1460.0
+offset_top = 190.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 18
+text = "OPTIONAL OVERLOOK\n↓ REJOIN UPPER PASSAGE"
+
+[node name="SpireBracket" type="Line2D" parent="Landmarks"]
+points = PackedVector2Array(3370, 770, 3370, 750, 3800, 750, 3800, 730)
+width = 4.0
+default_color = Color(0.7, 0.8, 0.87, 1)
+
+[node name="PointOfInterestSign" type="Label" parent="Landmarks"]
+offset_left = 3310.0
+offset_top = 480.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 22
+text = "03 / TWIN SPIRES\nPASS ABOVE THE TWO PILLARS\n← BASE VIA LOWER PASSAGE"
+
+[node name="ReturnEast" type="Label" parent="Landmarks"]
+offset_left = 1950.0
+offset_top = 910.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 20
+text = "← BASE / LOWER RETURN\nSAFE ROUTE: STAY ABOVE 260 m"
+
+[node name="ReturnWest" type="Label" parent="Landmarks"]
+offset_left = 820.0
+offset_top = 850.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 20
+text = "↑ BASE\nCLIMB HERE, THEN LEFT"
+
+[node name="TrenchSign" type="Label" parent="Landmarks"]
+offset_left = 2890.0
+offset_top = 1045.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 18
+text = "OPTIONAL PRESSURE TRENCH\n260 m CAUTION · 300 m LIMIT\n↓ DANGER / ASCEND TO RETURN"
+theme_override_colors/font_color = Color(1, 0.8, 0.48, 1)
+
+[node name="CautionLine" type="Line2D" parent="Landmarks"]
+points = PackedVector2Array(2880, 1040, 3280, 1040)
+width = 3.0
+default_color = Color(0.95, 0.79, 0.4, 1)
+
+[node name="DangerLine" type="Line2D" parent="Landmarks"]
+points = PackedVector2Array(2880, 1200, 3280, 1200)
+width = 4.0
+default_color = Color(1, 0.53, 0.43, 1)
+
+[node name="DangerSign" type="Label" parent="Landmarks"]
+offset_left = 2910.0
+offset_top = 1220.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 18
+text = "300 m / LIMIT EXCEEDED\nPRESSURE DAMAGES HULL\n↑ ASCEND"
+theme_override_colors/font_color = Color(1, 0.69, 0.6, 1)
+
+[node name="TrenchBottomSign" type="Label" parent="Landmarks"]
+offset_left = 2910.0
+offset_top = 1530.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 18
+text = "TEST LIMIT / TURN BACK ↑"
+
+[node name="RouteMarkers" type="Node2D" parent="."]
+
+[node name="UpperGate" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(1200, 480)
+
+[node name="Cave" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(2350, 480)
+
+[node name="EastChamber" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3050, 480)
+
+[node name="TwinSpires" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3500, 650)
+
+[node name="ReturnTurn" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3100, 650)
+
+[node name="LowerEast" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3100, 970)
+
+[node name="LowerWest" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(900, 970)
+
+[node name="BaseRise" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(900, 480)
+
+[node name="OverlookEntry" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(1400, 480)
+
+[node name="OverlookWest" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(1400, 280)
+
+[node name="OverlookTopWest" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(1550, 240)
+
+[node name="OverlookTopEast" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(1850, 240)
+
+[node name="OverlookExit" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(1950, 480)
+
+[node name="TrenchEntry" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3080, 970)
+
+[node name="CautionDepth" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3080, 1080)
+
+[node name="DangerDepth" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3080, 1280)
+
+[node name="TrenchBottom" type="Marker2D" parent="RouteMarkers"]
+position = Vector2(3080, 1500)
+
+[node name="LowerReturnJunction" type="Label" parent="Landmarks"]
+offset_left = 2960.0
+offset_top = 710.0
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 18
+text = "↓ LOWER RETURN / STOP AT 240 m\n← BASE · TRENCH BELOW IS OPTIONAL"

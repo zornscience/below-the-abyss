@@ -98,3 +98,10 @@ func _update_counts() -> void:
 	(%Depletions as Label).text = "Depletion events — hull: %d   battery: %d   oxygen: %d. No loss consequences yet." % [
 		_hull_depletions, _battery_depletions, _oxygen_depletions,
 	]
+
+
+func reset_test_counts() -> void:
+	_battery_depletions = 0
+	_oxygen_depletions = 0
+	_hull_depletions = 0
+	_update_counts()

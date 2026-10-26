@@ -1,6 +1,6 @@
 extends GutTest
 
-const PROTOTYPE: PackedScene = preload("res://scenes/main/main.tscn")
+const PROTOTYPE: PackedScene = preload("res://scenes/main/movement_prototype.tscn")
 const SUBMARINE: PackedScene = preload("res://scenes/player/submarine.tscn")
 var _old_fps: int
 

@@ -1,5 +1,9 @@
 # BTA-010 submarine movement prototype
 
+> BTA-014: this historical course now launches with
+> `godot --path . res://scenes/main/movement_prototype.tscn`. Add `-- --debug-controls`
+> for resource-test controls. The default main scene is the [continental shelf](continental_shelf.md).
+
 ![Godot 4.6.3 movement prototype](bta-010-movement.png)
 
 This is a movement/collision test cave, not a production region or vertical slice.

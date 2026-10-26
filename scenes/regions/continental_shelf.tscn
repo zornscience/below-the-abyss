@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/continental_shelf.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/props/graybox_rock.tscn" id="2"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" path="res://scenes/regions/shelf_ambient.tscn" id="6_ambient"]
 
 [ext_resource type="PackedScene" path="res://scenes/creatures/acoustic_creature.tscn" id="7_creature"]
+
+[ext_resource type="PackedScene" path="res://scenes/creatures/shelf_predator.tscn" id="8_predator"]
 
 [sub_resource type="RectangleShape2D" id="Base"]
 size = Vector2(440, 280)
@@ -272,3 +274,20 @@ position = Vector2(1080, 470)
 theme = SubResource("Signs")
 theme_override_font_sizes/font_size = 16
 text = "OPTIONAL ↑→ / HARMLESS OBSERVER\nF / X nearby · VESSEL CAN PASS THROUGH"
+
+[node name="ShelfPredator" parent="." instance=ExtResource("8_predator")]
+position = Vector2(3200, 350)
+[node name="PredatorWarning" type="Label" parent="Landmarks"]
+position = Vector2(2840, 365)
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 16
+text = "! OPTIONAL PREDATOR ↑→\nPING ALERTS · 2.5s WARNING\nRETREAT ↓ PAST 115 m"
+[node name="PredatorGate" type="Line2D" parent="Landmarks"]
+points = PackedVector2Array(3000, 430, 3330, 430)
+width = 3.0
+default_color = Color(0.95, 0.72, 0.44, 1)
+[node name="PredatorRetreat" type="Label" parent="Landmarks"]
+position = Vector2(3010, 510)
+theme = SubResource("Signs")
+theme_override_font_sizes/font_size = 16
+text = "SAFE RETREAT / STAY ON MAIN PASSAGE →\nSAFE AT 115–130 m DEPTH"

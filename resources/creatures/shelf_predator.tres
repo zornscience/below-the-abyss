@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PredatorProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/ai/predator_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+warning_seconds = 2.5
+pursuit_seconds = 6.0
+pursuit_speed = 90.0
+pursuit_distance = 180.0
+contact_damage = 5.0
+damage_cooldown = 3.0

@@ -1,0 +1,8 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://scenes/creatures/acoustic_creature.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/ai/predator_creature.gd" id="2"]
+[ext_resource type="Resource" path="res://resources/creatures/shelf_predator.tres" id="3"]
+[node name="ShelfPredator" instance=ExtResource("1")]
+script = ExtResource("2")
+creature_id = &"shelf-predator"
+configuration = ExtResource("3")

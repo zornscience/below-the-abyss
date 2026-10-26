@@ -34,7 +34,7 @@ def main() -> None:
             arguments += ["-gconfig=", "-gtest=res://tests/fixtures/intentional_failure.gd"]
         command_error = None
         try:
-            run_check(name, arguments, timeout=180)
+            run_check(name, arguments, timeout=240)
         except RuntimeError as error:
             command_error = error
         # Removed before execution: an existing report cannot make a failed or

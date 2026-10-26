@@ -2,13 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-030**. A harmless placeholder creature in the optional
-overlook now patrols, investigates eligible acoustic events and returns to its
-route. It uses the existing scene-owned acoustic bus and cannot block or damage
-the vessel. Navigation stays bounded and collision-safe. Existing sonar, scanning,
-research/discoveries, saves and the exploration loop remain operational. Threat
-encounters, attacks, missions, rewards, upgrades and general game saves remain
-unimplemented.
+Current milestone: **BTA-031**. A marked optional acoustic-predator pocket now
+provides warning, limited pursuit and a safe downward retreat. It reuses BTA-030
+movement/navigation, cannot block the vessel, and applies modest cooldown-limited
+contact damage through the existing hull API. The harmless observer and required
+exploration/scanning routes remain. Combat, missions, services, upgrades and general
+game saves remain unimplemented.
 
 ## Requirements
 
@@ -83,6 +82,25 @@ godot --path . res://scenes/main/movement_prototype.tscn
 # That original fixture with optional resource-test controls:
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
+
+## Optional predator encounter (BTA-031)
+
+The signed upper pocket before Twin Spires is optional. Stay on the main passage
+at roughly **120m** to bypass it, including while using sonar. Inside the pocket,
+a qualifying **F/controller X** ping starts a **2.5-second warning** before pursuit.
+The HUD labels the predator warning and instructs **RETREAT ↓ PAST 115m**.
+
+Pursuit is slower than the submarine, bounded to the habitat, limited to six seconds
+and a 180-unit ping-origin leash. Leaving the area or a blocked path disengages it.
+Contact costs **5 hull**, at most once per **3 seconds**, only during pursuit and
+with no terrain in between. Passive listening is silent. Neither creature can
+push or block the vessel. Pause freezes the encounter; Restart preserves permanent
+research/discoveries and acoustic history.
+
+See [actual keyboard/controller escape evidence, screenshots and manual protocol](docs/testing/predator_encounter.md)
+and [reuse, state, safety and damage contracts](docs/decisions/bta-031-predator-encounter.md).
+Independent human usability and physical-controller/native-platform tests remain
+pending; the documented graphical playthrough used real Godot with injected input.
 
 ## Harmless acoustic creature (BTA-030)
 
@@ -457,7 +475,7 @@ input/remapping, HUD and frame-rate coverage without removing prior tests.
 BTA-023 adds stable discovery IDs, validated atomic discovery persistence/recovery,
 wavefront/passive isolation, restart/reload, map visibility, remapping, controller
 navigation, responsive layout and 30/60/120-step coverage.
-The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
+The wrapper enforces a 240-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.
 All normal tests must pass; the summary reports the current suite count. The

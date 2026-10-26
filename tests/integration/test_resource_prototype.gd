@@ -86,13 +86,19 @@ func test_settings_stop_drains_and_depletion_does_not_disable_movement() -> void
 	assert_eq(body.hull_system.hull, 0.0)
 
 
-func test_wall_contact_does_not_implement_collision_damage() -> void:
+func test_severe_wall_contact_damages_once_without_changing_resource_interfaces() -> void:
 	var body: SubmarineController = _prototype.submarine
 	watch_signals(body)
+	watch_signals(body.damage_system)
 	Input.action_press("move_left")
 	await _frames(100)
 	assert_signal_emitted(body, "collision_occurred")
-	assert_eq(body.hull_system.hull, body.hull_system.max_hull)
+	assert_almost_eq(body.hull_system.hull, 91.0, 0.1)
+	assert_eq(body.hull_system.last_damage_source, &"collision")
+	var remaining: float = body.hull_system.hull
+	await _frames(100)
+	assert_eq(body.hull_system.hull, remaining, "Continuing to push must not deal jitter damage.")
+	assert_signal_emit_count(body.damage_system, "collision_damage_applied", 1)
 
 
 func test_keyboard_can_deplete_refill_and_resume_using_test_controls() -> void:

@@ -2,10 +2,10 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-011**. The movement prototype now includes configurable
-hull, battery and oxygen components, signal-driven temporary indicators, and
-explicit resource test controls. Depth/collision damage, depletion consequences,
-sonar, creatures, missions and upgrades are not implemented.
+Current milestone: **BTA-012**. The submarine prototype now includes authored
+depth mapping, safe-depth warnings, exposure-based pressure damage and bounded
+collision damage, alongside existing movement/resources/settings. Game over,
+respawn, sonar, creatures, missions and upgrade gameplay are not implemented.
 
 ## Requirements
 
@@ -74,8 +74,9 @@ controls, screenshot, test results and manual keyboard/controller/frame-cap cour
 Hull, battery and oxygen start at 100 units, configured in
 `resources/balance/prototype_resources.tres`. During active simulation, idle
 battery drains at 0.25 units/second, full thrust adds 1.5 units/second, and oxygen
-drains at 0.5 units/second. Hull changes only through explicit damage/repair APIs.
-Movement remains available at depletion; loss consequences are outside BTA-011.
+drains at 0.5 units/second. Hull changes through its damage/repair APIs; BTA-012 now supplies pressure and
+severe-impact damage sources. Movement remains available at zero hull; game-over
+and respawn behavior remain outside scope.
 
 Press Interact (E/controller A by default) or Tab to focus temporary test buttons.
 Use keyboard arrows/Tab/Enter or controller D-pad/stick/A to consume/repair/refill.
@@ -87,6 +88,23 @@ See [resource APIs and manual verification](docs/testing/submarine_resources.md)
 for configuration, signal/transfer contracts, screenshots, test results, and the
 keyboard/controller/refill/frame-cap playtest. This is temporary instrumentation,
 not the production HUD or station/game-over system.
+
+## Depth and hull damage (BTA-012)
+
+The cave's authored surface is local Y=0, with 0.25 m per authored unit. Spawn is
+130 m deep. CAUTION starts at 260 m; depth strictly beyond the 300 m safe rating
+starts a two-second grace period, then four hull units/second of pressure damage.
+Descend between X=200–450 into the marked deeper shaft to demonstrate pressure.
+
+Severe impacts use inward normal speed: above 150 px/s, damage is 0.1 per excess
+px/s, capped at 20. A full-speed perpendicular hit typically costs 9 hull.
+Contact latching and cooldown suppress repeated wall push/jitter damage.
+Existing settings and resource checks freeze all simulation clocks while active.
+
+See [depth/damage verification](docs/testing/depth_damage.md) and
+[design decisions](docs/decisions/bta-012-depth-damage.md) for mapping, boundaries,
+maximum-depth API, screenshots, tests and keyboard/controller playtesting.
+The maximum-depth API is ready for a future caller; no upgrade system is added.
 
 ## Input/settings test menu (BTA-004)
 
@@ -224,7 +242,8 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd \
 with `test_` and use typed GDScript. The original sample suite checks a JSON round trip and instantiation of the main
 scene. BTA-004 adds settings, binding, and menu integration suites; BTA-010 adds
 submarine velocity and real physics/camera integration suites; BTA-011 adds
-resource transfer, signal, drain and prototype-panel coverage.
+resource transfer, signal, drain and prototype-panel coverage; BTA-012 adds
+depth mapping, warning, pressure and collision-damage coverage.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.

@@ -157,7 +157,7 @@ offset_left = 2890.0
 offset_top = 1045.0
 theme = SubResource("Signs")
 theme_override_font_sizes/font_size = 18
-text = "OPTIONAL PRESSURE TRENCH\n260 m CAUTION · 300 m LIMIT\n↓ DANGER / ASCEND TO RETURN"
+text = "OPTIONAL PRESSURE TRENCH\nBASELINE HULL: 300 m LIMIT\nCHECK HUD RATING / ↑ RETURN"
 theme_override_colors/font_color = Color(1, 0.8, 0.48, 1)
 
 [node name="CautionLine" type="Line2D" parent="Landmarks"]
@@ -175,7 +175,7 @@ offset_left = 2910.0
 offset_top = 1220.0
 theme = SubResource("Signs")
 theme_override_font_sizes/font_size = 18
-text = "300 m / LIMIT EXCEEDED\nPRESSURE DAMAGES HULL\n↑ ASCEND"
+text = "300 m / BASELINE HULL LIMIT\nCHECK HUD FOR CURRENT RATING\n↑ ASCEND TO RETURN"
 theme_override_colors/font_color = Color(1, 0.69, 0.6, 1)
 
 [node name="TrenchBottomSign" type="Label" parent="Landmarks"]

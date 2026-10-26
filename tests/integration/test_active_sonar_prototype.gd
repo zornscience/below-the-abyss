@@ -71,7 +71,7 @@ func _tap_button(code: JoyButton) -> void:
 
 
 func test_initial_readiness_hidden_targets_and_keyboard_wavefront_reveal() -> void:
-	assert_eq((_scene.hud.get_node("%Sonar") as Label).text, "SONAR / READY · COST 4.0\nLAST PING / ECHOES 0")
+	assert_eq((_scene.hud.get_node("%Sonar") as Label).text, "SONAR / READY · COST 4.0\nRANGE 900 u · ECHOES 0")
 	assert_false(_target("shelf-marker").is_revealed())
 	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).receiver_count(), 7)
 	_scene.resume_route()

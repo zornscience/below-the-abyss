@@ -72,7 +72,7 @@ layout_mode = 2
 size_flags_vertical = 3
 autowrap_mode = 2
 theme_override_font_sizes/font_size = 18
-[node name="ServicesFooter" type="HBoxContainer" parent="Margin/Content/ServicesPage"]
+[node name="ServicesFooter" type="HFlowContainer" parent="Margin/Content/ServicesPage"]
 layout_mode = 2
 [node name="Undock" type="Button" parent="Margin/Content/ServicesPage/ServicesFooter"]
 unique_name_in_owner = true
@@ -82,6 +82,10 @@ text = "Return to piloting"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Mission board / notices"
+[node name="OpenUpgrades" type="Button" parent="Margin/Content/ServicesPage/ServicesFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Prototype upgrades"
 [node name="BoardPage" type="VBoxContainer" parent="Margin/Content"]
 unique_name_in_owner = true
 visible = false
@@ -114,6 +118,48 @@ size_flags_horizontal = 3
 autowrap_mode = 2
 theme_override_font_sizes/font_size = 18
 [node name="BackServices" type="Button" parent="Margin/Content/BoardPage"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to station services"
+[node name="UpgradesPage" type="VBoxContainer" parent="Margin/Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+[node name="UpgradeTitle" type="Label" parent="Margin/Content/UpgradesPage"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "PROTOTYPE UPGRADES / FREE INSTALLATION"
+[node name="UpgradePreview" type="Label" parent="Margin/Content/UpgradesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+[node name="InstallSonar" type="Button" parent="Margin/Content/UpgradesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sonar range / install FREE"
+[node name="InstallDepth" type="Button" parent="Margin/Content/UpgradesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Pressure hull / install FREE"
+[node name="UpgradeFeedback" type="Label" parent="Margin/Content/UpgradesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+[node name="UpgradeSaveStatus" type="Label" parent="Margin/Content/UpgradesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 16
+[node name="RecoverUpgrades" type="Button" parent="Margin/Content/UpgradesPage"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recover backup / replace installed IDs"
+[node name="BackUpgrades" type="Button" parent="Margin/Content/UpgradesPage"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Back to station services"

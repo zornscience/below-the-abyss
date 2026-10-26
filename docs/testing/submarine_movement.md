@@ -5,8 +5,10 @@
 This is a movement/collision test cave, not a production region or vertical slice.
 Walls, obstacles, grid and submarine are authored placeholder geometry. The hull
 has a fixed visual orientation and a symmetric collision capsule; artwork,
-animation, buoyancy, gravity, damage and all survival/sonar systems are absent.
-The on-screen speed/contact text is test instrumentation, not a resource HUD.
+animation, buoyancy, gravity, collision/depth damage and sonar are absent.
+BTA-011 now composes resource components and temporary numeric indicators with
+this prototype; see [resource verification](submarine_resources.md). Depletion
+consequences are not implemented. The speed/contact text remains test instrumentation.
 
 ## Launch and controls
 
@@ -88,7 +90,7 @@ workflow runs these commands, including import, individual authored-script parse
 checks, startup smoke and GUT. Logs and JUnit output retain the existing 14-day
 artifact policy. No CI checks are removed.
 
-Local result: **39 passed, 0 failed, 0 errors, 0 skipped**, including all 24
+BTA-010 result: **39 passed, 0 failed, 0 errors, 0 skipped**, including all 24
 foundation tests (the main-scene sample now checks the prototype hierarchy).
 New tests cover:
 

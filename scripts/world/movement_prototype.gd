@@ -13,11 +13,15 @@ var _contact_time: float = 0.0
 @onready var settings_layer: CanvasLayer = $SettingsLayer
 @onready var settings_backdrop: ColorRect = $SettingsLayer/Backdrop
 @onready var diagnostics: Label = %Diagnostics
+@onready var resource_panel: PrototypeResourcePanel = %ResourcePanel
 
 
 func _ready() -> void:
 	_load_settings()
 	submarine.collision_occurred.connect(_on_collision)
+	resource_panel.bind_sources(submarine.resource_system, submarine.hull_system)
+	resource_panel.test_controls_focused.connect(_stop_for_resource_checks)
+	resource_panel.test_requested.connect(_on_resource_test_requested)
 
 
 func _load_settings() -> void:
@@ -38,6 +42,34 @@ func _unhandled_input(event: InputEvent) -> void:
 		and (event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel")):
 		open_settings()
 		get_viewport().set_input_as_handled()
+	elif _menu == null and not resource_panel.has_test_focus() \
+		and not event.is_echo() and event.is_action_pressed("interact"):
+		resource_panel.focus_test_controls()
+		get_viewport().set_input_as_handled()
+
+
+func _stop_for_resource_checks() -> void:
+	submarine.velocity = Vector2.ZERO
+	submarine.set_physics_process(false)
+
+
+func _on_resource_test_requested(kind: StringName) -> void:
+	match kind:
+		&"hull":
+			submarine.hull_system.apply_damage(25.0, &"prototype_test")
+		&"battery":
+			submarine.resource_system.consume_battery(25.0)
+		&"oxygen":
+			submarine.resource_system.consume_oxygen(25.0)
+		&"refill":
+			submarine.hull_system.restore_hull(submarine.hull_system.max_hull)
+			submarine.resource_system.restore_battery(submarine.resource_system.max_battery)
+			submarine.resource_system.restore_oxygen(submarine.resource_system.max_oxygen)
+		&"pilot":
+			resource_panel.release_test_focus()
+			if _menu == null:
+				InputBindings.apply(settings.snapshot()["bindings"], float(settings.snapshot()["deadzone"]))
+				submarine.set_physics_process(true)
 
 
 func open_settings() -> void:
@@ -62,6 +94,7 @@ func close_settings() -> void:
 	# Explicit Save is the existing settings contract. Closing discards unsaved
 	# edits; failed loads preserve the prototype's previous valid settings.
 	_load_settings()
+	resource_panel.release_test_focus()
 	submarine.set_physics_process(true)
 
 

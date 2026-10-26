@@ -2,14 +2,18 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-040**. The shelf now has an original illustrated ocean
-palette, layered parallax, textured solid silhouettes, restrained motes/light,
-a recognizable NERIS survey vessel and consistent instrument controls. This is
-an art-direction study for review, not approved final production artwork.
-Gameplay, collision outlines, navigation, progression and save schema remain intact.
+Current milestone: **BTA-041**. The Continental Shelf now has original synthesized
+underwater ambience, machinery, sonar/research cues, resource warnings and reactive
+creature/threat audio. Pause → **Audio settings** provides independent Master,
+Music, Ambience, Effects and UI volumes plus mute, with keyboard/controller navigation
+and explicit persistent Save. Music is intentionally silent in this region.
 
-See the [visual style guide](docs/art_direction.md), [provenance](assets/art-provenance.csv)
-and [before/after native screenshots, verification and performance limits](docs/testing/art_direction.md).
+Sound observes real gameplay signals; sonar detection, creature hearing, resources
+and saved progression remain authoritative. Critical feedback remains visual.
+See the [audio direction/API/provenance](docs/audio_direction.md),
+[audio verification, examples and manual walkthrough](docs/testing/soundscape.md),
+[visual style guide](docs/art_direction.md) and [art verification](docs/testing/art_direction.md).
+Audio and art remain prototype studies requiring human review.
 
 ## Requirements
 

@@ -1,0 +1,73 @@
+FIRST PROCESS: input-driven native walkthrough + actual Godot Master mix capture
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":14.622}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":16.674}
+BTA041_AUDIO {"bus":"Effects","cue":"ping","seconds":17.057}
+BTA041_AUDIO {"bus":"Effects","cue":"echo","seconds":17.127}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":18.084}
+BTA041_AUDIO {"bus":"Effects","cue":"scan_start","seconds":18.86}
+BTA041_AUDIO {"bus":"Effects","cue":"complete","seconds":21.972}
+BTA041_NATIVE_RECORDING bytes=851968
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":23.471}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":27.169}
+BTA041_AUDIO {"bus":"Effects","cue":"ping","seconds":31.348}
+BTA041_AUDIO {"bus":"Effects","cue":"biological","seconds":31.354}
+BTA041_AUDIO {"bus":"Effects","cue":"echo","seconds":32.734}
+BTA041_AUDIO {"bus":"Effects","cue":"unknown","seconds":38.581}
+BTA041_AUDIO {"bus":"Effects","cue":"unknown","seconds":46.594}
+BTA041_AUDIO {"bus":"Effects","cue":"ping","seconds":49.056}
+BTA041_AUDIO {"bus":"Effects","cue":"predator_alert","seconds":49.093}
+BTA041_AUDIO {"bus":"Effects","cue":"unknown","seconds":49.868}
+BTA041_AUDIO {"bus":"Effects","cue":"echo","seconds":50.005}
+BTA041_AUDIO {"bus":"Effects","cue":"predator_pursue","seconds":51.545}
+BTA041_AUDIO {"bus":"Effects","cue":"retreat","seconds":52.139}
+BTA041_AUDIO {"bus":"Effects","cue":"ping","seconds":55.9}
+BTA041_AUDIO {"bus":"Effects","cue":"echo","seconds":56.045}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":68.869}
+BTA041_AUDIO {"bus":"Effects","cue":"unknown","seconds":69.888}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":75.872}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":76.861}
+BTA041_AUDIO {"bus":"Effects","cue":"damage","seconds":80.513}
+BTA041_AUDIO {"bus":"Effects","cue":"hull","seconds":80.519}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":81.881}
+BTA041_AUDIO {"bus":"Effects","cue":"oxygen","seconds":82.539}
+BTA041_AUDIO {"bus":"Effects","cue":"battery","seconds":84.545}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":84.879}
+BTA041_AUDIO {"bus":"UI","cue":"dock","seconds":85.229}
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":85.23}
+BTA041_AUDIO {"bus":"UI","cue":"service","seconds":85.421}
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":85.734}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":88.313}
+BTA041_NATIVE_FRAME_MS median=31.947 p95=57.083 adapter=llvmpipe (LLVM 19.1.7, 256 bits)
+BTA041_NATIVE_WALKTHROUGH_OK route_scan_passive_observer_threat_escape_warnings_services_save=true accepted_cues=37
+
+SECOND PROCESS: Continue and isolated frame observation
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":11.078}
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":11.341}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":13.066}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":14.036}
+BTA041_CONTINUE_FRAME_MS median=31.303 p95=57.704 adapter=llvmpipe (LLVM 19.1.7, 256 bits)
+BTA041_FRESH_PROCESS_CONTINUE_OK no_ping_or_research_replay=true
+
+FINAL UI REFRESH: selected-slider label; under concurrent test load
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":11.852}
+BTA041_AUDIO {"bus":"UI","cue":"ui","seconds":12.608}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":14.65}
+BTA041_AUDIO {"bus":"Effects","cue":"geological","seconds":15.749}
+BTA041_AUDIO {"bus":"Effects","cue":"mechanical","seconds":20.747}
+BTA041_CONTINUE_FRAME_MS median=37.537 p95=109.180 adapter=llvmpipe (LLVM 19.1.7, 256 bits)
+BTA041_FRESH_PROCESS_CONTINUE_OK no_ping_or_research_replay=true

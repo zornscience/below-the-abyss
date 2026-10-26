@@ -79,6 +79,21 @@ Target a consistent 2D reference composition (e.g. 1920×1080, responsive to 16:
 ## 9. Input, UI and audio
 Godot InputMap actions: `move_left`, `move_right`, `move_up`, `move_down`, `sonar_ping`, `interact`, `toggle_lights`, `open_map`, `pause`. Every action gets keyboard and gamepad bindings. UI navigation uses Godot focus controls, minimum readable font sizes, no color-only states. Use audio buses Master/Music/Ambience/Effects/UI and route critical sound cues to optional visual indicators.
 
+### Implemented BTA-041 presentation audio
+
+The shelf owns SoundscapeMixer + GameplayAudio; no audio autoload or gameplay
+AcousticBus registration. AudioCue/SoundscapeProfile Resources define semantic
+playback requests, category routing and bounded voice/rate/mix controls. Accepted
+active pings, wavefront echoes, passive contact snapshots, scanner/research signals,
+resource/damage APIs, station UI/services and existing creature phases drive audio.
+Five looping players and ten one-shot slots use original offline-synthesized PCM.
+SettingsStore version 1 accepts an optional strictly validated audio object and
+legacy input-only preferences; expedition schema stays version 2. Critical cues
+retain visual equivalents, including the low-resource badge. Headless tests exercise
+routing/requests without starting audio playback handles. See
+[audio direction, API, source/licensing and accessibility](docs/audio_direction.md)
+and [native verification](docs/testing/soundscape.md).
+
 ## 10. Persistence schema
 Store under `user://saves/slot_N.json` using a schema version and separate backup file. Example:
 ```

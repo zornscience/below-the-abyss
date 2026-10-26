@@ -171,6 +171,8 @@ func continue_expedition() -> Error:
 	_scene.ambient.reset_session()
 	_scene.creature.reset_session()
 	_scene.predator.reset_session()
+	if _scene.gameplay_audio != null:
+		_scene.gameplay_audio.reset_session()
 	apply_progress(saved.progress)
 	var vessel: SubmarineController = _scene.submarine
 	vessel.global_position = at

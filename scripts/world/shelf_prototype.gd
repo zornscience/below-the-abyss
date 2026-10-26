@@ -3,6 +3,9 @@ extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
 @export var expedition_path: String = ""
+var audio: SoundscapeMixer
+var gameplay_audio: GameplayAudio
+var audio_settings: AudioSettingsPanel
 var saves: SaveCoordinator
 var _expedition_started: bool = false
 const MISSION_CATALOG: MissionCatalog = preload("res://resources/missions/shelf_missions.tres")
@@ -131,10 +134,33 @@ func _ready() -> void:
 		station.service_applied.connect(func(_result: Dictionary) -> void: saves.save_current())
 	else:
 		_save_status()
+	audio = SoundscapeMixer.new()
+	add_child(audio)
+	audio.bind_settings(settings)
+	for gauge: ResourceGauge in [hud.hull_gauge, hud.battery_gauge, hud.oxygen_gauge]:
+		gauge.low_warning_fraction = audio.configuration.low_resource_fraction
+	gameplay_audio = GameplayAudio.new()
+	add_child(gameplay_audio)
+	gameplay_audio.setup(self, audio)
+	audio_settings = AudioSettingsPanel.new()
+	$SettingsLayer.add_child(audio_settings)
+	audio_settings.close_requested.connect(open_route_menu)
+	route_menu.audio_requested.connect(open_audio_settings)
 	open_route_menu()
 
 
+func open_audio_settings() -> void:
+	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
+		return
+	submarine.velocity = Vector2.ZERO
+	submarine.set_simulation_enabled(false)
+	route_layer.hide()
+	audio_settings.present(settings, audio, settings_path)
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if audio_settings != null and audio_settings.visible:
+		return
 	if exploration_map.visible or research_log.visible or station_menu.visible:
 		return
 	if _menu == null and not resource_panel.has_test_focus() and not event.is_echo() and event.is_action_pressed("open_map"):
@@ -255,6 +281,8 @@ func restart_route() -> void:
 	if station.end_interaction() != OK:
 		return
 	station_menu.hide()
+	if gameplay_audio != null:
+		gameplay_audio.reset_session()
 	# Discoveries and their store intentionally survive all test-route resets.
 	exploration_map.hide()
 	research_log.hide()
@@ -284,6 +312,8 @@ func restart_route() -> void:
 	hud.bind_sonar(submarine.sonar)
 	hud.bind_passive(submarine.passive)
 	hud.bind_threat(predator)
+	if gameplay_audio != null:
+		gameplay_audio.reset_session()
 	route_check.reset()
 	var camera: Camera2D = submarine.get_node("Camera2D") as Camera2D
 	camera.reset_smoothing()

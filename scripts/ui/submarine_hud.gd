@@ -37,6 +37,7 @@ func _ignore_input(node: Node) -> void:
 
 func _layout_changed() -> void:
 	(%IdentityDetail as Label).visible = size.x >= 1100.0
+	(%PassiveContacts as PassiveContactsPanel).set_compact(size.x < 1100.0)
 
 
 func _listen(event: Signal, callback: Callable) -> void:
@@ -47,6 +48,7 @@ func _listen(event: Signal, callback: Callable) -> void:
 
 func clear_sources() -> void:
 	bind_sonar(null)
+	bind_passive(null)
 	for index: int in range(_connections.size()):
 		var event: Signal = _connections[index]
 		if not event.is_null() and is_instance_valid(event.get_object()) \
@@ -114,6 +116,10 @@ func _refresh_sonar() -> void:
 	else:
 		label.text = "SONAR / %s · COST %.1f\nLAST PING / ECHOES %d" % [
 			_sonar.status_text(), _sonar.battery_cost(), _sonar.echo_count()]
+
+
+func bind_passive(receiver: PassiveReceiver) -> void:
+	(%PassiveContacts as PassiveContactsPanel).bind_source(receiver)
 
 
 func _battery_changed(current: float, maximum: float) -> void:

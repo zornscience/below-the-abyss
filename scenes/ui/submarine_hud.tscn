@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/submarine_hud.gd" id="1"]
 [ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/resource_gauge.tscn" id="3"]
+
+[ext_resource type="PackedScene" path="res://scenes/ui/passive_contacts.tscn" id="4_passive"]
 
 [node name="SubmarineHud" type="Control"]
 layout_mode = 3
@@ -51,10 +53,16 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Esc / P / Start · Settings"
 
+[node name="PassiveContacts" parent="Top/Identity" instance=ExtResource("4_passive")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+
 [node name="DepthPanel" type="PanelContainer" parent="Top"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(390, 0)
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="Content" type="VBoxContainer" parent="Top/DepthPanel"]
 layout_mode = 2

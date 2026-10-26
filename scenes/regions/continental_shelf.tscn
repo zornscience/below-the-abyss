@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/continental_shelf.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/props/graybox_rock.tscn" id="2"]
 [ext_resource type="Resource" path="res://resources/regions/continental_shelf_depth.tres" id="3"]
 [ext_resource type="Script" path="res://scripts/world/graybox_route_zone.gd" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/props/sonar_reveal_target.tscn" id="5_sonar"]
+
+[ext_resource type="PackedScene" path="res://scenes/regions/shelf_ambient.tscn" id="6_ambient"]
 
 [sub_resource type="RectangleShape2D" id="Base"]
 size = Vector2(440, 280)
@@ -258,3 +260,5 @@ caption = "OVERLOOK MARKER"
 position = Vector2(3560, 650)
 target_id = &"spire-marker"
 caption = "SPIRE MARKER"
+
+[node name="AmbientField" parent="." instance=ExtResource("6_ambient")]

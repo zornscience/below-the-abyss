@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/sonar/passive_receiver.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_receiver.gd" id="2"]
+[ext_resource type="Resource" path="res://resources/balance/prototype_passive_sonar.tres" id="3"]
+[node name="PassiveReceiver" type="Node2D"]
+script = ExtResource("1")
+configuration = ExtResource("3")
+[node name="AcousticReceiver" type="Node2D" parent="."]
+script = ExtResource("2")

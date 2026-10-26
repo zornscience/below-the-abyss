@@ -59,7 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _stop_for_resource_checks() -> void:
 	($DevelopmentUI/Banner as Control).hide()
 	submarine.velocity = Vector2.ZERO
-	submarine.set_physics_process(false)
+	submarine.set_simulation_enabled(false)
 
 
 func _on_resource_test_requested(kind: StringName) -> void:
@@ -79,14 +79,14 @@ func _on_resource_test_requested(kind: StringName) -> void:
 			($DevelopmentUI/Banner as Control).show()
 			if _menu == null:
 				InputBindings.apply(settings.snapshot()["bindings"], float(settings.snapshot()["deadzone"]))
-				submarine.set_physics_process(true)
+				submarine.set_simulation_enabled(true)
 
 
 func open_settings() -> void:
 	if _menu != null:
 		return
 	submarine.velocity = Vector2.ZERO
-	submarine.set_physics_process(false)
+	submarine.set_simulation_enabled(false)
 	_menu = INPUT_MENU.instantiate() as InputTestMenu
 	_menu.settings_path = settings_path
 	_menu.embedded = true
@@ -106,7 +106,7 @@ func close_settings() -> void:
 	_load_settings()
 	resource_panel.release_test_focus()
 	($DevelopmentUI/Banner as Control).show()
-	submarine.set_physics_process(true)
+	submarine.set_simulation_enabled(true)
 
 
 func _on_collision(_normal: Vector2, _approach_speed: float) -> void:

@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3]
+[ext_resource type="Script" path="res://scripts/sonar/ambient_acoustic_field.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/sonar/ambient_sound_emitter.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_emitter.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/sonar/ambient_emission_profile.gd" id="4"]
+
+[sub_resource type="Resource" id="Profile1"]
+script = ExtResource("4")
+classification = &"mechanical"
+strength = 1.0
+range_units = 1200.0
+first_delay = 2.0
+interval_seconds = 6.0
+maximum_events = 128
+
+[sub_resource type="Resource" id="Profile2"]
+script = ExtResource("4")
+classification = &"geological"
+strength = 0.9
+range_units = 1400.0
+first_delay = 3.0
+interval_seconds = 8.0
+maximum_events = 128
+
+[sub_resource type="Resource" id="Profile3"]
+script = ExtResource("4")
+classification = &"marine_life"
+strength = 0.8
+range_units = 1000.0
+first_delay = 4.0
+interval_seconds = 10.0
+maximum_events = 128
+
+[node name="AmbientField" type="Node2D"]
+script = ExtResource("1")
+
+[node name="station-machinery" type="Node2D" parent="."]
+position = Vector2(250, 500)
+script = ExtResource("2")
+source_id = &"shelf-station-machinery"
+configuration = SubResource("Profile1")
+[node name="AcousticEmitter" type="Node2D" parent="station-machinery"]
+script = ExtResource("3")
+
+[node name="rock-friction" type="Node2D" parent="."]
+position = Vector2(1180, 850)
+script = ExtResource("2")
+source_id = &"shelf-rock-friction"
+configuration = SubResource("Profile2")
+[node name="AcousticEmitter" type="Node2D" parent="rock-friction"]
+script = ExtResource("3")
+
+[node name="marine-ambience" type="Node2D" parent="."]
+position = Vector2(2080, 430)
+script = ExtResource("2")
+source_id = &"shelf-marine-ambience"
+configuration = SubResource("Profile3")
+[node name="AcousticEmitter" type="Node2D" parent="marine-ambience"]
+script = ExtResource("3")

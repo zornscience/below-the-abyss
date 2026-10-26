@@ -6,6 +6,7 @@ var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 @onready var region: ContinentalShelf = $WorldRoot/CurrentRegion
 @onready var route_layer: CanvasLayer = $RouteLayer
 @onready var route_menu: GrayboxRouteMenu = $RouteLayer/RouteMenu
+@onready var ambient: AmbientAcousticField = $WorldRoot/CurrentRegion/AmbientField
 
 
 func _ready() -> void:
@@ -21,6 +22,9 @@ func _ready() -> void:
 		if target.bind_bus(bus) != OK or submarine.sonar.listen_to(target) != OK:
 			push_error("Shelf sonar target registration failed.")
 	hud.bind_sonar(submarine.sonar)
+	if submarine.passive.bind_bus(bus) != OK or ambient.bind_bus(bus) != OK:
+		push_error("Shelf passive sonar setup failed.")
+	hud.bind_passive(submarine.passive)
 	($DevelopmentUI/Banner as Control).offset_top = 215.0
 	route_menu.resume_requested.connect(resume_route)
 	route_menu.settings_requested.connect(_route_settings_requested)
@@ -46,7 +50,7 @@ func open_route_menu() -> void:
 	if _menu != null:
 		return
 	submarine.velocity = Vector2.ZERO
-	submarine.set_physics_process(false)
+	submarine.set_simulation_enabled(false)
 	resource_panel.release_test_focus()
 	route_layer.show()
 	route_menu.focus_resume()
@@ -60,7 +64,7 @@ func resume_route() -> void:
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if focus != null:
 		focus.release_focus()
-	submarine.set_physics_process(true)
+	submarine.set_simulation_enabled(true)
 
 
 func _route_settings_requested() -> void:
@@ -76,8 +80,10 @@ func restart_route() -> void:
 	resource_panel.release_test_focus()
 	resource_panel.reset_test_counts()
 	_contact_time = 0.0
-	submarine.set_physics_process(false)
+	submarine.set_simulation_enabled(false)
 	submarine.sonar.reset_session()
+	submarine.passive.reset_session()
+	ambient.reset_session()
 	submarine.velocity = Vector2.ZERO
 	submarine.global_position = region.spawn.global_position
 	submarine.reset_physics_interpolation()
@@ -87,6 +93,7 @@ func restart_route() -> void:
 	submarine.damage_system.advance(0.0, region.depth_at_world(submarine.global_position), submarine.hull_system)
 	hud.bind_sources(submarine.resource_system, submarine.hull_system, submarine.damage_system)
 	hud.bind_sonar(submarine.sonar)
+	hud.bind_passive(submarine.passive)
 	route_check.reset()
 	var camera: Camera2D = submarine.get_node("Camera2D") as Camera2D
 	camera.reset_smoothing()
@@ -96,6 +103,7 @@ func restart_route() -> void:
 
 func _physics_process(delta: float) -> void:
 	if submarine.is_physics_processing():
+		ambient.advance(delta)
 		route_check.sample(region.base_zone.contains_world_position(submarine.global_position),
 			region.point_of_interest_zone.contains_world_position(submarine.global_position), delta)
 		_refresh_route_status()

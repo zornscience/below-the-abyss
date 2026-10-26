@@ -1,10 +1,12 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/submarine_hud.gd" id="1"]
 [ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/resource_gauge.tscn" id="3"]
 
 [ext_resource type="PackedScene" path="res://scenes/ui/passive_contacts.tscn" id="4_passive"]
+
+[ext_resource type="PackedScene" path="res://scenes/ui/threat_indicator.tscn" id="threat"]
 
 [node name="SubmarineHud" type="Control"]
 layout_mode = 3
@@ -173,3 +175,6 @@ size_flags_horizontal = 3
 caption = "OXYGEN SUPPLY"
 glyph = 2
 accent = Color(0.57, 0.75, 0.94, 1)
+
+[node name="ThreatIndicator" parent="." instance=ExtResource("threat")]
+unique_name_in_owner = true

@@ -72,6 +72,7 @@ func advance_simulation(delta: float) -> Error:
 	_remainder += delta
 	while _remainder + 0.000000001 >= STEP:
 		_remainder = maxf(0.0, _remainder - STEP)
+		_before_step(STEP)
 		brain.advance(STEP, position, _blocked)
 		var goal: Vector2 = brain.destination()
 		_replan = maxf(0.0, _replan - STEP)
@@ -90,8 +91,17 @@ func advance_simulation(delta: float) -> Error:
 			move_and_collide(motion)
 			velocity = (global_position - previous) / STEP
 			_blocked = motion.length() > 0.01 and global_position.distance_to(previous) < 0.001
+		_after_step(STEP)
 	_refresh()
 	return OK
+
+
+func _before_step(_delta: float) -> void:
+	pass
+
+
+func _after_step(_delta: float) -> void:
+	pass
 
 
 func reset_session() -> void:

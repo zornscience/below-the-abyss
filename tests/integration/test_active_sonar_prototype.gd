@@ -73,7 +73,7 @@ func _tap_button(code: JoyButton) -> void:
 func test_initial_readiness_hidden_targets_and_keyboard_wavefront_reveal() -> void:
 	assert_eq((_scene.hud.get_node("%Sonar") as Label).text, "SONAR / READY · COST 4.0\nLAST PING / ECHOES 0")
 	assert_false(_target("shelf-marker").is_revealed())
-	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).receiver_count(), 6)
+	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).receiver_count(), 7)
 	_scene.resume_route()
 	await _tap_key(KEY_F)
 	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).history_count(), 1)
@@ -173,7 +173,7 @@ func test_low_energy_hud_and_removed_targets_do_not_break_a_ping() -> void:
 	for target: Node in _scene.region.get_node("SonarTargets").get_children():
 		target.queue_free()
 	await _frames(2)
-	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).receiver_count(), 2)
+	assert_eq((_scene.get_node("AcousticBus") as AcousticBus).receiver_count(), 3)
 	assert_eq(_scene.submarine.sonar.request_ping(), OK)
 	await _frames(75)
 	assert_eq(_scene.submarine.sonar.echo_count(), 0)

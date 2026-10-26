@@ -49,6 +49,7 @@ func _listen(event: Signal, callback: Callable) -> void:
 func clear_sources() -> void:
 	bind_sonar(null)
 	bind_passive(null)
+	bind_threat(null)
 	for index: int in range(_connections.size()):
 		var event: Signal = _connections[index]
 		if not event.is_null() and is_instance_valid(event.get_object()) \
@@ -121,6 +122,9 @@ func _refresh_sonar() -> void:
 func bind_passive(receiver: PassiveReceiver) -> void:
 	(%PassiveContacts as PassiveContactsPanel).bind_source(receiver)
 
+
+func bind_threat(source: PredatorCreature) -> void:
+	(%ThreatIndicator as ThreatIndicator).bind_source(source)
 
 func _battery_changed(current: float, maximum: float) -> void:
 	battery_gauge.set_reading(current, maximum)

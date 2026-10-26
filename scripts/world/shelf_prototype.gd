@@ -17,6 +17,7 @@ var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 @onready var region: ContinentalShelf = $WorldRoot/CurrentRegion
 @onready var route_layer: CanvasLayer = $RouteLayer
 @onready var route_menu: GrayboxRouteMenu = $RouteLayer/RouteMenu
+@onready var predator: PredatorCreature = $WorldRoot/CurrentRegion/ShelfPredator
 @onready var creature: AcousticCreature = $WorldRoot/CurrentRegion/HarmlessObserver
 @onready var ambient: AmbientAcousticField = $WorldRoot/CurrentRegion/AmbientField
 
@@ -30,6 +31,9 @@ func _ready() -> void:
 	if creature.bind_bus(bus) != OK:
 		push_error("Creature receiver registration failed.")
 	submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: creature.set_suspended(not enabled))
+	if predator.bind_bus(bus) != OK or predator.setup_player(submarine) != OK:
+		push_error("Predator encounter setup failed.")
+	submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: predator.set_suspended(not enabled))
 	if submarine.sonar.setup(bus, submarine.resource_system, $WorldRoot/WorldEffects) != OK:
 		push_error("Shelf active sonar setup failed.")
 	for node: Node in region.get_node("SonarTargets").get_children():
@@ -78,6 +82,7 @@ func _ready() -> void:
 	if submarine.passive.bind_bus(bus) != OK or ambient.bind_bus(bus) != OK:
 		push_error("Shelf passive sonar setup failed.")
 	hud.bind_passive(submarine.passive)
+	hud.bind_threat(predator)
 	($DevelopmentUI/Banner as Control).offset_top = 215.0
 	route_menu.resume_requested.connect(resume_route)
 	route_menu.settings_requested.connect(_route_settings_requested)
@@ -191,6 +196,7 @@ func restart_route() -> void:
 	submarine.passive.reset_session()
 	ambient.reset_session()
 	creature.reset_session()
+	predator.reset_session()
 	submarine.velocity = Vector2.ZERO
 	submarine.global_position = region.spawn.global_position
 	submarine.reset_physics_interpolation()
@@ -201,6 +207,7 @@ func restart_route() -> void:
 	hud.bind_sources(submarine.resource_system, submarine.hull_system, submarine.damage_system)
 	hud.bind_sonar(submarine.sonar)
 	hud.bind_passive(submarine.passive)
+	hud.bind_threat(predator)
 	route_check.reset()
 	var camera: Camera2D = submarine.get_node("Camera2D") as Camera2D
 	camera.reset_smoothing()

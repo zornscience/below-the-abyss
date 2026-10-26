@@ -118,7 +118,7 @@ func advance(delta: float, position: Vector2, blocked: bool = false) -> Error:
 			_transition(State.INVESTIGATE, "SOUND / " + String(candidate.id))
 	_blocked = _blocked + delta if blocked else 0.0
 	if state == State.INVESTIGATE:
-		if position.distance_to(destination()) <= _rules.arrival_radius:
+		if _arrival_allowed() and position.distance_to(destination()) <= _rules.arrival_radius:
 			_return(position, "ARRIVED")
 		elif _time + 0.000000001 >= _deadline:
 			_return(position, "TIMEOUT")
@@ -133,6 +133,10 @@ func advance(delta: float, position: Vector2, blocked: bool = false) -> Error:
 		_blocked = 0.0
 		reason = "BLOCKED / TRY NEXT PATROL POINT"
 	return OK
+
+
+func _arrival_allowed() -> bool:
+	return true
 
 
 func snapshot() -> Dictionary:

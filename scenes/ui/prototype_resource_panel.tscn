@@ -13,7 +13,7 @@ corner_radius_bottom_left = 4
 corner_radius_bottom_right = 4
 
 [node name="PrototypeResourcePanel" type="PanelContainer"]
-focus_mode = 2
+focus_mode = 0
 theme = SubResource("Theme_panel")
 theme_override_styles/panel = SubResource("Style_panel")
 script = ExtResource("1_panel")
@@ -29,9 +29,10 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Values" type="HBoxContainer" parent="Padding/Content"]
+[node name="Values" type="HFlowContainer" parent="Padding/Content"]
 layout_mode = 2
-theme_override_constants/separation = 32
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 8
 
 [node name="Hull" type="Label" parent="Padding/Content/Values"]
 unique_name_in_owner = true
@@ -50,13 +51,14 @@ text = "Oxygen"
 
 [node name="Help" type="Label" parent="Padding/Content"]
 layout_mode = 2
-text = "Temporary checks: E / A or Tab to focus. Return to piloting resumes simulation."
+text = "DEVELOPMENT ONLY / Simulation paused. Test values are not saved."
 autowrap_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="Padding/Content"]
+[node name="Buttons" type="HFlowContainer" parent="Padding/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 8
 
 [node name="TestHull" type="Button" parent="Padding/Content/Buttons"]
 unique_name_in_owner = true

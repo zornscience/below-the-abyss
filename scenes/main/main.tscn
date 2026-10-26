@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/movement_prototype.gd" id="1_prototype"]
 [ext_resource type="PackedScene" path="res://scenes/regions/movement_cave.tscn" id="2_cave"]
 [ext_resource type="PackedScene" path="res://scenes/player/submarine.tscn" id="3_submarine"]
 [ext_resource type="PackedScene" path="res://scenes/ui/prototype_resource_panel.tscn" id="4_resources"]
+[ext_resource type="PackedScene" path="res://scenes/ui/submarine_hud.tscn" id="5_hud"]
 
 [sub_resource type="Theme" id="Theme_diagnostics"]
-default_font_size = 20
+default_font_size = 18
 
 [node name="GameRoot" type="Node"]
 script = ExtResource("1_prototype")
@@ -20,63 +21,46 @@ position = Vector2(400, 520)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Margin" type="MarginContainer" parent="UI"]
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 16.0
-offset_top = 12.0
-offset_right = -16.0
-mouse_filter = 2
+[node name="SubmarineHud" parent="UI" instance=ExtResource("5_hud")]
+unique_name_in_owner = true
+
+[node name="DevelopmentUI" type="CanvasLayer" parent="."]
+layer = 10
+visible = false
+
+[node name="Banner" type="VBoxContainer" parent="DevelopmentUI"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -290.0
+offset_right = 290.0
+offset_top = 205.0
 theme = SubResource("Theme_diagnostics")
-
-[node name="Panel" type="PanelContainer" parent="UI/Margin"]
-layout_mode = 2
 mouse_filter = 2
 
-[node name="Padding" type="MarginContainer" parent="UI/Margin/Panel"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_bottom = 8
+[node name="Mode" type="Label" parent="DevelopmentUI/Banner"]
+text = "DEVELOPMENT MODE / E or A: resource test controls"
+horizontal_alignment = 1
 
-[node name="Text" type="VBoxContainer" parent="UI/Margin/Panel/Padding"]
-layout_mode = 2
-mouse_filter = 2
+[node name="Diagnostics" type="Label" parent="DevelopmentUI/Banner"]
+unique_name_in_owner = true
+horizontal_alignment = 1
 
-[node name="Title" type="Label" parent="UI/Margin/Panel/Padding/Text"]
-layout_mode = 2
-text = "BTA-012 — Depth limits & hull damage / placeholder geometry"
-
-[node name="Instructions" type="Label" parent="UI/Margin/Panel/Padding/Text"]
-layout_mode = 2
-text = "Move: WASD / arrows, left stick / D-pad (defaults). Escape / P / Start: settings."
+[node name="SettingsStatus" type="Label" parent="DevelopmentUI/Banner"]
+unique_name_in_owner = true
+horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Scope" type="Label" parent="UI/Margin/Panel/Padding/Text"]
-layout_mode = 2
-text = "Deep test shaft: descend at X 200–450. Pressure and severe collisions damage hull."
-
-[node name="Diagnostics" type="Label" parent="UI/Margin/Panel/Padding/Text"]
+[node name="ResourcePanel" parent="DevelopmentUI" instance=ExtResource("4_resources")]
 unique_name_in_owner = true
-layout_mode = 2
-text = "Speed: 0 px/s"
-
-[node name="SettingsStatus" type="Label" parent="UI/Margin/Panel/Padding/Text"]
-unique_name_in_owner = true
-layout_mode = 2
-autowrap_mode = 2
-
-[node name="DepthStatus" type="Label" parent="UI/Margin/Panel/Padding/Text"]
-unique_name_in_owner = true
-layout_mode = 2
-autowrap_mode = 2
-
-[node name="DamageFeedback" type="Label" parent="UI/Margin/Panel/Padding/Text"]
-unique_name_in_owner = true
-layout_mode = 2
-autowrap_mode = 2
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -110.0
+offset_right = 360.0
+offset_bottom = 110.0
 
 [node name="SettingsLayer" type="CanvasLayer" parent="."]
 layer = 20
@@ -87,15 +71,3 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0.12, 0.13, 0.15, 1)
-
-[node name="ResourcePanel" parent="UI" instance=ExtResource("4_resources")]
-unique_name_in_owner = true
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -185.0
-offset_right = -16.0
-offset_bottom = -16.0
-grow_vertical = 0

@@ -1,0 +1,166 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/submarine_hud.gd" id="1"]
+[ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/resource_gauge.tscn" id="3"]
+
+[node name="SubmarineHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Top" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+
+[node name="Identity" type="VBoxContainer" parent="Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Vessel" type="Label" parent="Top/Identity"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "NERIS / 01"
+
+[node name="IdentityDetail" type="Label" parent="Top/Identity"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.66, 0.77, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "SCIENTIFIC SUBMERSIBLE
+PROTOTYPE INSTRUMENTS"
+
+[node name="Sonar" type="Label" parent="Top/Identity"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.66, 0.77, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "SONAR / NOT IMPLEMENTED"
+
+[node name="SettingsHint" type="Label" parent="Top/Identity"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Esc / P / Start · Settings"
+
+[node name="DepthPanel" type="PanelContainer" parent="Top"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="Top/DepthPanel"]
+layout_mode = 2
+
+[node name="DepthHeader" type="HBoxContainer" parent="Top/DepthPanel/Content"]
+layout_mode = 2
+
+[node name="Caption" type="Label" parent="Top/DepthPanel/Content/DepthHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "DEPTH / METERS"
+
+[node name="DepthValue" type="Label" parent="Top/DepthPanel/Content/DepthHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "0.0 m"
+
+[node name="SafeDepth" type="Label" parent="Top/DepthPanel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "SAFE OPERATING DEPTH   300.0 m"
+
+[node name="Rule" type="HSeparator" parent="Top/DepthPanel/Content"]
+layout_mode = 2
+
+[node name="WarningState" type="Label" parent="Top/DepthPanel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "SAFE / WITHIN OPERATING RANGE"
+
+[node name="PressureDetail" type="Label" parent="Top/DepthPanel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Pressure within hull rating"
+
+[node name="ConnectionStatus" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 220.0
+offset_right = 130.0
+text = "INSTRUMENTS DISCONNECTED"
+horizontal_alignment = 1
+
+[node name="Bottom" type="VBoxContainer" parent="."]
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -245.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_vertical = 0
+alignment = 2
+
+[node name="Feedback" type="HBoxContainer" parent="Bottom"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="ImpactFeedback" type="Label" parent="Bottom/Feedback"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.71, 0.62, 1)
+theme_override_colors/font_shadow_color = Color(0.01, 0.035, 0.05, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_font_sizes/font_size = 18
+
+[node name="PressureFeedback" type="Label" parent="Bottom/Feedback"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.71, 0.62, 1)
+theme_override_colors/font_shadow_color = Color(0.01, 0.035, 0.05, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
+
+[node name="InstrumentDeck" type="HBoxContainer" parent="Bottom"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HullGauge" parent="Bottom/InstrumentDeck" instance=ExtResource("3")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BatteryGauge" parent="Bottom/InstrumentDeck" instance=ExtResource("3")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+caption = "BATTERY CHARGE"
+glyph = 1
+accent = Color(0.95, 0.83, 0.54, 1)
+
+[node name="OxygenGauge" parent="Bottom/InstrumentDeck" instance=ExtResource("3")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+caption = "OXYGEN SUPPLY"
+glyph = 2
+accent = Color(0.57, 0.75, 0.94, 1)

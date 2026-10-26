@@ -6,6 +6,7 @@ var _prototype: MovementPrototype
 
 func before_each() -> void:
 	_prototype = PROTOTYPE.instantiate() as MovementPrototype
+	_prototype.development_mode = true
 	_prototype.settings_path = "user://bta011-test-no-settings-%d.json" % Time.get_ticks_usec()
 	add_child_autofree(_prototype)
 	await _frames(2)
@@ -62,7 +63,7 @@ func test_movement_advances_resources_without_altering_hull_or_motor() -> void:
 	assert_eq(body.hull_system.hull, body.hull_system.max_hull)
 	assert_gt(body.position.x, start.x + 30.0)
 	assert_true((_prototype.resource_panel.get_node("%Battery") as Label).text.contains("Battery:"))
-	assert_false((_prototype.resource_panel.get_node("%Buttons") as HBoxContainer).visible, "Test controls stay compact during piloting.")
+	assert_false((_prototype.resource_panel.get_node("%Buttons") as HFlowContainer).visible, "Test controls stay compact during piloting.")
 
 
 func test_settings_stop_drains_and_depletion_does_not_disable_movement() -> void:
@@ -106,7 +107,7 @@ func test_keyboard_can_deplete_refill_and_resume_using_test_controls() -> void:
 	await _tap_key(KEY_E)
 	assert_eq(get_viewport().gui_get_focus_owner(), panel.get_node("%TestHull"))
 	assert_false(_prototype.submarine.is_physics_processing())
-	assert_true((panel.get_node("%Buttons") as HBoxContainer).visible)
+	assert_true((panel.get_node("%Buttons") as HFlowContainer).visible)
 	var battery: float = _prototype.submarine.resource_system.battery
 	await _frames(5)
 	assert_eq(_prototype.submarine.resource_system.battery, battery)
@@ -136,7 +137,7 @@ func test_keyboard_can_deplete_refill_and_resume_using_test_controls() -> void:
 	await _tap_key(KEY_ENTER)
 	assert_true(_prototype.submarine.is_physics_processing())
 	assert_null(get_viewport().gui_get_focus_owner())
-	assert_false((panel.get_node("%Buttons") as HBoxContainer).visible)
+	assert_false((panel.get_node("%Buttons") as HFlowContainer).visible)
 
 
 func test_controller_can_navigate_test_controls_and_trigger_domain_requests() -> void:

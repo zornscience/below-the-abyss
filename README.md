@@ -2,10 +2,11 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-012**. The submarine prototype now includes authored
-depth mapping, safe-depth warnings, exposure-based pressure damage and bounded
-collision damage, alongside existing movement/resources/settings. Game over,
-respawn, sonar, creatures, missions and upgrade gameplay are not implemented.
+Current milestone: **BTA-013**. A reusable, signal-driven instrument HUD displays
+hull, battery, oxygen, authored depth, safe operating depth and text pressure
+warnings. Damage feedback and persistent depleted states accompany the existing
+movement/resource/depth prototype. Sonar is explicitly unimplemented; no new
+survival or later-milestone mechanics are added.
 
 ## Requirements
 
@@ -78,7 +79,8 @@ drains at 0.5 units/second. Hull changes through its damage/repair APIs; BTA-012
 severe-impact damage sources. Movement remains available at zero hull; game-over
 and respawn behavior remain outside scope.
 
-Press Interact (E/controller A by default) or Tab to focus temporary test buttons.
+Launch `godot --path . -- --debug-controls`, then press Interact
+(E/controller A by default) to open the separate development test panel.
 Use keyboard arrows/Tab/Enter or controller D-pad/stick/A to consume/repair/refill.
 Focusing test controls stops movement and drains; Return to piloting resumes them.
 Input settings also stop drains. Indicators show numeric values, EMPTY/DEPLETED,
@@ -105,6 +107,40 @@ See [depth/damage verification](docs/testing/depth_damage.md) and
 [design decisions](docs/decisions/bta-012-depth-damage.md) for mapping, boundaries,
 maximum-depth API, screenshots, tests and keyboard/controller playtesting.
 The maximum-depth API is ready for a future caller; no upgrade system is added.
+
+## Prototype HUD (BTA-013)
+
+Launch `godot --path .` for the production HUD. Rounded dark instrument cards,
+authored vector marks, numeric values/capacities and normalized bars show vessel
+resources. Depth warnings spell out **SAFE**, **CAUTION** and **DANGER**, with
+ASCEND instructions, authoritative grace time and persistent DEPLETED labels.
+Impact and pressure feedback have separate 2.5-second display lifetimes.
+No flashing, camera effects, UI focus or gameplay writes are introduced.
+
+The reference window is 1280×800; native Control layouts preserve 16+ pixel text
+at smaller sizes, with a minimum supported window of 800×600. Larger and tall
+windows retain edge anchoring and a clear gameplay center. The HUD scene is
+`scenes/ui/submarine_hud.tscn`; bind an initialized resource, hull and damage
+component using `SubmarineHud.bind_sources(...)`. It snapshots initial values,
+then follows their signals. Only the grace detail is sampled because that API
+has no change signal. Unbound/destroyed sources show INSTRUMENTS DISCONNECTED.
+
+Development instrumentation is opt-in and lives in a separate CanvasLayer:
+
+```sh
+godot --path . -- --debug-controls
+```
+
+Press E/controller A (or your remapped Interact action) to open resource tests.
+Arrows/Tab/Enter or D-pad/stick/A navigate the wrapping button panel. Simulation
+stops while testing; Return to piloting resumes it. The regular HUD stays visible
+and shows the real domain values. Debug depletion counts and resource mutations
+are excluded from the reusable HUD. The editor also exposes `development_mode`
+on GameRoot; it defaults to false.
+
+See [HUD verification and screenshots](docs/testing/submarine_hud.md) and
+[design decisions](docs/decisions/bta-013-hud.md) for test evidence, layout and
+signal contracts, keyboard/controller steps, and screenshot reproduction.
 
 ## Input/settings test menu (BTA-004)
 
@@ -243,7 +279,9 @@ with `test_` and use typed GDScript. The original sample suite checks a JSON rou
 scene. BTA-004 adds settings, binding, and menu integration suites; BTA-010 adds
 submarine velocity and real physics/camera integration suites; BTA-011 adds
 resource transfer, signal, drain and prototype-panel coverage; BTA-012 adds
-depth mapping, warning, pressure and collision-damage coverage.
+depth mapping, warning, pressure and collision-damage coverage; BTA-013 adds
+HUD initial/signal updates, depletion, rebinding, feedback and responsive-layout
+coverage. All previous suites remain enabled.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.

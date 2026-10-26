@@ -24,6 +24,7 @@ func _frames(count: int) -> void:
 
 func _prototype() -> MovementPrototype:
 	var scene: MovementPrototype = PROTOTYPE.instantiate() as MovementPrototype
+	scene.development_mode = true
 	scene.settings_path = "user://bta012-no-settings-%d.json" % Time.get_ticks_usec()
 	add_child_autofree(scene)
 	return scene
@@ -59,7 +60,7 @@ func test_authored_depth_warnings_and_exact_limit_keep_the_hull_safe() -> void:
 	await _frames(2)
 	await get_tree().process_frame
 	assert_eq(body.damage_system.warning_state, SubmarineDamageSystem.WarningState.APPROACHING)
-	assert_true((scene.get_node("%DepthStatus") as Label).text.contains("CAUTION"))
+	assert_true((scene.hud.get_node("%WarningState") as Label).text.contains("CAUTION"))
 	body.position.y = 1200.0
 	body.reset_physics_interpolation()
 	await _frames(90)
@@ -85,7 +86,7 @@ func test_deep_shaft_can_be_reached_by_piloting_and_pressure_uses_hull_api() -> 
 	assert_lt(body.hull_system.hull, 100.0)
 	assert_gt(body.hull_system.hull, 90.0)
 	assert_eq(body.hull_system.last_damage_source, &"pressure")
-	assert_true((scene.get_node("%DepthStatus") as Label).text.contains("DANGER"))
+	assert_true((scene.hud.get_node("%WarningState") as Label).text.contains("DANGER"))
 
 
 func test_settings_and_resource_checks_freeze_pressure_grace_and_damage() -> void:

@@ -27,9 +27,8 @@ func _ready() -> void:
 
 
 func _set_expanded(expanded: bool) -> void:
-	(%Buttons as HBoxContainer).visible = expanded
+	(%Buttons as HFlowContainer).visible = expanded
 	(%Depletions as Label).visible = expanded
-	offset_top = -185.0 if expanded else -95.0
 
 
 func bind_sources(resources: SubmarineResourceSystem, hull: SubmarineHullSystem) -> void:
@@ -46,6 +45,7 @@ func bind_sources(resources: SubmarineResourceSystem, hull: SubmarineHullSystem)
 
 
 func focus_test_controls() -> void:
+	show()
 	_set_expanded(true)
 	(%TestHull as Button).grab_focus()
 
@@ -60,6 +60,7 @@ func release_test_focus() -> void:
 	if owner != null and (owner == self or is_ancestor_of(owner)):
 		owner.release_focus()
 	_set_expanded(false)
+	hide()
 
 
 func _request(kind: StringName) -> void:

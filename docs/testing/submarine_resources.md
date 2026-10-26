@@ -1,5 +1,9 @@
 # BTA-011 submarine resources
 
+> BTA-013: the current HUD replaces temporary indicators. For resource test
+> controls, launch `godot --path . -- --debug-controls` and press Interact (E/A).
+> Earlier screenshots below show historical instrumentation. See [current HUD](submarine_hud.md).
+
 ![Temporary resource indicators and test controls](bta-011-resources.png)
 
 The prototype now composes hull, battery and oxygen components with the existing

@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/ui/mission_board.gd" id="1"]
+[node name="MissionBoard" type="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("1")
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "MISSIONS / PROTOTYPE ACKNOWLEDGEMENTS"
+[node name="Body" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+[node name="ListScroll" type="ScrollContainer" parent="Body"]
+layout_mode = 2
+custom_minimum_size = Vector2(230, 120)
+horizontal_scroll_mode = 0
+follow_focus = true
+[node name="MissionList" type="VBoxContainer" parent="Body/ListScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+[node name="MissionDetailScroll" type="ScrollContainer" parent="Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+[node name="MissionDetail" type="Label" parent="Body/MissionDetailScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+[node name="MissionFeedback" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+[node name="MissionSaveStatus" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+[node name="Actions" type="HFlowContainer" parent="."]
+layout_mode = 2
+[node name="AcceptMission" type="Button" parent="Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Accept objective"
+[node name="ClaimMission" type="Button" parent="Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Claim acknowledgement"
+[node name="SyncMissions" type="Button" parent="Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sync / retry progress"
+[node name="RecoverMissions" type="Button" parent="Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recover backup"
+[node name="ScrollMissionUp" type="Button" parent="Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Details ↑"
+[node name="ScrollMissionDown" type="Button" parent="Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Details ↓"
+[node name="BackMissions" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to notices"

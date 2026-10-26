@@ -29,7 +29,16 @@ func emit_event(event_id: StringName, simulation_time: float) -> Error:
 		profile.classification, global_position, profile.strength, profile.range_units, simulation_time)
 	if event == null:
 		return ERR_INVALID_PARAMETER
-	var result: Error = bus.dispatch(self, event)
+	return publish(event)
+
+
+func publish(event: AcousticEvent, acceptance: Callable = Callable()) -> Error:
+	var bus: AcousticBus = get_bus()
+	if bus == null:
+		return ERR_UNCONFIGURED
+	# Preserve emitted metadata even if a consumer modifies the caller's object.
+	var snapshot: AcousticEvent = event.snapshot() if event != null and event.is_valid() else null
+	var result: Error = bus.dispatch(self, snapshot, acceptance)
 	if result == OK:
-		event_emitted.emit(event.snapshot())
+		event_emitted.emit(snapshot.snapshot())
 	return result

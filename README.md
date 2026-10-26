@@ -2,11 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-020**. A reusable, scene-owned acoustic event contract
-now provides validated events, emitter/receiver registration, deterministic
-spatial/filter dispatch and duplicate suppression. It is demonstrated separately
-from the unchanged continental-shelf graybox. Sonar, reveal, energy costs and
-creature behavior remain unimplemented; the in-game HUD still says so.
+Current milestone: **BTA-021**. The submarine now has active sonar: battery cost,
+deterministic cooldown, an expanding wave and temporary placeholder echoes that
+appear only at wavefront arrival. It builds on the scene-owned BTA-020 acoustic
+contract and the existing shelf, movement, resources, damage, HUD and settings.
+Passive sonar, creature reactions, scanning, permanent discovery, missions and
+upgrades remain unimplemented.
 
 ## Requirements
 
@@ -82,6 +83,36 @@ godot --path . res://scenes/main/movement_prototype.tscn
 godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 ```
 
+## Active sonar (BTA-021)
+
+Run `godot --path .`, Begin/Resume and press **F / controller X** (default
+`sonar_ping` bindings). An accepted ping costs **4 battery**, has a **4-second
+cooldown**, and expands at **600 world units/second** to **900 units**. Temporary
+placeholder targets reveal when the front reaches their sampled distance and
+remain visible for six seconds from arrival. Out-of-range/filtered targets stay
+hidden. The ring stays at its emitted world position while the vessel moves.
+
+The HUD reports READY, COOLING, LOW BATTERY or BLOCKED/OFFLINE, numeric cost/time
+and the last ping's echo count. Existing settings remap the action. Route,
+settings and developer-control pauses freeze all sonar clocks. Route restart
+cancels pulses/reveals and issues a fresh producer epoch without clearing the
+acoustic ledger. The original movement fixture has no injected sonar bus and
+honestly displays OFFLINE.
+
+Tuning is in `resources/balance/prototype_sonar.tres`; reusable scripts/scenes
+compose the existing AcousticEmitter/AcousticReceiver and battery API. An atomic
+acceptance gate prevents rejected/invalid/duplicate pings from charging energy.
+There is no second dispatcher, occlusion, moving-target interception, terrain
+reveal, passive sonar, AI response, scanning or permanent discovery system.
+The exploration loop still requires no sonar.
+
+See [contracts, screenshots and manual verification](docs/testing/active_sonar.md)
+and [design decisions](docs/decisions/bta-021-active-sonar.md). Reproduce screenshots:
+
+```sh
+godot --path . --script res://tests/fixtures/capture_active_sonar.gd
+```
+
 ## Acoustic event contract (BTA-020)
 
 After import, run the independent text-only example:
@@ -106,8 +137,9 @@ the bus lifetime. Ledger capacity fails explicitly instead of evicting IDs.
 See [API contracts, example and verification](docs/testing/acoustic_contract.md)
 and [design decisions](docs/decisions/bta-020-acoustic-contract.md) for exact
 binding/error/identity/attenuation semantics, focused tests, limits and manual checks.
-No sonar visuals, detection/reveal, energy costs, AI, missions or later systems
-are added by this infrastructure milestone.
+BTA-020 remains the generic foundation; BTA-021 adds the separately composed
+active sonar above. Its ledger semantics are preserved with an optional atomic
+producer-acceptance gate before insertion/delivery.
 
 ## Movement prototype (BTA-010)
 
@@ -343,7 +375,9 @@ coverage. BTA-014 adds route telemetry, spawn/terrain/depth/connectivity, real i
 exploration/return, restart, settings, camera and menu coverage. All previous
 suites remain enabled against their original course fixture. BTA-020 adds event,
 registration, filtering, ordering, duplicate, attenuation and lifecycle suites
-plus an independently launchable headless contract example.
+plus an independently launchable headless contract example. BTA-021 adds sonar
+cost/acceptance/cooldown, wavefront timing, reveal/range/lifecycle, restart,
+input/remapping, HUD and frame-rate coverage without removing prior tests.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.

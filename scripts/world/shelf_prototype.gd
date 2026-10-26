@@ -13,6 +13,14 @@ func _ready() -> void:
 	submarine.global_position = region.spawn.global_position
 	region.configure_camera(submarine.get_node("Camera2D") as Camera2D)
 	super._ready()
+	var bus: AcousticBus = $AcousticBus
+	if submarine.sonar.setup(bus, submarine.resource_system, $WorldRoot/WorldEffects) != OK:
+		push_error("Shelf active sonar setup failed.")
+	for node: Node in region.get_node("SonarTargets").get_children():
+		var target: SonarRevealTarget = node as SonarRevealTarget
+		if target.bind_bus(bus) != OK or submarine.sonar.listen_to(target) != OK:
+			push_error("Shelf sonar target registration failed.")
+	hud.bind_sonar(submarine.sonar)
 	($DevelopmentUI/Banner as Control).offset_top = 215.0
 	route_menu.resume_requested.connect(resume_route)
 	route_menu.settings_requested.connect(_route_settings_requested)
@@ -69,6 +77,7 @@ func restart_route() -> void:
 	resource_panel.reset_test_counts()
 	_contact_time = 0.0
 	submarine.set_physics_process(false)
+	submarine.sonar.reset_session()
 	submarine.velocity = Vector2.ZERO
 	submarine.global_position = region.spawn.global_position
 	submarine.reset_physics_interpolation()
@@ -77,6 +86,7 @@ func restart_route() -> void:
 	submarine.damage_system.configure(submarine.damage_system.configuration)
 	submarine.damage_system.advance(0.0, region.depth_at_world(submarine.global_position), submarine.hull_system)
 	hud.bind_sources(submarine.resource_system, submarine.hull_system, submarine.damage_system)
+	hud.bind_sonar(submarine.sonar)
 	route_check.reset()
 	var camera: Camera2D = submarine.get_node("Camera2D") as Camera2D
 	camera.reset_smoothing()

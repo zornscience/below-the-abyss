@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/continental_shelf.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/props/graybox_rock.tscn" id="2"]
 [ext_resource type="Resource" path="res://resources/regions/continental_shelf_depth.tres" id="3"]
 [ext_resource type="Script" path="res://scripts/world/graybox_route_zone.gd" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/props/sonar_reveal_target.tscn" id="5_sonar"]
+
 [sub_resource type="RectangleShape2D" id="Base"]
 size = Vector2(440, 280)
 [sub_resource type="RectangleShape2D" id="Landmark"]
@@ -234,3 +236,25 @@ offset_top = 710.0
 theme = SubResource("Signs")
 theme_override_font_sizes/font_size = 18
 text = "↓ LOWER RETURN / STOP AT 240 m\n← BASE · TRENCH BELOW IS OPTIONAL"
+
+[node name="SonarTargets" type="Node2D" parent="."]
+
+[node name="shelf-marker" parent="SonarTargets" instance=ExtResource("5_sonar")]
+position = Vector2(760, 480)
+target_id = &"shelf-marker"
+caption = "SHELF MARKER"
+
+[node name="cave-marker" parent="SonarTargets" instance=ExtResource("5_sonar")]
+position = Vector2(1000, 520)
+target_id = &"cave-marker"
+caption = "CAVE MARKER"
+
+[node name="overlook-marker" parent="SonarTargets" instance=ExtResource("5_sonar")]
+position = Vector2(1750, 240)
+target_id = &"overlook-marker"
+caption = "OVERLOOK MARKER"
+
+[node name="spire-marker" parent="SonarTargets" instance=ExtResource("5_sonar")]
+position = Vector2(3560, 650)
+target_id = &"spire-marker"
+caption = "SPIRE MARKER"

@@ -21,7 +21,7 @@ func place(body: SubmarineController, position: Vector2) -> void:
 	camera.force_update_scroll()
 
 func _initialize() -> void:
-	var scene: MovementPrototype = load("res://scenes/main/main.tscn").instantiate() as MovementPrototype
+	var scene: MovementPrototype = load("res://scenes/main/movement_prototype.tscn").instantiate() as MovementPrototype
 	scene.settings_path = "user://bta013-visual-defaults.json"
 	root.add_child.call_deferred(scene)
 	await frames(5)

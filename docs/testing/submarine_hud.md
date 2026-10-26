@@ -1,5 +1,9 @@
 # BTA-013 HUD verification
 
+> BTA-014: this historical course now launches with
+> `godot --path . res://scenes/main/movement_prototype.tscn`. Add `-- --debug-controls`
+> for resource-test controls. The default main scene is the [continental shelf](continental_shelf.md).
+
 Use Godot **4.6.3.stable.official.7d41c59c4**, standard edition. This HUD uses the
 existing BTA-011/BTA-012 APIs, with no gameplay, balance or workflow changes.
 

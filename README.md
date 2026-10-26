@@ -2,11 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-013**. A reusable, signal-driven instrument HUD displays
-hull, battery, oxygen, authored depth, safe operating depth and text pressure
-warnings. Damage feedback and persistent depleted states accompany the existing
-movement/resource/depth prototype. Sonar is explicitly unimplemented; no new
-survival or later-milestone mechanics are added.
+Current milestone: **BTA-014**. The default scene is a handcrafted continental-
+shelf exploration graybox: safe base, cave passage, twin-spire landmark, lower
+return route, optional overlook and marked pressure trench. It uses the existing
+submarine, resources, damage, HUD and settings. A paused briefing and explicit
+restart make the test route repeatable. No sonar, scan, creature, mission,
+repair/refill station, upgrade or narrative system is implemented.
 
 ## Requirements
 
@@ -55,9 +56,37 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_DATA_HOME" "$XDG_CONFIG_HOME"
 cd /workspace/below-the-abyss
 ```
 
+## Continental-shelf exploration graybox (BTA-014)
+
+Run `godot --path .`. Select Begin/Resume with arrows/Tab/Enter or D-pad/stick/A.
+Pilot east through **02 Cave** to **03 Twin Spires**, then return west through the
+lower passage and ascend to **01 Shelf Base**. The required course stays above
+260 m; an optional overlook and signed pressure trench branch off it. All filled
+rock/platform geometry is solid; thin brackets/lines and arrows are nonsolid
+navigation marks. The local surface reference is Y=0 at 0.25 m per unit.
+
+Escape/P/Start opens the test-route menu, with Resume, Input settings and Restart.
+Restart resets the complete vessel/test session at base while preserving saved
+input settings. Entering base itself provides no repair/refill service. The
+on-screen loop check is ephemeral test telemetry, with no rewards or persistence.
+An automated input-driven full flight takes about **42 seconds**, ending with
+100 hull and battery/oxygen reserves; first-time manual playtesting remains needed.
+
+See [layout, acceptance evidence, screenshots and manual route](docs/testing/continental_shelf.md)
+and [design decisions](docs/decisions/bta-014-continental-shelf.md).
+
+The original movement/depth/HUD course remains available as a development fixture:
+
+```sh
+godot --path . res://scenes/main/movement_prototype.tscn
+# That original fixture with optional resource-test controls:
+godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
+```
+
 ## Movement prototype (BTA-010)
 
-Run `godot --path .`, or press F5. Move with WASD/arrows or left stick/D-pad
+For the original course, run `godot --path . res://scenes/main/movement_prototype.tscn`.
+Move with WASD/arrows or left stick/D-pad
 (default bindings). Release to coast; reverse thrust to brake. Escape/P/Start
 opens input settings and stops the motor. Save changes and select Return to
 movement; unsaved edits are discarded on return.
@@ -93,10 +122,12 @@ not the production HUD or station/game-over system.
 
 ## Depth and hull damage (BTA-012)
 
-The cave's authored surface is local Y=0, with 0.25 m per authored unit. Spawn is
+The original movement fixture's authored surface is local Y=0, with 0.25 m per authored unit. Spawn is
 130 m deep. CAUTION starts at 260 m; depth strictly beyond the 300 m safe rating
 starts a two-second grace period, then four hull units/second of pressure damage.
-Descend between X=200–450 into the marked deeper shaft to demonstrate pressure.
+In the original movement fixture, descend between X=200–450 into the marked
+deeper shaft to demonstrate pressure. The default shelf instead has an optional
+trench at X=2880–3280.
 
 Severe impacts use inward normal speed: above 150 px/s, damage is 0.1 per excess
 px/s, capped at 20. A full-speed perpendicular hit typically costs 9 hull.
@@ -110,7 +141,8 @@ The maximum-depth API is ready for a future caller; no upgrade system is added.
 
 ## Prototype HUD (BTA-013)
 
-Launch `godot --path .` for the production HUD. Rounded dark instrument cards,
+Launch `godot --path .` and Begin/Resume for the production HUD in the shelf.
+The original course remains in `scenes/main/movement_prototype.tscn`. Rounded dark instrument cards,
 authored vector marks, numeric values/capacities and normalized bars show vessel
 resources. Depth warnings spell out **SAFE**, **CAUTION** and **DANGER**, with
 ASCEND instructions, authoritative grace time and persistent DEPLETED labels.
@@ -281,7 +313,9 @@ submarine velocity and real physics/camera integration suites; BTA-011 adds
 resource transfer, signal, drain and prototype-panel coverage; BTA-012 adds
 depth mapping, warning, pressure and collision-damage coverage; BTA-013 adds
 HUD initial/signal updates, depletion, rebinding, feedback and responsive-layout
-coverage. All previous suites remain enabled.
+coverage. BTA-014 adds route telemetry, spawn/terrain/depth/connectivity, real input-driven
+exploration/return, restart, settings, camera and menu coverage. All previous
+suites remain enabled against their original course fixture.
 The wrapper enforces a 180-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.

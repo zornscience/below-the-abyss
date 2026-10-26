@@ -1,5 +1,9 @@
 # BTA-011 submarine resources
 
+> BTA-014: this historical course now launches with
+> `godot --path . res://scenes/main/movement_prototype.tscn`. Add `-- --debug-controls`
+> for resource-test controls. The default main scene is the [continental shelf](continental_shelf.md).
+
 > BTA-013: the current HUD replaces temporary indicators. For resource test
 > controls, launch `godot --path . -- --debug-controls` and press Interact (E/A).
 > Earlier screenshots below show historical instrumentation. See [current HUD](submarine_hud.md).

@@ -165,3 +165,4 @@ common/physics_interpolation=true
 
 2d_physics/layer_1="Cave walls"
 2d_physics/layer_2="Submarine"
+2d_physics/layer_3="Route test zones"

@@ -93,6 +93,10 @@ text = "Mission board / notices"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Prototype upgrades"
+[node name="OpenStationStory" type="Button" parent="Margin/Content/ServicesPage/ServicesFooter"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Expedition log / debrief"
 [node name="BoardPage" type="VBoxContainer" parent="Margin/Content"]
 unique_name_in_owner = true
 visible = false

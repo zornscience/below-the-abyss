@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="NarrativeCatalog" load_steps=11 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/narrative_catalog.gd" id="catalog"]
+[ext_resource type="Script" path="res://scripts/narrative/narrative_entry.gd" id="entry"]
+[sub_resource type="Resource" id="Briefing"]
+script = ExtResource("entry")
+stable_id = &"shelf-station-briefing"
+title = "01 / Shelf Base — Before departure"
+evidence = 0
+text = "NERIS, this is Shelf Base. The last scientific expedition stopped reporting after a survey of Twin Spires. We have their route, but no account of why they left it.\n\nA faint sequence still reaches the shelf receivers. It could be equipment, stone under stress, or something we have not measured. Record first; name it later.\n\nStart with the field reference plate just east of base. Use active sonar to identify its marker, approach, then deliberately scan with Interact. Follow the cave to Twin Spires and identify the survey landmark. Return by the marked lower passage.\n\nAt base, dock and open Expedition log / debrief. Bring back the record, not a theory. You may skip this text and reread it at any time."
+[sub_resource type="Resource" id="Departure"]
+script = ExtResource("entry")
+stable_id = &"shelf-survey-orders"
+title = "02 / Survey orders — Evidence before explanation"
+evidence = 1
+text = "Survey accepted. The station board tracks Shelf expedition and Calibration study; their saved acknowledgements also form this chapter's debrief.\n\nThe reference plate carries the required scientific record. Identify it with sonar, approach, and activate Interact to scan. A sonar echo alone is not a scientific scan. Earlier observations count.\n\nThen survey Twin Spires through the cave and return to Shelf Base. The geological overlook and the creature pockets are optional. There is no reason to enter the predator's habitat. Watch your reserves and turn back when necessary; station services are available after docking."
+[sub_resource type="Resource" id="Marker"]
+script = ExtResource("entry")
+stable_id = &"shelf-damaged-marker"
+title = "03 / Reference marker — A clean break"
+evidence = 2
+text = "The sonar-identified reference marker belongs to the missing survey array. One mounting ear has sheared off; the plate beside it remains readable.\n\nIts face carries a dense strip of etched field annotations. Approach the plate and scan intentionally. There is no distress symbol, only a direction toward the cave.\n\nThis is an observation, not evidence of an attack."
+[sub_resource type="Resource" id="Record"]
+script = ExtResource("entry")
+stable_id = &"shelf-expedition-field-record"
+title = "04 / Recovered field record — Transmitter isolated"
+evidence = 3
+text = "Recovered by scientific scan from the reference plate. Field record 07, expedition survey array.\n\n“Twin Spires: transmitter isolated for the quiet run. The receiver continued to mark the same interval. We checked the cable twice. No moving source could be resolved.\n\n“Leave the reference face here. Take the recording unit to the lower receiver. If the sequence stops, keep recording.”\n\nThe strip ends at a scored edge. It establishes that the crew noticed the sequence and moved their equipment. It does not establish what produced it. Identify Twin Spires and bring this record back to base."
+[sub_resource type="Resource" id="Spires"]
+script = ExtResource("entry")
+stable_id = &"shelf-spires-observation"
+title = "05 / Twin Spires — The survey baseline"
+evidence = 4
+text = "Twin Spires is now fixed on the exploration map. The paired columns match the expedition's survey reference. A small instrument saddle remains between them; its retaining strap is open.\n\nThe landmark ties the field record to an actual survey location. The instrument itself is gone. The scene supplies no reliable explanation for its removal.\n\nReturn west by the lower BASE arrows. The station can compare this location with the expedition's departure manifest."
+[sub_resource type="Resource" id="Return"]
+script = ExtResource("entry")
+stable_id = &"shelf-safe-return"
+title = "06 / Return received — Ready for review"
+evidence = 5
+text = "The survey record confirms your completed return to Shelf Base. Arrival has not repaired or refilled NERIS.\n\nIf the reference plate scan is complete, dock and select Expedition log / debrief. Submit both saved acknowledgements to close the chapter. If the plate is still unscanned, it remains just east of base; no evidence can be permanently missed."
+[sub_resource type="Resource" id="Debrief"]
+script = ExtResource("entry")
+stable_id = &"shelf-concluding-debrief"
+title = "07 / Debrief — They took the receiver"
+evidence = 6
+text = "SHELF BASE / Expedition review acknowledged\n\nYou brought back the field record, fixed Twin Spires on the map, and returned safely. The calibration and survey acknowledgements are saved.\n\nThe departure manifest lists one portable receiver. It was checked out after the crew's planned final survey, not lost during it. The empty saddle at the spires fits that receiver. Their move beyond the shelf appears deliberate; we still do not know why contact stopped.\n\nThe scored strip contains one final instruction: “If the sequence stops, keep recording.” They were preparing to listen to the silence.\n\nCHAPTER CONCLUDED / The next investigation leads below the shelf. For now, NERIS is home. Review the expedition log or return to piloting."
+[sub_resource type="Resource" id="Geology"]
+script = ExtResource("entry")
+stable_id = &"shelf-optional-strata-note"
+title = "Optional observation / The stone is not an answer"
+evidence = 7
+text = "Scientific scan: overlook formation. Angular faces and mineral seams provide a useful local reference, but the scan does not identify the acoustic source.\n\nA margin note on the survey annotation reads: “Do not mistake a regular shape for an explanation.” This observation is optional and does not gate the expedition debrief."
+[resource]
+script = ExtResource("catalog")
+entries = Array[ExtResource("entry")]([SubResource("Briefing"), SubResource("Departure"), SubResource("Marker"), SubResource("Record"), SubResource("Spires"), SubResource("Return"), SubResource("Debrief"), SubResource("Geology")])

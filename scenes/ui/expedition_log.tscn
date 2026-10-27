@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/ui/expedition_log.gd" id="script"]
+[ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="theme"]
+[node name="ExpeditionLog" type="Control"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("script")
+theme = ExtResource("theme")
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.015, 0.035, 0.05, 1)
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+[node name="Content" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+[node name="Title" type="Label" parent="Margin/Content"]
+layout_mode = 2
+text = "EXPEDITION LOG / The Quiet Run"
+theme_override_font_sizes/font_size = 24
+[node name="Help" type="Label" parent="Margin/Content"]
+layout_mode = 2
+text = "Arrows / Tab / D-pad: select · Enter / A: activate · Esc / B: back · Text ↑↓: scroll"
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+[node name="StoryObjective" type="Label" parent="Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 18
+[node name="Body" type="HBoxContainer" parent="Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+[node name="EntryScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+layout_mode = 2
+custom_minimum_size = Vector2(250, 160)
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+[node name="StoryEntries" type="VBoxContainer" parent="Margin/Content/Body/EntryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+[node name="StoryScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+[node name="StoryDetail" type="Label" parent="Margin/Content/Body/StoryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 20
+[node name="StoryFeedback" type="Label" parent="Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+[node name="Actions" type="HFlowContainer" parent="Margin/Content"]
+layout_mode = 2
+[node name="CloseStory" type="Button" parent="Margin/Content/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back / skip text"
+custom_minimum_size = Vector2(0, 40)
+[node name="BeginSurvey" type="Button" parent="Margin/Content/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Begin survey / count earlier evidence"
+custom_minimum_size = Vector2(0, 40)
+[node name="SubmitDebrief" type="Button" parent="Margin/Content/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Submit expedition debrief"
+custom_minimum_size = Vector2(0, 40)
+[node name="StoryUp" type="Button" parent="Margin/Content/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Text ↑"
+custom_minimum_size = Vector2(0, 40)
+[node name="StoryDown" type="Button" parent="Margin/Content/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Text ↓"
+custom_minimum_size = Vector2(0, 40)

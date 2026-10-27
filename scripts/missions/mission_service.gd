@@ -2,6 +2,7 @@ class_name MissionService
 extends Node
 ## Scene-owned deterministic state machine; domain registries remain authoritative.
 
+signal records_restored
 signal missions_changed
 signal mission_completed(mission_id: StringName)
 signal acknowledgement_claimed(mission_id: StringName, acknowledgement_id: StringName)
@@ -147,6 +148,7 @@ func recover_backup() -> Error:
 	if restored.error == OK:
 		_records = restored.records
 		missions_changed.emit()
+		records_restored.emit()
 	_busy = false
 	return restored.error
 
@@ -187,6 +189,7 @@ func restore_records(records: Dictionary) -> Error:
 	if _busy or _catalog == null or not _catalog.valid_records(records):
 		return ERR_INVALID_DATA
 	_records = records.duplicate(true)
+	records_restored.emit()
 	# Retain bounded, witnessed returns on same-process recovery; fresh nodes start empty.
 	missions_changed.emit()
 	return OK

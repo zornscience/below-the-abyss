@@ -6,6 +6,9 @@ extends MovementPrototype
 var audio: SoundscapeMixer
 var gameplay_audio: GameplayAudio
 var audio_settings: AudioSettingsPanel
+var narrative: NarrativeService
+var expedition_log: ExpeditionLog
+var _story_from_station: bool = false
 var saves: SaveCoordinator
 var _expedition_started: bool = false
 const MISSION_CATALOG: MissionCatalog = preload("res://resources/missions/shelf_missions.tres")
@@ -146,7 +149,56 @@ func _ready() -> void:
 	$SettingsLayer.add_child(audio_settings)
 	audio_settings.close_requested.connect(open_route_menu)
 	route_menu.audio_requested.connect(open_audio_settings)
+	narrative = NarrativeService.new()
+	add_child(narrative)
+	if narrative.setup(preload("res://resources/narrative/shelf_chapter.tres"), missions, discoveries, research) != OK:
+		push_error("Narrative chapter setup failed.")
+	narrative.progress_guard = func() -> bool: return saves == null or saves.can_write()
+	expedition_log = preload("res://scenes/ui/expedition_log.tscn").instantiate() as ExpeditionLog
+	var story_layer: CanvasLayer = CanvasLayer.new()
+	story_layer.layer = 50
+	add_child(story_layer)
+	story_layer.add_child(expedition_log)
+	expedition_log.setup(narrative)
+	expedition_log.close_requested.connect(close_story)
+	route_menu.story_requested.connect(open_story)
+	station_menu.story_requested.connect(open_station_story)
+	narrative.log_changed.connect(_refresh_route_status)
+	narrative.chapter_concluded.connect(func() -> void: audio.request(&"acknowledge"))
+	var details: ShelfStoryDetails = ShelfStoryDetails.new()
+	region.add_child(details)
+	details.bind_story(narrative)
+	# Concise skippable opening: read on the existing start/pause page, expand via log.
+	(route_menu.get_node("%Brief") as Label).text = "NERIS / Shelf Base: a scientific expedition is missing.\nAn unexplained sequence still reaches the shelf receivers.\nPing the plate east of base, approach and Interact to scan.\nSurvey Twin Spires, return safely. Expedition log: full briefing."
+	_refresh_route_status()
 	open_route_menu()
+
+
+func open_station_story() -> void:
+	if not station_menu.visible:
+		return
+	_story_from_station = true
+	station_menu.hide()
+	expedition_log.present(station)
+
+
+func open_story() -> void:
+	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible or audio_settings.visible:
+		return
+	_story_from_station = false
+	submarine.velocity = Vector2.ZERO
+	submarine.set_simulation_enabled(false)
+	route_layer.hide()
+	expedition_log.present()
+
+
+func close_story() -> void:
+	expedition_log.hide()
+	if _story_from_station:
+		station_menu.show()
+		station_menu.show_services()
+	else:
+		open_route_menu()
 
 
 func open_audio_settings() -> void:
@@ -159,6 +211,8 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if expedition_log != null and expedition_log.visible:
+		return
 	if audio_settings != null and audio_settings.visible:
 		return
 	if exploration_map.visible or research_log.visible or station_menu.visible:
@@ -197,6 +251,8 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
+	if expedition_log != null and expedition_log.visible:
+		return
 	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
 		return
 	_expedition_started = true
@@ -281,6 +337,8 @@ func restart_route() -> void:
 	if station.end_interaction() != OK:
 		return
 	station_menu.hide()
+	if expedition_log != null:
+		expedition_log.hide()
 	if gameplay_audio != null:
 		gameplay_audio.reset_session()
 	# Discoveries and their store intentionally survive all test-route resets.
@@ -341,12 +399,18 @@ func _refresh_route_status() -> void:
 		GrayboxRouteCheck.Stage.COMPLETE:
 			status.text = "LOOP COMPLETE / %.1f s active piloting · Pause / Start to restart" % route_check.elapsed_seconds
 
+	if narrative != null:
+		status.text = narrative.guidance() if route_check.stage != GrayboxRouteCheck.Stage.COMPLETE else (
+			"LOOP COMPLETE / CHAPTER CONCLUDED · Pause: expedition log" if narrative.is_concluded() else "LOOP COMPLETE / " + narrative.guidance().get_slice(" / ", 1))
+
 
 func _refresh_mission_status() -> void:
 	(%MissionStatus as Label).text = missions.status_text() if missions.store.can_write() else "MISSIONS / SAVE BLOCKED · Open station mission board for recovery"
 
 
 func _save_status() -> void:
+	if narrative != null:
+		narrative.log_changed.emit()
 	if saves == null:
 		route_menu.configure_save_ui(false, _expedition_started, false, "Expedition saving not configured for this development fixture.")
 	else:

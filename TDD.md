@@ -70,6 +70,23 @@ Shared state machine with Idle/Patrol/Investigate/Pursue/Flee/Return. Inputs: vi
 ### Interaction and missions
 `Interactable` contract exposes `can_interact(context)` and `interact(context)`; mission updates use typed domain events (`log_recovered`, `region_entered`, `scan_completed`) and stable IDs. MissionService validates prerequisites and idempotently applies completion rewards. Essential progression cannot depend on a nonpersistent transient node.
 
+### Implemented BTA-042 narrative projection
+
+NarrativeEntry/NarrativeCatalog Resources validate original text, stable IDs and
+bounded evidence selectors. Scene-owned NarrativeService projects the existing
+MissionService, DiscoveryRegistry and ResearchRegistry into a rereadable log;
+Begin survey delegates acceptance of the two existing missions, and station debrief
+delegates their existing docking-guarded, idempotent claims. No new mission ledger,
+checkpoint field, store, reward or event dispatcher. Research/POI/mission IDs and
+schema versions remain unchanged; old saves reconstruct their eligible entries.
+MissionService.records_restored explicitly distinguishes silent restoration from
+real completion/acknowledgement signals. Generic registry refreshes update UI;
+record_unlocked/chapter_concluded are bounded presentation events from actual domain
+transitions, never replayed during load. The start/pause page contains the concise
+opening briefing; ExpeditionLog supplies focus navigation and text-scroll buttons.
+See [story/API/IDs/save decisions](docs/narrative_slice.md) and
+[verification and actual native walkthrough](docs/testing/narrative_slice.md).
+
 ## 7. World and level pipeline
 Build one authored region as a Godot scene with TileMapLayer or collision polygons, parallax backdrops, POI markers, acoustic targets and spawn points. Use separate static collision and interaction layers. Start with discrete transitions at tunnels/airlocks. Seamless neighboring-region streaming is deferred until demonstrated necessary. Keep a region checklist for spawn safety, return route, discovery, landmark, optional secret and performance budget.
 

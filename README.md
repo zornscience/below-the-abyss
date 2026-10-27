@@ -2,18 +2,27 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-041**. The Continental Shelf now has original synthesized
-underwater ambience, machinery, sonar/research cues, resource warnings and reactive
-creature/threat audio. Pause → **Audio settings** provides independent Master,
-Music, Ambience, Effects and UI volumes plus mute, with keyboard/controller navigation
-and explicit persistent Save. Music is intentionally silent in this region.
+Current milestone: **BTA-042 — The Quiet Run**. Shelf Base briefs NERIS on the
+missing expedition. Identify and scan the reference plate east of base, survey
+Twin Spires through the cave, then return and dock for an explicit debrief.
+**Expedition log / briefing** is available on the start/pause page; the station
+provides **Expedition log / debrief**. Text is skippable and rereadable.
 
-Sound observes real gameplay signals; sonar detection, creature hearing, resources
-and saved progression remain authoritative. Critical feedback remains visual.
-See the [audio direction/API/provenance](docs/audio_direction.md),
-[audio verification, examples and manual walkthrough](docs/testing/soundscape.md),
-[visual style guide](docs/art_direction.md) and [art verification](docs/testing/art_direction.md).
-Audio and art remain prototype studies requiring human review.
+In the log choose **Begin survey / count earlier evidence** to intentionally accept
+the two existing board objectives. Earlier discoveries/scans count. Survey return
+and both station acknowledgements persist through the existing save system; story
+entries reconstruct from those records. No extra save file/schema or reward is added.
+The geological overlook and creature encounters remain optional.
+
+See the [narrative overview and spoiler-marked ending](docs/narrative_slice.md),
+[complete walkthrough, native screenshots, timings and verification](docs/testing/narrative_slice.md),
+[visual style guide](docs/art_direction.md) and [audio direction](docs/audio_direction.md).
+The 20–40 minute unfamiliar-player target requires human playtesting; automation
+provides actual shorter timings, not a claim that target is met.
+
+Pause → **Audio settings** retains independent volumes/mute and explicit Save.
+The existing soundscape, station services, upgrades, map/research and optional
+creatures remain available. Art/audio/narrative are prototype studies for review.
 
 ## Requirements
 

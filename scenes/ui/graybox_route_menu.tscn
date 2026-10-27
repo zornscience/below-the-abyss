@@ -45,11 +45,21 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 text = "Input settings"
-[node name="AudioSettings" type="Button" parent="Center/Panel/Content"]
+[node name="Tools" type="HBoxContainer" parent="Center/Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+[node name="AudioSettings" type="Button" parent="Center/Panel/Content/Tools"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Audio settings / independent volumes and mute"
+text = "Audio settings / mix and mute"
+size_flags_horizontal = 3
+[node name="OpenStory" type="Button" parent="Center/Panel/Content/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+size_flags_horizontal = 3
+text = "Expedition log / briefing"
 [node name="Restart" type="Button" parent="Center/Panel/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)

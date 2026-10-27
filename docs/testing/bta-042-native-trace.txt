@@ -1,0 +1,22 @@
+FIRST PROCESS — actual input-driven chapter
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA042_RECORD_UNLOCKED shelf-survey-orders
+BTA042_RECORD_UNLOCKED shelf-damaged-marker
+BTA042_RECORD_UNLOCKED shelf-expedition-field-record
+BTA042_RECORD_UNLOCKED shelf-spires-observation
+BTA042_RECORD_UNLOCKED shelf-safe-return
+BTA042_RECORD_UNLOCKED shelf-concluding-debrief
+BTA042_CHAPTER_CONCLUDED
+BTA042_NATIVE_CHAPTER_OK automated_wall_seconds=51.391 active_route_seconds=44.883 entries=7 chapter_events=1 predator_required=false direct_completion_flags=false
+
+SECOND PROCESS — fresh Continue
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA042_FRESH_PROCESS_CONTINUE_OK entries=7 concluded=true replayed_story_events=0 movement_after_load=true

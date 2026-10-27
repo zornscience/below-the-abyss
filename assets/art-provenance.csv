@@ -3,3 +3,4 @@ assets/art/submarine/neris.svg,original repository SVG,repository-authored BTA-0
 assets/shaders/shelf_water.gdshader,original shader source,repository-authored BTA-040 study,project license pending,depth gradient
 assets/shaders/shelf_rock.gdshader,original shader source,repository-authored BTA-040 study,project license pending,arithmetic strata
 scripts/visuals,original vector drawing source,repository-authored BTA-040 study,project license pending,background motes lamp and landmark ink
+scripts/narrative/shelf_story_details.gd,Original programmatic instrument plate and empty strap,Repository-authored BTA-042 line geometry,Project license pending,No external source; non-colliding details on existing landmarks

@@ -2,6 +2,7 @@ class_name StationMenu
 extends Control
 ## Station page coordinator; domain rules belong to services/upgrades/missions.
 
+signal story_requested
 signal close_requested
 var _station: WeakRef
 @onready var _missions_page: MissionBoard = %MissionsPage
@@ -12,6 +13,7 @@ var _station: WeakRef
 
 func _ready() -> void:
 	(%Undock as Button).pressed.connect(func() -> void: close_requested.emit())
+	(%OpenStationStory as Button).pressed.connect(func() -> void: story_requested.emit())
 	(%OpenBoard as Button).pressed.connect(show_board)
 	(%OpenMissions as Button).pressed.connect(show_missions)
 	_missions_page.back_requested.connect(show_board)
@@ -89,6 +91,7 @@ func _refresh() -> void:
 				previews.append(titles[index] + ": " + String(quote.reason))
 	controls.append(%OpenBoard as Control)
 	controls.append(%OpenUpgrades as Control)
+	controls.append(%OpenStationStory as Control)
 	_wire_focus(controls)
 	(%ServicePreview as Label).text = "\n".join(previews)
 	var focus: Control = get_viewport().gui_get_focus_owner()

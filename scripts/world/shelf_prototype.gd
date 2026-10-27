@@ -6,6 +6,7 @@ extends MovementPrototype
 @export var extended_expedition: bool = true
 @export var revised_expedition: bool = true
 @export var canonical_chapter: bool = true
+var mission_tracker: MissionTracker
 var chapter: SunlitShallows
 var _station_failure: String = ""
 var _station_failure_remaining: float = 0.0
@@ -263,7 +264,7 @@ func _ready() -> void:
 		station_menu.use_hub = true
 		get_viewport().size_changed.connect(_layout_tutorial)
 		tutorial_card.minimum_size_changed.connect(_layout_tutorial)
-		(hud.get_node("Top/Identity") as Control).minimum_size_changed.connect(_layout_tutorial)
+		hud.identity_container().minimum_size_changed.connect(_layout_tutorial)
 		accessibility_service.queue_apply()
 		($UI/RouteGuide as Control).hide()
 		(route_menu.get_node("%Brief") as Label).text = "A survey submarine is missing on the outer shelf. Recover its trail, locate the wreck and bring back the recorder. Prepare at Shelf Base. Help & tutorials explains the instruments."
@@ -281,6 +282,10 @@ func _ready() -> void:
 			chapter = SunlitShallows.new()
 			add_child(chapter)
 			chapter.setup(self)
+	if extended_expedition:
+		mission_tracker = MissionTracker.new()
+		get_node("UI").add_child(mission_tracker)
+		mission_tracker.setup(self)
 
 
 func open_help() -> void:
@@ -661,10 +666,10 @@ func _new_expedition() -> void:
 func _layout_tutorial() -> void:
 	if tutorial_card == null: return
 	var width: float = get_viewport().get_visible_rect().size.x
-	tutorial_card.size = Vector2(minf(420.0,width*0.42),0.0)
-	tutorial_card.custom_minimum_size.x = minf(350.0,width*0.42)
-	tutorial_card.position = Vector2(24,(hud.get_node("Top/Identity") as Control).get_global_rect().end.y+12)
-	tutorial_card.visible = not tutorial_card.title_label.text.is_empty() and submarine.is_physics_processing()
+	tutorial_card.size = Vector2(minf(340.0,width*0.32),0.0)
+	tutorial_card.custom_minimum_size.x = minf(280.0,width*0.32)
+	tutorial_card.position = Vector2(24,(hud.get_node("%InstrumentDeck") as Control).get_global_rect().end.y+50.0+12)
+	tutorial_card.visible = not tutorial_card.title_label.text.is_empty() and submarine.is_physics_processing() and (revision==null or not revision.ui.notifications.visible or not revision.ui.notifications.panel.visible)
 
 func close_settings() -> void:
 	super.close_settings()

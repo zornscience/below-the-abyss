@@ -20,7 +20,7 @@ func _tap(button: JoyButton) -> void:
 			JOY_BUTTON_START: KEY_P, JOY_BUTTON_BACK: KEY_M, JOY_BUTTON_X: KEY_F,
 			JOY_BUTTON_DPAD_DOWN: KEY_DOWN, JOY_BUTTON_DPAD_UP: KEY_UP,
 			JOY_BUTTON_DPAD_LEFT: KEY_LEFT, JOY_BUTTON_DPAD_RIGHT: KEY_RIGHT,
-			JOY_BUTTON_RIGHT_SHOULDER: KEY_TAB}
+			JOY_BUTTON_RIGHT_SHOULDER: KEY_TAB, JOY_BUTTON_LEFT_SHOULDER: KEY_R}
 		key.keycode = keys[button]
 		key.physical_keycode = key.keycode
 		key.pressed = true
@@ -110,7 +110,8 @@ func _point(name: String) -> Vector2:
 
 
 func _respond_radio() -> void:
-	if _scene.revision.ui.radio_page.visible:
+	if not _scene.revision.ui.notifications.pending.is_empty():
+		if not _scene.revision.ui.notifications.expanded: await _tap(JOY_BUTTON_LEFT_SHOULDER)
 		await _activate(_scene.revision.ui.find_child("AcceptTransmission",true,false) as Control)
 func _control(id: String) -> Control:
 	return _scene.revision.ui.find_child(id,true,false) as Control

@@ -8,6 +8,8 @@ signal collision_occurred(normal: Vector2, approach_speed: float)
 @export var motion: SubmarineMotion = SubmarineMotion.new()
 var facing: float = 1.0
 var depth_region: DepthRegion
+# Optional presentation input filter; never gates movement or domain request_ping APIs.
+var sonar_input_guard: Callable
 
 @onready var resource_system: SubmarineResourceSystem = $ResourceSystem
 @onready var hull_system: SubmarineHullSystem = $HullSystem
@@ -20,7 +22,7 @@ var depth_region: DepthRegion
 func _physics_process(delta: float) -> void:
 	passive.advance(delta)
 	sonar.advance(delta)
-	if Input.is_action_just_pressed("sonar_ping"):
+	if Input.is_action_just_pressed("sonar_ping") and (not sonar_input_guard.is_valid() or sonar_input_guard.call()):
 		sonar.request_ping()
 	var thrust: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	resource_system.advance(delta, thrust.length())

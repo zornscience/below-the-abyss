@@ -195,12 +195,11 @@ func test_pause_freezes_buoy_scanning_and_mute_does_not_hide_its_message() -> vo
 	assert_eq(game.submarine.scanner.snapshot().progress,before)
 	game.submarine.set_simulation_enabled(true)
 	game.submarine.scanner.advance(3.0)
-	assert_true(game.revision.ui.radio_page.visible)
-	var text: String = ""
-	for node: Node in game.revision.ui._radio_body.get_children():
-		if node is Label: text+=node.text
-	assert_true(text.contains(SunlitShallowsData.MESSAGE))
-	assert_false(game.submarine.is_physics_processing())
+	assert_true(game.revision.ui.notifications.contains_message("sunlit-buoy-recovered"))
+	assert_true(game.submarine.is_physics_processing())
+	game.revision.ui.notifications.toggle()
+	assert_true(game.revision.ui.notifications.transcript.text.contains(SunlitShallowsData.MESSAGE))
+	assert_true(game.submarine.is_physics_processing())
 func test_recovery_and_restart_keep_recorded_choice_message_and_claim_without_replay() -> void:
 	_launch()
 	_bloom(false)

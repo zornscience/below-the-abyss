@@ -295,3 +295,23 @@ old shallow wreck are unchanged. Protected limits at y=800/x=3900 prevent enteri
 future depths; camera/map bounds match the first course. Explicit prototype mode
 disables these chapter-only bounds and restores existing outer-course behavior.
 See [APIs, commands, migrations and verification](docs/testing/bta-047/README.md).
+
+## Compact production interface — BTA-048
+
+ResourceGauge normalizes finite current/positive-maximum readings before display-only
+rounding. The compact path uses existing glyphs, exact-third status colors and explicit
+LOW/EMPTY/INVALID text. SubmarineHud owns compact reflow and exposes identity_container
+for relocated secondary instruments; accessibility/tutorial/context consumers use the
+new placements. Historical development-layout APIs remain for regression fixtures.
+
+Scene-owned MissionTracker is a read-only projection of accepted MissionService,
+SunlitShallows and narrative state. RadioNotifications owns a bounded transient queue
+of existing IDs, previews, unread badge and a scrollable reader, without pausing or
+mutating vessel motion. ExpeditionRevision remains the authority for eligibility,
+mission acceptance, persistent acknowledgement and checkpoint writes. The buoy uses
+its existing research/log state, with no additional acknowledgement ledger. Expedition
+schema 6 is unchanged. Settings schema 1 compatibly adds a remappable open_radio action,
+choosing unused descriptors without altering existing bindings. No dependencies or
+new gameplay systems. A scene-supplied optional sonar input guard suppresses only
+the physics step of a consumed radio control press; ordinary quick pings and movement
+remain independent. [Contracts and evidence](docs/testing/bta-048/README.md).

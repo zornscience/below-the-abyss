@@ -160,7 +160,7 @@ func test_tutorial_and_context_fit_without_covering_instruments() -> void:
 	scene.resume_route()
 	await wait_process_frames(8)
 	assert_lt(scene.tutorial_card.size.y,scene.get_viewport().get_visible_rect().size.y*0.5)
-	assert_lt(scene.pilot_context.get_global_rect().end.y,(scene.hud.get_node("%InstrumentDeck") as Control).get_global_rect().position.y)
+	assert_false(scene.pilot_context.get_global_rect().intersects((scene.hud.get_node("%InstrumentDeck") as Control).get_global_rect()))
 	assert_lt(scene.pilot_context.size.y,100.0)
 func test_ui_confirm_held_during_resume_cannot_fire_until_released() -> void:
 	scene.resume_route()

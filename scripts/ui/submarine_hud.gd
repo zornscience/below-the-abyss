@@ -40,8 +40,8 @@ func _ignore_input(node: Node) -> void:
 
 func _layout_changed() -> void:
 	(%IdentityDetail as Label).visible = size.x >= 1100.0 and not quiet
-	(%PassiveContacts as PassiveContactsPanel).set_compact(size.x < 1100.0 or large_interface)
-	(get_node("Top/Identity/Vessel") as Control).visible = not _accessibility_compact and not quiet
+	(%PassiveContacts as PassiveContactsPanel).set_compact(quiet or size.x < 1100.0 or large_interface)
+	(identity_container().get_node("Vessel") as Control).visible = not _accessibility_compact and not quiet
 
 
 func set_accessibility_compact(value: bool) -> void:
@@ -52,6 +52,7 @@ func set_accessibility_compact(value: bool) -> void:
 		gauge.accessibility_compact = value
 		gauge.set_reading(gauge.current_value, gauge.maximum_value)
 	_layout_changed()
+	if quiet: compact_reflow()
 	if is_instance_valid(_damage):
 		_maximum_depth_changed(_damage.get_maximum_depth_m())
 		_warning_changed(_damage.warning_state)
@@ -134,7 +135,7 @@ func _refresh_sonar() -> void:
 	else:
 		label.text = "SONAR / %s · COST %.1f\nRANGE %.0f u · ECHOES %d" % [
 			_sonar.status_text(), _sonar.battery_cost(), _sonar.maximum_radius(), _sonar.echo_count()]
-		if quiet: label.text = "SONAR  %s  ·  %.0f battery" % [_sonar.status_text(),_sonar.battery_cost()]
+		if quiet: label.text = "SONAR %s · %.0f power" % [_sonar.status_text(),_sonar.battery_cost()]
 
 
 func bind_passive(receiver: PassiveReceiver) -> void:
@@ -180,7 +181,7 @@ func _warning_changed(state: int) -> void:
 	if _accessibility_compact:
 		label.text = ["SAFE / WITHIN RANGE", "CAUTION / NEAR LIMIT", "DANGER / ASCEND"][state]
 	if quiet:
-		label.text = ["SAFE", "CAUTION · NEAR LIMIT", "DANGER · ASCEND"][state]
+		label.text = ["SAFE", "! CAUTION", "! DANGER · ASCEND"][state]
 	_refresh_pressure_detail()
 
 
@@ -220,6 +221,7 @@ func _process(delta: float) -> void:
 			# Grace has no change signal. Only this presentation detail is sampled;
 			# the simulation's clock remains authoritative while paused in menus.
 			_refresh_pressure_detail()
+	if quiet: compact_reflow()
 	_impact_remaining = maxf(0.0, _impact_remaining - delta)
 	_pressure_remaining = maxf(0.0, _pressure_remaining - delta)
 	if _impact_remaining == 0.0:
@@ -230,20 +232,75 @@ func _process(delta: float) -> void:
 
 func set_quiet_layout(value: bool) -> void:
 	quiet = value
-	for gauge: ResourceGauge in [hull_gauge,battery_gauge,oxygen_gauge]:
-		gauge.quiet = value
-		for pair: Array in [["%Value",22],["%Caption",16]]:
-			var label: Label = gauge.get_node(pair[0]) as Label
-			label.set_meta("a11y_font",pair[1])
-			label.add_theme_font_size_override("font_size",pair[1])
-		gauge.set_reading(gauge.current_value,gauge.maximum_value)
-	var passive: PassiveContactsPanel = %PassiveContacts
-	passive.quiet = value
-	if value:
-		passive.reparent(self)
-		passive.layout_mode = 0
-		passive.custom_minimum_size.x = 250
-		(%DepthPanel as Control).custom_minimum_size.x = 250
-		(get_node("Top/DepthPanel/Content/DepthHeader/Caption") as Label).text = "DEPTH"
+	if not value: return
+	var old: Control = %InstrumentDeck
+	var deck: VBoxContainer = VBoxContainer.new()
+	var scene_owner: Node = old.owner
+	old.unique_name_in_owner = false
+	old.name = "RetiredDeck"
+	deck.name = "InstrumentDeck"
+	add_child(deck)
+	deck.owner = scene_owner
+	deck.unique_name_in_owner = true
+	for child: Node in old.get_children(): child.reparent(deck)
+	old.queue_free()
+	deck.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	# Stack three compact readings without a full-width deck.
+	for gauge: ResourceGauge in [hull_gauge,battery_gauge,oxygen_gauge]: gauge.make_compact()
+	var identity: Control = get_node("Top/Identity") as Control
+	identity.reparent(self)
+	identity.name = "SecondaryInstruments"
+	(%DepthPanel as Control).reparent(self)
+	(%PassiveContacts as PassiveContactsPanel).quiet = true
+	(%PassiveContacts as Control).reparent(self)
+	(%PassiveContacts as PassiveContactsPanel).set_compact(true)
+	(get_node("Bottom/Feedback") as Control).reparent(self)
+	for label: Label in [%ImpactFeedback,%PressureFeedback]: label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	(get_node("Top") as Control).hide()
+	(get_node("Bottom") as Control).hide()
+	(%SettingsHint as Control).hide()
+	(%IdentityDetail as Control).hide()
+	(get_node("SecondaryInstruments/Vessel") as Control).hide()
+	(%DepthPanel as Control).get_node("Content/DepthHeader/Caption").hide()
+	(%DepthPanel as Control).get_node("Content/Rule").hide()
+	((%DepthPanel as Control).get_node("Content") as VBoxContainer).add_theme_constant_override("separation",4)
+	var depth_style: StyleBoxFlat = ((%DepthPanel as Control).get_theme_stylebox("panel") as StyleBoxFlat).duplicate() as StyleBoxFlat
+	depth_style.content_margin_top = 8
+	depth_style.content_margin_bottom = 8
+	(%DepthPanel as Control).add_theme_stylebox_override("panel",depth_style)
+	(%DepthPanel as Control).set_meta("a11y_style",[true,depth_style])
+	(%DepthValue as Label).set_meta("a11y_font",22)
+	(%DepthValue as Label).add_theme_font_size_override("font_size",22)
 	_refresh_sonar()
-	_layout_changed()
+	_ignore_input(self)
+	compact_reflow()
+
+func identity_container() -> Control:
+	return get_node("SecondaryInstruments") as Control if quiet else get_node("Top/Identity") as Control
+
+func compact_reflow() -> void:
+	if not quiet or not is_node_ready(): return
+	var width: float = size.x
+	var left_width: float = minf(280.0,width*0.32-8)
+	var right_width: float = minf(340.0,width*0.34)
+	var deck: Control = %InstrumentDeck
+	deck.position = Vector2(16,16)
+	deck.size = Vector2(left_width,deck.get_combined_minimum_size().y)
+	var depth: Control = %DepthPanel
+	depth.custom_minimum_size.x = 0
+	depth.size = Vector2(minf(280,width*0.30-16),depth.get_combined_minimum_size().y)
+	depth.position = Vector2((width-depth.size.x)*0.5,16)
+	var identity: Control = identity_container()
+	identity.position = Vector2(16,size.y-identity.get_combined_minimum_size().y-16)
+	identity.size = Vector2(minf(380,width*0.46),identity.get_combined_minimum_size().y)
+	var passive: Control = %PassiveContacts
+	passive.custom_minimum_size.x = 0
+	passive.size = Vector2(right_width,passive.get_combined_minimum_size().y)
+	passive.position = Vector2(width-right_width-16,size.y-passive.size.y-16)
+	var threat: Control = %ThreatIndicator
+	threat.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	threat.size = Vector2(right_width,threat.get_combined_minimum_size().y)
+	threat.position = Vector2(passive.position.x,passive.position.y-threat.size.y-8)
+	var feedback: Control = get_node("Feedback") as Control
+	feedback.size = Vector2(left_width,feedback.get_combined_minimum_size().y)
+	feedback.position = Vector2(16,deck.get_global_rect().end.y+8)

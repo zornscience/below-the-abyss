@@ -177,3 +177,17 @@ reserved number; BTA-045 release candidate and BTA-046 Resonance retain their ID
 
 [Implementation, route, migration, evidence and limitations](docs/testing/bta-047/README.md).
 Review in a separate PR; do not merge automatically.
+
+## BTA-048 — Compact HUD, radio notifications and mission tracker
+
+User-authorized interface redesign based on main after merged PR #30. Replace the
+production resource deck with icon/percentage readings, center depth/rating, retain
+all warnings/secondary instruments and leave the bottom center clear. Project
+accepted canonical/legacy objectives from existing services into an upper-right
+tracker. Ordinary radio arrival and transcript expansion must preserve simulation,
+velocity and movement; explicit acceptance/acknowledgement still uses the existing
+ledger/checkpoint. Add a conflict-free, compatible remappable radio action. No new
+story, gameplay, dependencies, save fields or region. Verify native comparisons,
+all supported sizes/accessibility, complete actual-input routes, full regression
+suite and Linux release. [Decisions, commands, route and evidence](docs/testing/bta-048/README.md).
+Review in a separate PR; do not merge automatically.

@@ -2,7 +2,8 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **BTA-047 — The Sunlit Shallows**, the canonical first expedition.
+Current build: **BTA-048 — compact instruments, non-blocking radio and mission tracker**,
+on **The Sunlit Shallows**, the canonical first expedition.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
 recover missing acoustician Mara Voss's emergency buoy. Bring the recording home
 for a first-expedition debrief. The Twilight Shelf is a future chapter, not playable.
@@ -18,12 +19,20 @@ for a first-expedition debrief. The Twilight Shelf is a future chapter, not play
 - **Choose:** scan the bloom unharmed or bottle a specimen for Crane. Its visual
   outcome and Wick/Okafor/Crane dialogue persist without a numeric morality score.
   Neither branch blocks completion or can be repeated for rewards.
+- **Instruments:** compact HULL / POWER / OXYGEN percentages at upper left; depth
+  centered above the environment, accepted objectives at upper right. Low/empty
+  resources and danger warnings use text/symbols as well as color.
+- **Radio:** R / left shoulder opens queued messages. Tab/right shoulder cycles
+  actions, Enter/A selects and Escape/B closes. Previews and transcripts leave
+  movement running; explicit briefing, bloom choices and station menus still pause.
 - **Dock:** slow down and deliberately use E/A. Station services repair/refill/rearm;
   passing through base does not. Submit **First expedition debrief** after returning
   with evidence. Research technology and free reassignment remain accessible.
 - **Optional tools:** ten facing-fired torpedoes (Space/right trigger/right-stick
   click), accelerating wakes and comfort-aware blasts remain available. Combat is
   not required. Sonar pings cost substantially more battery than normal cruising.
+
+[Compact layout, radio controls, comparisons and verification](docs/testing/bta-048/README.md).
 
 [Complete chapter route, APIs, compatibility, verification and native screenshots](docs/testing/bta-047/README.md).
 The shallow grounded wreck is a **separate prototype vessel, never Lantern-1**.

@@ -8,7 +8,6 @@ var buoy: EmergencyBuoyVisual
 var dressing: SunlitDressing
 var _water_color: Color
 var boundary: StaticBody2D
-var objective: Label
 var _needs_rebase: bool = false
 var _previous_scan_gate: Callable
 func setup(owner_scene: ShelfPrototype) -> void:
@@ -43,11 +42,6 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	sign.text = "200 m SURVEY LIMIT\nTwilight Shelf · future expedition"
 	sign.add_theme_font_size_override("font_size",18)
 	boundary.add_child(sign)
-	objective = Label.new()
-	objective.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	objective.add_theme_font_size_override("font_size",18)
-	scene.hud.get_node("Top/Identity").add_child(objective)
-	objective.hide()
 	_previous_scan_gate = scene.research.completion_gate
 	scene.research.completion_gate = _before_scan_completion
 	scene.research.scan_completed.connect(_scan_completed)
@@ -112,8 +106,7 @@ func _activate(value: bool) -> void:
 	(scene.region.get_node("Water") as Polygon2D).color = Color("123643") if value else _water_color
 	boundary.visible = value
 	boundary.collision_layer = 1 if value else 0
-	objective.visible = value
-	(scene.hud.get_node("Top/Identity/Vessel") as Label).text = "LANTERN-2" if value else "NERIS / 01"
+	(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2" if value else "NERIS / 01"
 	scene.missions.progress_filter = _is_chapter if value else Callable()
 	scene.narrative.entries_provider = entries if value else Callable()
 	scene.narrative.guidance_provider = guidance if value else Callable()
@@ -188,7 +181,7 @@ func guidance() -> String:
 	return "Bring Mara's recording home · return west through the upper passage and dock at Halcyon"
 func _scan_completed(id: StringName) -> void:
 	if active and id==SunlitShallowsData.BUOY:
-		read_buoy()
+		scene.revision.ui.notifications.enqueue("sunlit-buoy-recovered",entry(&"sunlit-buoy-recovered").text,"Wick / Mara’s buoy")
 	_refresh()
 func _choice_applied(id: StringName,_encounter: StringName) -> void:
 	if active:
@@ -199,10 +192,6 @@ func _refresh() -> void:
 	buoy.recovered = scene.research.is_completed(SunlitShallowsData.BUOY)
 	buoy.queue_redraw()
 	if not active: return
-	var brief: String = "Chapter complete · Twilight Shelf dossier" if concluded() else ("Study the light bloom" if not scene.story.resolved(LightBloomEncounter.ENCOUNTER) else ("Recover buoy · Twin Spires" if not buoy.recovered else "Return to Halcyon · Mara’s message"))
-	objective.text = "LANTERN-2 / "+brief
-	objective.custom_minimum_size.x = 0
-	objective.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scene.exploration_map.canvas.has_report = not buoy.recovered
 	scene.exploration_map.canvas.reported_position = Vector2(3500,620)
 	scene.exploration_map.canvas.queue_redraw()
@@ -215,8 +204,7 @@ func can_offer_prototype() -> bool:
 	return state()=="available"
 
 func close_buoy_message() -> void:
-	scene.revision.ui.radio_page.hide()
-	scene.resume_route()
+	scene.revision.ui.notifications.collapse()
 func _before_scan_completion(id: StringName) -> Error:
 	if id!=SunlitShallowsData.BUOY:
 		return _previous_scan_gate.call(id) if _previous_scan_gate.is_valid() else OK
@@ -229,7 +217,5 @@ func can_review_buoy() -> bool:
 	return active and scene.research.is_completed(SunlitShallowsData.BUOY) and scene.submarine.global_position.distance_to(buoy.global_position)<=180.0
 func read_buoy() -> Error:
 	if not can_review_buoy() or scene.revision.ui.modal(): return ERR_UNAVAILABLE
-	scene.submarine.velocity = Vector2.ZERO
-	scene.submarine.set_simulation_enabled(false)
-	scene.revision.ui.show_story_page("LANTERN-1 / EMERGENCY BUOY",entry(&"sunlit-buoy-recovered").text,"Return to piloting",close_buoy_message,&"CloseBuoyMessage",close_buoy_message)
+	scene.revision.ui.notifications.replay("sunlit-buoy-recovered",entry(&"sunlit-buoy-recovered").text,"Wick / Mara’s buoy")
 	return OK

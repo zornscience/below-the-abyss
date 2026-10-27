@@ -158,6 +158,13 @@ fire_torpedo={
 }
 
 
+open_radio={
+"deadzone": 0.25,
+"events": [Object(InputEventKey,"physical_keycode":82)
+, Object(InputEventJoypadButton,"device":-1,"button_index":9)
+]
+}
+
 [display]
 
 window/size/viewport_width=1280

@@ -131,6 +131,23 @@ audio/accessibility. Campaign schema remains version 2. See
 [controls, architecture, recovery and limitations](docs/accessibility.md) and
 [tests/native evidence](docs/testing/accessibility.md).
 
+### Implemented BTA-044 local playtest instrumentation
+
+PlaytestObserver is a scene-owned read-only adapter, composed only for playtest
+mode/builds. Explicit session consent starts PlaytestRecorder; no preference or
+campaign field enables it automatically. Monotonic wall time is split by vessel
+simulation state. Existing sonar/research/discovery/mission/damage/narrative signals
+supply bounded allowlisted events. The existing route sampler also exposes base
+entry/departure observations without changing stage/progression logic; checkpoint
+restore synchronizes occupancy and emits a restore notification silently to adapters.
+PlaytestStore validates bounded JSON, atomically replaces it with a previous-valid
+backup, and derives readable text; no network/API or raw input/log hook. New launches
+never resume recording. Reports and anonymous feedback remain separate unless the
+participant explicitly shares an ID. The Linux release preset excludes test fixtures
+and hides developer controls; explicit nested hearing Resources preserve existing
+creature settings through binary export, with no hearing/motion balance changes.
+See [toolkit, privacy/format and pending human-study gate](docs/playtesting/README.md).
+
 ## 10. Persistence schema
 Store under `user://saves/slot_N.json` using a schema version and separate backup file. Example:
 ```

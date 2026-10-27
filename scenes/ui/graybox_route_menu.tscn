@@ -123,3 +123,9 @@ text = "Cancel / keep expedition"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Confirm New Expedition"
+
+[node name="Playtest" type="Button" parent="Center/Panel/Content/SaveActions"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Playtest / local reports"

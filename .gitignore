@@ -27,3 +27,6 @@ mono_crash.*.json
 *.exe
 # Uncomment if your project does not version PCK files as runtime dependencies.
 # *.pck
+
+# Generated CSV translation-import metadata for developer provenance tables.
+/assets/*provenance.csv.import

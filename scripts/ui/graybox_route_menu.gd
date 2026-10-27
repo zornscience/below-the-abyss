@@ -2,6 +2,7 @@ class_name GrayboxRouteMenu
 extends Control
 ## Expedition pause/start UI plus distinctly labeled developer route restart.
 
+signal playtest_requested
 signal save_requested
 signal recover_requested
 signal new_expedition_requested
@@ -14,6 +15,12 @@ signal restart_requested
 
 
 func _ready() -> void:
+	(%Playtest as Button).visible = OS.has_feature("playtest") or OS.get_cmdline_user_args().has("--playtest")
+	(%Playtest as Button).pressed.connect(func() -> void: playtest_requested.emit())
+	if OS.has_feature("playtest"):
+		$Center/Panel/Content/Title.text = "CONTINENTAL SHELF / The Quiet Run"
+		(%Restart as Button).hide()
+		(%Restart as Button).disabled = true
 	(%Resume as Button).pressed.connect(func() -> void: resume_requested.emit())
 	(%Settings as Button).pressed.connect(func() -> void: settings_requested.emit())
 	(%Accessibility as Button).pressed.connect(func() -> void: accessibility_requested.emit())
@@ -36,8 +43,8 @@ func _ready() -> void:
 
 func _wire_main_focus() -> void:
 	var buttons: Array[Button] = []
-	for button: Button in [%Resume, %Settings, %AudioSettings, %OpenStory, %Accessibility, %Restart, %SaveExpedition, %NewExpedition, %RecoverExpedition]:
-		if not button.disabled:
+	for button: Button in [%Resume, %Settings, %AudioSettings, %OpenStory, %Accessibility, %Playtest, %Restart, %SaveExpedition, %NewExpedition, %RecoverExpedition]:
+		if not button.disabled and button.visible:
 			buttons.append(button)
 	for index: int in range(buttons.size()):
 		for property: String in ["focus_previous", "focus_neighbor_left", "focus_neighbor_top"]:
@@ -51,7 +58,7 @@ func focus_resume() -> void:
 
 
 func configure_save_ui(available: bool, started: bool, enabled: bool, message: String) -> void:
-	(%Resume as Button).text = "Continue saved expedition" if available and not started else "Begin / Resume test route"
+	(%Resume as Button).text = "Continue saved expedition" if available and not started else ("Begin / Resume expedition" if OS.has_feature("playtest") else "Begin / Resume test route")
 	(%Resume as Button).disabled = not enabled and message != "Expedition saving not configured for this development fixture."
 	(%SaveExpedition as Button).disabled = not enabled or (available and not started)
 	(%NewExpedition as Button).disabled = not enabled
@@ -73,6 +80,8 @@ func cancel_new() -> void:
 	(%NewConfirmation as Control).hide()
 	for control: Control in [%Brief, %ControlHints, %Resume, %Settings, %Restart, %Tools, %SaveActions]:
 		control.show()
+	if OS.has_feature("playtest"):
+		(%Restart as Button).hide()
 	focus_resume()
 
 

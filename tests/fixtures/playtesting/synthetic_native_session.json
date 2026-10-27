@@ -1,0 +1,154 @@
+{
+	"active_seconds": 60.548014,
+	"build_id": "a28d1a15b3a8a40dd7e3410b9ec44a38bb6ec9e6",
+	"completed": true,
+	"completion_active_seconds": 60.138265,
+	"completion_seconds": 71.162683,
+	"counts": {
+		"chapter_completed": 1,
+		"damage": 0,
+		"discovery": 2,
+		"error": 0,
+		"failure": 0,
+		"milestone": 4,
+		"mission_accepted": 2,
+		"mission_claimed": 2,
+		"mission_completed": 2,
+		"resource_warning": 0,
+		"scan_completed": 1,
+		"scan_started": 1,
+		"session_end": 1,
+		"session_start": 1,
+		"sonar": 2,
+		"station_return": 1
+	},
+	"damage_total": 0.0,
+	"events": [
+		{
+			"amount": 0.0,
+			"detail": "opt_in",
+			"kind": "session_start",
+			"seconds": 0.0
+		},
+		{
+			"amount": 0.0,
+			"detail": "continue",
+			"kind": "milestone",
+			"seconds": 7.74282
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-expedition",
+			"kind": "mission_accepted",
+			"seconds": 8.709704
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-calibration-study",
+			"kind": "mission_accepted",
+			"seconds": 8.713314
+		},
+		{
+			"amount": 0.0,
+			"detail": "outbound",
+			"kind": "milestone",
+			"seconds": 10.687435
+		},
+		{
+			"amount": 0.0,
+			"detail": "active_ping",
+			"kind": "sonar",
+			"seconds": 11.645205
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-navigation-marker",
+			"kind": "discovery",
+			"seconds": 11.665399
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-calibration-plate",
+			"kind": "scan_started",
+			"seconds": 12.720673
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-calibration-study",
+			"kind": "mission_completed",
+			"seconds": 15.727889
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-calibration-plate",
+			"kind": "scan_completed",
+			"seconds": 15.729568
+		},
+		{
+			"amount": 0.0,
+			"detail": "twin_spires",
+			"kind": "milestone",
+			"seconds": 42.226516
+		},
+		{
+			"amount": 0.0,
+			"detail": "active_ping",
+			"kind": "sonar",
+			"seconds": 43.632858
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-twin-spires",
+			"kind": "discovery",
+			"seconds": 43.775566
+		},
+		{
+			"amount": 0.0,
+			"detail": "route_return",
+			"kind": "station_return",
+			"seconds": 68.088827
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-expedition",
+			"kind": "mission_completed",
+			"seconds": 68.094188
+		},
+		{
+			"amount": 0.0,
+			"detail": "returned_to_base",
+			"kind": "milestone",
+			"seconds": 68.095517
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-expedition",
+			"kind": "mission_claimed",
+			"seconds": 71.15265
+		},
+		{
+			"amount": 0.0,
+			"detail": "shelf-calibration-study",
+			"kind": "mission_claimed",
+			"seconds": 71.160679
+		},
+		{
+			"amount": 0.0,
+			"detail": "the_quiet_run",
+			"kind": "chapter_completed",
+			"seconds": 71.162683
+		},
+		{
+			"amount": 0.0,
+			"detail": "disabled",
+			"kind": "session_end",
+			"seconds": 77.938563
+		}
+	],
+	"game_version": "0.1.0-playtest",
+	"menu_seconds": 17.390549,
+	"omitted_events": 0,
+	"schema_version": 1,
+	"session_id": "febdee371b6f23a945cb81f1538b8211",
+	"status": "disabled"
+}

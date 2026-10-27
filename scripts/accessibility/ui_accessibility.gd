@@ -175,7 +175,7 @@ func _apply_control(control: Control) -> void:
 
 
 func _wrap_screen(screen: Control) -> void:
-	var large: bool = _preferences.ui_scale == "large"
+	var large: bool = _preferences.ui_scale == "large" or OS.has_feature("playtest") or OS.get_cmdline_user_args().has("--playtest")
 	var parent: Node = screen.get_node_or_null("Margin")
 	var content: Control
 	if screen == _scene.route_menu:

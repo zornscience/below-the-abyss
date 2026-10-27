@@ -1,5 +1,12 @@
-[gd_resource type="Resource" script_class="CreatureProfile" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CreatureProfile" load_steps=4 format=3]
 [ext_resource type="Script" path="res://scripts/ai/creature_profile.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_receiver_profile.gd" id="2_hearing"]
+[sub_resource type="Resource" id="Hearing"]
+script = ExtResource("2_hearing")
+accepted_event_types = Array[StringName]([&"active_sonar", &"ambient"])
+maximum_range_units = 650.0
+minimum_strength = 0.2
+
 [resource]
 script = ExtResource("1")
 patrol_speed = 55.0
@@ -10,3 +17,4 @@ recovery_seconds = 2.0
 unreachable_seconds = 1.5
 navigation_bounds = Rect2(1380, 210, 620, 250)
 patrol_points = PackedVector2Array(1510, 420, 1510, 250, 1890, 250, 1890, 420)
+hearing = SubResource("Hearing")

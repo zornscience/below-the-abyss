@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="960" viewBox="0 0 640 960">
+<!-- Original irregular basalt planes. Distant decorative rock, never a navigable boundary. -->
+<defs><linearGradient id="stone" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#23444d"/><stop offset=".42" stop-color="#112c36"/><stop offset="1" stop-color="#02050b"/></linearGradient><linearGradient id="rim" x2="0" y2="1"><stop stop-color="#3b7078" stop-opacity=".45"/><stop offset="1" stop-color="#09181f" stop-opacity="0"/></linearGradient></defs>
+<path d="M640 0H367L344 67 350 134 298 181 320 244 265 286 277 353 229 397 241 467 176 512 195 576 141 622 162 694 107 742 122 812 47 873 0 960H640Z" fill="url(#stone)"/>
+<path d="M369 0L347 69 354 136 302 182 324 246 269 288 281 355 234 399 245 470 181 515 200 579 147 625 168 697 114 745 129 815 56 877 9 960H34L83 887 154 835 155 763 199 716 182 641 232 602 211 528 274 481 269 407 315 368 307 301 362 266 340 193 388 148 381 82 405 0Z" fill="url(#rim)"/>
+<g fill="#3b7078" opacity=".1"><path d="M365 155L640 94V113L338 184ZM295 314L640 237V254L282 335ZM239 440L640 372V387L244 455ZM186 566L640 481V500L200 581ZM160 699L640 607V621L173 713ZM112 826L640 729V747L105 846Z"/></g>
+<g fill="none" stroke="#02050b" stroke-width="6" opacity=".38"><path d="M440 36L454 154 415 203 450 296M517 319L482 402 510 504M374 497L331 569 362 662M498 640L461 724 479 816M273 727L232 800 251 901"/></g>
+</svg>

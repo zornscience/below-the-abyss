@@ -1,0 +1,52 @@
+BTA-049 — local verification, 2026-10-27
+Base: main 13e814a (merged PR #31)
+Branch: bta-049-halcyon-descent
+Engine: 4.6.3.stable.official.7d41c59c4; GUT 9.6.1
+XDG_CACHE_HOME=/workspace/.cache
+XDG_DATA_HOME=/workspace/.local/share
+XDG_CONFIG_HOME=/workspace/.config
+
+python3 tools/validate_godot.py
+  PASS: engine; import; 241 script checks; startup smoke.
+  /tmp/bta049-validation.log; build/ci-logs/{import,parser,smoke,summary}.log
+python3 tools/run_tests.py
+  Preflight PASS: 580/580; 26639 assertions; 405.722 s; 65 scripts.
+  /tmp/bta049-full-final.log (before final accessibility-return regression).
+  Final full-suite result follows the clean implementation commit.
+godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gdisable_colors -gconfig= -gtest=res://tests/integration/test_cinematic_title.gd
+  PASS: 7/7; 97 assertions; 9.123 s.
+  /tmp/bta049-focused-final.log
+  Includes actual Accessibility cancel -> visible title focus, input devices,
+  six size/text combinations, recovery/prototype controls, resource/pose isolation.
+python3 tools/verify_sunlit_shallows.py
+  PASS: 12 launches; both outcomes/devices, full and mid-buoy Continue;
+  no combat or replayed choices/rewards. /tmp/bta049-sunlit.log
+python3 tools/verify_revision_two.py
+  PASS: 472.7 simulation seconds; full hull, return battery 72.5869586;
+  dock battery 100; 4 research points; 10 torpedoes; no excavation.
+  /tmp/bta049-revision.log
+python3 tools/verify_expanded_expedition.py
+  PASS: 320.7166667 simulation seconds; hull 100; battery 73.6623615;
+  oxygen 90.2625; no excavation. /tmp/bta049-expanded.log
+python3 tools/verify_story_choice.py
+  PASS: eight launches; both outcomes/devices, silent Continue.
+  /tmp/bta049-bloom.log
+python3 -m unittest discover -s tests/python -v
+  PASS: 7/7. /tmp/bta049-python.log
+
+godot --headless --path . --script res://tests/fixtures/capture_halcyon_descent.gd -- --quit-test
+  PASS: controller navigation/activation closes via the original Quit callback.
+  No --quit-after; exit 0; no leaked coroutine warning.
+  /tmp/bta049-quit-input-final.log
+
+Native evidence: eight PNGs; compatibility/X11/Mesa llvmpipe; DISPLAY=:98,
+LIBGL_ALWAYS_SOFTWARE=1, LP_NUM_THREADS=2, Dummy audio; no fixed FPS.
+BTA_EVIDENCE_DIR=docs/testing/bta-049/screenshots godot --path . --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/fixtures/capture_halcyon_descent.gd
+  PASS: keyboard Options, controller Accessibility/return/Begin/briefing,
+  muted audio, 800/1280/1920 captures and static Large/High Contrast settings.
+  /tmp/bta049-native-delivery.log; native-runtime.txt (tracked copy)
+  No engine/script errors; expected unsupported-VSync software-driver warning.
+  Performance numbers/limitations are in README.md; not GPU certification.
+
+Clean-commit Linux export/smoke and final full-suite/PR status are recorded in
+an evidence-only follow-up after this implementation commit. No main merge.

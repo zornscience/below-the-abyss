@@ -6,6 +6,7 @@ var scene: ShelfPrototype
 var active: bool = false
 var buoy: EmergencyBuoyVisual
 var dressing: SunlitDressing
+var departure: HalcyonDeparture
 var _water_color: Color
 var boundary: StaticBody2D
 var _needs_rebase: bool = false
@@ -18,6 +19,10 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	dressing.z_index = -2
 	scene.region.add_child(dressing)
 	dressing.hide()
+	departure = HalcyonDeparture.new()
+	departure.name = "HalcyonDeparture"
+	scene.region.add_child(departure)
+	departure.hide()
 	buoy = EmergencyBuoyVisual.new()
 	buoy.position = Vector2(3500,620)
 	scene.region.add_child(buoy)
@@ -103,6 +108,7 @@ func start_prototype() -> void:
 func _activate(value: bool) -> void:
 	active = value
 	dressing.visible = value
+	departure.visible = value
 	(scene.region.get_node("Water") as Polygon2D).color = Color("123643") if value else _water_color
 	boundary.visible = value
 	boundary.collision_layer = 1 if value else 0
@@ -122,6 +128,7 @@ func _activate(value: bool) -> void:
 	scene.narrative.presentation_changed()
 	for node: Node in scene.region.get_children():
 		if node is StationIllustration:
+			node.visible = not value
 			node.station_name = "HALCYON" if value else "SHELF BASE"
 			node.queue_redraw()
 	(scene.route_menu.get_node("%Brief") as Label).text = entry(&"sunlit-orders").text if value else "Prototype expedition / NERIS and Shelf Base. Earlier records remain archived."

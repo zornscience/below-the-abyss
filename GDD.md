@@ -180,3 +180,13 @@ reading. Mission offers still require explicit acceptance. Briefing, station, bl
 choice and debrief interactions retain their deliberate behavior. No gameplay balance,
 progression, save content, lore or environmental art changes are implied. See
 [layout, controls, comparisons and manual acceptance](docs/testing/bta-048/README.md).
+
+## Approved cinematic identity — BTA-049
+
+The Halcyon Descent title presents a distant warm scientific installation over a
+dark ocean, Lantern-2's illustrated searchlight and cliffs fading into depth. Cool
+negative space supports restrained actual menu controls. This is the same vessel
+and modular station art used at the immediate Halcyon departure, not promotional
+3D imagery or new geography. Existing Begin/Continue/options/recovery/legacy access
+and all exploration mechanics remain intact. Comfort modes provide a static version;
+no narrative spoilers, new regions, objectives or mechanics.

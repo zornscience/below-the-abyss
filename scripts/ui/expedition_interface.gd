@@ -1,10 +1,11 @@
 class_name ExpeditionInterface
 extends CanvasLayer
-## Title, dock and radio use discrete pages with fixed recovery controls.
+## Deliberate title/dock/story pages; ordinary radio uses the non-blocking queue.
 var revision: ExpeditionRevision
 var title_page: PanelContainer
 var dock_page: PanelContainer
 var radio_page: PanelContainer
+var notifications: RadioNotifications
 var _dock_body: VBoxContainer
 var _title_body: VBoxContainer
 var _radio_body: VBoxContainer
@@ -25,6 +26,9 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	dock_page.hide()
 	radio_page.hide()
 	show_title()
+	notifications = RadioNotifications.new()
+	add_child(notifications)
+	notifications.setup(revision)
 func _screen() -> PanelContainer:
 	var panel: PanelContainer = PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -187,15 +191,8 @@ func _assign(branch: String, difference: int) -> void:
 func _respec() -> void:
 	revision.respec()
 	show_dock("technology")
-func show_radio(id: String, body: String, offer: bool) -> void:
-	_story_back = Callable()
-	_clear(_radio_body)
-	radio_page.show()
-	_label(_radio_body,"INCOMING TRANSMISSION  /  SHELF BASE",28)
-	_label(_radio_body,body,24)
-	_button(_radio_body,"Accept investigation" if offer else "Acknowledge",func() -> void: revision.accept_transmission(id,offer)).name = "AcceptTransmission"
-	_button(_radio_body,"Read later",revision.defer_transmission)
-	_focus()
+func show_radio(id: String, body: String, _offer: bool) -> void:
+	notifications.enqueue(id,body)
 func modal() -> bool:
 	return title_page.visible or dock_page.visible or radio_page.visible
 func _input(event: InputEvent) -> void:

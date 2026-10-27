@@ -94,3 +94,13 @@ trench; avoid relying on color alone.
 60 FPS on modest desktop hardware is the target, not certified by a software-rendered
 cloud VM. See the testing record for measured frame intervals and limitations. Desktop
 GPU, Windows/macOS and physical controller visual checks remain external work.
+
+## BTA-048 interface revision
+
+The approved compact production layout supersedes the original instrument panel
+sizes described above. Existing InstrumentGlyph vectors accompany integer resource
+percentages: green #22C55E, yellow #EAB308, red #EF4444, classified on normalized
+fractions before rounding. LOW/EMPTY/INVALID and pressure/threat words/symbols remain
+legible independently of color. Existing dark materials, contrast preferences and
+focus treatments are reused. No environment, vessel, fauna or asset-pipeline art
+changes. [Measured native comparisons](testing/bta-048/README.md).

@@ -46,3 +46,9 @@ func _process(_delta: float) -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
 	size = Vector2(minf(480.0,viewport_size.x-48.0),get_combined_minimum_size().y)
 	position = Vector2((viewport_size.x-size.x)*0.5,(_scene.hud.get_node("%InstrumentDeck") as Control).get_global_rect().position.y-get_combined_minimum_size().y-42.0)
+
+	if _scene.hud.quiet:
+		var width: float = minf(340,get_viewport_rect().size.x*0.34)-16
+		size = Vector2(width,0)
+		var tracker: Control = _scene.mission_tracker
+		position = Vector2(get_viewport_rect().size.x-width-16,tracker.get_global_rect().end.y+8 if tracker!=null else 180.0)

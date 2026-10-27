@@ -38,10 +38,11 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	ui = ExpeditionInterface.new()
 	add_child(ui)
 	ui.setup(self)
+	scene.submarine.sonar_input_guard = ui.notifications.sonar_input_allowed
 	_ammo_label = Label.new()
 	_ammo_label.add_theme_font_size_override("font_size",18)
 	_ammo_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	scene.hud.get_node("Top/Identity").add_child(_ammo_label)
+	scene.hud.identity_container().add_child(_ammo_label)
 	scene.torpedoes.ammunition_changed.connect(func(_current: int,_maximum: int) -> void: _refresh_ammo())
 	if scene.saves!=null: scene.torpedoes.restore_ammunition(int(scene.saves._state.prototype.ammunition))
 	scene.missions.missions_changed.connect(_reward_survey_deferred)
@@ -68,6 +69,8 @@ func restore(value: Dictionary) -> void:
 	scene.torpedoes.restore_ammunition(int(value.ammunition))
 	scene.upgrades.reapply()
 	_refresh_map_marker()
+	for id: String in campaign.messages:
+		if ui!=null: ui.notifications.remove_message(id)
 	research_changed.emit()
 func _commit(value: Dictionary) -> Error:
 	if not CampaignData.valid(value) or not can_write(): return ERR_INVALID_DATA
@@ -154,37 +157,34 @@ func _physics_process(delta: float) -> void:
 	if scene.chapter!=null and scene.chapter.active: return
 	_clock += delta
 	if scene.station.is_in_range(scene.submarine.global_position) or _clock<_defer_until or ui.modal(): return
-	var id: String = ""
-	var offer: bool = false
 	if scene.missions.snapshot()[String(ShelfChapterData.OUTER)].state=="available":
-		id = "dispatch"
-		offer = true
-	elif campaign.decoded and "next-signal" not in campaign.messages: id = "next-signal"
-	elif scene.research.is_completed(WRECK) and "wreck-recovered" not in campaign.messages: id = "wreck-recovered"
-	elif "outer-survey" in campaign.awards and "survey-complete" not in campaign.messages: id = "survey-complete"
-	elif scene.discoveries.state_of(NarrativeService.SPIRES)==DiscoveryRegistry.State.DISCOVERED and "relay" not in campaign.messages: id = "relay"
-	if id!="": show_transmission(id,offer)
+		show_transmission("dispatch",true)
+		return
+	if campaign.decoded: show_transmission("next-signal")
+	if scene.research.is_completed(WRECK): show_transmission("wreck-recovered")
+	if "outer-survey" in campaign.awards: show_transmission("survey-complete")
+	if scene.discoveries.state_of(NarrativeService.SPIRES)==DiscoveryRegistry.State.DISCOVERED: show_transmission("relay")
 func show_transmission(id: String, offer: bool = false) -> void:
-	if id not in TRANSMISSIONS: return
+	if id not in TRANSMISSIONS or id in campaign.messages or offer!=(id=="dispatch"): return
 	_radio_id = id
-	scene.submarine.velocity = Vector2.ZERO
-	scene.submarine.set_simulation_enabled(false)
-	ui.show_radio(id,TRANSMISSIONS[id],offer)
+	ui.notifications.enqueue(id,TRANSMISSIONS[id])
 func accept_transmission(id: String, offer: bool) -> void:
-	if not ui.radio_page.visible or id!=_radio_id: return
+	if not ui.notifications.contains_message(id) or id in campaign.messages or offer!=(id=="dispatch"): return
 	if offer:
-		if scene.narrative.begin_survey()!=OK: return
+		if scene.narrative.begin_survey()!=OK:
+			ui.notifications.notice = "NOT SAVED · recover checkpoint"
+			return
 	var next: Dictionary = campaign.duplicate(true)
-	if id not in next.messages: next.messages.append(id)
-	if _commit(next)!=OK: return
+	next.messages.append(id)
+	if _commit(next)!=OK:
+		ui.notifications.notice = "NOT SAVED · recover checkpoint"
+		return
+	ui.notifications.notice = ""
 	_refresh_map_marker()
-	ui.radio_page.hide()
+	ui.notifications.remove_message(id)
 	_defer_until = _clock+8.0
-	scene.resume_route()
 func defer_transmission() -> void:
-	ui.radio_page.hide()
-	_defer_until = _clock+25.0
-	scene.resume_route()
+	ui.notifications.defer_current()
 func _refresh_map_marker() -> void:
 	var accepted: bool = scene.missions.snapshot()[String(ShelfChapterData.OUTER)].state!="available"
 	scene.exploration_map.canvas.reported_position = Vector2(3560,650)

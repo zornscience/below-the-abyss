@@ -1,0 +1,84 @@
+BTA-048 local verification — 2026-10-27
+Base: origin/main 16e8e48252f9b48a4cfff5c949e39604bf36a1b9 (merged PR #30)
+Review branch: bta-048-compact-interface
+Engine: 4.6.3.stable.official.7d41c59c4; GUT 9.6.1
+XDG_CACHE_HOME=/workspace/.cache
+XDG_DATA_HOME=/workspace/.local/share
+XDG_CONFIG_HOME=/workspace/.config
+
+Commands and results
+--------------------
+python3 tools/validate_godot.py
+  PASS: pinned engine; import; 237 script checks; startup smoke.
+  /tmp/bta048-validation-delivery.log, build/ci-logs/{import,parser,smoke}.log and parser-0001..0237.log
+python3 tools/run_tests.py
+  PASS: tests=574, passed=574, failures=0, errors=0, skipped=0
+  64 scripts; 26550 assertions; 347.41 s; final committed implementation,
+  including unknown-ID replay rejection and remapped input regression cases.
+  /tmp/bta048-full-release.log, build/ci-logs/unit-tests{.log,.xml,-summary.log}
+godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gdisable_colors -gconfig= -gtest=res://tests/integration/test_compact_interface.gd
+  PASS: 15/15; 199 assertions; 27.611 s. Includes mouse badge, remapped
+  confirm/navigation command suppression and unknown replay ID rejection.
+  /tmp/bta048-bounded-focused.log
+python3 tools/verify_sunlit_shallows.py
+  PASS: 12 launches: both outcomes/devices, completed Continue, quit at buoy,
+  separate-process recovery. No combat, no repeated choices/claims on restore.
+  /tmp/bta048-walks-delivery.log; build/ci-logs/sunlit-*.log
+python3 tools/verify_revision_two.py
+  PASS: 472.7 simulation seconds; return hull=100; battery=72.5869586;
+  dock battery=100; research points=4; torpedoes=10; excavations=0.
+  /tmp/bta048-revision-delivery.log; build/ci-logs/revised-expedition.log
+python3 tools/verify_expanded_expedition.py
+  PASS: 320.7166667 simulation seconds; hull=100; battery=73.6623615;
+  oxygen=90.2625; excavations=0. /tmp/bta048-expanded.log
+python3 tools/verify_story_choice.py
+  PASS: eight launches, both choices/devices and separate-process Continue;
+  one choice on fresh routes, zero on restore. /tmp/bta048-story.log
+python3 -m unittest discover -s tests/python -v
+  PASS: 7/7. /tmp/bta048-python-delivery.log
+python3 tools/install_export_templates.py
+  PASS: checksum-pinned 4.6.3 Linux templates already installed.
+  /tmp/bta048-templates.log
+
+Native evidence
+---------------
+DISPLAY=:98 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2
+Compatibility/X11, Mesa llvmpipe, Dummy audio, fixed-fps 60.
+BTA_EVIDENCE_DIR=docs/testing/bta-048/screenshots godot --path . --audio-driver Dummy --rendering-method gl_compatibility --fixed-fps 60 --script res://tests/fixtures/capture_compact_interface.gd
+  PASS: seven implementation captures plus three baseline captures from
+  isolated git archive of main 16e8e48 using the same capture fixture.
+  /tmp/bta048-captures-final-input.log; /tmp/bta048-before-captures.log
+  Native images stage poses/readings; they do not establish flight completion.
+  Unsupported-VSync driver warning is expected; no engine/script errors.
+godot --path . --audio-driver Dummy --rendering-method gl_compatibility --fixed-fps 60 --script res://tests/fixtures/drive_sunlit_shallows.gd --quit-after 24000 -- --outcome=collect --input=controller --profile=bta048-native-final-input --small --comfort
+  PASS: SUNLIT_CHAPTER_WALK_PASS outcome=collect input=controller resumed=false
+  choices=1 claims=1 simulation_seconds=73.0999999999971 muted=true
+  /tmp/bta048-native-final-input.log
+  Actual input/focus flight without teleports or injected rewards; 800x600,
+  Large Text/High Contrast/reduced motion/effects. No human usability trial.
+
+Release/hosted status
+---------------------
+python3 tools/build_playtest.py
+  PASS: clean implementation commit 57ffb79728ebe711910ec7e913ffefecd99ea148
+  development_dirty=false; Godot 4.6.3; Linux x86_64 release.
+  build/below-the-abyss-playtest-linux-57ffb79728eb.zip
+  Binary SHA256: cdb1f0b9db86ef536bf0f7cd4342837ac6fa766ef689befce01036810821bd45
+  /tmp/bta048-export.log; build/playtest/{import,export}.log; manifest.json
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-57ffb79728eb.zip --log build/playtest/standalone-smoke.log
+  PASS: extracted standalone release launch, default telemetry OFF.
+  /tmp/bta048-standalone.log; build/playtest/standalone-smoke.log
+Later evidence-only commits do not change exported gameplay sources.
+
+git push --set-upstream origin bta-048-compact-interface
+  PASS: review branch published; main not changed.
+gh pr create --repo zornscience/below-the-abyss --base main --head bta-048-compact-interface --title 'BTA-048: Compact HUD, radio notifications and mission tracker' --body-file build/bta048-pr-body.md
+  BLOCKED: Post "https://api.github.com/graphql": Forbidden (exit 1).
+  /tmp/bta048-pr-create.log
+  Prepared description: build/bta048-pr-body.md (ignored local review artifact).
+  Create/review: https://github.com/zornscience/below-the-abyss/compare/main...bta-048-compact-interface?expand=1
+  No PR was created and no merge was attempted.
+GitHub API access remains denied by the currently enforced cloud network policy
+(api.github.com is absent); a saved configuration draft is not active policy.
+Hosted CI is not claimed as executed. Existing workflow checks remain enabled.
+Automated inputs/captures are not human usability or physical-device testing.

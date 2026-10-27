@@ -95,7 +95,7 @@ func test_assign_refund_and_respec_use_finite_points_and_update_real_capabilitie
 func test_accepted_radio_assignment_marks_report_without_discovering_secret() -> void:
 	_start()
 	scene.revision.show_transmission("dispatch",true)
-	assert_false(scene.submarine.is_physics_processing())
+	assert_true(scene.submarine.is_physics_processing())
 	scene.revision.accept_transmission("dispatch",true)
 	assert_true(scene.submarine.is_physics_processing())
 	assert_ne(scene.missions.snapshot()[String(ShelfChapterData.OUTER)].state,"available")

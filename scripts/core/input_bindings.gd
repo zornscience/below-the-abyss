@@ -4,7 +4,7 @@ extends RefCounted
 
 const ACTIONS: Array[StringName] = [
 	&"move_left", &"move_right", &"move_up", &"move_down",
-	&"interact", &"sonar_ping", &"pause", &"toggle_lights", &"open_map", &"fire_torpedo",
+	&"interact", &"sonar_ping", &"pause", &"toggle_lights", &"open_map", &"fire_torpedo", &"open_radio",
 ]
 const MENU_ACTIONS: Array[StringName] = [
 	&"ui_left", &"ui_right", &"ui_up", &"ui_down",
@@ -204,26 +204,34 @@ static func describe_device(bindings: Dictionary, action: StringName, controller
 
 
 static func compatible_bindings(value: Variant) -> Dictionary:
-	if valid_bindings(value):
-		return value.duplicate(true)
+	if valid_bindings(value): return value.duplicate(true)
+	if not value is Dictionary: return {}
 	var legacy: Array[StringName] = ACTIONS.duplicate()
-	legacy.erase(&"fire_torpedo")
-	if not valid_bindings(value, legacy):
-		return {}
+	var missing: Array[StringName] = []
+	for action: StringName in [&"fire_torpedo",&"open_radio"]:
+		if not value.has(String(action)):
+			legacy.erase(action)
+			missing.append(action)
+	if missing.is_empty() or not valid_bindings(value,legacy): return {}
 	var result: Dictionary = value.duplicate(true)
 	var used: Dictionary = {}
 	for action: String in result:
-		for entry: Dictionary in result[action]:
-			used[binding_id(entry)] = true
-	var chosen: Array[Dictionary] = []
-	for code: int in [KEY_SPACE, KEY_R, KEY_G, KEY_V, KEY_T] + range(KEY_F1, KEY_F35+1):
-		var entry: Dictionary = {"kind":"key","code":code}
-		if not used.has(binding_id(entry)):
-			chosen.append(entry)
-			break
-	for entry: Dictionary in [{"kind":"axis","axis":JOY_AXIS_TRIGGER_RIGHT,"direction":1}, {"kind":"button","code":JOY_BUTTON_RIGHT_SHOULDER}, {"kind":"axis","axis":JOY_AXIS_TRIGGER_LEFT,"direction":1}, {"kind":"button","code":JOY_BUTTON_LEFT_SHOULDER}, {"kind":"button","code":JOY_BUTTON_RIGHT_STICK}]:
-		if not used.has(binding_id(entry)):
-			chosen.append(entry)
-			break
-	result["fire_torpedo"] = chosen
+		for entry: Dictionary in result[action]: used[binding_id(entry)] = true
+	for action: StringName in missing:
+		var chosen: Array[Dictionary] = []
+		var keys: Array = ([KEY_SPACE,KEY_R,KEY_G,KEY_V,KEY_T] if action==&"fire_torpedo" else [KEY_R,KEY_G,KEY_V,KEY_T])+range(KEY_F1,KEY_F35+1)
+		for code: int in keys:
+			var key: Dictionary = {"kind":"key","code":code}
+			if not used.has(binding_id(key)):
+				chosen.append(key)
+				used[binding_id(key)] = true
+				break
+		var devices: Array = [{"kind":"axis","axis":JOY_AXIS_TRIGGER_RIGHT,"direction":1},{"kind":"button","code":JOY_BUTTON_RIGHT_SHOULDER},{"kind":"axis","axis":JOY_AXIS_TRIGGER_LEFT,"direction":1},{"kind":"button","code":JOY_BUTTON_LEFT_SHOULDER},{"kind":"button","code":JOY_BUTTON_RIGHT_STICK}] if action==&"fire_torpedo" else [{"kind":"button","code":JOY_BUTTON_LEFT_SHOULDER},{"kind":"button","code":JOY_BUTTON_LEFT_STICK}]
+		for code: int in range(JOY_BUTTON_MAX): devices.append({"kind":"button","code":code})
+		for device: Dictionary in devices:
+			if not used.has(binding_id(device)):
+				chosen.append(device)
+				used[binding_id(device)] = true
+				break
+		result[String(action)] = chosen
 	return result if valid_bindings(result) else {}

@@ -24,7 +24,7 @@ func _tap(button: JoyButton) -> void:
 			JOY_BUTTON_START: KEY_P, JOY_BUTTON_BACK: KEY_M, JOY_BUTTON_X: KEY_F,
 			JOY_BUTTON_DPAD_DOWN: KEY_DOWN, JOY_BUTTON_DPAD_UP: KEY_UP,
 			JOY_BUTTON_DPAD_LEFT: KEY_LEFT, JOY_BUTTON_DPAD_RIGHT: KEY_RIGHT,
-			JOY_BUTTON_RIGHT_SHOULDER: KEY_TAB}
+			JOY_BUTTON_RIGHT_SHOULDER: KEY_TAB, JOY_BUTTON_LEFT_SHOULDER: KEY_R}
 		key.keycode = keys[button]
 		key.physical_keycode = key.keycode
 		key.pressed = true
@@ -210,7 +210,12 @@ func _initialize() -> void:
 		await _interact()
 		await _frames(300)
 		assert(_scene.research.is_completed(SunlitShallowsData.BUOY))
-		assert(_scene.revision.ui.radio_page.visible)
+		assert(_scene.revision.ui.notifications.contains_message("sunlit-buoy-recovered"))
+		assert(_scene.submarine.is_physics_processing())
+		await _tap(JOY_BUTTON_LEFT_SHOULDER)
+		await _activate(_control("RadioDown"))
+		assert(_scene.revision.ui.notifications.scroll.scroll_vertical>0)
+		assert(_scene.submarine.is_physics_processing())
 		await _capture("maras-message")
 		if OS.get_cmdline_user_args().has("--stop-at-buoy"):
 			print("SUNLIT_BUOY_CHECKPOINT_PASS outcome=",_outcome," input=",("keyboard" if _keyboard else "controller"))
@@ -218,7 +223,7 @@ func _initialize() -> void:
 			await _frames(4)
 			quit()
 			return
-		await _activate(_control("CloseBuoyMessage"))
+		await _activate(_control("CloseRadio"))
 	else:
 		assert(_choice_events==0 and _scan_events==0 and _ack_events==0)
 		assert(_scene.chapter.active)

@@ -167,3 +167,16 @@ The grounded shallow wreck and outer course stay explicitly **prototype** conten
 not Mara's vessel or a canonical later-zone reveal. Old progress is archived, never
 renamed or reinterpreted. Full route, acceptance criteria and remaining human
 playtesting questions: [BTA-047](docs/testing/bta-047/README.md).
+
+## Approved compact interface — BTA-048
+
+The production HUD uses small existing glyphs and normalized resource percentages,
+with textual depletion/danger cues. Depth stays near the upper center; accepted
+mission objectives remain upper right. Compact sonar/ordnance/passive/threat status
+uses corners and temporary damage/context feedback remains readable. The bottom
+center stays open. Ordinary radio is a non-blocking preview/unread badge plus an
+intentional scrollable transcript; the submarine keeps moving and simulating while
+reading. Mission offers still require explicit acceptance. Briefing, station, bloom
+choice and debrief interactions retain their deliberate behavior. No gameplay balance,
+progression, save content, lore or environmental art changes are implied. See
+[layout, controls, comparisons and manual acceptance](docs/testing/bta-048/README.md).

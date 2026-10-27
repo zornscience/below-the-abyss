@@ -33,9 +33,16 @@ install untrusted system software on someone else's computer.
 | Torpedo (horizontal facing; optional) | Space | Right trigger / right-stick click |
 | Lights | L | Y |
 | Map / research | M | Back / Select |
+| Open / close radio | R | Left shoulder |
 | Pause | Escape / P | Start |
 | Menu navigation | Arrows, Tab / Shift+Tab | D-pad / stick, shoulders |
 | Select / back | Enter or Space / Escape | A / B |
+
+Radio previews do not pause your submarine. Open a transcript intentionally with
+R/left shoulder; Tab/right shoulder cycles its actions, Enter/A selects, and B/Escape
+closes. Text ↑/↓ scrolls and Next message visits the queue. Left stick/WASD keep
+piloting while reading. Use Pause/Start explicitly if you want to stop. Resources
+are percentages at upper left; accepted objectives stay upper right.
 
 Passive listening is automatic. Controls can be remapped in Input settings; Save
 keeps edits, Return discards unsaved edits. Fixed menu controls remain available

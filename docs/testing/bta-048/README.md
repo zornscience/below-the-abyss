@@ -242,7 +242,10 @@ Local validation passed: **574/574 GUT tests** (64 scripts; zero failures, error
 skips), **15/15 focused interface tests**, import, **237 parser checks**, startup,
 all 12 canonical chapter launches, legacy revised/expanded routes, all eight bloom
 choice launches and seven Python tooling tests. The clean release export/smoke
-record follows in [verification.txt](verification.txt), with exact logs/counts.
+passed; [verification.txt](verification.txt) records the clean commit, binary hash
+and exact commands/results. The review branch is published, but PR creation returned
+GitHub API `Forbidden`; hosted CI has not run. The existing workflow is unchanged.
+[Create the PR](https://github.com/zornscience/below-the-abyss/compare/main...bta-048-compact-interface?expand=1).
 
 Automated routes and graphical captures are **not human usability studies or physical-device
 trials**. Human comfort, subjective readability and target-GPU performance still

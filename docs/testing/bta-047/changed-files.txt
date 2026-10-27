@@ -26,6 +26,7 @@ docs/testing/bta-047/screenshots/observe-debrief.png
 docs/testing/bta-047/screenshots/observe-halcyon-return.png
 docs/testing/bta-047/screenshots/observe-maras-message.png
 docs/testing/bta-047/screenshots/observe-title.png
+docs/testing/bta-047/verification.txt
 resources/story/sunlit_buoy_scan.tres
 resources/story/sunlit_mission.tres
 resources/story/sunlit_narrative.tres

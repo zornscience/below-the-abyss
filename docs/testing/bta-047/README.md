@@ -138,7 +138,9 @@ stay within this course. Switching to the legacy prototype disables these limits
   checkpoint/backup. No independent story/log file or new top-level state. Readers
   accept versions 1–6. Old two/five-mission catalogues are validated before adding
   one **available**, unaccepted canonical mission; old records are copied verbatim.
-  Old files are not overwritten merely by loading. Version-1–4 Resonance migration
+  Old files are not overwritten merely by loading. Older binaries reject schema 6
+  rather than discard its new progress; downgrading requires a preserved old copy.
+  Version-1–4 Resonance migration
   still starts zero/empty; version-5 bloom decisions remain unchanged.
 - The coordinator projects known mission records into each scene while retaining
   the full validated checkpoint for future merges. Monotonic progress recovery
@@ -215,6 +217,9 @@ Local verification used pinned Godot 4.6.3 / GUT 9.6.1:
 | Legacy bloom input/Continue | **8/8** separate launches, both branches × both input devices; restore emits zero choice events |
 | Canonical chapter input/Continue | **12/12** launches: four full, four completed Continue, two quit-on-buoy, two Continue-from-buoy |
 | Native graphical chapters | **2/2** full actual-input routes; keyboard/observe at 1280×800, controller/collect at 800×600/Large/reduced effects; both muted |
+| Import / parser / startup | PASS, exact engine version, **233** authored GDScript checks and error-free startup |
+| Linux release / extracted smoke | PASS, clean code commit `95265d8697f14dbdad286081937d0d22b20e5b54`, default telemetry OFF |
+| Hosted GitHub Actions | Not run yet: environment blocks `api.github.com`; local equivalents all pass |
 | Human / physical-device study | **Not performed**; no claim of unfamiliar-player comprehension or pacing |
 
 Fresh automated chapter routes took 54.4–74.533 simulation seconds. Completed
@@ -227,9 +232,10 @@ automation is not a human completion-time measurement.
 The initial full regression run exposed the intended title-label change and an
 incorrect legacy-fixture expectation in the new test. Those expectations were
 corrected without weakening gameplay assertions. [Changed-file inventory](changed-files.txt).
-Engine import/parser/startup and standalone export results are added to the
-verification record after completion. Hosted CI remains separately identified;
-local runs are not presented as GitHub Actions results.
+[Exact local command/result record and export checksum](verification.txt). The
+export used the implementation commit; the follow-up commit only records results.
+Hosted CI remains separately identified; local runs are not presented as GitHub
+Actions results.
 
 All images below are **actual Godot X11/Mesa viewport captures** from the complete
 input-driven runs, not mockups or generated artwork. The [screenshots directory](screenshots/)

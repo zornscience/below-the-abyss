@@ -1,0 +1,50 @@
+BTA-047 local verification — 27 October 2026
+Implementation / clean export commit: 95265d8697f14dbdad286081937d0d22b20e5b54
+Follow-up changes only record verification and changed-file inventory.
+Godot 4.6.3.stable.official.7d41c59c4; GUT 9.6.1
+
+python3 tools/validate_godot.py
+PASS: exact engine version; headless import; 233 script checks; startup smoke.
+python3 tools/run_tests.py
+PASS: 559 tests, 26,347 assertions, 471.634 s; 0 failures/errors/skips.
+Final focused test_sunlit_shallows.gd: 16/16, 176 assertions.
+python3 -m unittest discover -s tests/python -v
+PASS: 7/7.
+python3 tools/verify_expanded_expedition.py
+PASS: original expanded controller route; hull=100; no excavation.
+python3 tools/verify_revision_two.py
+PASS: original revised controller route, radio, debrief and four-point progression.
+python3 tools/verify_story_choice.py
+PASS: 8/8 fresh/Continue launches, both outcomes/devices, muted/reduced effects.
+python3 tools/verify_sunlit_shallows.py
+PASS: 12/12 full/Continue/quit-at-buoy/recovered-Continue launches.
+Fresh observe: keyboard=57.4, controller=74.5333 simulation seconds.
+Fresh collect: keyboard=54.4, controller=71.5333 simulation seconds.
+Completed Continue: choice_events=0, acknowledgement_events=0.
+Buoy Continue: choice_events=0, first acknowledgement_events=1.
+All fresh routes: shots=0; excavations=0; hull=100; awards=[commission].
+
+Native X11/Mesa actual-input driver (commands in README):
+observe / keyboard / 1280x800 / muted: PASS, 57.4167 simulation seconds.
+collect / controller / 800x600 / Large / reduced effects / muted: PASS, 71.55 s.
+Actual Godot viewport captures are committed under screenshots/.
+Known graphics warning: X11 llvmpipe cannot change VSync mode. No engine errors.
+No actual human usability study or physical controller trial was performed.
+
+python3 tools/build_playtest.py
+PASS: clean Linux x86_64 release, development_dirty=false.
+Package: build/below-the-abyss-playtest-linux-95265d8697f1.zip
+Executable SHA256: af76352b8007e40cf5045c7cb0d5776373567eb35da8c55bbd9245a6768b6733
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-95265d8697f1.zip --log build/playtest/standalone-smoke.log
+PASS: extracted standalone release outside source/editor; default telemetry OFF.
+
+git diff --check
+PASS.
+
+Hosted CI: NOT RUN YET. GitHub API requests are denied by the running environment
+host policy (api.github.com absent); repository git reads/writes are available.
+The existing environment configuration draft includes that host but is not applied.
+Do not interpret local test results as hosted GitHub Actions results.
+Full local logs/JUnit remain in build/ci-logs; export/smoke logs in build/playtest.
+The workflow retains corresponding hosted logs/package artifacts for 14 days once
+an actual pull request is opened and runs them.

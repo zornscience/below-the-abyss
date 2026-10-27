@@ -76,8 +76,9 @@ func _portrait() -> void:
 	body.add_child(space)
 	var bloom: LightBloomVisual = LightBloomVisual.new()
 	space.add_child(bloom)
+	bloom.specimen_view = true
 	bloom.scale = Vector2.ONE*1.5
-	bloom.position = Vector2(85,100)
+	bloom.position = Vector2(105,65)
 	var prefs: Dictionary = encounter.scene.settings.snapshot().accessibility
 	bloom.reduced_effects = prefs.reduced_motion or prefs.reduced_flashing
 	bloom.set_outcome(encounter.scene.story.has_decision(LightBloomEncounter.COLLECT),encounter.scene.story.has_decision(LightBloomEncounter.OBSERVE),_response)
@@ -85,9 +86,9 @@ func show_choice() -> void:
 	_response = false
 	_clear()
 	page.show()
-	_label("LIGHT-BLOOM COLONY",30)
+	_label("LIGHT-BLOOM PLANKTON",30)
 	_portrait()
-	_label("An intact colony glows against the shelf. Okafor requests a non-destructive scan. Crane has requested a specimen. Removing this colony will extinguish it.")
+	_label("Bioluminescent plankton forms a precise spiral, then scatters. Dr. Okafor, the station biologist, asks for a scan. Director Crane asks for a bottled sample. Bottling kills the sampled bloom.")
 	if not encounter.identified(): _label("Identify the bloom with sonar before choosing how to study it.")
 	if encounter.scene.saves==null or not encounter.scene.saves.can_write(): _label("Checkpoint unavailable. Recover the existing save before making a decision.")
 	_button("ObserveBloom",encounter.scene.story.definition(LightBloomEncounter.OBSERVE).action_text,_observe,not encounter.can_choose())
@@ -98,7 +99,8 @@ func show_response(text: String) -> void:
 	_response = true
 	_clear()
 	page.show()
-	_label("BLOOM LEFT UNHARMED" if encounter.scene.story.has_decision(LightBloomEncounter.OBSERVE) else "SPECIMEN COLLECTED · COLONY EXTINGUISHED",28)
+	_label("BLOOM LEFT UNHARMED" if encounter.scene.story.has_decision(LightBloomEncounter.OBSERVE) else "SPECIMEN BOTTLED · BLOOM EXTINGUISHED",28)
+	_label("Wick · onboard AI / Okafor and Crane · Halcyon radio",18)
 	_portrait()
 	_label(text)
 	_button("ReturnFromBloom","Return to piloting",encounter.leave)
@@ -118,6 +120,13 @@ func _focus() -> void:
 	if not _buttons.is_empty():
 		(_buttons[-2] if _response else _buttons[0]).grab_focus()
 	scroll.set_deferred("scroll_vertical",0)
+	if _response: _reset_read_scroll.call_deferred()
+func _reset_read_scroll() -> void:
+	# Accessibility font reflow and focus-follow finish after the initial layout.
+	await get_tree().process_frame
+	var footer: Control = page.get_meta("footer") as Control
+	if page.visible and _response and footer.is_ancestor_of(get_viewport().gui_get_focus_owner()):
+		scroll.scroll_vertical = 0
 func refresh_comfort() -> void:
 	if body==null: return
 	var prefs: Dictionary = encounter.scene.settings.snapshot().accessibility

@@ -259,3 +259,10 @@ The narrow LightBloomEncounter adapter reuses sonar eligibility, the typed scann
 Interact, simulation pause and accessibility policy; canonical names are confined
 to authored response text. No existing campaign/save IDs are renamed.
 See [contracts, tests and limitations](docs/testing/bta-046/README.md).
+
+The supplied [Story Bible](docs/story/README.md) now anchors the bloom as geometric
+plankton. Arrival presentation is scene-owned, pauses alongside vessel simulation
+and uses a static alternative for reduced effects. Collection removes the glowing
+patch rather than leaving a plant stump; the response illustration shows an unlit
+vial. This presentation alignment changes no choice IDs, deltas, flags, save schema,
+mission/sonar/scanner contracts or checkpoint semantics.

@@ -32,7 +32,7 @@ limitations and native screenshots](docs/feedback-two/README.md). The prior
 
 The optional **light-bloom encounter** near the upper shelf passage uses sonar
 identification and E/A interaction. Scan and leave it intact, or intentionally
-collect a specimen. Dialogue and the colony itself communicate the outcome; no
+bottle a specimen. Dialogue and the plankton itself communicate the outcome; no
 numeric morality score appears. Decisions persist immediately in the existing
 expedition checkpoint and cannot be repeated for rewards.
 [API, save migration, commands, screenshots and manual verification](docs/testing/bta-046/README.md).
@@ -51,6 +51,10 @@ See [accessibility](docs/accessibility.md), [art direction](docs/art_direction.m
 Pause → **Audio settings** retains independent volumes/mute and explicit Save.
 The existing soundscape, station services, upgrades, map/research and optional
 creatures remain available. Art/audio/narrative are prototype studies for review.
+
+The supplied [Story Bible and prototype alignment](docs/story/README.md) define
+the geometric plankton encounter and character roles. This is a small canonical
+encounter within the existing prototype, not the full eight-zone story.
 
 ## Requirements
 

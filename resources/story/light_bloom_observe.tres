@@ -8,4 +8,4 @@ resonance_delta = 15
 flags = Array[StringName]([&"zone1-light-bloom-unharmed"])
 research_record_id = &"zone1-light-bloom-scan"
 action_text = "Scan and leave the bloom unharmed"
-response_text = "Wick: We have the reading. The sampler can stay closed.\n\nOkafor: The bloom is still pulsing. Leave it where it grows.\n\nCrane: Record received. We can work from the scan."
+response_text = "Wick: Scan stored aboard. The sampler is closed; the plankton is still glowing.\n\nOkafor: A spiral, then a scatter. Keep the recording and leave the bloom unharmed.\n\nCrane: I requested a sample. Send the scan to Halcyon for now."

@@ -115,3 +115,6 @@ The GitHub PR also includes inherited PR #25 changes until that dependency is me
 | Modified | [tools/run_tests.py](../../tools/run_tests.py) |
 | Added | [tools/verify_expanded_expedition.py](../../tools/verify_expanded_expedition.py) |
 | Added | [docs/feedback/changed-files.md](changed-files.md) |
+| Added | [docs/feedback/logs/packed-controller-flight.log](../../docs/feedback/logs/packed-controller-flight.log) |
+| Added | [docs/feedback/logs/packed-native-capture.log](../../docs/feedback/logs/packed-native-capture.log) |
+| Added | [docs/feedback/logs/standalone-smoke.log](../../docs/feedback/logs/standalone-smoke.log) |

@@ -1,0 +1,8 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PACKED_ONLY_PROBE_PASS playtest=true editor_tests=false legacy_fixture=false
+EXPANDED_SCAN shelf-calibration-plate at=(758.6627, 480.0)
+EXPANDED_SCAN outer-hydrophone-record at=(6498.689, 699.9994)
+EXPANDED_SCAN outer-vent-study at=(12798.71, 1099.999)
+EXPANDED_SCAN lost-expedition-blackbox at=(21598.72, 1239.892)
+EXPANDED_FLIGHT_PASS simulation_seconds=320.716666666704 battery=73.6623615244347 oxygen=90.2624999999535 hull=100.0 excavations=0

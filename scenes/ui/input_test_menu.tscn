@@ -98,7 +98,7 @@ text = "Reload saved settings"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-text = "Reset to defaults"
+text = "Restore default controls"
 
 [node name="Quit" type="Button" parent="Margin/Scroll/Content"]
 unique_name_in_owner = true

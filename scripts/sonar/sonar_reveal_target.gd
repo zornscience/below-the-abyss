@@ -7,6 +7,7 @@ signal revealed_for_ping(event_id: StringName)
 signal reveal_state_changed(revealed: bool)
 @export var target_id: StringName = &""
 @export var caption: String = "PLACEHOLDER ECHO"
+var reduced_flashing: bool = false
 var registration_generation: int = 0
 var _clock: float = 0.0
 var _expires_at: float = 0.0
@@ -94,7 +95,7 @@ func _refresh() -> void:
 func _draw() -> void:
 	if not is_revealed():
 		return
-	var ink: Color = Color("9cf4e4")
+	var ink: Color = Color("7dbdb6") if reduced_flashing else Color("9cf4e4")
 	draw_arc(Vector2.ZERO, 23.0, 0.0, TAU, 64, ink, 2.0, true)
 	draw_polyline(PackedVector2Array([Vector2(0, -12), Vector2(12, 0),
 		Vector2(0, 12), Vector2(-12, 0), Vector2(0, -12)]), ink, 3.0, true)

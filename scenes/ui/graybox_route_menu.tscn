@@ -35,6 +35,12 @@ Sonar: F / X · Interact/scan/station: E / A · Map: M / Back.
 Save while safely paused. Continue resumes your checkpoint.
 New Expedition resets vessel/route and retains permanent progress."
 autowrap_mode = 2
+[node name="ControlHints" type="Label" parent="Center/Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 2
+theme_override_font_sizes/font_size = 16
+
 [node name="Resume" type="Button" parent="Center/Panel/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
@@ -52,14 +58,20 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Audio settings / mix and mute"
+text = "Audio settings"
 size_flags_horizontal = 3
 [node name="OpenStory" type="Button" parent="Center/Panel/Content/Tools"]
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0, 40)
 size_flags_horizontal = 3
-text = "Expedition log / briefing"
+text = "Expedition log"
+[node name="Accessibility" type="Button" parent="Center/Panel/Content/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+size_flags_horizontal = 3
+text = "Accessibility"
 [node name="Restart" type="Button" parent="Center/Panel/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 46)
@@ -69,7 +81,7 @@ text = "Restart test route (reset vessel and route check)"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "Arrows / Tab / D-pad: navigate · Enter / A: select · Esc / B / Start: resume"
+text = "Arrows / Tab / D-pad: navigate · Enter / A: select · Esc / B: resume"
 
 [node name="SaveActions" type="HFlowContainer" parent="Center/Panel/Content"]
 unique_name_in_owner = true

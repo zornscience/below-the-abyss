@@ -7,6 +7,8 @@ var _resources: SubmarineResourceSystem
 var _hull: SubmarineHullSystem
 var _damage: SubmarineDamageSystem
 var _sonar: SonarEmitter
+var large_interface: bool = false
+var _accessibility_compact: bool = false
 var _has_sonar: bool = false
 var _connections: Array[Signal] = []
 var _callbacks: Array[Callable] = []
@@ -37,7 +39,21 @@ func _ignore_input(node: Node) -> void:
 
 func _layout_changed() -> void:
 	(%IdentityDetail as Label).visible = size.x >= 1100.0
-	(%PassiveContacts as PassiveContactsPanel).set_compact(size.x < 1100.0)
+	(%PassiveContacts as PassiveContactsPanel).set_compact(size.x < 1100.0 or large_interface)
+	(get_node("Top/Identity/Vessel") as Control).visible = not _accessibility_compact
+
+
+func set_accessibility_compact(value: bool) -> void:
+	_accessibility_compact = value
+	(%ThreatIndicator as ThreatIndicator).set_compact(value)
+	(%DepthPanel as Control).custom_minimum_size.x = 0.0 if value else 390.0
+	for gauge: ResourceGauge in [hull_gauge, battery_gauge, oxygen_gauge]:
+		gauge.accessibility_compact = value
+		gauge.set_reading(gauge.current_value, gauge.maximum_value)
+	_layout_changed()
+	if is_instance_valid(_damage):
+		_maximum_depth_changed(_damage.get_maximum_depth_m())
+		_warning_changed(_damage.warning_state)
 
 
 func _listen(event: Signal, callback: Callable) -> void:
@@ -144,7 +160,7 @@ func _depth_changed(depth: float, maximum: float) -> void:
 
 
 func _maximum_depth_changed(maximum: float) -> void:
-	(%SafeDepth as Label).text = "SAFE OPERATING DEPTH   %.1f m" % maximum
+	(%SafeDepth as Label).text = ("SAFE LIMIT  %.1f m" if _accessibility_compact else "SAFE OPERATING DEPTH   %.1f m") % maximum
 
 
 func _warning_changed(state: int) -> void:
@@ -159,6 +175,8 @@ func _warning_changed(state: int) -> void:
 		SubmarineDamageSystem.WarningState.EXCEEDED:
 			label.text = "DANGER  /  DEPTH LIMIT EXCEEDED"
 			label.modulate = Color("ffb49e")
+	if _accessibility_compact:
+		label.text = ["SAFE / WITHIN RANGE", "CAUTION / NEAR LIMIT", "DANGER / ASCEND"][state]
 	_refresh_pressure_detail()
 
 
@@ -171,7 +189,7 @@ func _refresh_pressure_detail() -> void:
 	elif _damage.grace_remaining_seconds > 0.0:
 		detail.text = "ASCEND / Hull damage in %.1f s" % _damage.grace_remaining_seconds
 	else:
-		detail.text = "ASCEND / PRESSURE DAMAGE ACTIVE"
+		detail.text = "ASCEND / DAMAGE ACTIVE" if _accessibility_compact else "ASCEND / PRESSURE DAMAGE ACTIVE"
 
 
 func _impact_applied(amount: float, _approach_speed: float) -> void:

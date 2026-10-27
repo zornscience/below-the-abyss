@@ -2,6 +2,7 @@ class_name ThreatIndicator
 extends PanelContainer
 ## Read-only, focus-free compact warning, driven by encounter signals.
 
+var _compact: bool = false
 var _source: WeakRef
 
 
@@ -15,6 +16,11 @@ func bind_source(source: PredatorCreature) -> void:
 	_refresh()
 
 
+func set_compact(value: bool) -> void:
+	_compact = value
+	_refresh()
+
+
 func _refresh() -> void:
 	var source: PredatorCreature = _source.get_ref() as PredatorCreature if _source != null else null
 	if source == null:
@@ -22,7 +28,7 @@ func _refresh() -> void:
 		return
 	var value: Dictionary = source.hud_snapshot()
 	visible = value.visible
-	($Content/Title as Label).text = value.title
+	($Content/Title as Label).text = String(value.title).replace("! PREDATOR / WARNING", "PREDATOR ! WARN").replace("! PREDATOR / PURSUIT", "PREDATOR ! PURSUE") if _compact else String(value.title)
 	($Content/Hint as Label).text = value.hint
 
 

@@ -80,7 +80,7 @@ func present(position: Vector2, binding_hint: String) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if visible and not event.is_echo() and (event.is_action_pressed("open_map") \
-		or event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")):
+	if visible and not event.is_echo() and ((event.is_action_pressed("open_map") and not InputBindings.is_menu_navigation(event)) \
+		or InputBindings.is_menu_back(event)):
 		get_viewport().set_input_as_handled()
 		close_requested.emit()

@@ -2,7 +2,15 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-042 — The Quiet Run**. Shelf Base briefs NERIS on the
+Current milestone: **BTA-043 — Controller support and accessibility polish**.
+Pause → **Accessibility** provides Compact/Standard/Large text, softer sonar
+highlights, reduced motion, disabled motes and high contrast. Input settings support
+keyboard/controller remapping; restoring controls retains audio/comfort preferences.
+All chapter interfaces support keyboard/controller navigation and text scrolling.
+See [controls, settings compatibility and manual accessibility checks](docs/accessibility.md)
+and [automated/native results and screenshots](docs/testing/accessibility.md).
+
+**The Quiet Run** remains the narrative slice. Shelf Base briefs NERIS on the
 missing expedition. Identify and scan the reference plate east of base, survey
 Twin Spires through the cave, then return and dock for an explicit debrief.
 **Expedition log / briefing** is available on the start/pause page; the station

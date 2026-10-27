@@ -50,6 +50,12 @@ static func discoveries(include_story: bool = false) -> DiscoveryCatalog:
 		bloom.display_name = "Light-bloom plankton"
 		bloom.map_position = Vector2(1330,590)
 		catalog.points.append(bloom)
+		var buoy: PointOfInterest = PointOfInterest.new()
+		buoy.stable_id = SunlitShallowsData.POI
+		buoy.sonar_target_id = SunlitShallowsData.ECHO
+		buoy.display_name = "Emergency buoy"
+		buoy.map_position = Vector2(3500,620)
+		catalog.points.append(buoy)
 	return catalog
 static func research(encrypted: bool = false) -> ResearchCatalog:
 	var catalog: ResearchCatalog = load("res://resources/regions/shelf_research.tres").duplicate(true) as ResearchCatalog
@@ -63,7 +69,9 @@ static func research(encrypted: bool = false) -> ResearchCatalog:
 		target.position = item.at
 		target.duration = item.seconds
 		catalog.targets.append(target)
-	if encrypted: catalog.targets.append(preload("res://resources/story/light_bloom_scan.tres").duplicate(true) as ScanDefinition)
+	if encrypted:
+		catalog.targets.append(preload("res://resources/story/light_bloom_scan.tres").duplicate(true) as ScanDefinition)
+		catalog.targets.append(preload("res://resources/story/sunlit_buoy_scan.tres").duplicate(true) as ScanDefinition)
 	return catalog
 static func missions() -> MissionCatalog:
 	var catalog: MissionCatalog = load("res://resources/missions/shelf_missions.tres").duplicate(true) as MissionCatalog

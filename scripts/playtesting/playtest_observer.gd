@@ -38,7 +38,7 @@ func setup(scene: ShelfPrototype) -> void:
 	_link(scene.submarine.damage_system.warning_changed, func(state: int) -> void:
 		if state != SubmarineDamageSystem.WarningState.SAFE:
 			_record("resource_warning", "depth_caution" if state == SubmarineDamageSystem.WarningState.APPROACHING else "depth_danger"))
-	_link(scene.narrative.chapter_concluded, func() -> void: _record("chapter_completed", "the_quiet_run", 0.0, "chapter"))
+	_link(scene.narrative.chapter_concluded, func() -> void: _record("chapter_completed", "the_sunlit_shallows" if scene.chapter!=null and scene.chapter.active else "the_quiet_run", 0.0, "chapter"))
 	_link(scene.submarine.simulation_enabled_changed, func(enabled: bool) -> void:
 		_tick()
 		_active = enabled and not get_tree().paused)

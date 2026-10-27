@@ -30,12 +30,17 @@ func _process(_delta: float) -> void:
 		text = _scene._station_failure if _scene._station_failure_remaining>0.0 else (binding+" · Dock at Shelf Base" if _scene.station.can_interact(_scene.submarine) else _scene.station.docking_hint(_scene.submarine))
 	elif state.active_id != &"":
 		text = "SCANNING %.0f%% · %s cancel" % [state.progress*100.0,binding]
+	elif _scene.chapter!=null and _scene.chapter.can_review_buoy():
+		text = binding+" · Replay Mara’s archived buoy message"
 	elif _scene.bloom!=null and _scene.bloom.in_range():
 		text = _scene.bloom.prompt()
 	elif _scene.submarine.scanner.candidate_id() != &"":
 		text = binding+" · Scan "+_scene.research.definition(_scene.submarine.scanner.candidate_id()).title
 	elif _scene.submarine.scanner._feedback_seconds > 0.0 and not state.text.begins_with("SCANNER"):
 		text = state.text.get_slice(" · ",0)
+	if _scene.chapter!=null and _scene.chapter.active: text = text.replace("Shelf Base","Halcyon Station").replace("NERIS","Lantern-2")
+	if _scene.chapter!=null and _scene.chapter.active and (_scene.submarine.global_position.y>720.0 or _scene.submarine.global_position.x>3780.0):
+		text = "Wick / Shallows survey limit · Twilight Shelf is a future expedition"
 	caption.text = text
 	visible = not text.is_empty() and _scene.submarine.is_physics_processing()
 	var viewport_size: Vector2 = get_viewport_rect().size

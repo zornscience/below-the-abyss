@@ -38,6 +38,9 @@ func _read(candidate: String, catalog: MissionCatalog) -> Dictionary:
 	if catalog.missions.size() > 2 and data.get("missions") is Dictionary and data.missions.size() == 2:
 		var upgraded: Dictionary = ShelfChapterData.upgrade_missions(data.missions)
 		if not upgraded.is_empty(): data.missions = upgraded
+	if catalog.missions.size()==6 and data.get("missions") is Dictionary and data.missions.size()==5:
+		var canonical: Dictionary = SunlitShallowsData.upgrade_records(data.missions)
+		if not canonical.is_empty(): data.missions = canonical
 	if data.size() != 4 or data.get("format") != "bta-missions" or data.get("catalog_id") != String(catalog.stable_id) \
 		or not data.get("missions") is Dictionary or not catalog.valid_records(data.missions):
 		return {"error": ERR_INVALID_DATA}

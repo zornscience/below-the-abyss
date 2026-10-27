@@ -154,6 +154,7 @@ func _initialize() -> void:
 		for stem: String in ["", ".expedition.json", ".discoveries.json", ".research.json", ".missions.json", ".upgrades.json"]:
 			for suffix: String in ["", ".bak", ".tmp", ".invalid", ".rejected"]: DirAccess.remove_absolute(ProjectSettings.globalize_path(path+stem+suffix))
 	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene.canonical_chapter = false
 	_scene.settings_path = path
 	_scene.expedition_path = path+".expedition.json"
 	root.add_child.call_deferred(_scene)

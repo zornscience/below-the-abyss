@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/missions/mission_definition.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/missions/mission_objective.gd" id="2"]
+[sub_resource type="Resource" id="Bloom"]
+script = ExtResource("2")
+stable_id = &"study-light-bloom"
+kind = 3
+target_id = &"zone1-light-bloom"
+description = "Study the light bloom: scan it unharmed or bottle a specimen."
+[sub_resource type="Resource" id="Buoy"]
+script = ExtResource("2")
+stable_id = &"recover-maras-message"
+kind = 1
+target_id = &"sunlit-lantern1-buoy-record"
+description = "Identify Lantern-1's emergency buoy with sonar and recover its recording."
+[sub_resource type="Resource" id="Return"]
+script = ExtResource("2")
+stable_id = &"return-message-to-halcyon"
+kind = 4
+target_id = &"sunlit-lantern1-buoy-record"
+description = "Return to Halcyon with the recovered message, then dock for debrief."
+[resource]
+script = ExtResource("1")
+stable_id = &"sunlit-shallows-expedition"
+title = "The Sunlit Shallows"
+description = "Pilot Lantern-2 from Halcyon. Observe the light bloom, recover Lantern-1's emergency buoy near Twin Spires and bring Mara's message home."
+acknowledgement_id = &"sunlit-first-expedition-acknowledged"
+acknowledgement = "Halcyon has archived Mara's message. The next investigation leads toward the Twilight Shelf; that zone is not yet playable."
+objectives = Array[ExtResource("2")]([SubResource("Bloom"),SubResource("Buoy"),SubResource("Return")])

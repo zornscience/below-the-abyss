@@ -64,6 +64,9 @@ jobs:
       - name: Verify story choice with keyboard, controller and separate-process Continue
         run: python3 tools/verify_story_choice.py
 
+      - name: Verify canonical Sunlit Shallows chapter and recovery with actual input
+        run: python3 tools/verify_sunlit_shallows.py
+
       - name: Test playtest analysis tooling
         run: python3 -m unittest discover -s tests/python -v
 

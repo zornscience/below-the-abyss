@@ -47,6 +47,8 @@ func refresh() -> void:
 		entry_list.remove_child(child)
 		child.free()
 	var entries: Array[NarrativeEntry] = narrative.available_entries()
+	if not entries.is_empty() and not entries.any(func(item: NarrativeEntry) -> bool: return item.stable_id==_selected):
+		_selected = entries.back().stable_id if narrative.is_concluded() else entries[0].stable_id
 	for entry: NarrativeEntry in entries:
 		var button: Button = Button.new()
 		button.text = entry.title
@@ -64,7 +66,7 @@ func refresh() -> void:
 	var station: ServiceStation = _station.get_ref() as ServiceStation if _station != null else null
 	debrief_button.disabled = not narrative.progress_allowed() or station == null or not narrative.can_debrief()
 	debrief_button.text = "Chapter acknowledged / saved" if narrative.is_concluded() else (
-		"Submit expedition debrief" if station != null else "Dock at Shelf Base to debrief")
+		"Submit expedition debrief" if station != null else ("Dock at Halcyon to debrief" if narrative.entries_provider.is_valid() else "Dock at Shelf Base to debrief"))
 	var controls: Array[Control] = [close_button]
 	for button: Button in [begin_button, debrief_button, %StoryUp, %StoryDown]:
 		if not button.disabled:
@@ -101,10 +103,10 @@ func _begin() -> void:
 func _debrief() -> void:
 	var station: ServiceStation = _station.get_ref() as ServiceStation if _station != null else null
 	var result: Error = narrative.debrief(station)
-	feedback.text = "DEBRIEF SAVED / Both expedition acknowledgements recorded." if result == OK else "DEBRIEF NOT COMPLETE / " + error_string(result) + " · Saved partial acknowledgements remain; retry after recovery."
+	feedback.text = "DEBRIEF SAVED / Expedition acknowledgement recorded." if result == OK else "DEBRIEF NOT COMPLETE / " + error_string(result) + " · Saved partial acknowledgements remain; retry after recovery."
 	refresh()
 	if narrative.is_concluded():
-		_select(&"shelf-concluding-debrief")
+		_select(narrative.available_entries().back().stable_id if narrative.entries_provider.is_valid() else &"shelf-concluding-debrief")
 
 
 func _input(event: InputEvent) -> void:

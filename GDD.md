@@ -142,3 +142,28 @@ those bands to wildlife, trust, existing dialogue, branches or endings. Existing
 combat, talents, missions and rewards are unchanged; observing or collecting grants
 no research points/inventory. Permanent decisions survive Continue and route reset.
 [Acceptance, exact controls and evidence](docs/testing/bta-046/README.md).
+
+## Canonical first expedition — BTA-047
+
+The normal title begins **The Sunlit Shallows**, in the Bible's 0–200 m band.
+Halcyon Station / Meridian Deep Institute introduces Lantern-2, Wick and the
+search for Lantern-1 and missing acoustician Dr. Mara Voss. Public Tethys funding
+is established without revealing Crane's private connections. The player can ask
+Okafor a short optional question before intentionally accepting the dive.
+
+Pylons, kelp and reefs lead to the existing geometric plankton encounter, then an
+emergency buoy near Twin Spires. Sonar identifies; deliberate scanning recovers
+Mara's exact line: "It isn't empty down there. Tell Elias the Choir is a voice."
+Both bloom decisions permit recovery and return. The decision remains visibly
+intact/extinguished and is recalled in the station debrief, without numeric scoring.
+
+One compact objective line and optional contextual Wick cards support continuous
+piloting. Dialogue is short, written, manually advanced and archived. Deliberate
+return/docking and submission acknowledge the first expedition, pointing toward
+the Twilight Shelf without opening Zone 2. Existing research technology remains
+accessible; this chapter adds no currency or point award. Combat is optional.
+
+The grounded shallow wreck and outer course stay explicitly **prototype** content,
+not Mara's vessel or a canonical later-zone reveal. Old progress is archived, never
+renamed or reinterpreted. Full route, acceptance criteria and remaining human
+playtesting questions: [BTA-047](docs/testing/bta-047/README.md).

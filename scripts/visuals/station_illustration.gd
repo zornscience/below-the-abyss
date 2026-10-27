@@ -1,5 +1,6 @@
 class_name StationIllustration
 extends Control
+var station_name: String = "SHELF BASE"
 ## Vector cutaway illustration shared by the docking page and station landmark.
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -25,6 +26,7 @@ func _draw() -> void:
 	draw_line(Vector2(470,95),Vector2(470,30),Color("829c98"),6)
 	draw_arc(Vector2(470,30),25,PI,TAU,24,Color("829c98"),3,true)
 	draw_circle(Vector2(470,30),4,Color("d9e0a6"))
+	draw_string(ThemeDB.fallback_font,Vector2(135,115),station_name,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("dce4ca"))
 	for x: int in range(150,800,45):
 		draw_line(Vector2(x,275),Vector2(x+16,275),Color("d9c687"),3)
 func _draw_module(rect: Rect2,label: String,ink: Color) -> void:

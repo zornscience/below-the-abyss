@@ -282,7 +282,7 @@ func test_bottled_plankton_is_extinguished_without_a_seabed_stump() -> void:
 		if node is LightBloomVisual:
 			assert_true(node.specimen_view)
 			assert_false(node.plankton_visible())
-	assert_eq(ExpeditionSchema.VERSION,5)
+	assert_eq(ExpeditionSchema.VERSION,6)
 	assert_eq(scene.story.definition(LightBloomEncounter.OBSERVE).resonance_delta,15)
 	assert_eq(scene.story.definition(LightBloomEncounter.COLLECT).resonance_delta,-15)
 func test_bloom_text_uses_character_roles_and_keeps_the_anomaly_unexplained() -> void:

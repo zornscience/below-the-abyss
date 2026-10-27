@@ -29,7 +29,7 @@ func test_loading_opens_clean_title_with_paused_world_and_no_accepted_assignment
 func test_title_keyboard_controller_focus_and_options_return_without_piloting() -> void:
 	await wait_process_frames(3)
 	var first: Control = scene.get_viewport().gui_get_focus_owner()
-	assert_eq((first as Button).text,"Begin expedition")
+	assert_eq((first as Button).text,"Begin The Sunlit Shallows")
 	assert_eq((first.get_node(first.focus_neighbor_right) as Button).text,"Options")
 	scene.revision.open_option("accessibility")
 	assert_true(scene.accessibility_panel.visible)

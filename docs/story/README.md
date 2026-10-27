@@ -38,24 +38,27 @@ rewards, small-action scoring or glyph HUD. Those require separately scoped work
 
 ## Canonical names and the shelf wreck
 
-The existing expanded shelf expedition is a gameplay prototype, not a literal
-implementation of the eight-zone plot. NERIS / Shelf Base and the grounded shelf
-expedition vessel retain their display names and stable save IDs. **That shallow
-wreck is a separate prototype expedition vessel, not Lantern-1 or Mara's fate.**
-Do not relabel it Lantern-1. The Bible places Lantern-1 intact on the Hollow Plain
-in Zone 5 (4,000–6,000 m), with an open hatch and a later revelation about its pilot
-(pp. 3, 7–8). Bringing that story forward into the shallow wreck would spoil and
-contradict the intended investigation. No old wreck mission, log, route or reward is
-rewritten here. Halcyon is named in the isolated new radio responses. A campaign-wide display-name
-transition to Halcyon / Lantern-2 remains separate work and
-must preserve old save IDs.
+The old expanded shelf expedition remains a gameplay prototype, not a literal
+implementation of the eight-zone plot. **That shallow wreck is a separate
+prototype vessel, never Lantern-1 or Mara's fate.** The Bible places Lantern-1
+intact on the Hollow Plain in Zone 5 (4,000–6,000 m), with later revelations
+(pp. 3, 7–8). No old wreck mission, grounding log, route or reward is rewritten.
 
-Zone 1's emergency buoy, its first-dive mission framing, the other seven zones,
-small ±1–3 actions, wildlife reactions, path-specific tools, glyph puzzles and
-endings remain outside this presentation alignment. Their presence in the source
-PDF does not imply they are playable. The optional bloom scan center is at 147.5 m,
-within the Bible's Sunlit Shallows band (0–200 m), despite the prototype region's
-existing continental-shelf name.
+BTA-047 now implements the canonical **Sunlit Shallows** opening, emergency buoy
+and first-expedition debrief. Halcyon / Lantern-2 are presentation mappings over
+the existing scene and domain services. Stable NERIS/Shelf Base/prototype save IDs
+and their records remain intact; the old expanded expedition is separately
+accessible. The new buoy is not a wreck and does not reveal Mara's fate.
+
+The bloom remains at 147.5 m and the buoy at 155 m. The canonical course is bounded
+at 200 m and introduces the Twilight Shelf only as a future investigation. Other
+zones, small ±1–3 actions, wider wildlife Resonance reactions, path-specific tools,
+glyph puzzles and endings remain outside this implementation. The full PDF is an
+authoring reference, not a list of implemented gameplay.
+
+[Current chapter implementation, save transition and evidence](../testing/bta-047/README.md).
+The verification below records the earlier PR #29 bloom alignment and is retained
+as historical evidence; the current chapter uses schema 6, preserving those choices.
 
 ## Verification and review
 

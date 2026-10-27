@@ -5,6 +5,8 @@ extends MovementPrototype
 @export var expedition_path: String = ""
 @export var extended_expedition: bool = true
 @export var revised_expedition: bool = true
+@export var canonical_chapter: bool = true
+var chapter: SunlitShallows
 var _station_failure: String = ""
 var _station_failure_remaining: float = 0.0
 var story: StoryState
@@ -59,6 +61,7 @@ var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 
 
 func _ready() -> void:
+	if OS.get_cmdline_user_args().has("--prototype-expedition"): canonical_chapter = false
 	story = StoryState.new()
 	add_child(story)
 	if story.configure()!=OK: push_error("Invalid story choice catalog.")
@@ -155,7 +158,7 @@ func _ready() -> void:
 	add_child(missions)
 	var missions_file: String = mission_path if not mission_path.is_empty() else (
 		MissionStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".missions.json")
-	if missions.setup(ShelfChapterData.missions() if extended_expedition else MISSION_CATALOG, discoveries, research, route_check, missions_file) != OK:
+	if missions.setup(SunlitShallowsData.missions() if extended_expedition and revised_expedition and canonical_chapter else (ShelfChapterData.missions() if extended_expedition else MISSION_CATALOG), discoveries, research, route_check, missions_file, story) != OK:
 		push_error("Mission framework setup failed.")
 	station.missions = missions
 	missions.missions_changed.connect(_refresh_mission_status)
@@ -274,6 +277,10 @@ func _ready() -> void:
 		bloom = LightBloomEncounter.new()
 		add_child(bloom)
 		bloom.setup(self)
+		if canonical_chapter:
+			chapter = SunlitShallows.new()
+			add_child(chapter)
+			chapter.setup(self)
 
 
 func open_help() -> void:
@@ -394,6 +401,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not development_mode and _menu == null and not event.is_echo() and event.is_action_pressed("interact"):
 			if station.is_in_range(submarine.global_position):
 				open_station()
+			elif chapter!=null and chapter.can_review_buoy():
+				chapter.read_buoy()
 			elif bloom!=null and bloom.in_range():
 				bloom.interact()
 			else:

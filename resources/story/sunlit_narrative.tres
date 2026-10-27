@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="NarrativeCatalog" load_steps=8 format=3]
+[ext_resource type="Script" path="res://scripts/narrative/narrative_catalog.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/narrative/narrative_entry.gd" id="2"]
+[sub_resource type="Resource" id="E0"]
+script = ExtResource("2")
+stable_id = &"sunlit-arrival"
+title = "Halcyon Station"
+text = "HALCYON STATION / Meridian Deep Institute\nStation funding: Tethys Extraction\n\nOkafor: I'm Dr. Elias Okafor. Our survey sub, Lantern-1, vanished while investigating the Halvard Anomalies. Its pilot, Dr. Mara Voss, is an acoustician—and a friend.\n\nWick: Lantern-2 is ready. I'll help you bring it home.\n\nCrane: Observe the light bloom. Lantern-1's emergency buoy surfaced weeks after the loss; search the shallows near Twin Spires and recover its recorder."
+[sub_resource type="Resource" id="E1"]
+script = ExtResource("2")
+stable_id = &"sunlit-anomalies"
+title = "Ask Okafor"
+text = "Okafor: Lights gathering into geometric patterns. A repeating sound we can't yet explain. Mara was listening to it when we lost contact.\n\nCrane: Evidence first. Bring a physical bloom sample if you can.\n\nWick: Sonar identifies a subject. Approach and use Interact to scan it. You can pause for controls at any time."
+[sub_resource type="Resource" id="E2"]
+script = ExtResource("2")
+stable_id = &"sunlit-orders"
+title = "First-dive orders"
+text = "THE SUNLIT SHALLOWS / 0–200 m\n\nFollow the station pylons east. Study the light bloom, then continue through the upper passage to Twin Spires. Use sonar to identify the emergency buoy and Interact to recover its recorder. Return by the same passage and deliberately dock at Halcyon.\n\nWick: Watch battery and oxygen. Pings cost more power than cruising. If supplies run low, return; the station can refill them. The map keeps your discoveries. Combat is not required."
+[sub_resource type="Resource" id="E3"]
+script = ExtResource("2")
+stable_id = &"sunlit-buoy-recovered"
+title = "Mara · emergency recording"
+text = "EMERGENCY BUOY / Dr. Mara Voss\n\n\"It isn't empty down there. Tell Elias the Choir is a voice.\"\n\nWick: Copy verified and stored aboard Lantern-2.\nOkafor: That's Mara. Bring the recording home. We need to listen carefully.\nCrane: Evidence secured. Return to Halcyon. No further descent on this expedition."
+[sub_resource type="Resource" id="E4"]
+script = ExtResource("2")
+stable_id = &"sunlit-debrief"
+title = "Halcyon · first expedition debrief"
+text = "HALCYON / FIRST EXPEDITION ACKNOWLEDGED\n\nOkafor: I know that voice. Mara heard something she couldn't leave unanswered. This recording tells us what she was investigating, not what happened to her.\n\nWick: The buoy record and your observations are archived. Lantern-2 is safely home.\n\nCrane: We'll prepare an investigation toward the Twilight Shelf. Today, we stop here.\n\nNEXT INVESTIGATION / The Twilight Shelf. This chapter is complete; Zone 2 is not yet playable. Research technology and the shallows remain available."
+[resource]
+script = ExtResource("1")
+entries = Array[ExtResource("2")]([SubResource("E0"), SubResource("E1"), SubResource("E2"), SubResource("E3"), SubResource("E4")])

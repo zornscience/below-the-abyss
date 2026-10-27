@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ScanDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/scan_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"sunlit-lantern1-buoy-record"
+required_poi_id = &"sunlit-lantern1-buoy"
+classification = "artificial"
+title = "Lantern-1 emergency buoy · Mara's message"
+description = "EMERGENCY BUOY / Lantern-1\n\nThe buoy surfaced on its own weeks after the submarine disappeared. Its damaged recorder holds Dr. Mara Voss's voice:\n\n\"It isn't empty down there. Tell Elias the Choir is a voice.\"\n\nWick: Local copy verified aboard Lantern-2.\nOkafor: That's Mara. Bring the recording home. We need to listen carefully.\nCrane: Recover the evidence and return to Halcyon. No further descent on this expedition."
+position = Vector2(3500,620)
+radius = 180.0
+duration = 4.0

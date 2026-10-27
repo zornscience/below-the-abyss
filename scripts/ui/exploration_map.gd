@@ -4,6 +4,7 @@ extends Control
 
 signal research_requested
 signal close_requested
+var presentation_bounds: Rect2
 var registry: DiscoveryRegistry
 var store: DiscoveryStore
 @onready var canvas: ExplorationMapCanvas = %MapCanvas
@@ -27,6 +28,9 @@ func setup(value: DiscoveryRegistry, persistence: DiscoveryStore) -> void:
 func refresh() -> void:
 	canvas.bounds = registry.survey_bounds()
 	canvas.points = registry.discovered_points()
+	if presentation_bounds.has_area():
+		canvas.bounds = presentation_bounds
+		canvas.points = canvas.points.filter(func(point: PointOfInterest) -> bool: return presentation_bounds.has_point(point.map_position))
 	var list: VBoxContainer = %LandmarkList
 	for child: Node in list.get_children():
 		list.remove_child(child)

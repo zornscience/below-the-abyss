@@ -117,6 +117,7 @@ func _scan(id: StringName) -> void:
 	print("REVISION_TWO_SCAN ",id," at=",_scene.submarine.global_position)
 func _initialize() -> void:
 	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene.canonical_chapter = false
 	_scene.settings_path = "user://revision-two-flight-%d.json" % Time.get_ticks_usec()
 	_scene.expedition_path = _scene.settings_path+".expedition.json"
 	root.add_child.call_deferred(_scene)

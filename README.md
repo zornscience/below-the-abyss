@@ -2,40 +2,37 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **Resonance foundation (BTA-046)** with one optional light-bloom
-story choice, on top of **playtest feedback round two** — a clean title screen, illustrated
-station interior, revised underwater handling/torpedoes, radio-led investigation,
-encrypted wreck logs and a finite research-point talent tree.
+Current build: **BTA-047 — The Sunlit Shallows**, the canonical first expedition.
+Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
+recover missing acoustician Mara Voss's emergency buoy. Bring the recording home
+for a first-expedition debrief. The Twilight Shelf is a future chapter, not playable.
 
-- **Start:** Begin/Continue, Options and Quit on the illustrated title. Optional
-  tutorial cards can be disabled under Pause → Help & tutorials.
+- **Start:** Begin/Continue The Sunlit Shallows, Options and Quit on the illustrated
+  title. Accept a short briefing; asking Okafor about the anomalies is optional.
 - **Pilot:** WASD/arrows or left stick; F/X sonar, E/A interact/scan/dock,
-  M/Back map/research, P/Start pause. Acceleration is slower and water-like.
-- **Torpedoes:** Space/right trigger (or right-stick click), remappable. Ten rounds;
-  fire horizontally in the visible facing direction, accelerate to cruise speed,
-  leave fading wakes and create bright locally refractive blasts. The HUD tracks
-  remaining rounds. Comfort preferences suppress strong effects.
-- **Dock:** deliberate E/A docking automatically repairs/refills/rearms. The new
-  interior offers Research technology, Expedition logs, Radio archive and Depart.
-  Merely passing through base never restores supplies.
-- **Investigate:** accept the base's radio request after departure. The map receives
-  an unconfirmed last-contact report. Follow the existing scientific trail to the
-  wreck; a harmless scavenger flees on arrival. Scan encrypted logs and bring them
-  home for decoding and the next story dossier.
-- **Research points:** two commissioning points, one outer-survey reward and one
-  decoding reward, four total in this prototype. Spend across six sequential sonar/
-  pressure-hull ranks; freely refund/reassign at base. Awards and allocations persist.
+  M/Back map/research, P/Start pause. Bindings are remappable. Optional Wick tutorial
+  cards can be disabled under Pause → Help & tutorials.
+- **Investigate:** follow Halcyon's pylons east, study the bloom, then search near
+  Twin Spires. Sonar identifies subjects; deliberate scans recover records. Read
+  the recovered message in the expedition log. Return through the upper passage.
+- **Choose:** scan the bloom unharmed or bottle a specimen for Crane. Its visual
+  outcome and Wick/Okafor/Crane dialogue persist without a numeric morality score.
+  Neither branch blocks completion or can be repeated for rewards.
+- **Dock:** slow down and deliberately use E/A. Station services repair/refill/rearm;
+  passing through base does not. Submit **First expedition debrief** after returning
+  with evidence. Research technology and free reassignment remain accessible.
+- **Optional tools:** ten facing-fired torpedoes (Space/right trigger/right-stick
+  click), accelerating wakes and comfort-aware blasts remain available. Combat is
+  not required. Sonar pings cost substantially more battery than normal cruising.
 
-[Acceptance matrix, APIs/save migration, complete walkthrough, exact commands,
-limitations and native screenshots](docs/feedback-two/README.md). The prior
-[feedback round](docs/feedback/README.md) remains documented as historical behavior.
-
-The optional **light-bloom encounter** near the upper shelf passage uses sonar
-identification and E/A interaction. Scan and leave it intact, or intentionally
-bottle a specimen. Dialogue and the plankton itself communicate the outcome; no
-numeric morality score appears. Decisions persist immediately in the existing
-expedition checkpoint and cannot be repeated for rewards.
-[API, save migration, commands, screenshots and manual verification](docs/testing/bta-046/README.md).
+[Complete chapter route, APIs, compatibility, verification and native screenshots](docs/testing/bta-047/README.md).
+The shallow grounded wreck is a **separate prototype vessel, never Lantern-1**.
+Existing saves retain their records, talents and claims. Use the title's **Prototype
+expedition / legacy checkpoint** option (when legacy progress exists), or
+`godot --path . -- --prototype-expedition`, for the previous expanded course.
+Its [feedback-round-two controls, four-point progression and wreck route](docs/feedback-two/README.md)
+remain documented. The [Resonance foundation](docs/testing/bta-046/README.md) and
+[prior feedback](docs/feedback/README.md) are historical implementation records.
 
 **The external five-player study has not run.** The [BTA-044 toolkit](docs/playtesting/README.md)
 provides opt-in local reports, participant/facilitator materials and anonymous
@@ -53,8 +50,8 @@ The existing soundscape, station services, upgrades, map/research and optional
 creatures remain available. Art/audio/narrative are prototype studies for review.
 
 The supplied [Story Bible and prototype alignment](docs/story/README.md) define
-the geometric plankton encounter and character roles. This is a small canonical
-encounter within the existing prototype, not the full eight-zone story.
+the geometric plankton encounter and character roles. The normal game presents the first canonical chapter; the other seven zones are
+not playable.
 
 ## Requirements
 
@@ -90,7 +87,7 @@ godot --headless --path . --quit-after 60
 ```
 
 Import and smoke commands must exit with status 0 and no Godot errors.
-The expanded shelf expedition should open on its start/pause menu.
+The illustrated Sunlit Shallows title should open before its interactive briefing.
 This smoke check validates startup, not gameplay or a unit test suite.
 
 In the managed cloud environment, initialize writable Godot cache paths before
@@ -108,7 +105,7 @@ cd /workspace/below-the-abyss
 
 This historical course is available with
 `godot --path . scenes/main/shelf_prototype_fixture.tscn`; normal launch uses the
-expanded expedition documented above. Select Begin/Resume with arrows/Tab/Enter or D-pad/stick/A.
+canonical first expedition documented above. Select Begin/Resume with arrows/Tab/Enter or D-pad/stick/A.
 Pilot east through **02 Cave** to **03 Twin Spires**, then return west through the
 lower passage and ascend to **01 Shelf Base**. The required course stays above
 260 m; an optional overlook and signed pressure trench branch off it. All filled
@@ -138,7 +135,8 @@ godot --path . res://scenes/main/movement_prototype.tscn -- --debug-controls
 Launch with `godot --path .`. Choose **Continue saved expedition** when a validated
 checkpoint exists. After beginning/continuing, pause with Escape/Start and choose
 **Save expedition** from clear terrain outside pressure danger and predator pursuit.
-Docking and successful station operations also save checkpoints. Read the explicit
+Docking, successful station operations and safe emergency-buoy recovery also save
+checkpoints. The buoy recording and vessel pose commit before its message opens. Read the explicit
 success/failure message before exiting; there is no implicit quit autosave.
 
 **New Expedition…** asks for confirmation and resets vessel/temporary route while
@@ -146,7 +144,7 @@ keeping all permanent progress. Cancel leaves the checkpoint alone. **Restart Te
 Route** remains a separate development action. Keyboard and controller navigation
 work in pause/confirmation/station menus.
 
-The normal game now uses `user://saves/expedition.json` (version 5; migrates versions 1–4) with a recoverable
+The normal game now uses `user://saves/expedition.json` (version 6; migrates versions 1–5) with a recoverable
 checkpoint backup. Existing narrow save files are validated/imported and preserved;
 their store APIs then delegate writes to the coordinator. Standalone component
 fixtures still use their original stores. Custom isolated settings scenes inject
@@ -161,7 +159,7 @@ and [complete walkthrough, exact tests and two-process native evidence](docs/tes
 The narrow-store sections below describe their standalone formats; the normal
 shelf game now routes those persistent records through this canonical checkpoint.
 
-## Mission board (BTA-034)
+## Historical prototype mission board (BTA-034)
 
 Dock with **E / controller A**, choose **Mission board / notices**, then **Missions**.
 Intentionally accept the main Shelf expedition and optional Calibration study. Use

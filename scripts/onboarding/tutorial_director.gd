@@ -39,6 +39,9 @@ func _body(id: String) -> String:
 	if _scene.revision!=null and id=="station": text = "Inside the station ring, slow down and press {interact}. Docking automatically repairs, refills and rearms. Spend or freely reassign your finite research points in Research technology."
 	if _scene.revision!=null and id=="torpedo": text = "{fire}: launch one of ten torpedoes in the direction NERIS faces. The torpedo accelerates and leaves a fading wake. Explosions excavate soft rock and damage wildlife. Dock to rearm."
 	if _scene.revision!=null and id=="movement": text = "Use {move} to thrust. NERIS takes time to accelerate in water; release to coast and reverse to brake. Base will radio an investigation after you depart."
+	if _scene.chapter!=null and _scene.chapter.active:
+		if id=="depth": text = "Watch hull, battery and oxygen. Pings cost more power than cruising. Return to Halcyon and deliberately dock to repair and refill; passing the station restores nothing."
+		text = text.replace("NERIS","Lantern-2").replace("Base will radio an investigation after you depart.","Study the light bloom, then search near Twin Spires for Lantern-1’s buoy.")
 	return text.replace("{move}"," / ".join([_scene.input_context.describe(&"move_up"),_scene.input_context.describe(&"move_left"),_scene.input_context.describe(&"move_down"),_scene.input_context.describe(&"move_right")])).replace("{sonar}",_scene.input_context.describe(&"sonar_ping")).replace("{interact}",_scene.input_context.describe(&"interact")).replace("{map}",_scene.input_context.describe(&"open_map")).replace("{fire}",_scene.input_context.describe(&"fire_torpedo"))
 func show_hint(id: String, repeat: bool = false) -> void:
 	if not TEXT.has(id) or not _scene.settings.snapshot().onboarding.enabled or (not repeat and (_shown.has(id) or id in _scene.settings.snapshot().onboarding.seen)):
@@ -47,7 +50,7 @@ func show_hint(id: String, repeat: bool = false) -> void:
 	_current = id
 	_shown[id] = true
 	_visible_until = _clock + 12.0
-	message_changed.emit(TEXT[id][0],_body(id))
+	message_changed.emit("Wick / supplies" if id=="depth" and _scene.chapter!=null and _scene.chapter.active else TEXT[id][0],_body(id))
 func complete(id: String) -> void:
 	var value: Dictionary = _scene.settings.snapshot().onboarding
 	if id not in value.seen:
@@ -68,7 +71,9 @@ func _process(delta: float) -> void:
 		show_hint("sonar")
 	if _clock > 15.0 and _scene.station.is_in_range(_scene.submarine.global_position):
 		show_hint("station")
-	if _clock > 65.0: show_hint("torpedo")
+	if _scene.chapter!=null and _scene.chapter.active:
+		if _clock>30.0: show_hint("depth")
+	elif _clock > 65.0: show_hint("torpedo")
 	if _scene.submarine.global_position.distance_to(_scene.creature.global_position) < 340.0:
 		show_hint("wildlife")
 func toggle() -> Error:

@@ -89,6 +89,9 @@ func respec() -> Error:
 	var next: Dictionary = campaign.duplicate(true)
 	next.ranks = {"sonar":0,"hull":0}
 	return _commit(next)
+func start_from_title() -> void:
+	if scene.chapter!=null: scene.chapter.start()
+	else: start()
 func start() -> void:
 	if not can_write(): return
 	ui.title_page.hide()
@@ -109,6 +112,12 @@ func on_docked() -> Error:
 	scene.torpedoes.refill()
 	docking_report = "Docked · Hull %.0f → %.0f · Battery %.0f → %.0f · Oxygen %.0f → %.0f · Torpedoes 10/10" % [before.hull,scene.submarine.hull_system.hull,before.battery,scene.submarine.resource_system.battery,before.oxygen,scene.submarine.resource_system.oxygen]
 	if service.error not in [OK,ERR_UNAVAILABLE]: docking_report = "Docking services unavailable: "+str(service.reason)
+	if scene.chapter!=null and scene.chapter.active:
+		scene.route_check.sample(scene.region.base_zone.contains_world_position(scene.submarine.global_position),scene.region.point_of_interest_zone.contains_world_position(scene.submarine.global_position),0.0)
+		scene.station_menu.hide()
+		if scene.saves.save_current()!=OK: docking_report += "\nCHECKPOINT NOT SAVED · Recover before continuing."
+		ui.show_dock()
+		return OK
 	if scene.research.is_completed(WRECK) and not campaign.decoded:
 		var next: Dictionary = campaign.duplicate(true)
 		next.decoded = true
@@ -142,6 +151,7 @@ func _reward_survey() -> void:
 func _physics_process(delta: float) -> void:
 	_refresh_ammo()
 	if scene==null or not scene.submarine.is_physics_processing(): return
+	if scene.chapter!=null and scene.chapter.active: return
 	_clock += delta
 	if scene.station.is_in_range(scene.submarine.global_position) or _clock<_defer_until or ui.modal(): return
 	var id: String = ""

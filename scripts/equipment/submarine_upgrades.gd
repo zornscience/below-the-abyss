@@ -4,6 +4,8 @@ extends Node
 
 signal capabilities_changed
 signal upgrade_installed(id: StringName)
+var capability_override: Callable
+var installation_guard: Callable
 var store: UpgradeStore = UpgradeStore.new()
 var _catalog: UpgradeCatalog
 var _sonar: SonarEmitter
@@ -48,6 +50,7 @@ func is_installed(id: StringName) -> bool:
 
 
 func install(id: StringName) -> Error:
+	if installation_guard.is_valid() and not installation_guard.call(): return ERR_UNAUTHORIZED
 	if _busy:
 		return ERR_BUSY
 	if _catalog == null or not _catalog.knows_id(id):
@@ -98,6 +101,10 @@ func _apply() -> void:
 				sonar_profile.maximum_radius = definition.upgraded_value
 			else:
 				depth = definition.upgraded_value
+	if capability_override.is_valid():
+		var override: Dictionary = capability_override.call()
+		sonar_profile.maximum_radius = override.sonar
+		depth = override.hull
 	# configure snapshots tuning only; it preserves pulses, cooldown, time and event IDs.
 	_sonar.configure(sonar_profile)
 	_damage.set_maximum_depth_m(depth)

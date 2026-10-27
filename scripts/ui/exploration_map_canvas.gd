@@ -5,6 +5,8 @@ extends Control
 var bounds: Rect2
 var points: Array[PointOfInterest] = []
 var player_position: Vector2
+var has_report: bool = false
+var reported_position: Vector2
 var selected_id: StringName
 
 
@@ -38,6 +40,10 @@ func _draw() -> void:
 		if selected_id == point.stable_id:
 			draw_arc(at, 12, 0, TAU, 32, Color("f4dc94"), 2.0, true)
 		draw_string(font, at + Vector2(10, -8), str(index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 18, ink)
+	if has_report:
+		var report: Vector2 = _point(reported_position)
+		draw_arc(report,13,0,TAU,32,Color("dfba7d"),2,true)
+		draw_string(font,report+Vector2(18,26),"LAST CONTACT · BASE REPORT",HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("dfba7d"))
 	var player: Vector2 = _point(player_position)
 	draw_colored_polygon(PackedVector2Array([player + Vector2(0, -9), player + Vector2(9, 5), player + Vector2(-9, 5)]), Color("f4dc94"))
 	draw_string(font, player + Vector2(12, 18), "YOU", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("f4dc94"))

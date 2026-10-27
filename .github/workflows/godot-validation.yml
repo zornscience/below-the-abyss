@@ -13,7 +13,7 @@ jobs:
   validate:
     name: Godot 4.6.3 import, parser and smoke
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
       CI_LOG_DIR: ${{ github.workspace }}/build/ci-logs
     steps:
@@ -57,6 +57,9 @@ jobs:
 
       - name: Verify expanded expedition with controller input
         run: python3 tools/verify_expanded_expedition.py
+
+      - name: Verify revised expedition, radio and research progression
+        run: python3 tools/verify_revision_two.py
 
       - name: Test playtest analysis tooling
         run: python3 -m unittest discover -s tests/python -v

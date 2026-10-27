@@ -107,3 +107,20 @@ Station/wreck/perimeter structures remain protected. Native screenshots, exact
 balance values, compatibility policy and manual acceptance checks are in
 [the feedback record](docs/feedback/README.md). The 20–40 minute human pacing target
 and five external sessions are still evaluation gates, not completed claims.
+
+## Approved second playtest revision
+
+The user explicitly requested a clean illustrated title, more shaded environment/
+fauna, slower water-like vessel acceleration, horizontal facing-based accelerating
+torpedoes with wakes/bright refractive blasts and a ten-round complement/HUD count.
+Deliberate docking now automatically repairs/refills/rearms. Mission offers arrive
+by base radio, marking an unconfirmed last-contact report rather than exposing an
+undiscovered wreck. A harmless wreck scavenger flees on approach; scientific scanning
+recovers encrypted logs that decode at base and lead to a next-region dossier.
+
+Research points replace free production upgrades: two commissioning points plus
+one outer-survey and one decoding reward, four total in this prototype, spent across
+six sequential sonar/hull talents. The user chose free reassignment at the station.
+No farming/kill rewards, ammunition economy, additional playable region or final
+campaign budget. Earlier explicit-service/free-upgrade behavior remains in regression
+fixtures only. [Complete decisions and acceptance](docs/feedback-two/README.md).

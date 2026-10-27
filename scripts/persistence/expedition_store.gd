@@ -76,6 +76,7 @@ func write_checkpoint(data: Dictionary) -> Error:
 			if document.error != OK:
 				_writable = false
 				return document.error
+			if not CampaignData.contains_earned(data.prototype.campaign,document.data.prototype.campaign): return ERR_BUSY
 			if ExpeditionSchema.merge_progress(data.progress, document.data.progress) != data.progress:
 				return ERR_BUSY
 	var text: String = JSON.stringify(data, "\t")
@@ -84,12 +85,14 @@ func write_checkpoint(data: Dictionary) -> Error:
 	return _atomic_write(path, text) if result == OK else result
 
 
-func recover_checkpoint(current_progress: Dictionary) -> Dictionary:
+func recover_checkpoint(current_progress: Dictionary, current_prototype: Dictionary = {}) -> Dictionary:
 	var backup: Dictionary = read_file(path + ".bak")
 	if backup.error != OK:
 		return backup
 	var restored: Dictionary = backup.data
 	restored.progress = ExpeditionSchema.merge_progress(restored.progress, current_progress)
+	if ExpeditionSchema.valid_prototype(current_prototype):
+		restored.prototype.campaign = CampaignData.merge_earned(restored.prototype.campaign,current_prototype.campaign)
 	if FileAccess.file_exists(path):
 		if FileAccess.file_exists(path + ".rejected"):
 			return {"error": ERR_ALREADY_EXISTS}

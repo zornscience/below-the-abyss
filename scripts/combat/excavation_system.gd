@@ -1,6 +1,7 @@
 class_name ExcavationSystem
 extends Node
 ## Bounded, authored solid-rock registry. Terrain edits are replayed before vessel restore.
+signal geometry_changed
 var _rocks: Dictionary[String, DestructibleRock] = {}
 var _cuts: Array[Dictionary] = []
 func register(rock: DestructibleRock) -> void:
@@ -18,6 +19,7 @@ func excavate(origin: Vector2, radius: float) -> int:
 		if _rocks[key].carve(origin, radius):
 			_cuts.append({"rock": key, "at": [origin.x, origin.y], "radius": radius})
 			changed += 1
+	if changed>0: geometry_changed.emit()
 	return changed
 func snapshot() -> Array[Dictionary]:
 	return _cuts.duplicate(true)
@@ -31,4 +33,5 @@ func restore(records: Array) -> Error:
 		if _rocks.has(cut.rock):
 			_rocks[cut.rock].carve(Vector2(cut.at[0],cut.at[1]), cut.radius)
 			_cuts.append(cut.duplicate(true))
+	geometry_changed.emit()
 	return OK

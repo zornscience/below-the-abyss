@@ -1,5 +1,6 @@
 class_name OuterShelfInk
 extends Node2D
+var shaded: bool = false
 ## Cached original environmental detail. No secret map markers or collision impostors.
 func _draw() -> void:
 	for index: int in range(100):
@@ -18,7 +19,10 @@ func _draw() -> void:
 	for index: int in range(9):
 		var x: float = 12100+index*190
 		var tip: Vector2 = Vector2(x+sin(index)*22,1350-(index%4)*45)
-		draw_polyline(PackedVector2Array([Vector2(x-20,1440),tip,Vector2(x+20,1440)]),Color("4d7b78"),5,true)
+		if shaded:
+			draw_polygon(PackedVector2Array([Vector2(x-26,1440),tip+Vector2(-5,0),tip+Vector2(8,4),Vector2(x+25,1440)]),PackedColorArray([Color("1b3f49"),Color("89a494"),Color("678c7f"),Color("284e58")]))
+		else:
+			draw_polyline(PackedVector2Array([Vector2(x-20,1440),tip,Vector2(x+20,1440)]),Color("4d7b78"),5,true)
 		draw_circle(tip,6,Color("91b8a1"))
 	# Broken cable and debris make the wreck approach visually distinct without arrows.
 	for index: int in range(24):

@@ -20,6 +20,8 @@ var research: ResearchRegistry
 var _emitted: Array[StringName] = []
 var _links: Array[Dictionary] = []
 var _concluded_seen: bool = false
+var radio_assignments: bool = false
+var debrief_guard: Callable
 var progress_guard: Callable
 
 
@@ -144,6 +146,7 @@ func begin_survey() -> Error:
 
 
 func can_debrief() -> bool:
+	if debrief_guard.is_valid() and not debrief_guard.call(): return false
 	if extended_chapter and not legacy_conclusion:
 		for id: StringName in [ShelfChapterData.OUTER,ShelfChapterData.WRECK]:
 			if _state(id) not in ["completed","claimed"]: return false
@@ -171,6 +174,7 @@ func debrief(station: ServiceStation) -> Error:
 func guidance() -> String:
 	if missions == null:
 		return "EXPEDITION LOG / OFFLINE"
+	if radio_assignments and _state(ShelfChapterData.OUTER)=="available": return "BASE RADIO / Depart station to receive and accept the investigation"
 	if extended_chapter and research.is_completed(PLATE) and not research.is_completed(&"lost-expedition-blackbox"):
 		return "OUTER SHELF / Follow the expedition evidence in your research log"
 	if is_concluded():

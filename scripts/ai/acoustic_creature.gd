@@ -13,6 +13,7 @@ var _spawn: Vector2
 var _suspended: bool = true
 var _destroyed: bool = false
 var damageable: bool = false
+var illustrated: bool = false
 var _remainder: float = 0.0
 var _nav_ready: bool = false
 var _blocked: bool = false
@@ -130,6 +131,7 @@ func _refresh() -> void:
 
 
 func _draw() -> void:
+	if illustrated: return
 	var ink: Color = Color("92c9d8")
 	draw_colored_polygon(PackedVector2Array([Vector2(-17, 0), Vector2(-8, -11), Vector2(14, -7), Vector2(19, 0), Vector2(14, 7), Vector2(-8, 11)]), ink)
 	draw_circle(Vector2(10, -2), 2.0, Color("102938"))

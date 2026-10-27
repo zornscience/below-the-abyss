@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ResearchTree" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/campaign/research_tree.gd" id="1"]
+[resource]
+script = ExtResource("1")
+sonar_radii = PackedFloat32Array(900,1200,1500,1800)
+hull_ratings = PackedFloat32Array(300,400,450,500)
+commissioning_points = 2
+survey_points = 1
+decoding_points = 1

@@ -6,9 +6,8 @@ var _phase: float = 0.0
 
 func _process(delta: float) -> void:
 	var old_facing: float = scale.x
-	var body: CharacterBody2D = get_parent() as CharacterBody2D
-	if absf(body.velocity.x) > 12.0:
-		scale.x = -1.0 if body.velocity.x < 0.0 else 1.0
+	var body: SubmarineController = get_parent() as SubmarineController
+	scale.x = body.facing_direction().x
 	if body.is_physics_processing() and not reduced_motion:
 		_phase = fmod(_phase + delta * (4.0 + body.velocity.length() * 0.06), TAU)
 	if not reduced_motion or old_facing != scale.x:

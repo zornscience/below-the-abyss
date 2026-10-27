@@ -76,6 +76,7 @@ func snapshot() -> Dictionary:
 	var vessel: SubmarineController = _scene.submarine
 	return {"format": "bta-expedition", "schema_version": ExpeditionSchema.VERSION, "region_id": ExpeditionSchema.REGION, "legacy_imported": true,
 		"legacy_conclusion": bool(_state.get("legacy_conclusion",false)),
+		"prototype": prototype_snapshot(),
 		"terrain": _scene.excavation.snapshot() if _scene.excavation != null else [],
 		"player": {"position": [vessel.global_position.x, vessel.global_position.y], "rotation": wrapf(vessel.rotation, -PI, PI),
 			"hull": vessel.hull_system.hull, "battery": vessel.resource_system.battery, "oxygen": vessel.resource_system.oxygen,
@@ -148,6 +149,7 @@ func commit_progress(kind: StringName, proposed: Variant) -> Error:
 	if _busy or not _ready_to_write:
 		return ERR_BUSY
 	var candidate: Dictionary = _state.duplicate(true)
+	candidate.prototype = prototype_snapshot()
 	candidate.terrain = _scene.excavation.snapshot() if _scene.excavation != null else []
 	candidate.progress = progress_snapshot()
 	candidate.progress[String(kind)] = proposed.duplicate(true) if proposed is Dictionary else _strings(proposed)
@@ -192,6 +194,9 @@ func continue_expedition() -> Error:
 	_scene.submarine.set_simulation_enabled(false)
 	_scene.station.end_interaction()
 	_scene.station_menu.hide()
+	if _scene.revision!=null:
+		_scene.revision.ui.dock_page.hide()
+		_scene.revision.ui.radio_page.hide()
 	_scene.submarine.scanner.reset_session()
 	if _scene.torpedoes != null:
 		_scene.torpedoes.reset_session()
@@ -205,6 +210,7 @@ func continue_expedition() -> Error:
 	if _scene.gameplay_audio != null:
 		_scene.gameplay_audio.reset_session()
 	apply_progress(saved.progress)
+	if _scene.revision != null: _scene.revision.restore(saved.prototype)
 	var vessel: SubmarineController = _scene.submarine
 	vessel.global_position = at
 	vessel.rotation = angle
@@ -237,7 +243,7 @@ func recover_backup() -> Error:
 	if _busy:
 		return ERR_BUSY
 	_busy = true
-	var restored: Dictionary = store.recover_checkpoint(progress_snapshot())
+	var restored: Dictionary = store.recover_checkpoint(progress_snapshot(),prototype_snapshot())
 	if restored.error == OK:
 		_state = restored.data
 		_has_checkpoint = true
@@ -305,3 +311,12 @@ func _recover_legacy() -> Error:
 
 func is_restoring() -> bool:
 	return _busy
+
+func prototype_snapshot() -> Dictionary:
+	if _scene.revision != null: return _scene.revision.snapshot()
+	return _state.get("prototype",{"ammunition":10,"campaign":CampaignData.migrate(progress_snapshot())}).duplicate(true)
+func commit_prototype(value: Dictionary) -> Error:
+	if not ExpeditionSchema.valid_prototype(value): return ERR_INVALID_DATA
+	var candidate: Dictionary = _state.duplicate(true)
+	candidate.prototype = value.duplicate(true)
+	return _write(candidate,"Research and expedition state saved.")

@@ -1,12 +1,17 @@
 class_name TorpedoLauncher
 extends Node
 signal fired(event_id: StringName)
+signal ammunition_changed(current: int, capacity: int)
+const CAPACITY: int = 10
+var ammunition: int = CAPACITY
+var revised: bool = false
 signal detonated(event_id: StringName, origin: Vector2)
-@export var configuration: BlastProfile = BlastProfile.new()
+@export var configuration: BlastProfile = preload("res://resources/balance/torpedo_profile.tres")
 var _scene: ShelfPrototype
 var _rules: BlastProfile
 var _projectiles: Array[TorpedoProjectile] = []
 var _effects: Array[BlastEffect] = []
+var _trails: Array[TorpedoTrail] = []
 var _receivers: Array[BlastReceiver] = []
 var _cooldown: float = 0.0
 var _epoch: String
@@ -19,6 +24,7 @@ func setup(scene: ShelfPrototype) -> Error:
 	if configuration == null or not configuration.is_valid():
 		return ERR_INVALID_PARAMETER
 	_scene = scene
+	revised = scene.revised_expedition
 	scene.submarine.simulation_enabled_changed.connect(func(_enabled: bool) -> void: _armed = false)
 	_rules = configuration.duplicate(true) as BlastProfile
 	_emitter = AcousticEmitter.new()
@@ -37,6 +43,9 @@ func setup(scene: ShelfPrototype) -> Error:
 		_receivers.append(receiver)
 	return OK
 func request_fire() -> Error:
+	if revised:
+		aim = _scene.submarine.facing_direction()
+		if ammunition <= 0: return ERR_UNAVAILABLE
 	if not aim.is_finite() or aim.length_squared() < 0.000001: return ERR_INVALID_PARAMETER
 	if _scene == null or not _scene.submarine.is_physics_processing() or _cooldown > 0.000000001 or _projectiles.size() >= 8:
 		return ERR_BUSY
@@ -47,10 +56,23 @@ func request_fire() -> Error:
 	projectile.direction = aim.normalized()
 	projectile.speed = _rules.speed
 	projectile.remaining = _rules.lifetime
+	if revised:
+		projectile.speed = _rules.launch_speed
+		projectile.maximum_speed = _rules.cruise_speed
+		projectile.acceleration = _rules.propulsion_acceleration
+		projectile.remaining = _rules.powered_lifetime
+		ammunition -= 1
+		ammunition_changed.emit(ammunition,CAPACITY)
 	projectile.event_id = StringName("torpedo/" + _epoch + "/" + str(_sequence))
 	projectile.ignore = [_scene.submarine.get_rid()]
 	_scene.get_node("WorldRoot/WorldEffects").add_child(projectile)
-	projectile.global_position = _scene.submarine.global_position
+	projectile.global_position = _scene.submarine.global_position + (aim*48.0 if revised else Vector2.ZERO)
+	if revised:
+		var trail: TorpedoTrail = TorpedoTrail.new()
+		trail.reduced = _scene.settings.snapshot().accessibility.reduced_particles or _scene.settings.snapshot().accessibility.reduced_motion
+		_scene.get_node("WorldRoot/WorldEffects").add_child(trail)
+		projectile.trail = trail
+		_trails.append(trail)
 	projectile.impact.connect(_impact)
 	_projectiles.append(projectile)
 	_cooldown = _rules.cooldown
@@ -61,7 +83,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_clock += delta
 	var movement: Vector2 = Input.get_vector("move_left","move_right","move_up","move_down")
-	if movement.length_squared() > 0.01:
+	if not revised and movement.length_squared() > 0.01:
 		aim = movement.normalized()
 	_cooldown = maxf(0.0, _cooldown-delta)
 	if not Input.is_action_pressed("fire_torpedo"): _armed = true
@@ -71,6 +93,9 @@ func _physics_process(delta: float) -> void:
 		if is_instance_valid(projectile) and not projectile.is_queued_for_deletion():
 			projectile.advance(delta)
 	_projectiles = _projectiles.filter(func(p: TorpedoProjectile) -> bool: return is_instance_valid(p) and not p.is_queued_for_deletion())
+	for trail: TorpedoTrail in _trails.duplicate():
+		if is_instance_valid(trail) and not trail.active: trail.sample(Vector2.ZERO,delta)
+	_trails = _trails.filter(func(t: TorpedoTrail) -> bool: return is_instance_valid(t) and not t.is_queued_for_deletion())
 	for effect: BlastEffect in _effects.duplicate():
 		if is_instance_valid(effect) and not effect.is_queued_for_deletion():
 			effect.advance(delta)
@@ -89,6 +114,7 @@ func _impact(projectile: TorpedoProjectile, at: Vector2) -> void:
 	effect.radius = _rules.radius
 	var comfort: Dictionary = _scene.settings.snapshot().accessibility
 	effect.reduced_effects = comfort.reduced_flashing or comfort.reduced_particles or comfort.reduced_motion
+	effect.refractive = revised
 	_scene.get_node("WorldRoot/WorldEffects").add_child(effect)
 	effect.global_position = at
 	_effects.append(effect)
@@ -97,6 +123,9 @@ func _impact(projectile: TorpedoProjectile, at: Vector2) -> void:
 	_scene.audio.request(&"impact")
 	detonated.emit(projectile.event_id, at)
 func reset_session() -> void:
+	for trail: TorpedoTrail in _trails:
+		if is_instance_valid(trail): trail.queue_free()
+	_trails.clear()
 	for projectile: TorpedoProjectile in _projectiles:
 		if is_instance_valid(projectile): projectile.queue_free()
 	for effect: BlastEffect in _effects:
@@ -106,3 +135,10 @@ func reset_session() -> void:
 	_cooldown = 0.0
 	for receiver: BlastReceiver in _receivers:
 		receiver.reset_session()
+
+func refill() -> void:
+	ammunition = CAPACITY
+	ammunition_changed.emit(ammunition,CAPACITY)
+func restore_ammunition(value: int) -> void:
+	ammunition = clampi(value,0,CAPACITY)
+	ammunition_changed.emit(ammunition,CAPACITY)

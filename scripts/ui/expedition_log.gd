@@ -60,7 +60,7 @@ func refresh() -> void:
 			detail.text = entry.title + "\n\n" + entry.text
 	(%StoryObjective as Label).text = narrative.guidance()
 	var states: Dictionary = narrative.missions.snapshot()
-	begin_button.disabled = not narrative.progress_allowed() or (states[String(NarrativeService.MAIN)].state != "available" and states[String(NarrativeService.SCIENCE)].state != "available")
+	begin_button.disabled = narrative.radio_assignments or not narrative.progress_allowed() or (states[String(NarrativeService.MAIN)].state != "available" and states[String(NarrativeService.SCIENCE)].state != "available")
 	var station: ServiceStation = _station.get_ref() as ServiceStation if _station != null else null
 	debrief_button.disabled = not narrative.progress_allowed() or station == null or not narrative.can_debrief()
 	debrief_button.text = "Chapter acknowledged / saved" if narrative.is_concluded() else (

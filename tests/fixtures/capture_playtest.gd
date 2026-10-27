@@ -158,6 +158,7 @@ func _initialize() -> void:
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(profile + stem + suffix))
 	root.size = _size
 	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene.revised_expedition = false
 	_scene.settings_path = profile
 	_scene.expedition_path = profile + ".expedition.json"
 	root.add_child.call_deferred(_scene)

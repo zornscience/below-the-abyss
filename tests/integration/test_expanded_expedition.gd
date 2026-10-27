@@ -6,6 +6,7 @@ func before_each() -> void:
 	InputBindings.apply(InputBindings.defaults(),0.25)
 	path = "user://feedback-%d.json" % Time.get_ticks_usec()
 	scene = MAIN.instantiate() as ShelfPrototype
+	scene.revised_expedition = false
 	scene.settings_path = path
 	scene.expedition_path = path+".expedition.json"
 	var viewport: SubViewport = SubViewport.new()
@@ -220,6 +221,7 @@ func test_pre_checkpoint_legacy_profile_retains_earned_chapter_ending() -> void:
 		"shelf-calibration-study":{"state":"claimed","objectives":["scan-calibration-plate"]}}
 	assert_eq(mission_store.save_records(records,ShelfPrototype.MISSION_CATALOG),OK)
 	var restored: ShelfPrototype = MAIN.instantiate() as ShelfPrototype
+	restored.revised_expedition = false
 	restored.settings_path = legacy
 	restored.expedition_path = legacy+".expedition.json"
 	add_child_autofree(restored)

@@ -1,0 +1,197 @@
+[gd_resource type="Resource" script_class="SoundscapeProfile" load_steps=45 format=3]
+
+[ext_resource type="Script" path="res://scripts/audio/soundscape_profile.gd" id="profile"]
+[ext_resource type="Script" path="res://scripts/audio/audio_cue.gd" id="cue"]
+[ext_resource type="AudioStream" path="res://assets/audio/ping.wav" id="ping"]
+[ext_resource type="AudioStream" path="res://assets/audio/echo.wav" id="echo"]
+[ext_resource type="AudioStream" path="res://assets/audio/mechanical.wav" id="mechanical"]
+[ext_resource type="AudioStream" path="res://assets/audio/geological.wav" id="geological"]
+[ext_resource type="AudioStream" path="res://assets/audio/biological.wav" id="biological"]
+[ext_resource type="AudioStream" path="res://assets/audio/unknown.wav" id="unknown"]
+[ext_resource type="AudioStream" path="res://assets/audio/creak.wav" id="creak"]
+[ext_resource type="AudioStream" path="res://assets/audio/impact.wav" id="impact"]
+[ext_resource type="AudioStream" path="res://assets/audio/damage.wav" id="damage"]
+[ext_resource type="AudioStream" path="res://assets/audio/battery.wav" id="battery"]
+[ext_resource type="AudioStream" path="res://assets/audio/oxygen.wav" id="oxygen"]
+[ext_resource type="AudioStream" path="res://assets/audio/hull.wav" id="hull"]
+[ext_resource type="AudioStream" path="res://assets/audio/dock.wav" id="dock"]
+[ext_resource type="AudioStream" path="res://assets/audio/service.wav" id="service"]
+[ext_resource type="AudioStream" path="res://assets/audio/scan_start.wav" id="scan_start"]
+[ext_resource type="AudioStream" path="res://assets/audio/complete.wav" id="complete"]
+[ext_resource type="AudioStream" path="res://assets/audio/acknowledge.wav" id="acknowledge"]
+[ext_resource type="AudioStream" path="res://assets/audio/predator_alert.wav" id="predator_alert"]
+[ext_resource type="AudioStream" path="res://assets/audio/predator_pursue.wav" id="predator_pursue"]
+[ext_resource type="AudioStream" path="res://assets/audio/retreat.wav" id="retreat"]
+[ext_resource type="AudioStream" path="res://assets/audio/ui.wav" id="ui"]
+
+[sub_resource type="Resource" id="Cue_ping"]
+script = ExtResource("cue")
+cue_id = &"ping"
+stream = ExtResource("ping")
+bus = "Effects"
+gain_db = -4.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_echo"]
+script = ExtResource("cue")
+cue_id = &"echo"
+stream = ExtResource("echo")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_mechanical"]
+script = ExtResource("cue")
+cue_id = &"mechanical"
+stream = ExtResource("mechanical")
+bus = "Effects"
+gain_db = -18.0
+minimum_interval = 3.0
+
+[sub_resource type="Resource" id="Cue_geological"]
+script = ExtResource("cue")
+cue_id = &"geological"
+stream = ExtResource("geological")
+bus = "Effects"
+gain_db = -18.0
+minimum_interval = 3.0
+
+[sub_resource type="Resource" id="Cue_biological"]
+script = ExtResource("cue")
+cue_id = &"biological"
+stream = ExtResource("biological")
+bus = "Effects"
+gain_db = -18.0
+minimum_interval = 3.0
+
+[sub_resource type="Resource" id="Cue_unknown"]
+script = ExtResource("cue")
+cue_id = &"unknown"
+stream = ExtResource("unknown")
+bus = "Effects"
+gain_db = -18.0
+minimum_interval = 3.0
+
+[sub_resource type="Resource" id="Cue_creak"]
+script = ExtResource("cue")
+cue_id = &"creak"
+stream = ExtResource("creak")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 5.0
+
+[sub_resource type="Resource" id="Cue_impact"]
+script = ExtResource("cue")
+cue_id = &"impact"
+stream = ExtResource("impact")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_damage"]
+script = ExtResource("cue")
+cue_id = &"damage"
+stream = ExtResource("damage")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 5.0
+
+[sub_resource type="Resource" id="Cue_battery"]
+script = ExtResource("cue")
+cue_id = &"battery"
+stream = ExtResource("battery")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 12.0
+
+[sub_resource type="Resource" id="Cue_oxygen"]
+script = ExtResource("cue")
+cue_id = &"oxygen"
+stream = ExtResource("oxygen")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 12.0
+
+[sub_resource type="Resource" id="Cue_hull"]
+script = ExtResource("cue")
+cue_id = &"hull"
+stream = ExtResource("hull")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 12.0
+
+[sub_resource type="Resource" id="Cue_dock"]
+script = ExtResource("cue")
+cue_id = &"dock"
+stream = ExtResource("dock")
+bus = "UI"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_service"]
+script = ExtResource("cue")
+cue_id = &"service"
+stream = ExtResource("service")
+bus = "UI"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_scan_start"]
+script = ExtResource("cue")
+cue_id = &"scan_start"
+stream = ExtResource("scan_start")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_complete"]
+script = ExtResource("cue")
+cue_id = &"complete"
+stream = ExtResource("complete")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_acknowledge"]
+script = ExtResource("cue")
+cue_id = &"acknowledge"
+stream = ExtResource("acknowledge")
+bus = "UI"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_predator_alert"]
+script = ExtResource("cue")
+cue_id = &"predator_alert"
+stream = ExtResource("predator_alert")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_predator_pursue"]
+script = ExtResource("cue")
+cue_id = &"predator_pursue"
+stream = ExtResource("predator_pursue")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_retreat"]
+script = ExtResource("cue")
+cue_id = &"retreat"
+stream = ExtResource("retreat")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[sub_resource type="Resource" id="Cue_ui"]
+script = ExtResource("cue")
+cue_id = &"ui"
+stream = ExtResource("ui")
+bus = "UI"
+gain_db = -12.0
+minimum_interval = 0.15
+
+[resource]
+script = ExtResource("profile")
+cues = Array[ExtResource("cue")]([SubResource("Cue_ping"), SubResource("Cue_echo"), SubResource("Cue_mechanical"), SubResource("Cue_geological"), SubResource("Cue_biological"), SubResource("Cue_unknown"), SubResource("Cue_creak"), SubResource("Cue_impact"), SubResource("Cue_damage"), SubResource("Cue_battery"), SubResource("Cue_oxygen"), SubResource("Cue_hull"), SubResource("Cue_dock"), SubResource("Cue_service"), SubResource("Cue_scan_start"), SubResource("Cue_complete"), SubResource("Cue_acknowledge"), SubResource("Cue_predator_alert"), SubResource("Cue_predator_pursue"), SubResource("Cue_retreat"), SubResource("Cue_ui")])

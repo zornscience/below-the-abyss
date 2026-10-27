@@ -5,6 +5,7 @@ extends PanelContainer
 @export var caption: String = "HULL INTEGRITY"
 @export var glyph: InstrumentGlyph.Kind = InstrumentGlyph.Kind.HULL
 @export var accent: Color = Color("85d8cc")
+@export_range(0.0, 1.0) var low_warning_fraction: float = 0.2
 var current_value: float = 0.0
 var maximum_value: float = 100.0
 
@@ -31,4 +32,5 @@ func set_reading(current: float, maximum: float) -> void:
 	(%Value as Label).text = "%.1f / %.1f" % [current, maximum]
 	(%Bar as ProgressBar).value = 100.0 * current / maximum if maximum > 0.0 else 0.0
 	(%State as Label).text = "DEPLETED" if depleted else "AVAILABLE"
+	(%LowWarning as Label).text = "! LOW / RETURN" if maximum > 0.0 and current / maximum <= low_warning_fraction else ""
 	(%State as Label).modulate = Color("ffb49e") if depleted else Color("a8c5cd")

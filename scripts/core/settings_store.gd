@@ -10,14 +10,38 @@ var _document: Dictionary = default_document()
 
 
 static func default_document() -> Dictionary:
-	return {"schema_version": 1, "deadzone": 0.25, "bindings": InputBindings.defaults()}
+	return {"schema_version": 1, "deadzone": 0.25, "bindings": InputBindings.defaults(), "audio": default_audio()}
+
+
+static func default_audio() -> Dictionary:
+	return {"Master": 0.8, "Music": 0.5, "Ambience": 0.65, "Effects": 0.8, "UI": 0.7, "muted": false}
+
+
+static func valid_audio(audio: Variant) -> bool:
+	if not audio is Dictionary or audio.size() != 6 or not audio.get("muted") is bool:
+		return false
+	for bus: String in ["Master", "Music", "Ambience", "Effects", "UI"]:
+		var value: Variant = audio.get(bus)
+		if typeof(value) not in [TYPE_FLOAT, TYPE_INT] or not is_finite(float(value)) or float(value) < 0.0 or float(value) > 1.0:
+			return false
+	return true
+
+
+func set_audio(audio: Dictionary) -> Error:
+	if not valid_audio(audio):
+		return ERR_INVALID_PARAMETER
+	_document["audio"] = audio.duplicate(true)
+	settings_changed.emit()
+	return OK
 
 
 static func valid_document(document: Variant) -> bool:
-	if not document is Dictionary or document.size() != 3:
+	if not document is Dictionary or document.size() not in [3, 4]:
 		return false
 	if not InputBindings.is_integer(document.get("schema_version")) \
 		or float(document["schema_version"]) != 1.0:
+		return false
+	if document.size() == 4 and not valid_audio(document.get("audio")):
 		return false
 	var value: Variant = document.get("deadzone")
 	if typeof(value) != TYPE_FLOAT and typeof(value) != TYPE_INT:
@@ -78,6 +102,7 @@ func load_settings(path: String = DEFAULT_PATH) -> Error:
 		"schema_version": 1,
 		"deadzone": float(json.data["deadzone"]),
 		"bindings": InputBindings.normalized(json.data["bindings"]),
+		"audio": json.data.get("audio", default_audio()).duplicate(true),
 	}
 	settings_changed.emit()
 	return OK

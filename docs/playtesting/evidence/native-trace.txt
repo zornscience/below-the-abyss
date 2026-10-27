@@ -1,0 +1,32 @@
+=== native (synthetic/local verification, not human evidence) ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA044_FRAME_INTERVALS controller-1280 samples=120 mean_ms=66.794825 median_ms=55.473 p95_ms=119.73 renderer=software_llvmpipe
+BTA044_REPORT {"active_seconds":60.548014,"completed":true,"completion_seconds":71.162683,"counts":{"chapter_completed":1,"damage":0,"discovery":2,"error":0,"failure":0,"milestone":4,"mission_accepted":2,"mission_claimed":2,"mission_completed":2,"resource_warning":0,"scan_completed":1,"scan_started":1,"session_end":1,"session_start":1,"sonar":2,"station_return":1},"menu_seconds":17.390549}
+BTA044_NATIVE_COMPLETE controller-1280 wall_seconds=78.816472 route_seconds=55.7333333333315 chapter_events=1 controller_events_only=true mouse_events=0 muted=true large=true reduced=true
+
+=== native-continue (synthetic/local verification, not human evidence) ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA044_CONTINUE_OK controller-1280 chapter=true upgrade=true large=true muted=true story_replays=0
+
+=== native-standalone-final (synthetic/local verification, not human evidence) ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+
+=== bundle-probe (synthetic/local verification, not human evidence) ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BTA044_BUNDLE_FILTERS_PASS playtest=true fixtures=false gut=false
+
+=== quit (synthetic/local verification, not human evidence) ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org

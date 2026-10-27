@@ -55,11 +55,63 @@ jobs:
       - name: Run GDScript unit tests
         run: python3 tools/run_tests.py
 
+      - name: Test playtest analysis tooling
+        run: python3 -m unittest discover -s tests/python -v
+
       - name: Retain validation logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: godot-validation-${{ github.run_id }}-${{ github.run_attempt }}
           path: build/ci-logs/
+          if-no-files-found: warn
+          retention-days: 14
+
+  playtest-linux:
+    name: Linux standalone playtest package
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out project
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.3.1
+        with:
+          persist-credentials: false
+      - name: Install checksum-verified Godot 4.6.3
+        shell: bash
+        run: |
+          set -euo pipefail
+          export GODOT_BIN="$RUNNER_TEMP/godot/Godot_v4.6.3-stable_linux.x86_64"
+          printf 'GODOT_BIN=%s\n' "$GODOT_BIN" >> "$GITHUB_ENV"
+          mkdir -p "$(dirname "$GODOT_BIN")"
+          cd "$(dirname "$GODOT_BIN")"
+          archive=Godot_v4.6.3-stable_linux.x86_64.zip
+          curl --fail --location --retry 3 --connect-timeout 15 --max-time 180 \
+            "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/$archive" --output "$archive"
+          printf '%s  %s\n' \
+            'a035258da32b77f966a5376f9fa29c30a6adde826a85ba918e1605bd1fc9823eba7d85f1dd5e748956bd2ba72827c0025ffa11bb82aec91128c407a2e723c99c' \
+            "$archive" | sha512sum --check --strict
+          unzip -q "$archive"
+          chmod +x "$GODOT_BIN"
+      - name: Install checksum-verified export templates
+        run: python3 tools/install_export_templates.py
+      - name: Export and package release
+        run: python3 tools/build_playtest.py
+      - name: Smoke test extracted standalone package
+        shell: bash
+        run: |
+          set -euo pipefail
+          package=(build/below-the-abyss-playtest-linux-*.zip)
+          test "${#package[@]}" -eq 1
+          python3 tools/smoke_playtest.py "${package[0]}" --log build/playtest/standalone-smoke.log
+      - name: Retain package, manifest and export logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: linux-playtest-${{ github.sha }}
+          path: |
+            build/below-the-abyss-playtest-linux-*.zip
+            build/playtest/manifest.json
+            build/playtest/*.log
           if-no-files-found: warn
           retention-days: 14

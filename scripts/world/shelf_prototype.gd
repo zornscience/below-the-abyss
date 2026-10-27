@@ -3,6 +3,8 @@ extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
 @export var expedition_path: String = ""
+var playtest_observer: PlaytestObserver
+var playtest_panel: PlaytestPanel
 var audio: SoundscapeMixer
 var gameplay_audio: GameplayAudio
 var audio_settings: AudioSettingsPanel
@@ -187,9 +189,28 @@ func _ready() -> void:
 	accessibility_service = UiAccessibility.new()
 	add_child(accessibility_service)
 	accessibility_service.setup(self)
+	if OS.has_feature("playtest") or OS.get_cmdline_user_args().has("--playtest"):
+		playtest_observer = PlaytestObserver.new()
+		add_child(playtest_observer)
+		playtest_observer.setup(self)
+		playtest_panel = PlaytestPanel.new()
+		$SettingsLayer.add_child(playtest_panel)
+		playtest_panel.close_requested.connect(func() -> void:
+			open_route_menu()
+			(route_menu.get_node("%Playtest") as Button).grab_focus())
+		route_menu.playtest_requested.connect(open_playtest)
 	_refresh_prompts()
 	_refresh_route_status()
 	open_route_menu()
+
+
+func open_playtest() -> void:
+	if playtest_panel == null or not route_layer.visible:
+		return
+	submarine.velocity = Vector2.ZERO
+	submarine.set_simulation_enabled(false)
+	route_layer.hide()
+	playtest_panel.present(playtest_observer)
 
 
 func open_accessibility() -> void:
@@ -258,6 +279,8 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if playtest_panel != null and playtest_panel.visible:
+		return
 	if accessibility_panel != null and accessibility_panel.visible:
 		return
 	if expedition_log != null and expedition_log.visible:
@@ -300,6 +323,8 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
+	if playtest_panel != null and playtest_panel.visible:
+		return
 	if accessibility_panel != null and accessibility_panel.visible:
 		return
 	if expedition_log != null and expedition_log.visible:

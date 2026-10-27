@@ -3,6 +3,7 @@ extends Node
 ## Scene-owned checkpoint coordinator. All domain stores use its optional write port.
 
 signal status_changed
+signal checkpoint_restored
 var status: String = "No expedition save loaded."
 var store: ExpeditionStore = ExpeditionStore.new()
 var _scene: ShelfPrototype
@@ -185,6 +186,7 @@ func continue_expedition() -> Error:
 	vessel.damage_system.advance(0.0, _scene.region.depth_at_world(at), vessel.hull_system)
 	vessel.sonar.restore_cooldown(saved.player.sonar_cooldown)
 	_scene.route_check.stage = GrayboxRouteCheck.Stage.AT_BASE if relocated else int(saved.route.stage) as GrayboxRouteCheck.Stage
+	_scene.route_check.synchronize_base_state(_scene.region.base_zone.contains_world_position(at))
 	_scene.route_check.elapsed_seconds = 0.0 if relocated else saved.route.elapsed_seconds
 	_scene._refresh_route_status()
 	_scene._refresh_scan_status()
@@ -193,6 +195,7 @@ func continue_expedition() -> Error:
 	camera.reset_smoothing()
 	camera.force_update_scroll()
 	_busy = false
+	checkpoint_restored.emit()
 	return _report("Continued at clear Shelf Base fallback; supplies/progress preserved, temporary route reset." if relocated else "Expedition restored. Temporary echoes, contacts and creature pursuit cleared.", OK)
 
 
@@ -266,3 +269,7 @@ func _recover_legacy() -> Error:
 	if configured != OK:
 		return configured
 	return save_current()
+
+
+func is_restoring() -> bool:
+	return _busy

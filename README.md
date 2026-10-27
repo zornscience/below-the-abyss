@@ -2,7 +2,14 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-043 — Controller support and accessibility polish**.
+Current milestone: **BTA-044 — External playtesting preparation**.
+The [playtesting toolkit](docs/playtesting/README.md) supplies a standalone Linux
+package procedure, explicit opt-in local reports, a spoiler-free participant guide,
+facilitator worksheet, questionnaire and anonymous analysis tooling. **The external
+study has not run: at least five unfamiliar human players and evaluated feedback
+are still required.** No human results are claimed.
+
+BTA-043 controller/accessibility remains available.
 Pause → **Accessibility** provides Compact/Standard/Large text, softer sonar
 highlights, reduced motion, disabled motes and high contrast. Input settings support
 keyboard/controller remapping; restoring controls retains audio/comfort preferences.
@@ -37,7 +44,8 @@ creatures remain available. Art/audio/narrative are prototype studies for review
 - **Godot 4.6.3 stable**, standard edition (GDScript), pinned in `.godot-version`.
   The verified Linux binary reports `4.6.3.stable.official.7d41c59c4`.
 - Git, Python 3.9+, and curl for the checksum-pinned GUT test dependency.
-  No .NET SDK or export templates are required.
+  No .NET SDK or export templates are required to run the source project.
+  The [standalone Linux package](docs/playtesting/build.md) requires matching official export templates.
 
 Read [AGENTS.md](AGENTS.md), [GDD.md](GDD.md), [TDD.md](TDD.md), and
 [CODEX_PLAN.md](CODEX_PLAN.md) before implementation.

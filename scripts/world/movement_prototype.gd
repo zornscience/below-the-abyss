@@ -19,7 +19,7 @@ var _contact_time: float = 0.0
 
 
 func _ready() -> void:
-	development_mode = development_mode or OS.get_cmdline_user_args().has("--debug-controls")
+	development_mode = (development_mode or OS.get_cmdline_user_args().has("--debug-controls")) and not OS.has_feature("playtest")
 	($DevelopmentUI as CanvasLayer).visible = development_mode
 	_load_settings()
 	submarine.depth_region = $WorldRoot/CurrentRegion as DepthRegion

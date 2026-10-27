@@ -2,7 +2,7 @@ class_name ExpeditionSchema
 extends RefCounted
 ## Pure validation/migration. No node restoration or executable data from disk.
 
-const VERSION: int = 3
+const VERSION: int = 4
 const REGION: String = "continental_shelf"
 const DISCOVERIES: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
 const RESEARCH: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
@@ -47,7 +47,7 @@ static func decode(value: Variant) -> Dictionary:
 	if not value is Dictionary or not InputBindings.is_integer(value.get("schema_version")):
 		return {"error": ERR_INVALID_DATA}
 	var version: int = int(value.schema_version)
-	if version not in [1, 2, VERSION]:
+	if version not in [1, 2, 3, VERSION]:
 		return {"error": ERR_UNAVAILABLE}
 	var data: Dictionary = value.duplicate(true)
 	if version in [1,2]:
@@ -56,7 +56,10 @@ static func decode(value: Variant) -> Dictionary:
 		data.terrain = []
 		var old: Variant = data.get("progress",{}).get("missions",{}) if data.get("progress") is Dictionary else {}
 		data.legacy_conclusion = old is Dictionary and MISSIONS.valid_records(old) and old["shelf-expedition"].state == "claimed" and old["shelf-calibration-study"].state == "claimed"
-	if data.size() != 9 or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id != REGION \
+	if version <= 3:
+		if data.size()!=9 or not valid_progress(data.get("progress")): return {"error":ERR_INVALID_DATA}
+		data.prototype = {"ammunition":10,"campaign":CampaignData.migrate(data.progress)}
+	if data.size() != 10 or not valid_prototype(data.get("prototype")) or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id != REGION \
 		or not data.get("legacy_imported") is bool or data.legacy_imported != true or not data.get("player") is Dictionary \
 		or not data.get("route") is Dictionary or not valid_progress(data.get("progress")):
 		return {"error": ERR_INVALID_DATA}
@@ -77,6 +80,8 @@ static func decode(value: Variant) -> Dictionary:
 	if data.route.size() != 2 or not InputBindings.is_integer(data.route.get("stage")) \
 		or int(data.route.stage) not in [0, 1, 2, 3] or not number(data.route.get("elapsed_seconds"), 0, 360000):
 		return {"error": ERR_INVALID_DATA}
+	data.prototype.ammunition = int(data.prototype.ammunition)
+	data.prototype.campaign = CampaignData.normalized(data.prototype.campaign)
 	return {"error": OK, "data": data, "migrated": version != VERSION}
 
 
@@ -96,3 +101,6 @@ static func merge_progress(a: Dictionary, b: Dictionary) -> Dictionary:
 		if right.size() == 2: right = ShelfChapterData.upgrade_missions(right)
 		merged.missions = ShelfChapterData.missions().merge_records(left,right)
 	return merged
+
+static func valid_prototype(value: Variant) -> bool:
+	return value is Dictionary and value.size()==2 and InputBindings.is_integer(value.get("ammunition")) and value.ammunition>=0 and value.ammunition<=10 and CampaignData.valid(value.get("campaign"))

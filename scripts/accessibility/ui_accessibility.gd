@@ -112,6 +112,11 @@ func _apply_node(node: Node) -> void:
 		node.set_process(not bool(_preferences.reduced_motion) and not bool(_preferences.reduced_particles))
 	if script != null and script.resource_path.ends_with("/submarine_illustration.gd"):
 		node.set("reduced_motion", bool(_preferences.reduced_motion))
+	if node is CreaturePaint: node.reduced_motion = bool(_preferences.reduced_motion)
+	if node is TorpedoTrail: node.reduced = bool(_preferences.reduced_particles) or bool(_preferences.reduced_motion)
+	if node is BlastEffect:
+		node.reduced_effects = bool(_preferences.reduced_flashing) or bool(_preferences.reduced_motion) or bool(_preferences.reduced_particles)
+		if node._lens!=null: node._lens.visible = not node.reduced_effects
 	if node is Parallax2D:
 		if not node.has_meta("a11y_scroll_scale"):
 			node.set_meta("a11y_scroll_scale", (node as Parallax2D).scroll_scale)

@@ -4,6 +4,10 @@ extends MovementPrototype
 
 @export var expedition_path: String = ""
 @export var extended_expedition: bool = true
+@export var revised_expedition: bool = true
+var _station_failure: String = ""
+var _station_failure_remaining: float = 0.0
+var revision: ExpeditionRevision
 var excavation: ExcavationSystem
 var torpedoes: TorpedoLauncher
 var tutorial: TutorialDirector
@@ -98,14 +102,14 @@ func _ready() -> void:
 	exploration_map.close_requested.connect(close_map)
 	research = ResearchRegistry.new()
 	add_child(research)
-	if research.configure(ShelfChapterData.research() if extended_expedition else RESEARCH_CATALOG) != OK:
+	if research.configure(ShelfChapterData.research(revised_expedition) if extended_expedition else RESEARCH_CATALOG) != OK:
 		push_error("Invalid research catalogue.")
 	research_store.path = research_path if not research_path.is_empty() else (
 		ResearchStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".research.json")
 	research_store.load_registry(research)
 	research.scan_completed.connect(func(_id: StringName) -> void: research_store.save_registry(research))
 	var targets: Array[ScientificScanTarget] = []
-	var research_catalog: ResearchCatalog = ShelfChapterData.research() if extended_expedition else RESEARCH_CATALOG
+	var research_catalog: ResearchCatalog = ShelfChapterData.research(revised_expedition) if extended_expedition else RESEARCH_CATALOG
 	for definition: ScanDefinition in research_catalog.targets:
 		var target: ScientificScanTarget = ScientificScanTarget.new()
 		target.name = String(definition.stable_id)
@@ -182,7 +186,7 @@ func _ready() -> void:
 	add_child(narrative)
 	narrative.extended_chapter = extended_expedition
 	narrative.legacy_conclusion = saves != null and bool(saves._state.get("legacy_conclusion",false))
-	if narrative.setup(ShelfChapterData.narrative() if extended_expedition else preload("res://resources/narrative/shelf_chapter.tres"), missions, discoveries, research) != OK:
+	if narrative.setup(ShelfChapterData.narrative(revised_expedition) if extended_expedition else preload("res://resources/narrative/shelf_chapter.tres"), missions, discoveries, research) != OK:
 		push_error("Narrative chapter setup failed.")
 	narrative.progress_guard = func() -> bool: return saves == null or saves.can_write()
 	expedition_log = preload("res://scenes/ui/expedition_log.tscn").instantiate() as ExpeditionLog
@@ -258,6 +262,10 @@ func _ready() -> void:
 	_refresh_prompts()
 	_refresh_route_status()
 	open_route_menu()
+	if extended_expedition and revised_expedition:
+		revision = ExpeditionRevision.new()
+		add_child(revision)
+		revision.setup(self)
 
 
 func open_help() -> void:
@@ -299,6 +307,11 @@ func _refresh_prompts() -> void:
 	(hud.get_node("%SettingsHint") as Label).text = "%s: sonar · %s: map · %s: pause" % [input_context.describe(&"sonar_ping"), input_context.describe(&"open_map"), input_context.describe(&"pause")]
 	if extended_expedition:
 		(hud.get_node("%SettingsHint") as Label).text = "%s ping · %s torpedo · %s map" % [input_context.describe(&"sonar_ping"),input_context.describe(&"fire_torpedo"),input_context.describe(&"open_map")]
+	if revision!=null:
+		var hints: Array[String] = []
+		for action: StringName in [&"sonar_ping",&"fire_torpedo",&"open_map"]:
+			hints.append(input_context.describe(action).get_slice(" / ",0).replace("Controller ",""))
+		(hud.get_node("%SettingsHint") as Label).text = "%s ping · %s torpedo · %s map" % hints
 	(route_menu.get_node("%ControlHints") as Label).text = "Move ← %s · → %s · ↑ %s · ↓ %s" % [input_context.describe(&"move_left").get_slice(" / ", 0), input_context.describe(&"move_right").get_slice(" / ", 0), input_context.describe(&"move_up").get_slice(" / ", 0), input_context.describe(&"move_down").get_slice(" / ", 0)]
 	for node: Node in region.find_children("*", "Label", true, false):
 		var label: Label = node as Label
@@ -345,6 +358,7 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if revision!=null and revision.ui.modal(): return
 	if help_panel != null and help_panel.visible: return
 	if playtest_panel != null and playtest_panel.visible:
 		return
@@ -379,6 +393,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func open_route_menu() -> void:
+	if revision!=null and revision.returning_to_title:
+		revision.returning_to_title = false
+		route_layer.hide()
+		submarine.set_simulation_enabled(false)
+		revision.ui.show_title()
+		return
 	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
 		return
 	submarine.velocity = Vector2.ZERO
@@ -390,6 +410,7 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
+	if revision!=null and revision.ui.modal(): return
 	if help_panel != null and help_panel.visible: return
 	if playtest_panel != null and playtest_panel.visible:
 		return
@@ -417,6 +438,7 @@ func _route_settings_requested() -> void:
 func open_map() -> void:
 	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible or resource_panel.has_test_focus():
 		return
+	if revision!=null: revision._refresh_map_marker()
 	_map_from_route = route_layer.visible
 	route_layer.hide()
 	submarine.velocity = Vector2.ZERO
@@ -437,15 +459,20 @@ func close_research() -> void:
 
 
 func open_station() -> Error:
+	if revision!=null and revision.ui.modal(): return ERR_BUSY
 	if _menu != null or route_layer.visible or exploration_map.visible or research_log.visible or station_menu.visible or resource_panel.has_test_focus():
 		return ERR_BUSY
 	var result: Error = station.interact(submarine)
 	if result != OK:
+		_station_failure = station.docking_hint(submarine)
+		_station_failure_remaining = 1.25
 		_refresh_scan_status()
 		return result
+	_station_failure_remaining = 0.0
 	submarine.velocity = Vector2.ZERO
 	submarine.set_simulation_enabled(false)
 	station_menu.present(station)
+	if revision!=null: return revision.on_docked()
 	if saves != null:
 		saves.save_current()
 	return OK
@@ -464,6 +491,7 @@ func _refresh_scan_status() -> void:
 	else:
 		(%ScanStatus as Label).text = station.docking_hint(submarine) if station.is_in_range(submarine.global_position) else String(submarine.scanner.snapshot().text)
 
+	if _station_failure_remaining>0.0: (%ScanStatus as Label).text = _station_failure
 	if input_context != null:
 		var label: Label = %ScanStatus
 		if accessibility_service != null and accessibility_service.tight_hud() and not station.is_in_range(submarine.global_position):
@@ -537,6 +565,7 @@ func restart_route() -> void:
 
 func _physics_process(delta: float) -> void:
 	if submarine.is_physics_processing():
+		_station_failure_remaining = maxf(0.0,_station_failure_remaining-delta)
 		ambient.advance(delta)
 		route_check.sample(region.base_zone.contains_world_position(submarine.global_position),
 			region.point_of_interest_zone.contains_world_position(submarine.global_position), delta)
@@ -587,7 +616,7 @@ func _route_resume_requested() -> void:
 	if saves != null and saves.has_checkpoint() and not _expedition_started:
 		if saves.continue_expedition() != OK:
 			return
-	if extended_expedition and narrative != null: narrative.begin_survey()
+	if extended_expedition and narrative != null and revision==null: narrative.begin_survey()
 	resume_route()
 
 
@@ -603,7 +632,7 @@ func _recover_expedition() -> void:
 
 func _new_expedition() -> void:
 	if saves != null and saves.new_expedition() == OK:
-		if extended_expedition: narrative.begin_survey()
+		if extended_expedition and revision==null: narrative.begin_survey()
 		resume_route()
 
 
@@ -614,3 +643,7 @@ func _layout_tutorial() -> void:
 	tutorial_card.custom_minimum_size.x = minf(350.0,width*0.42)
 	tutorial_card.position = Vector2(24,(hud.get_node("Top/Identity") as Control).get_global_rect().end.y+12)
 	tutorial_card.visible = not tutorial_card.title_label.text.is_empty() and submarine.is_physics_processing()
+
+func close_settings() -> void:
+	super.close_settings()
+	if revision!=null and revision.returning_to_title: open_route_menu()

@@ -6,6 +6,7 @@ signal simulation_enabled_changed(enabled: bool)
 signal collision_occurred(normal: Vector2, approach_speed: float)
 
 @export var motion: SubmarineMotion = SubmarineMotion.new()
+var facing: float = 1.0
 var depth_region: DepthRegion
 
 @onready var resource_system: SubmarineResourceSystem = $ResourceSystem
@@ -24,6 +25,8 @@ func _physics_process(delta: float) -> void:
 	var thrust: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	resource_system.advance(delta, thrust.length())
 	velocity = motion.next_velocity(velocity, thrust, delta)
+	if absf(velocity.x) > 12.0:
+		facing = -1.0 if velocity.x < 0.0 else 1.0
 	var attempted_velocity: Vector2 = velocity
 	var collided: bool = move_and_slide()
 	var maximum_approach_speed: float = 0.0
@@ -50,3 +53,7 @@ func set_simulation_enabled(value: bool) -> void:
 	passive.set_suspended(not value)
 	scanner.set_suspended(not value)
 	simulation_enabled_changed.emit(value)
+
+func facing_direction() -> Vector2:
+	if absf(velocity.x)>12.0: facing = signf(velocity.x)
+	return Vector2(facing,0)

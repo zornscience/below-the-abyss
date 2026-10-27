@@ -52,6 +52,11 @@ visual effects. Audio settings offer mute and separate mix levels. Save each pag
 to keep preferences. All essential information is also visible with sound muted.
 You can change these settings before starting and at any point later.
 
+Deliberate docking automatically restores hull, battery, oxygen and ten torpedoes.
+Base sends mission offers by radio after departure; accept on the transmission
+page. Research technology spends a finite point budget and allows free reassignment
+while docked. Recovered encrypted logs decode on return to base.
+
 Pause and choose Save expedition in safe terrain, then wait for the success message.
 Station interactions also checkpoint. Relaunch and choose Continue saved expedition.
 There is no automatic quit save: save progress explicitly before exiting. New

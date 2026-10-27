@@ -35,7 +35,7 @@ def main() -> None:
         command_error = None
         try:
             # The expanded mission/route walkthrough keeps real-time physics coverage.
-            run_check(name, arguments, timeout=420)
+            run_check(name, arguments, timeout=600)
         except RuntimeError as error:
             command_error = error
         # Removed before execution: an existing report cannot make a failed or

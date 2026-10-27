@@ -44,7 +44,7 @@ static func discoveries() -> DiscoveryCatalog:
 		point.map_position = item.at
 		catalog.points.append(point)
 	return catalog
-static func research() -> ResearchCatalog:
+static func research(encrypted: bool = false) -> ResearchCatalog:
 	var catalog: ResearchCatalog = load("res://resources/regions/shelf_research.tres").duplicate(true) as ResearchCatalog
 	for item: Dictionary in SCIENCE:
 		var target: ScanDefinition = ScanDefinition.new()
@@ -52,7 +52,7 @@ static func research() -> ResearchCatalog:
 		target.required_poi_id = StringName(item.poi)
 		target.classification = item.type
 		target.title = item.title
-		target.description = item.text
+		target.description = "ENCRYPTED FLIGHT LOGS / Return to Shelf Base to decode the recovered recorder." if encrypted and item.id=="lost-expedition-blackbox" else item.text
 		target.position = item.at
 		target.duration = item.seconds
 		catalog.targets.append(target)
@@ -90,19 +90,22 @@ static func upgrade_missions(records: Dictionary) -> Dictionary:
 	return result
 
 
-static func narrative() -> NarrativeCatalog:
+static func narrative(encrypted: bool = false) -> NarrativeCatalog:
 	var catalog: NarrativeCatalog = load("res://resources/narrative/shelf_chapter.tres").duplicate(true) as NarrativeCatalog
 	for entry: NarrativeEntry in catalog.entries:
 		if entry.evidence == NarrativeEntry.Evidence.BRIEFING:
 			entry.text = "SHELF BASE / Expedition orders\n\nA survey submarine is missing. Begin with the reference plate and Twin Spires survey, then follow the recovered hydrophone and chimney-field evidence out onto the outer shelf. Locate the grounded vessel and scan its flight recorder. Return to Shelf Base for the expedition review.\n\nPrepare the pressure hull before descending beyond 300 metres. Sonar locates subjects; deliberate scientific scans recover records. Read those records for clues. The map records discoveries without drawing a route. Wildlife research is optional; weapons are not required to complete the expedition."
 		if entry.evidence == NarrativeEntry.Evidence.CONCLUDED:
 			entry.text = "SHELF BASE / Expedition review acknowledged\n\nThe recorder confirms that the submarine made an emergency grounding after a power failure. The portable receiver had already been removed, and no crew remained aboard. Finding their vessel resolves where the expedition stopped travelling; it does not explain where they went.\n\nThe crew were listening for the silence between transmissions. Their final instruction remains: If the sequence stops, keep recording.\n\nNERIS is safely home. Your research and discoveries remain available."
+	if encrypted:
+		for entry: NarrativeEntry in catalog.entries:
+			if entry.evidence==NarrativeEntry.Evidence.CONCLUDED: entry.text = "SHELF BASE / Survey acknowledged. Your records remain archived. Recovered flight logs are available in the station's decoded-records room; further expedition evidence can still be investigated."
 	for index: int in range(3):
 		var item: Dictionary = SCIENCE[index]
 		var entry: NarrativeEntry = NarrativeEntry.new()
 		entry.stable_id = StringName(item.id+"-narrative")
 		entry.title = item.title
-		entry.text = item.text
+		entry.text = "ENCRYPTED LOGS RECOVERED / Return to Shelf Base for decoding." if encrypted and item.id=="lost-expedition-blackbox" else item.text
 		entry.evidence = [NarrativeEntry.Evidence.HYDROPHONE,NarrativeEntry.Evidence.VENT,NarrativeEntry.Evidence.WRECK][index]
 		catalog.entries.append(entry)
 	return catalog

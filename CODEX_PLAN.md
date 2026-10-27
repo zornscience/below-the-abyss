@@ -119,3 +119,14 @@ Acceptance: [feedback matrix and manual checks](docs/feedback/README.md), native
 Godot screenshots, all prior GUT rules, parser/import/startup, Python tooling,
 controller chapter walkthrough and standalone export smoke. Review through a PR;
 no automatic merge. Human pacing/five-player evaluation remains outstanding.
+
+## Authorized second feedback revision
+
+Implement the user's requested title/docking/art/handling/torpedo improvements,
+radio-led mission flow, scared wreck encounter, encrypted-log return/decoding and
+finite research-point technology tree. Free point reassignment at the station was
+explicitly selected. Preserve domain detectors/contracts and old regression fixtures;
+verify production MAIN separately through controller input, save/recovery, unit tests,
+native screenshots and standalone exports. No next-region gameplay or campaign-wide
+research tree is implied. Review in a separate PR; do not merge automatically.
+See [acceptance and manual course](docs/feedback-two/README.md).

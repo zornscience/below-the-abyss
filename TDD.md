@@ -215,3 +215,22 @@ Expedition schema 3 adds terrain cuts and a legacy-conclusion flag; strict versi
 Terrain is replayed before checkpoint collision clearance. Permanent progress and
 terrain survive route resets; temporary wildlife/projectiles reset. Details and
 limits: [feedback implementation and verification](docs/feedback/README.md).
+
+## Second feedback implementation
+
+ExpeditionRevision is a scene-owned adapter over the existing acoustic, mission,
+research, discovery, service, upgrade and checkpoint contracts. Production title/
+dock/radio pages are separate, with focus navigation and fixed text-scroll controls.
+SubmarineUpgrades accepts a validated capability projection from ResearchTree /
+CampaignData while preserving active pulse/history/cooldown and depth APIs. Award IDs
+are unique and available points derive from earned awards minus allocated ranks.
+Capabilities reconstruct from baselines; legacy install IDs migrate to Rank I.
+
+Schema 4 adds validated ordnance/campaign state, migrates versions 1/2/3 and preserves
+atomic backup/recovery. New ranks commit before capability changes. Recovery merges
+earned flags monotonically, while allocation changes remain intentional and free.
+The shared creature FSM adds FLEE for a bounded, collision-safe wreck encounter.
+Accelerating torpedoes integrate exact travel distance and own bounded fading wakes;
+local impact refraction is cosmetic and suppressed by comfort options. Authored
+Resources supply production motion, ordnance tuning and research capabilities.
+[Architecture, exact commands, limits and graphical evidence](docs/feedback-two/README.md).

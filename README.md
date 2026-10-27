@@ -2,33 +2,32 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **playtest feedback iteration** (on top of BTA-044). The playable
-region now extends from Shelf Base to the lost expedition wreck, with a hydrophone
-record, chimney-field study and flight-recorder recovery before returning to debrief.
-The original compact shelf remains a development/regression fixture.
+Current build: **playtest feedback round two** — a clean title screen, illustrated
+station interior, revised underwater handling/torpedoes, radio-led investigation,
+encrypted wreck logs and a finite research-point talent tree.
 
-- **Learn:** optional contextual mechanic cards; Pause → **Help & tutorials** →
-  **Tutorial messages: OFF** disables them and saves the preference. Help remains
-  available with messages disabled. Tutorials explain controls, not a marked route.
-- **Pilot:** WASD/arrows or left stick; **F / X** sonar; **E / A** dock or scan;
-  **M / Back** map/research; **P / Start** pause; **L / Y** lights.
-- **Torpedoes:** **Space / right trigger** (also right-stick click), remappable.
-  Aim follows the last thrust direction. Blasts excavate authored rock and damage
-  nearby wildlife. The station, wreck hull and perimeter bedrock remain solid.
-  Weapons are optional; there are no kill rewards or ammunition economy.
-- **Prepare:** dock intentionally at Shelf Base, then use the graphical overview
-  for services, upgrades, expedition log or assignments. Free pressure-hull and
-  sonar upgrades persist. Passing through base never refills resources.
-- **Explore:** read recovered scientific records for clues; the map records found
-  landmarks without route arrows. Wildlife responds to sound and supports an
-  optional nonviolent biological study. Passive listening remains silent.
+- **Start:** Begin/Continue, Options and Quit on the illustrated title. Optional
+  tutorial cards can be disabled under Pause → Help & tutorials.
+- **Pilot:** WASD/arrows or left stick; F/X sonar, E/A interact/scan/dock,
+  M/Back map/research, P/Start pause. Acceleration is slower and water-like.
+- **Torpedoes:** Space/right trigger (or right-stick click), remappable. Ten rounds;
+  fire horizontally in the visible facing direction, accelerate to cruise speed,
+  leave fading wakes and create bright locally refractive blasts. The HUD tracks
+  remaining rounds. Comfort preferences suppress strong effects.
+- **Dock:** deliberate E/A docking automatically repairs/refills/rearms. The new
+  interior offers Research technology, Expedition logs, Radio archive and Depart.
+  Merely passing through base never restores supplies.
+- **Investigate:** accept the base's radio request after departure. The map receives
+  an unconfirmed last-contact report. Follow the existing scientific trail to the
+  wreck; a harmless scavenger flees on arrival. Scan encrypted logs and bring them
+  home for decoding and the next story dossier.
+- **Research points:** two commissioning points, one outer-survey reward and one
+  decoding reward, four total in this prototype. Spend across six sequential sonar/
+  pressure-hull ranks; freely refund/reassign at base. Awards and allocations persist.
 
-The quieter HUD retains numerical resources, depth/rating, pressure/threat warnings
-and sonar/passive instruments. Scan progress and docking prompts appear only in
-context. Idle battery drain is 0.005/s, full thrust adds 0.025/s; a sonar ping costs
-4 battery (over two minutes of full-thrust travel). Oxygen is 0.03/s for the longer
-expedition. See the [feedback change record, controls, save migration, walkthrough,
-limitations and native screenshots](docs/feedback/README.md).
+[Acceptance matrix, APIs/save migration, complete walkthrough, exact commands,
+limitations and native screenshots](docs/feedback-two/README.md). The prior
+[feedback round](docs/feedback/README.md) remains documented as historical behavior.
 
 **The external five-player study has not run.** The [BTA-044 toolkit](docs/playtesting/README.md)
 provides opt-in local reports, participant/facilitator materials and anonymous

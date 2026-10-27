@@ -3,7 +3,9 @@ extends RefCounted
 ## Pure state/arbitration. The bus owns lifetime duplicate history, not this model.
 
 signal state_changed(state: int)
-enum State { PATROL, INVESTIGATE, RETURN }
+enum State { PATROL, INVESTIGATE, RETURN, FLEE }
+var _flee_target: Vector2
+var _flee_settled: bool = false
 var state: State = State.PATROL
 var reason: String = "PATROL"
 var patrol_index: int = 0
@@ -26,6 +28,7 @@ func configure(profile: CreatureProfile) -> Error:
 
 
 func reset_session() -> void:
+	_flee_settled = false
 	state = State.PATROL
 	reason = "PATROL"
 	patrol_index = 0
@@ -56,7 +59,7 @@ func offer(event: AcousticEvent, strength: float, distance: float, local_origin:
 		return ERR_INVALID_PARAMETER
 	if event.event_id == _last_id or (not _pending.is_empty() and event.event_id == _pending.id):
 		return ERR_ALREADY_EXISTS
-	if state == State.RETURN or _time < _recover_until or not _rules.hearing.accepts(event) \
+	if state in [State.RETURN,State.FLEE] or _time < _recover_until or not _rules.hearing.accepts(event) \
 		or not _rules.event_priorities.has(event.event_type) or strength < _rules.hearing.minimum_strength \
 		or distance > minf(event.range_units, _rules.hearing.maximum_range_units) \
 		or not _rules.center_bounds().has_point(local_origin) \
@@ -72,11 +75,13 @@ func offer(event: AcousticEvent, strength: float, distance: float, local_origin:
 
 
 func destination() -> Vector2:
+	if state==State.FLEE: return _flee_target
 	return _focus.origin if state == State.INVESTIGATE else _rules.patrol_points[patrol_index]
 
 
 func speed() -> float:
 	match state:
+		State.FLEE: return 0.0 if _flee_settled else _rules.investigate_speed
 		State.INVESTIGATE: return _rules.investigate_speed
 		State.RETURN: return _rules.return_speed
 		_: return _rules.patrol_speed
@@ -104,6 +109,13 @@ func advance(delta: float, position: Vector2, blocked: bool = false) -> Error:
 	if _rules == null or not is_finite(delta) or delta < 0.0 or not is_finite(_time + delta) or not position.is_finite():
 		return ERR_INVALID_PARAMETER
 	_time += delta
+	if state==State.FLEE:
+		_blocked = _blocked+delta if blocked else 0.0
+		if position.distance_to(_flee_target)<=_rules.arrival_radius or _blocked>=_rules.unreachable_seconds or _time>=_deadline:
+			_flee_target = position
+			_flee_settled = true
+			reason = "REFUGE"
+		return OK
 	if not _pending.is_empty() and _pending.timestamp <= _time + 0.000000001:
 		var candidate: Dictionary = _pending
 		_pending = {}
@@ -142,3 +154,13 @@ func _arrival_allowed() -> bool:
 func snapshot() -> Dictionary:
 	return {"state": state, "reason": reason, "destination": destination(),
 		"event_id": _last_id, "time": _time, "deadline": _deadline, "patrol_index": patrol_index}
+
+func request_flee(target: Vector2) -> Error:
+	if _rules==null or not target.is_finite() or not _rules.center_bounds().has_point(target): return ERR_INVALID_PARAMETER
+	if state==State.FLEE: return ERR_ALREADY_EXISTS
+	_flee_target = target
+	_flee_settled = false
+	_deadline = _time+15.0
+	_pending.clear()
+	_transition(State.FLEE,"FLEE / VESSEL APPROACH")
+	return OK

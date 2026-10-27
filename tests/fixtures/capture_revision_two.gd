@@ -1,0 +1,80 @@
+extends SceneTree
+var scene: ShelfPrototype
+func frames(count: int = 5) -> void:
+	for index: int in range(count): await physics_frame
+func capture(label: String) -> void:
+	await frames()
+	await RenderingServer.frame_post_draw
+	assert(root.get_texture().get_image().save_png(OS.get_environment("BTA_EVIDENCE_DIR").path_join(label+".png"))==OK)
+	print("REVISION_TWO_CAPTURE ",label," size=",root.size)
+func move_to(at: Vector2) -> void:
+	scene.submarine.global_position = at
+	scene.submarine.velocity = Vector2.ZERO
+	scene.submarine.reset_physics_interpolation()
+	await frames(3)
+	var camera: Camera2D = scene.submarine.get_node("Camera2D") as Camera2D
+	camera.reset_smoothing()
+	camera.force_update_scroll()
+	await frames(6)
+func _initialize() -> void:
+	root.size = Vector2i(1280,800)
+	scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	scene.settings_path = "user://revision-two-capture-%d.json" % Time.get_ticks_usec()
+	scene.expedition_path = scene.settings_path+".expedition.json"
+	root.add_child.call_deferred(scene)
+	await frames(8)
+	await capture("title")
+	scene.revision.start()
+	assert(scene.open_station()==OK)
+	await capture("station-interior")
+	scene.revision.ui.show_dock("technology")
+	assert(scene.revision.assign("hull",1)==OK)
+	assert(scene.revision.assign("sonar",1)==OK)
+	scene.revision.ui.show_dock("technology")
+	await capture("technology")
+	scene.revision.undock()
+	scene.revision.show_transmission("dispatch",true)
+	await capture("radio-assignment")
+	scene.revision.accept_transmission("dispatch",true)
+	await move_to(Vector2(12800,1100))
+	await capture("shaded-seascape")
+	await move_to(Vector2(18400,1100))
+	assert(scene.torpedoes.request_fire()==OK)
+	await frames(45)
+	await capture("torpedo-wake")
+	scene.torpedoes.reset_session()
+	await move_to(Vector2(19150,1100))
+	assert(scene.torpedoes.request_fire()==OK)
+	await frames(47)
+	await capture("blast-refraction")
+	scene.revision.scavenger.reset_session()
+	await move_to(Vector2(21100,1220))
+	await frames(30)
+	assert(scene.revision.scavenger.encounter_started)
+	await capture("wreck-encounter")
+	await move_to(Vector2(21600,1290))
+	scene.research.complete_scan(&"lost-expedition-blackbox")
+	await frames()
+	if scene.revision.ui.radio_page.visible: scene.revision.accept_transmission("wreck-recovered",false)
+	scene.open_map()
+	scene.open_research()
+	scene.research_log._select(&"lost-expedition-blackbox")
+	await capture("encrypted-recorder")
+	scene.close_research()
+	scene.close_map()
+	await move_to(scene.region.spawn.global_position)
+	assert(scene.open_station()==OK)
+	scene.revision.ui.show_dock("logs")
+	assert(scene.revision.campaign.decoded)
+	await capture("decoded-logs")
+	root.size = Vector2i(800,600)
+	var preferences: Dictionary = scene.settings.snapshot().accessibility
+	preferences.ui_scale = "large"
+	scene.settings.set_accessibility(preferences)
+	scene.revision.ui.show_dock("technology")
+	await capture("technology-compact")
+	scene.revision.ui.dock_page.hide()
+	scene.revision.ui.show_title()
+	await capture("title-compact")
+	print("REVISION_TWO_NATIVE_PASS")
+	quit()

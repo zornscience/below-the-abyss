@@ -3,6 +3,7 @@ extends Control
 ## Completed records only. No catalogue/undiscovered titles enter this page.
 
 signal close_requested
+var entry_text_provider: Callable
 var registry: ResearchRegistry
 var store: ResearchStore
 
@@ -54,7 +55,7 @@ func refresh() -> void:
 func _select(id: StringName) -> void:
 	if registry.is_completed(id):
 		var entry: ScanDefinition = registry.definition(id)
-		(%ResearchDetail as Label).text = "%s\n%s / COMPLETED\n\n%s" % [entry.title, entry.classification.to_upper(), entry.description]
+		(%ResearchDetail as Label).text = "%s\n%s / COMPLETED\n\n%s" % [entry.title, entry.classification.to_upper(), entry_text_provider.call(id,entry.description) if entry_text_provider.is_valid() else entry.description]
 
 
 func _status() -> void:

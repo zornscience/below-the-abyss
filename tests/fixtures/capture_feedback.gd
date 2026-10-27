@@ -22,6 +22,7 @@ func move_to(at: Vector2) -> void:
 func _initialize() -> void:
 	root.size = Vector2i(1280,800)
 	scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	scene.revised_expedition = false
 	scene.settings_path = "user://feedback-capture-%d.json" % Time.get_ticks_usec()
 	scene.expedition_path = scene.settings_path+".expedition.json"
 	root.add_child.call_deferred(scene)

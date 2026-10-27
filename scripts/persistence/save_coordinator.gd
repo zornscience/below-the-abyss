@@ -21,10 +21,13 @@ func _report(message: String, result: Error) -> Error:
 
 func setup(scene: ShelfPrototype, path: String) -> Error:
 	_scene = scene
+	scene.story.persistence_required = true
+	scene.story.checkpoint_writer = Callable()
 	store.path = path
 	var document: Dictionary = store.load_checkpoint()
 	if document.error == OK:
 		_state = document.data
+		if scene.story.restore(_state.story)!=OK: return _report("Conflicting story checkpoint; live progress and files preserved.",ERR_BUSY)
 		_state.progress = ExpeditionSchema.merge_progress(_state.progress, progress_snapshot())
 		apply_progress(_state.progress)
 		_has_checkpoint = true
@@ -46,6 +49,7 @@ func setup(scene: ShelfPrototype, path: String) -> Error:
 
 
 func _delegate_stores() -> void:
+	_scene.story.checkpoint_writer = commit_story
 	for legacy: Variant in [_scene.discovery_store, _scene.research_store, _scene.upgrades.store, _scene.missions.store]:
 		legacy.checkpoint_writer = commit_progress
 		legacy._report("Progress managed by expedition checkpoint; legacy files preserved.", OK)
@@ -76,6 +80,7 @@ func snapshot() -> Dictionary:
 	var vessel: SubmarineController = _scene.submarine
 	return {"format": "bta-expedition", "schema_version": ExpeditionSchema.VERSION, "region_id": ExpeditionSchema.REGION, "legacy_imported": true,
 		"legacy_conclusion": bool(_state.get("legacy_conclusion",false)),
+		"story": _scene.story.snapshot(),
 		"prototype": prototype_snapshot(),
 		"terrain": _scene.excavation.snapshot() if _scene.excavation != null else [],
 		"player": {"position": [vessel.global_position.x, vessel.global_position.y], "rotation": wrapf(vessel.rotation, -PI, PI),
@@ -125,6 +130,11 @@ func _write(candidate: Dictionary, message: String) -> Error:
 	if _busy or not _ready_to_write:
 		return _report("Save blocked; recover the existing checkpoint before writing.", ERR_BUSY)
 	_busy = true
+	var reconciled: Dictionary = StoryState.merge_snapshots(candidate.story,_state.story)
+	if reconciled.error!=OK:
+		_busy = false
+		return _report("Conflicting story decisions; existing checkpoint preserved.",reconciled.error)
+	candidate.story = reconciled.data
 	candidate.progress = ExpeditionSchema.merge_progress(candidate.progress, _state.progress)
 	var result: Error = store.write_checkpoint(candidate)
 	if result == OK:
@@ -150,6 +160,7 @@ func commit_progress(kind: StringName, proposed: Variant) -> Error:
 		return ERR_BUSY
 	var candidate: Dictionary = _state.duplicate(true)
 	candidate.prototype = prototype_snapshot()
+	candidate.story = _scene.story.snapshot()
 	candidate.terrain = _scene.excavation.snapshot() if _scene.excavation != null else []
 	candidate.progress = progress_snapshot()
 	candidate.progress[String(kind)] = proposed.duplicate(true) if proposed is Dictionary else _strings(proposed)
@@ -197,6 +208,7 @@ func continue_expedition() -> Error:
 	if _scene.revision!=null:
 		_scene.revision.ui.dock_page.hide()
 		_scene.revision.ui.radio_page.hide()
+	if _scene.bloom!=null: _scene.bloom.reset_session()
 	_scene.submarine.scanner.reset_session()
 	if _scene.torpedoes != null:
 		_scene.torpedoes.reset_session()
@@ -209,6 +221,7 @@ func continue_expedition() -> Error:
 		for grazer: AcousticCreature in _scene.extension.wildlife: grazer.reset_session()
 	if _scene.gameplay_audio != null:
 		_scene.gameplay_audio.reset_session()
+	_scene.story.restore(saved.story)
 	apply_progress(saved.progress)
 	if _scene.revision != null: _scene.revision.restore(saved.prototype)
 	var vessel: SubmarineController = _scene.submarine
@@ -243,13 +256,15 @@ func recover_backup() -> Error:
 	if _busy:
 		return ERR_BUSY
 	_busy = true
-	var restored: Dictionary = store.recover_checkpoint(progress_snapshot(),prototype_snapshot())
+	var restored: Dictionary = store.recover_checkpoint(progress_snapshot(),prototype_snapshot(),_scene.story.snapshot())
 	if restored.error == OK:
 		_state = restored.data
 		_has_checkpoint = true
 		_ready_to_write = true
 		_delegate_stores()
+		_scene.story.restore(_state.story)
 		apply_progress(_state.progress)
+		if _scene.bloom!=null: _scene.bloom.refresh_state()
 	_report("Backup recovered; rejected file preserved. Continue to resume." if restored.error == OK else "Backup not recovered (%s); files/vessel preserved." % error_string(restored.error), restored.error)
 	_busy = false
 	return restored.error
@@ -320,3 +335,18 @@ func commit_prototype(value: Dictionary) -> Error:
 	var candidate: Dictionary = _state.duplicate(true)
 	candidate.prototype = value.duplicate(true)
 	return _write(candidate,"Research and expedition state saved.")
+
+func commit_story(value: Dictionary, choice_id: StringName) -> Error:
+	if _busy or not _ready_to_write or not StoryState.valid_snapshot(value): return ERR_UNAVAILABLE
+	var candidate: Dictionary = _state.duplicate(true)
+	candidate.story = value.duplicate(true)
+	candidate.progress = progress_snapshot()
+	candidate.prototype = prototype_snapshot()
+	candidate.terrain = _scene.excavation.snapshot() if _scene.excavation!=null else []
+	if choice_id!=&"":
+		var choice: ChoiceData = _scene.story.definition(choice_id)
+		if choice==null: return ERR_INVALID_PARAMETER
+		if choice.research_record_id!=&"" and String(choice.research_record_id) not in candidate.progress.research:
+			candidate.progress.research.append(String(choice.research_record_id))
+			candidate.progress.research.sort()
+	return _write(candidate,"Story decision saved with expedition progress.")

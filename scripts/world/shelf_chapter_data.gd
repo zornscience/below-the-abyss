@@ -33,7 +33,7 @@ static func terrain_ids() -> Array[String]:
 	for rock: Dictionary in ROCKS:
 		ids.append(rock.id)
 	return ids
-static func discoveries() -> DiscoveryCatalog:
+static func discoveries(include_story: bool = false) -> DiscoveryCatalog:
 	var catalog: DiscoveryCatalog = load("res://resources/regions/shelf_discoveries.tres").duplicate(true) as DiscoveryCatalog
 	catalog.survey_bounds = Rect2(BOUNDS)
 	for item: Dictionary in POINTS:
@@ -43,6 +43,13 @@ static func discoveries() -> DiscoveryCatalog:
 		point.display_name = item.title
 		point.map_position = item.at
 		catalog.points.append(point)
+	if include_story:
+		var bloom: PointOfInterest = PointOfInterest.new()
+		bloom.stable_id = &"zone1-light-bloom-habitat"
+		bloom.sonar_target_id = &"zone1-light-bloom-echo"
+		bloom.display_name = "Light-bloom colony"
+		bloom.map_position = Vector2(1330,590)
+		catalog.points.append(bloom)
 	return catalog
 static func research(encrypted: bool = false) -> ResearchCatalog:
 	var catalog: ResearchCatalog = load("res://resources/regions/shelf_research.tres").duplicate(true) as ResearchCatalog
@@ -56,6 +63,7 @@ static func research(encrypted: bool = false) -> ResearchCatalog:
 		target.position = item.at
 		target.duration = item.seconds
 		catalog.targets.append(target)
+	if encrypted: catalog.targets.append(preload("res://resources/story/light_bloom_scan.tres").duplicate(true) as ScanDefinition)
 	return catalog
 static func missions() -> MissionCatalog:
 	var catalog: MissionCatalog = load("res://resources/missions/shelf_missions.tres").duplicate(true) as MissionCatalog

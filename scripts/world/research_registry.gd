@@ -4,6 +4,7 @@ extends Node
 
 signal scan_completed(target_id: StringName)
 signal records_changed
+var completion_gate: Callable
 var _catalog: ResearchCatalog
 var _completed: Dictionary[StringName, bool] = {}
 
@@ -43,6 +44,9 @@ func complete_scan(id: StringName) -> Error:
 		return ERR_INVALID_PARAMETER
 	if is_completed(id):
 		return ERR_ALREADY_EXISTS
+	if completion_gate.is_valid():
+		var result: Error = completion_gate.call(id)
+		if result!=OK: return result
 	_completed[id] = true
 	scan_completed.emit(id)
 	records_changed.emit()

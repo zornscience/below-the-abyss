@@ -2,7 +2,7 @@ class_name ShelfExpansion
 extends Node
 var wildlife: Array[AcousticCreature] = []
 var excavation: ExcavationSystem
-func setup(region: ContinentalShelf) -> ExcavationSystem:
+func setup(region: ContinentalShelf, include_story: bool = false) -> ExcavationSystem:
 	excavation = ExcavationSystem.new()
 	region.add_child(excavation)
 	region.camera_bounds = ShelfChapterData.BOUNDS
@@ -55,6 +55,12 @@ func setup(region: ContinentalShelf) -> ExcavationSystem:
 		grazer.position = origin
 		region.add_child(grazer)
 		wildlife.append(grazer)
+	if include_story:
+		var bloom_echo: SonarRevealTarget = preload("res://scenes/props/sonar_reveal_target.tscn").instantiate() as SonarRevealTarget
+		bloom_echo.target_id = &"zone1-light-bloom-echo"
+		bloom_echo.caption = "Light-bloom colony"
+		bloom_echo.position = Vector2(1330,590)
+		region.get_node("SonarTargets").add_child(bloom_echo)
 	var station_art: StationIllustration = StationIllustration.new()
 	station_art.position = Vector2(180,250)
 	station_art.size = Vector2(480,195)

@@ -7,6 +7,8 @@ extends MovementPrototype
 @export var revised_expedition: bool = true
 var _station_failure: String = ""
 var _station_failure_remaining: float = 0.0
+var story: StoryState
+var bloom: LightBloomEncounter
 var revision: ExpeditionRevision
 var excavation: ExcavationSystem
 var torpedoes: TorpedoLauncher
@@ -57,12 +59,15 @@ var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 
 
 func _ready() -> void:
+	story = StoryState.new()
+	add_child(story)
+	if story.configure()!=OK: push_error("Invalid story choice catalog.")
 	(route_menu.get_node("%HelpTutorial") as Button).visible = extended_expedition
 	(route_menu.get_node("%HelpTutorial") as Button).disabled = not extended_expedition
 	if extended_expedition:
 		extension = ShelfExpansion.new()
 		add_child(extension)
-		excavation = extension.setup(region)
+		excavation = extension.setup(region,revised_expedition)
 	# Place the existing vessel before the shared orchestration samples depth.
 	submarine.global_position = region.spawn.global_position
 	region.configure_camera(submarine.get_node("Camera2D") as Camera2D)
@@ -88,7 +93,7 @@ func _ready() -> void:
 			push_error("Shelf sonar target registration failed.")
 	discoveries = DiscoveryRegistry.new()
 	add_child(discoveries)
-	if discoveries.configure(ShelfChapterData.discoveries() if extended_expedition else DISCOVERY_CATALOG) != OK:
+	if discoveries.configure(ShelfChapterData.discoveries(revised_expedition) if extended_expedition else DISCOVERY_CATALOG) != OK:
 		push_error("Invalid discovery catalog.")
 	for node: Node in region.get_node("SonarTargets").get_children():
 		var result: Error = discoveries.connect_sonar_target(node as SonarRevealTarget)
@@ -266,6 +271,9 @@ func _ready() -> void:
 		revision = ExpeditionRevision.new()
 		add_child(revision)
 		revision.setup(self)
+		bloom = LightBloomEncounter.new()
+		add_child(bloom)
+		bloom.setup(self)
 
 
 func open_help() -> void:
@@ -358,6 +366,7 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if bloom!=null and bloom.modal(): return
 	if revision!=null and revision.ui.modal(): return
 	if help_panel != null and help_panel.visible: return
 	if playtest_panel != null and playtest_panel.visible:
@@ -385,6 +394,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not development_mode and _menu == null and not event.is_echo() and event.is_action_pressed("interact"):
 			if station.is_in_range(submarine.global_position):
 				open_station()
+			elif bloom!=null and bloom.in_range():
+				bloom.interact()
 			else:
 				submarine.scanner.request_scan()
 			get_viewport().set_input_as_handled()
@@ -410,6 +421,7 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
+	if bloom!=null and bloom.modal(): return
 	if revision!=null and revision.ui.modal(): return
 	if help_panel != null and help_panel.visible: return
 	if playtest_panel != null and playtest_panel.visible:
@@ -514,6 +526,7 @@ func open_settings() -> void:
 
 
 func restart_route() -> void:
+	if bloom!=null: bloom.reset_session()
 	if station.end_interaction() != OK:
 		return
 	station_menu.hide()

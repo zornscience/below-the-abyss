@@ -53,6 +53,15 @@ class AnalysisTests(unittest.TestCase):
         with self.assertRaises(ValueError): a.analyze(dict(schema_version=1,participants=[participant(),participant()]),[])
         with self.assertRaises(ValueError): a.analyze(dict(schema_version=1,participants=[]),[report(),report()])
 
+    def test_bloom_uses_existing_event_allowlist_without_exposing_hidden_story(self):
+        data = report()
+        for kind, detail in [('discovery','zone1-light-bloom-habitat'), ('scan_started','zone1-light-bloom-scan'), ('scan_completed','zone1-light-bloom-scan')]:
+            data['events'].append(dict(kind=kind,detail=detail,seconds=1,amount=0))
+            data['counts'][kind] = 1
+        a.validate_report(data)
+        data['resonance'] = 15
+        with self.assertRaises(ValueError): a.validate_report(data)
+
     def test_malformed_or_personal_telemetry_rejected(self):
         for key, value in [('email','x'),('device_id','x'),('active_seconds',float('nan')),('events',[{'raw_key':'A'}])]:
             data = copy.deepcopy(report()); data[key] = value

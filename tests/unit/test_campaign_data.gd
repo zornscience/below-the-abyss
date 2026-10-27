@@ -41,10 +41,11 @@ func test_v3_save_migrates_ammunition_and_allocations_in_memory() -> void:
 	var old: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
 	old.schema_version = 3
 	old.erase("prototype")
+	old.erase("story")
 	var loaded: Dictionary = ExpeditionSchema.decode(old)
 	assert_eq(loaded.error,OK)
 	assert_true(loaded.migrated)
-	assert_eq(loaded.data.schema_version,4)
+	assert_eq(loaded.data.schema_version,5)
 	assert_eq(loaded.data.prototype.ammunition,10)
 	assert_eq(loaded.data.prototype.campaign.ranks.sonar,1)
 	assert_false(old.has("prototype"))

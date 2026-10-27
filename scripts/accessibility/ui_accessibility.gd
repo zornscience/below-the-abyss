@@ -212,6 +212,22 @@ func _fit_hud() -> void:
 		return
 	var guide: Control = _scene.get_node("UI/RouteGuide") as Control
 	var threat: Control = _scene.hud.get_node("%ThreatIndicator") as Control
+	if _scene.hud.quiet:
+		var deck: Control = _scene.hud.get_node("%InstrumentDeck") as Control
+		var depth: Control = _scene.hud.get_node("%DepthPanel") as Control
+		var passive: Control = _scene.hud.get_node("%PassiveContacts") as Control
+		passive.position = Vector2(depth.get_global_rect().position.x,depth.get_global_rect().end.y+8)
+		passive.size.x = depth.size.x
+		threat.offset_left = depth.get_global_rect().position.x - _scene.get_viewport().get_visible_rect().size.x
+		threat.offset_top = passive.position.y + passive.get_combined_minimum_size().y + 8
+		threat.offset_bottom = threat.offset_top + threat.get_combined_minimum_size().y
+		if _feedback.get_parent() != _scene.hud: _feedback.reparent(_scene.hud)
+		_feedback.layout_mode = 0
+		_feedback.position = Vector2(24,deck.get_global_rect().position.y-38)
+		_feedback.size = Vector2(_scene.get_viewport().get_visible_rect().size.x-48,30)
+		guide.hide()
+		_scene._layout_tutorial()
+		return
 	if _preferences.ui_scale != "large":
 		threat.offset_left = _threat_offsets.position.x
 		threat.offset_top = _threat_offsets.position.y

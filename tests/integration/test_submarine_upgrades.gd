@@ -1,6 +1,6 @@
 extends GutTest
 
-const MAIN: PackedScene = preload("res://scenes/main/main.tscn")
+const MAIN: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 const TARGET: PackedScene = preload("res://scenes/props/sonar_reveal_target.tscn")
 const SONAR: StringName = &"sonar-range-1200"
 const HULL: StringName = &"pressure-hull-400"

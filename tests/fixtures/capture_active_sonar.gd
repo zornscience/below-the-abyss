@@ -21,7 +21,7 @@ func _target(name: String) -> SonarRevealTarget:
 
 
 func _initialize() -> void:
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta021-capture-defaults.json"
 	root.add_child.call_deferred(_scene)
 	await _frames(5)

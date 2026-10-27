@@ -4,7 +4,7 @@ extends RefCounted
 
 const ACTIONS: Array[StringName] = [
 	&"move_left", &"move_right", &"move_up", &"move_down",
-	&"interact", &"sonar_ping", &"pause", &"toggle_lights", &"open_map",
+	&"interact", &"sonar_ping", &"pause", &"toggle_lights", &"open_map", &"fire_torpedo",
 ]
 const MENU_ACTIONS: Array[StringName] = [
 	&"ui_left", &"ui_right", &"ui_up", &"ui_down",
@@ -54,11 +54,11 @@ static func binding_id(binding: Dictionary) -> String:
 	return "%s:%d" % [binding["kind"], int(binding["code"])]
 
 
-static func valid_bindings(bindings: Variant) -> bool:
-	if not bindings is Dictionary or bindings.size() != ACTIONS.size():
+static func valid_bindings(bindings: Variant, actions: Array[StringName] = ACTIONS) -> bool:
+	if not bindings is Dictionary or bindings.size() != actions.size():
 		return false
 	var seen: Dictionary = {}
-	for action: StringName in ACTIONS:
+	for action: StringName in actions:
 		var entries: Variant = bindings.get(String(action))
 		if not entries is Array or entries.is_empty() or entries.size() > 8:
 			return false
@@ -154,6 +154,7 @@ static func describe(bindings: Dictionary, action: StringName) -> String:
 				JOY_BUTTON_A: "Controller A", JOY_BUTTON_B: "Controller B",
 				JOY_BUTTON_X: "Controller X", JOY_BUTTON_Y: "Controller Y",
 				JOY_BUTTON_BACK: "Back / Select", JOY_BUTTON_START: "Start / Menu",
+				JOY_BUTTON_LEFT_STICK: "Left stick click", JOY_BUTTON_RIGHT_STICK: "Right stick click",
 				JOY_BUTTON_LEFT_SHOULDER: "Left shoulder", JOY_BUTTON_RIGHT_SHOULDER: "Right shoulder",
 				JOY_BUTTON_DPAD_LEFT: "D-pad left", JOY_BUTTON_DPAD_RIGHT: "D-pad right",
 				JOY_BUTTON_DPAD_UP: "D-pad up", JOY_BUTTON_DPAD_DOWN: "D-pad down",
@@ -169,6 +170,10 @@ static func describe(bindings: Dictionary, action: StringName) -> String:
 					names.append("Left stick up" if negative else "Left stick down")
 				JOY_AXIS_RIGHT_X:
 					names.append("Right stick left" if negative else "Right stick right")
+				JOY_AXIS_TRIGGER_RIGHT:
+					names.append("Right trigger")
+				JOY_AXIS_TRIGGER_LEFT:
+					names.append("Left trigger")
 				JOY_AXIS_RIGHT_Y:
 					names.append("Right stick up" if negative else "Right stick down")
 				_:
@@ -196,3 +201,29 @@ static func describe_device(bindings: Dictionary, action: StringName, controller
 			entries.append(entry)
 	filtered[String(action)] = entries
 	return describe(filtered, action)
+
+
+static func compatible_bindings(value: Variant) -> Dictionary:
+	if valid_bindings(value):
+		return value.duplicate(true)
+	var legacy: Array[StringName] = ACTIONS.duplicate()
+	legacy.erase(&"fire_torpedo")
+	if not valid_bindings(value, legacy):
+		return {}
+	var result: Dictionary = value.duplicate(true)
+	var used: Dictionary = {}
+	for action: String in result:
+		for entry: Dictionary in result[action]:
+			used[binding_id(entry)] = true
+	var chosen: Array[Dictionary] = []
+	for code: int in [KEY_SPACE, KEY_R, KEY_G, KEY_V, KEY_T] + range(KEY_F1, KEY_F35+1):
+		var entry: Dictionary = {"kind":"key","code":code}
+		if not used.has(binding_id(entry)):
+			chosen.append(entry)
+			break
+	for entry: Dictionary in [{"kind":"axis","axis":JOY_AXIS_TRIGGER_RIGHT,"direction":1}, {"kind":"button","code":JOY_BUTTON_RIGHT_SHOULDER}, {"kind":"axis","axis":JOY_AXIS_TRIGGER_LEFT,"direction":1}, {"kind":"button","code":JOY_BUTTON_LEFT_SHOULDER}, {"kind":"button","code":JOY_BUTTON_RIGHT_STICK}]:
+		if not used.has(binding_id(entry)):
+			chosen.append(entry)
+			break
+	result["fire_torpedo"] = chosen
+	return result if valid_bindings(result) else {}

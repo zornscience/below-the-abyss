@@ -11,7 +11,7 @@ var _document: Dictionary = default_document()
 
 
 static func default_document() -> Dictionary:
-	return {"schema_version": 1, "deadzone": 0.25, "bindings": InputBindings.defaults(), "audio": default_audio(), "accessibility": default_accessibility()}
+	return {"schema_version": 1, "deadzone": 0.25, "bindings": InputBindings.defaults(), "audio": default_audio(), "accessibility": default_accessibility(), "onboarding": {"enabled":true,"seen":[]}}
 
 
 static func default_audio() -> Dictionary:
@@ -65,23 +65,25 @@ func set_audio(audio: Dictionary) -> Error:
 
 
 static func valid_document(document: Variant) -> bool:
-	if not document is Dictionary or document.size() not in [3, 4, 5]:
+	if not document is Dictionary or document.size() not in [3, 4, 5, 6]:
 		return false
 	if not InputBindings.is_integer(document.get("schema_version")) \
 		or float(document["schema_version"]) != 1.0:
 		return false
 	for key: Variant in document:
-		if key not in ["schema_version", "deadzone", "bindings", "audio", "accessibility"]:
+		if key not in ["schema_version", "deadzone", "bindings", "audio", "accessibility", "onboarding"]:
 			return false
 	if document.has("accessibility") and not valid_accessibility(document.accessibility):
 		return false
 	if document.has("audio") and not valid_audio(document.audio):
 		return false
+	if document.has("onboarding") and not valid_onboarding(document.onboarding):
+		return false
 	var value: Variant = document.get("deadzone")
 	if typeof(value) != TYPE_FLOAT and typeof(value) != TYPE_INT:
 		return false
 	return is_finite(float(value)) and float(value) >= 0.1 and float(value) <= 0.9 \
-		and InputBindings.valid_bindings(document.get("bindings"))
+		and not InputBindings.compatible_bindings(document.get("bindings")).is_empty()
 
 
 func snapshot() -> Dictionary:
@@ -140,9 +142,10 @@ func _read_settings(path: String) -> Error:
 	_document = {
 		"schema_version": 1,
 		"deadzone": float(json.data["deadzone"]),
-		"bindings": InputBindings.normalized(json.data["bindings"]),
+		"bindings": InputBindings.normalized(InputBindings.compatible_bindings(json.data["bindings"])),
 		"audio": json.data.get("audio", default_audio()).duplicate(true),
 		"accessibility": json.data.get("accessibility", default_accessibility()).duplicate(true),
+		"onboarding": json.data.get("onboarding", {"enabled":true,"seen":[]}).duplicate(true),
 	}
 	settings_changed.emit()
 	return OK
@@ -174,3 +177,21 @@ func save_settings(path: String = DEFAULT_PATH) -> Error:
 	else:
 		last_load_result = OK
 	return error
+
+
+const TUTORIAL_IDS: Array[String] = ["movement","sonar","scan","map","station","depth","wildlife","torpedo"]
+static func valid_onboarding(value: Variant) -> bool:
+	if not value is Dictionary or value.size() != 2 or not value.get("enabled") is bool or not value.get("seen") is Array or value.seen.size() > TUTORIAL_IDS.size():
+		return false
+	var seen: Array[String] = []
+	for id: Variant in value.seen:
+		if not id is String or id not in TUTORIAL_IDS or id in seen:
+			return false
+		seen.append(id)
+	return true
+func set_onboarding(value: Dictionary) -> Error:
+	if not valid_onboarding(value):
+		return ERR_INVALID_PARAMETER
+	_document.onboarding = value.duplicate(true)
+	settings_changed.emit()
+	return OK

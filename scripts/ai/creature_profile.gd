@@ -15,11 +15,11 @@ extends Resource
 @export var navigation_bounds: Rect2 = Rect2(1380, 210, 620, 250)
 @export var patrol_points: PackedVector2Array = PackedVector2Array([Vector2(1510, 420), Vector2(1510, 250), Vector2(1890, 250), Vector2(1890, 420)])
 @export var hearing: AcousticReceiverProfile = AcousticReceiverProfile.new()
-@export var event_priorities: Dictionary[StringName, int] = {&"active_sonar": 20, &"ambient": 10}
+@export var event_priorities: Dictionary[StringName, int] = {&"active_sonar": 20, &"ambient": 10, &"explosion": 30}
 
 
 func _init() -> void:
-	hearing.accepted_event_types = [&"active_sonar", &"ambient"]
+	hearing.accepted_event_types = [&"active_sonar", &"ambient", &"explosion"]
 	hearing.maximum_range_units = 650.0
 	hearing.minimum_strength = 0.2
 

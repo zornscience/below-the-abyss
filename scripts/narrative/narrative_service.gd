@@ -11,6 +11,8 @@ const SCIENCE: StringName = &"shelf-calibration-study"
 const PLATE: StringName = &"shelf-calibration-plate"
 const MARKER: StringName = &"shelf-navigation-marker"
 const SPIRES: StringName = &"shelf-twin-spires"
+var extended_chapter: bool = false
+var legacy_conclusion: bool = false
 var _catalog: NarrativeCatalog
 var missions: MissionService
 var discoveries: DiscoveryRegistry
@@ -88,6 +90,8 @@ func _state(id: StringName) -> String:
 
 
 func is_concluded() -> bool:
+	if extended_chapter and not legacy_conclusion:
+		if missions == null or _state(ShelfChapterData.OUTER) != "claimed" or _state(ShelfChapterData.WRECK) != "claimed": return false
 	return missions != null and _state(MAIN) == "claimed" and _state(SCIENCE) == "claimed" \
 		and research.is_completed(PLATE) and discoveries.state_of(SPIRES) == DiscoveryRegistry.State.DISCOVERED
 
@@ -105,6 +109,9 @@ func _eligible(evidence: NarrativeEntry.Evidence) -> bool:
 		NarrativeEntry.Evidence.SPIRES: return discoveries.state_of(SPIRES) == DiscoveryRegistry.State.DISCOVERED
 		NarrativeEntry.Evidence.RETURNED: return returned()
 		NarrativeEntry.Evidence.CONCLUDED: return is_concluded()
+		NarrativeEntry.Evidence.HYDROPHONE: return research.is_completed(&"outer-hydrophone-record")
+		NarrativeEntry.Evidence.VENT: return research.is_completed(&"outer-vent-study")
+		NarrativeEntry.Evidence.WRECK: return research.is_completed(&"lost-expedition-blackbox")
 		NarrativeEntry.Evidence.GEOLOGY: return research.is_completed(&"shelf-overlook-formation")
 	return false
 
@@ -127,7 +134,7 @@ func begin_survey() -> Error:
 		return ERR_UNAUTHORIZED
 	if missions == null:
 		return ERR_UNCONFIGURED
-	for id: StringName in [MAIN, SCIENCE]:
+	for id: StringName in required_missions():
 		if _state(id) == "available":
 			var result: Error = missions.accept(id)
 			if result != OK:
@@ -137,6 +144,9 @@ func begin_survey() -> Error:
 
 
 func can_debrief() -> bool:
+	if extended_chapter and not legacy_conclusion:
+		for id: StringName in [ShelfChapterData.OUTER,ShelfChapterData.WRECK]:
+			if _state(id) not in ["completed","claimed"]: return false
 	return missions != null and research.is_completed(PLATE) and discoveries.state_of(SPIRES) == DiscoveryRegistry.State.DISCOVERED \
 		and _state(MAIN) in ["completed", "claimed"] \
 		and _state(SCIENCE) in ["completed", "claimed"] and not is_concluded()
@@ -150,7 +160,7 @@ func debrief(station: ServiceStation) -> Error:
 	if not can_debrief() or not is_instance_valid(station) or station.missions != missions:
 		return ERR_UNAVAILABLE
 	# Existing docking/pause guard and durable, idempotent claims remain authoritative.
-	for id: StringName in [MAIN, SCIENCE]:
+	for id: StringName in required_missions():
 		if _state(id) == "completed":
 			var result: Error = station.mission_action(&"claim", id)
 			if result != OK:
@@ -161,6 +171,8 @@ func debrief(station: ServiceStation) -> Error:
 func guidance() -> String:
 	if missions == null:
 		return "EXPEDITION LOG / OFFLINE"
+	if extended_chapter and research.is_completed(PLATE) and not research.is_completed(&"lost-expedition-blackbox"):
+		return "OUTER SHELF / Follow the expedition evidence in your research log"
 	if is_concluded():
 		return "CHAPTER CONCLUDED / NERIS is home · Pause: expedition log"
 	if not research.is_completed(PLATE):
@@ -180,3 +192,9 @@ func _exit_tree() -> void:
 		if not source.is_null() and is_instance_valid(source.get_object()) and source.is_connected(link.callback):
 			source.disconnect(link.callback)
 	_links.clear()
+
+
+func required_missions() -> Array[StringName]:
+	var ids: Array[StringName] = [MAIN,SCIENCE]
+	if extended_chapter: ids.append_array([ShelfChapterData.OUTER,ShelfChapterData.WRECK])
+	return ids

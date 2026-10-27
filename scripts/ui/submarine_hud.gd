@@ -8,6 +8,7 @@ var _hull: SubmarineHullSystem
 var _damage: SubmarineDamageSystem
 var _sonar: SonarEmitter
 var large_interface: bool = false
+var quiet: bool = false
 var _accessibility_compact: bool = false
 var _has_sonar: bool = false
 var _connections: Array[Signal] = []
@@ -38,15 +39,15 @@ func _ignore_input(node: Node) -> void:
 
 
 func _layout_changed() -> void:
-	(%IdentityDetail as Label).visible = size.x >= 1100.0
+	(%IdentityDetail as Label).visible = size.x >= 1100.0 and not quiet
 	(%PassiveContacts as PassiveContactsPanel).set_compact(size.x < 1100.0 or large_interface)
-	(get_node("Top/Identity/Vessel") as Control).visible = not _accessibility_compact
+	(get_node("Top/Identity/Vessel") as Control).visible = not _accessibility_compact and not quiet
 
 
 func set_accessibility_compact(value: bool) -> void:
 	_accessibility_compact = value
 	(%ThreatIndicator as ThreatIndicator).set_compact(value)
-	(%DepthPanel as Control).custom_minimum_size.x = 0.0 if value else 390.0
+	(%DepthPanel as Control).custom_minimum_size.x = 0.0 if value else (250.0 if quiet else 390.0)
 	for gauge: ResourceGauge in [hull_gauge, battery_gauge, oxygen_gauge]:
 		gauge.accessibility_compact = value
 		gauge.set_reading(gauge.current_value, gauge.maximum_value)
@@ -133,6 +134,7 @@ func _refresh_sonar() -> void:
 	else:
 		label.text = "SONAR / %s · COST %.1f\nRANGE %.0f u · ECHOES %d" % [
 			_sonar.status_text(), _sonar.battery_cost(), _sonar.maximum_radius(), _sonar.echo_count()]
+		if quiet: label.text = "SONAR  %s  ·  %.0f battery" % [_sonar.status_text(),_sonar.battery_cost()]
 
 
 func bind_passive(receiver: PassiveReceiver) -> void:
@@ -160,7 +162,7 @@ func _depth_changed(depth: float, maximum: float) -> void:
 
 
 func _maximum_depth_changed(maximum: float) -> void:
-	(%SafeDepth as Label).text = ("SAFE LIMIT  %.1f m" if _accessibility_compact else "SAFE OPERATING DEPTH   %.1f m") % maximum
+	(%SafeDepth as Label).text = ("RATED %.0f m" if quiet else ("SAFE LIMIT  %.1f m" if _accessibility_compact else "SAFE OPERATING DEPTH   %.1f m")) % maximum
 
 
 func _warning_changed(state: int) -> void:
@@ -177,11 +179,14 @@ func _warning_changed(state: int) -> void:
 			label.modulate = Color("ffb49e")
 	if _accessibility_compact:
 		label.text = ["SAFE / WITHIN RANGE", "CAUTION / NEAR LIMIT", "DANGER / ASCEND"][state]
+	if quiet:
+		label.text = ["SAFE", "CAUTION · NEAR LIMIT", "DANGER · ASCEND"][state]
 	_refresh_pressure_detail()
 
 
 func _refresh_pressure_detail() -> void:
 	var detail: Label = %PressureDetail
+	detail.visible = not quiet or _damage.warning_state != SubmarineDamageSystem.WarningState.SAFE
 	if _damage.warning_state != SubmarineDamageSystem.WarningState.EXCEEDED:
 		detail.text = "Prepare to ascend" if _damage.warning_state == SubmarineDamageSystem.WarningState.APPROACHING else "Pressure within hull rating"
 	elif _damage.pressure_damage_per_second == 0.0:
@@ -221,3 +226,24 @@ func _process(delta: float) -> void:
 		(%ImpactFeedback as Label).text = ""
 	if _pressure_remaining == 0.0:
 		(%PressureFeedback as Label).text = ""
+
+
+func set_quiet_layout(value: bool) -> void:
+	quiet = value
+	for gauge: ResourceGauge in [hull_gauge,battery_gauge,oxygen_gauge]:
+		gauge.quiet = value
+		for pair: Array in [["%Value",22],["%Caption",16]]:
+			var label: Label = gauge.get_node(pair[0]) as Label
+			label.set_meta("a11y_font",pair[1])
+			label.add_theme_font_size_override("font_size",pair[1])
+		gauge.set_reading(gauge.current_value,gauge.maximum_value)
+	var passive: PassiveContactsPanel = %PassiveContacts
+	passive.quiet = value
+	if value:
+		passive.reparent(self)
+		passive.layout_mode = 0
+		passive.custom_minimum_size.x = 250
+		(%DepthPanel as Control).custom_minimum_size.x = 250
+		(get_node("Top/DepthPanel/Content/DepthHeader/Caption") as Label).text = "DEPTH"
+	_refresh_sonar()
+	_layout_changed()

@@ -79,7 +79,7 @@ func _initialize() -> void:
 		for suffix: String in ["", ".bak", ".tmp", ".bak.tmp", ".rejected"]:
 			if FileAccess.file_exists(path + suffix):
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(path + suffix))
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta034-capture.json"
 	root.add_child.call_deferred(_scene)
 	await _frames(5)
@@ -150,7 +150,7 @@ func _initialize() -> void:
 	_scene.submarine.set_simulation_enabled(false)
 	_scene.queue_free()
 	await _frames(3)
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta034-capture.json"
 	root.add_child(_scene)
 	await _frames(3)

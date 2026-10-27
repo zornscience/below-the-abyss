@@ -7,6 +7,7 @@ const CLASS_LABELS: Dictionary[StringName, String] = {
 	&"mechanical": "MECHANICAL", &"geological": "GEOLOGICAL", &"marine_life": "MARINE LIFE"}
 var _source: WeakRef
 var _compact: bool = false
+var quiet: bool = false
 
 
 func _ready() -> void:
@@ -43,7 +44,7 @@ func _refresh() -> void:
 	if source != null:
 		contacts = source.contacts_snapshot()
 	var status: String = source.status_text() if source != null else "OFFLINE"
-	(%PassiveHeader as Label).text = "PASSIVE / %s" % status
+	(%PassiveHeader as Label).text = "PASSIVE" if quiet else "PASSIVE / %s" % status
 	(%PassiveEmpty as Label).visible = contacts.is_empty()
 	(%PassiveEmpty as Label).text = "No recent contacts" if status != "OFFLINE" else "No receiver bound"
 	for index: int in range(3):
@@ -55,7 +56,7 @@ func _refresh() -> void:
 		var bearing: float = contact.bearing_degrees
 		(row.get_node("Header/Arrow") as Label).text = ARROWS[posmod(int(roundf(bearing / 45.0)), 8)]
 		(row.get_node("Header/Caption") as Label).text = "%s  %+04.0f°" % [
-			CLASS_LABELS.get(contact.classification, "UNKNOWN"), bearing]
+			(CLASS_LABELS.get(contact.classification, "UNKNOWN").replace("MECHANICAL","MECH").replace("GEOLOGICAL","GEO").replace("MARINE LIFE","LIFE") if quiet else CLASS_LABELS.get(contact.classification,"UNKNOWN")), bearing]
 		if _compact:
 			(row.get_node("Header/Caption") as Label).text += " ~%.0f%%" % (contact.signal_strength * 100.0)
 		(row.get_node("Strength") as Control).visible = not _compact

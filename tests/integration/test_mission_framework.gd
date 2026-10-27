@@ -1,6 +1,6 @@
 extends GutTest
 
-const MAIN: PackedScene = preload("res://scenes/main/main.tscn")
+const MAIN: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 const TARGET: PackedScene = preload("res://scenes/props/sonar_reveal_target.tscn")
 const MAIN_ID: StringName = &"shelf-expedition"
 const OPTIONAL_ID: StringName = &"shelf-calibration-study"

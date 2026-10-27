@@ -58,7 +58,7 @@ func test_movement_advances_resources_without_altering_hull_or_motor() -> void:
 	var start: Vector2 = body.position
 	Input.action_press("move_right")
 	await _frames(30)
-	assert_lt(body.resource_system.battery, battery - 0.5)
+	assert_lt(body.resource_system.battery, battery - 0.008)
 	assert_lt(body.resource_system.oxygen, oxygen)
 	assert_eq(body.hull_system.hull, body.hull_system.max_hull)
 	assert_gt(body.position.x, start.x + 30.0)

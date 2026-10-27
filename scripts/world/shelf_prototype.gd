@@ -3,6 +3,14 @@ extends MovementPrototype
 ## BTA-014 scene composition and ephemeral route-check telemetry.
 
 @export var expedition_path: String = ""
+@export var extended_expedition: bool = true
+var excavation: ExcavationSystem
+var torpedoes: TorpedoLauncher
+var tutorial: TutorialDirector
+var tutorial_card: TutorialCard
+var help_panel: MechanicsHelp
+var pilot_context: PilotContext
+var extension: ShelfExpansion
 var playtest_observer: PlaytestObserver
 var playtest_panel: PlaytestPanel
 var audio: SoundscapeMixer
@@ -45,11 +53,23 @@ var route_check: GrayboxRouteCheck = GrayboxRouteCheck.new()
 
 
 func _ready() -> void:
+	(route_menu.get_node("%HelpTutorial") as Button).visible = extended_expedition
+	(route_menu.get_node("%HelpTutorial") as Button).disabled = not extended_expedition
+	if extended_expedition:
+		extension = ShelfExpansion.new()
+		add_child(extension)
+		excavation = extension.setup(region)
 	# Place the existing vessel before the shared orchestration samples depth.
 	submarine.global_position = region.spawn.global_position
 	region.configure_camera(submarine.get_node("Camera2D") as Camera2D)
 	super._ready()
 	var bus: AcousticBus = $AcousticBus
+	if extension != null:
+		for grazer: AcousticCreature in extension.wildlife:
+			if grazer.bind_bus(bus) != OK: push_error("Outer wildlife receiver registration failed")
+			submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: grazer.set_suspended(not enabled))
+		for animal: AcousticCreature in [creature,predator]+extension.wildlife:
+			(animal.get_node("StateCaption") as Label).hide()
 	if creature.bind_bus(bus) != OK:
 		push_error("Creature receiver registration failed.")
 	submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: creature.set_suspended(not enabled))
@@ -64,7 +84,7 @@ func _ready() -> void:
 			push_error("Shelf sonar target registration failed.")
 	discoveries = DiscoveryRegistry.new()
 	add_child(discoveries)
-	if discoveries.configure(DISCOVERY_CATALOG) != OK:
+	if discoveries.configure(ShelfChapterData.discoveries() if extended_expedition else DISCOVERY_CATALOG) != OK:
 		push_error("Invalid discovery catalog.")
 	for node: Node in region.get_node("SonarTargets").get_children():
 		var result: Error = discoveries.connect_sonar_target(node as SonarRevealTarget)
@@ -78,20 +98,24 @@ func _ready() -> void:
 	exploration_map.close_requested.connect(close_map)
 	research = ResearchRegistry.new()
 	add_child(research)
-	if research.configure(RESEARCH_CATALOG) != OK:
+	if research.configure(ShelfChapterData.research() if extended_expedition else RESEARCH_CATALOG) != OK:
 		push_error("Invalid research catalogue.")
 	research_store.path = research_path if not research_path.is_empty() else (
 		ResearchStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".research.json")
 	research_store.load_registry(research)
 	research.scan_completed.connect(func(_id: StringName) -> void: research_store.save_registry(research))
 	var targets: Array[ScientificScanTarget] = []
-	var research_catalog: ResearchCatalog = RESEARCH_CATALOG
+	var research_catalog: ResearchCatalog = ShelfChapterData.research() if extended_expedition else RESEARCH_CATALOG
 	for definition: ScanDefinition in research_catalog.targets:
 		var target: ScientificScanTarget = ScientificScanTarget.new()
 		target.name = String(definition.stable_id)
 		target.target_id = definition.stable_id
-		region.add_child(target)
-		target.position = definition.position
+		if extended_expedition and definition.stable_id == &"observer-ecology":
+			creature.add_child(target)
+			target.position = Vector2.ZERO
+		else:
+			region.add_child(target)
+			target.position = definition.position
 		targets.append(target)
 	if submarine.scanner.setup(research, discoveries, targets) != OK:
 		push_error("Scientific scanner setup failed.")
@@ -122,7 +146,7 @@ func _ready() -> void:
 	add_child(missions)
 	var missions_file: String = mission_path if not mission_path.is_empty() else (
 		MissionStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".missions.json")
-	if missions.setup(MISSION_CATALOG, discoveries, research, route_check, missions_file) != OK:
+	if missions.setup(ShelfChapterData.missions() if extended_expedition else MISSION_CATALOG, discoveries, research, route_check, missions_file) != OK:
 		push_error("Mission framework setup failed.")
 	station.missions = missions
 	missions.missions_changed.connect(_refresh_mission_status)
@@ -156,7 +180,9 @@ func _ready() -> void:
 	route_menu.audio_requested.connect(open_audio_settings)
 	narrative = NarrativeService.new()
 	add_child(narrative)
-	if narrative.setup(preload("res://resources/narrative/shelf_chapter.tres"), missions, discoveries, research) != OK:
+	narrative.extended_chapter = extended_expedition
+	narrative.legacy_conclusion = saves != null and bool(saves._state.get("legacy_conclusion",false))
+	if narrative.setup(ShelfChapterData.narrative() if extended_expedition else preload("res://resources/narrative/shelf_chapter.tres"), missions, discoveries, research) != OK:
 		push_error("Narrative chapter setup failed.")
 	narrative.progress_guard = func() -> bool: return saves == null or saves.can_write()
 	expedition_log = preload("res://scenes/ui/expedition_log.tscn").instantiate() as ExpeditionLog
@@ -199,9 +225,46 @@ func _ready() -> void:
 			open_route_menu()
 			(route_menu.get_node("%Playtest") as Button).grab_focus())
 		route_menu.playtest_requested.connect(open_playtest)
+	if extended_expedition:
+		torpedoes = TorpedoLauncher.new()
+		add_child(torpedoes)
+		if torpedoes.setup(self) != OK:
+			push_error("Invalid torpedo configuration")
+	if extended_expedition:
+		tutorial = TutorialDirector.new()
+		add_child(tutorial)
+		tutorial_card = TutorialCard.new()
+		$UI.add_child(tutorial_card)
+		tutorial.setup(self)
+		tutorial.message_changed.connect(func(title: String,body: String) -> void:
+			tutorial_card.display(title,body)
+			_layout_tutorial.call_deferred())
+		submarine.simulation_enabled_changed.connect(func(_enabled: bool) -> void: _layout_tutorial.call_deferred())
+		help_panel = MechanicsHelp.new()
+		$SettingsLayer.add_child(help_panel)
+		help_panel.close_requested.connect(open_route_menu)
+		route_menu.help_requested.connect(open_help)
+		pilot_context = PilotContext.new()
+		$UI.add_child(pilot_context)
+		pilot_context.setup(self)
+		hud.set_quiet_layout(true)
+		station_menu.use_hub = true
+		get_viewport().size_changed.connect(_layout_tutorial)
+		tutorial_card.minimum_size_changed.connect(_layout_tutorial)
+		(hud.get_node("Top/Identity") as Control).minimum_size_changed.connect(_layout_tutorial)
+		accessibility_service.queue_apply()
+		($UI/RouteGuide as Control).hide()
+		(route_menu.get_node("%Brief") as Label).text = "A survey submarine is missing on the outer shelf. Recover its trail, locate the wreck and bring back the recorder. Prepare at Shelf Base. Help & tutorials explains the instruments."
 	_refresh_prompts()
 	_refresh_route_status()
 	open_route_menu()
+
+
+func open_help() -> void:
+	if help_panel == null: return
+	submarine.set_simulation_enabled(false)
+	route_layer.hide()
+	help_panel.present(self)
 
 
 func open_playtest() -> void:
@@ -234,6 +297,8 @@ func _controller_lost() -> void:
 
 func _refresh_prompts() -> void:
 	(hud.get_node("%SettingsHint") as Label).text = "%s: sonar · %s: map · %s: pause" % [input_context.describe(&"sonar_ping"), input_context.describe(&"open_map"), input_context.describe(&"pause")]
+	if extended_expedition:
+		(hud.get_node("%SettingsHint") as Label).text = "%s ping · %s torpedo · %s map" % [input_context.describe(&"sonar_ping"),input_context.describe(&"fire_torpedo"),input_context.describe(&"open_map")]
 	(route_menu.get_node("%ControlHints") as Label).text = "Move ← %s · → %s · ↑ %s · ↓ %s" % [input_context.describe(&"move_left").get_slice(" / ", 0), input_context.describe(&"move_right").get_slice(" / ", 0), input_context.describe(&"move_up").get_slice(" / ", 0), input_context.describe(&"move_down").get_slice(" / ", 0)]
 	for node: Node in region.find_children("*", "Label", true, false):
 		var label: Label = node as Label
@@ -264,7 +329,8 @@ func close_story() -> void:
 	expedition_log.hide()
 	if _story_from_station:
 		station_menu.show()
-		station_menu.show_services()
+		if extended_expedition: station_menu.show_hub()
+		else: station_menu.show_services()
 	else:
 		open_route_menu()
 
@@ -279,6 +345,7 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if help_panel != null and help_panel.visible: return
 	if playtest_panel != null and playtest_panel.visible:
 		return
 	if accessibility_panel != null and accessibility_panel.visible:
@@ -323,6 +390,7 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
+	if help_panel != null and help_panel.visible: return
 	if playtest_panel != null and playtest_panel.visible:
 		return
 	if accessibility_panel != null and accessibility_panel.visible:
@@ -338,6 +406,7 @@ func resume_route() -> void:
 	if focus != null:
 		focus.release_focus()
 	submarine.set_simulation_enabled(true)
+	if tutorial != null: tutorial.show_hint("movement")
 
 
 func _route_settings_requested() -> void:
@@ -432,6 +501,8 @@ func restart_route() -> void:
 	# Keep component identities so existing HUD/debug signal subscriptions survive.
 	if _menu != null:
 		close_settings()
+	if torpedoes != null:
+		torpedoes.reset_session()
 	resource_panel.release_test_focus()
 	resource_panel.reset_test_counts()
 	_contact_time = 0.0
@@ -441,6 +512,8 @@ func restart_route() -> void:
 	ambient.reset_session()
 	creature.reset_session()
 	predator.reset_session()
+	if extension != null:
+		for grazer: AcousticCreature in extension.wildlife: grazer.reset_session()
 	submarine.velocity = Vector2.ZERO
 	submarine.global_position = region.spawn.global_position
 	submarine.reset_physics_interpolation()
@@ -514,6 +587,7 @@ func _route_resume_requested() -> void:
 	if saves != null and saves.has_checkpoint() and not _expedition_started:
 		if saves.continue_expedition() != OK:
 			return
+	if extended_expedition and narrative != null: narrative.begin_survey()
 	resume_route()
 
 
@@ -529,4 +603,14 @@ func _recover_expedition() -> void:
 
 func _new_expedition() -> void:
 	if saves != null and saves.new_expedition() == OK:
+		if extended_expedition: narrative.begin_survey()
 		resume_route()
+
+
+func _layout_tutorial() -> void:
+	if tutorial_card == null: return
+	var width: float = get_viewport().get_visible_rect().size.x
+	tutorial_card.size = Vector2(minf(420.0,width*0.42),0.0)
+	tutorial_card.custom_minimum_size.x = minf(350.0,width*0.42)
+	tutorial_card.position = Vector2(24,(hud.get_node("Top/Identity") as Control).get_global_rect().end.y+12)
+	tutorial_card.visible = not tutorial_card.title_label.text.is_empty() and submarine.is_physics_processing()

@@ -10,7 +10,7 @@ class ThreeContacts:
 			{"classification": &"geological", "bearing_degrees": 90.0, "signal_strength": 0.6, "remaining_seconds": 6.9},
 			{"classification": &"marine_life", "bearing_degrees": -45.0, "signal_strength": 0.4, "remaining_seconds": 5.9}]
 
-const MAIN: PackedScene = preload("res://scenes/main/main.tscn")
+const MAIN: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 var _scene: ShelfPrototype
 var _paths: Array[String] = []
 

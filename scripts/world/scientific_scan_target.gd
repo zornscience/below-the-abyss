@@ -3,6 +3,7 @@ extends Node2D
 ## Non-colliding placeholder; no secrets shown before the associated discovery.
 
 @export var target_id: StringName
+var scan_enabled: bool = true
 var _completed: bool = false
 var _known: bool = false
 var _classification: String = ""

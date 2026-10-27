@@ -11,6 +11,8 @@ var _rules: CreatureProfile
 var _region: Node2D
 var _spawn: Vector2
 var _suspended: bool = true
+var _destroyed: bool = false
+var damageable: bool = false
 var _remainder: float = 0.0
 var _nav_ready: bool = false
 var _blocked: bool = false
@@ -46,7 +48,7 @@ func bind_bus(bus: AcousticBus) -> Error:
 
 func set_suspended(value: bool) -> void:
 	_suspended = value
-	receiver.enabled = not value
+	receiver.enabled = not value and not _destroyed
 	_refresh()
 
 
@@ -62,7 +64,7 @@ func _physics_process(delta: float) -> void:
 func advance_simulation(delta: float) -> Error:
 	if not is_finite(delta) or delta < 0.0 or delta > 1.0:
 		return ERR_INVALID_PARAMETER
-	if _suspended or _rules == null:
+	if _suspended or _destroyed or _rules == null:
 		return OK
 	if not _nav_ready:
 		var result: Error = navigation.build(_rules, _region)
@@ -105,6 +107,7 @@ func _after_step(_delta: float) -> void:
 
 
 func reset_session() -> void:
+	set_destroyed(false)
 	# Explicit test-route reset only; ordinary navigation never assigns position.
 	position = _spawn
 	reset_physics_interpolation()
@@ -134,3 +137,14 @@ func _draw() -> void:
 	draw_line(Vector2(-14, 0), Vector2(-23, 8), ink, 3.0, true)
 	if brain.state == CreatureState.State.INVESTIGATE:
 		draw_arc(Vector2.ZERO, 25.0, 0.0, TAU, 32, Color("f4dc94"), 2.0, true)
+
+
+func set_destroyed(value: bool) -> void:
+	_destroyed = value
+	for child: Node in get_children():
+		if child is ScientificScanTarget: (child as ScientificScanTarget).scan_enabled = not value
+	visible = not value
+	collision_layer = 8 if damageable and not value else 0
+	if is_instance_valid(receiver):
+		receiver.enabled = not value and not _suspended
+	velocity = Vector2.ZERO

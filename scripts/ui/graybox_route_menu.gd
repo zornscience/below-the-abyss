@@ -2,6 +2,7 @@ class_name GrayboxRouteMenu
 extends Control
 ## Expedition pause/start UI plus distinctly labeled developer route restart.
 
+signal help_requested
 signal playtest_requested
 signal save_requested
 signal recover_requested
@@ -21,6 +22,7 @@ func _ready() -> void:
 		$Center/Panel/Content/Title.text = "CONTINENTAL SHELF / The Quiet Run"
 		(%Restart as Button).hide()
 		(%Restart as Button).disabled = true
+	(%HelpTutorial as Button).pressed.connect(func() -> void: help_requested.emit())
 	(%Resume as Button).pressed.connect(func() -> void: resume_requested.emit())
 	(%Settings as Button).pressed.connect(func() -> void: settings_requested.emit())
 	(%Accessibility as Button).pressed.connect(func() -> void: accessibility_requested.emit())
@@ -43,7 +45,7 @@ func _ready() -> void:
 
 func _wire_main_focus() -> void:
 	var buttons: Array[Button] = []
-	for button: Button in [%Resume, %Settings, %AudioSettings, %OpenStory, %Accessibility, %Playtest, %Restart, %SaveExpedition, %NewExpedition, %RecoverExpedition]:
+	for button: Button in [%Resume, %Settings, %AudioSettings, %OpenStory, %Accessibility, %HelpTutorial, %Playtest, %Restart, %SaveExpedition, %NewExpedition, %RecoverExpedition]:
 		if not button.disabled and button.visible:
 			buttons.append(button)
 	for index: int in range(buttons.size()):

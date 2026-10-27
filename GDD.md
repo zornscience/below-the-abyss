@@ -88,3 +88,22 @@ Working price hypothesis: USD $14.99, subject to comparable-title research and p
 
 ## 14. Open design questions
 Final protagonist identity; scientific realism level; exact nature of anomaly; fail-state penalty; exact map dimensions; dialogue volume; art production pipeline; accessibility presets; final pricing; supported minimum hardware.
+
+## Approved playtest-feedback revision (2026-10-27)
+
+The user requested optional contextual tutorials with a saved disable switch, a
+quieter HUD, an illustrated station overview, meaningful wildlife observation,
+slower travel drain, a visible expedition wreck, removal of route directions, and
+more environmental detail. They explicitly selected excavatable terrain and a
+substantially expanded first chapter. These additions remain exploration focused:
+no kill rewards, combat progression, ammunition economy or mandatory fighting.
+
+The current prototype extends the shelf to a hydrophone, chimney field and grounded
+expedition wreck. Recover their scientific records and return for debrief; old
+completed saves retain their earned conclusion. The observer supports optional
+nonviolent biological research; additional grazers react to sound. Torpedoes are
+optional excavation/damage tools, with modest energy cost and bounded radial blasts.
+Station/wreck/perimeter structures remain protected. Native screenshots, exact
+balance values, compatibility policy and manual acceptance checks are in
+[the feedback record](docs/feedback/README.md). The 20–40 minute human pacing target
+and five external sessions are still evaluation gates, not completed claims.

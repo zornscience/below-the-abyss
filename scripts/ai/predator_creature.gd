@@ -63,6 +63,7 @@ func _refresh() -> void:
 
 
 func hud_snapshot() -> Dictionary:
+	if _destroyed: return {"visible":false,"title":"","hint":""}
 	var player: SubmarineController = _live_player()
 	var near: bool = player != null and _rules != null and _rules.navigation_bounds.grow(120).has_point(_region.to_local(player.global_position))
 	var title: String = "PREDATOR / QUIET"

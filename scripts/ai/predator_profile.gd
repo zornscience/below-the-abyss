@@ -24,10 +24,10 @@ func _init() -> void:
 	navigation_bounds = Rect2(3000, 300, 330, 145)
 	patrol_points = PackedVector2Array([Vector2(3200, 350), Vector2(3280, 360), Vector2(3240, 400)])
 	grid_spacing = 32.0
-	hearing.accepted_event_types = [&"active_sonar"]
+	hearing.accepted_event_types = [&"active_sonar", &"explosion"]
 	hearing.maximum_range_units = 500.0
 	hearing.minimum_strength = 0.2
-	event_priorities = {&"active_sonar": 20}
+	event_priorities = {&"active_sonar": 20, &"explosion": 30}
 
 
 func is_valid() -> bool:

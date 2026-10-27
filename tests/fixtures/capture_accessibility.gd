@@ -148,7 +148,7 @@ func _initialize() -> void:
 			for suffix: String in ["", ".bak", ".tmp", ".bak.tmp", ".rejected", ".invalid"]:
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(profile + stem + suffix))
 	root.size = _size
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = profile
 	_scene.expedition_path = profile + ".expedition.json"
 	root.add_child.call_deferred(_scene)

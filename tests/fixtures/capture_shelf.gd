@@ -34,7 +34,7 @@ func _point(name: String) -> Vector2:
 
 
 func _initialize() -> void:
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta014-capture-defaults.json"
 	root.add_child.call_deferred(_scene)
 	await _frames(5)

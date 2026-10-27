@@ -34,6 +34,10 @@ func setup(scene: ShelfPrototype, path: String) -> Error:
 			if legacy.last_result != OK and (legacy.last_result != ERR_FILE_NOT_FOUND or FileAccess.file_exists(legacy.path + ".bak")):
 				return _report("Legacy progress needs recovery before migration. Use its existing recovery page, then retry Save.", ERR_INVALID_DATA)
 		_state = snapshot()
+		if scene.extended_expedition:
+			# A pre-checkpoint legacy profile can already have earned the old ending.
+			var records: Dictionary = _state.progress.missions
+			_state.legacy_conclusion = records["shelf-expedition"].state == "claimed" and records["shelf-calibration-study"].state == "claimed" and records[String(ShelfChapterData.OUTER)].state == "available" and records[String(ShelfChapterData.WRECK)].state == "available"
 	else:
 		return _report("Expedition file unavailable (%s). Preserved; use Recover expedition backup." % error_string(document.error), document.error)
 	_ready_to_write = true
@@ -70,7 +74,9 @@ func _names(ids: Array) -> Array[StringName]:
 
 func snapshot() -> Dictionary:
 	var vessel: SubmarineController = _scene.submarine
-	return {"format": "bta-expedition", "schema_version": 2, "region_id": ExpeditionSchema.REGION, "legacy_imported": true,
+	return {"format": "bta-expedition", "schema_version": ExpeditionSchema.VERSION, "region_id": ExpeditionSchema.REGION, "legacy_imported": true,
+		"legacy_conclusion": bool(_state.get("legacy_conclusion",false)),
+		"terrain": _scene.excavation.snapshot() if _scene.excavation != null else [],
 		"player": {"position": [vessel.global_position.x, vessel.global_position.y], "rotation": wrapf(vessel.rotation, -PI, PI),
 			"hull": vessel.hull_system.hull, "battery": vessel.resource_system.battery, "oxygen": vessel.resource_system.oxygen,
 			"sonar_cooldown": vessel.sonar.cooldown_remaining()},
@@ -87,9 +93,24 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 	var vessel: SubmarineController = _scene.submarine
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = (vessel.get_node("CollisionShape2D") as CollisionShape2D).shape
-	query.transform = Transform2D(orientation, at)
+	query.transform = Transform2D(orientation, at) * (_scene.submarine.get_node("CollisionShape2D") as CollisionShape2D).transform
 	query.collision_mask = vessel.collision_mask
 	query.exclude = [vessel.get_rid()]
+	if _scene.excavation != null:
+		for rock: DestructibleRock in _scene.excavation._rocks.values():
+			query.exclude.append(rock.get_rid())
+		var capsule: CapsuleShape2D = query.shape as CapsuleShape2D
+		var footprint: PackedVector2Array = []
+		for index: int in range(32):
+			var angle: float = index * TAU / 32.0
+			var point: Vector2 = Vector2.from_angle(angle) * capsule.radius / cos(PI/32.0)
+			point.y += signf(point.y) * (capsule.height*0.5-capsule.radius)
+			footprint.append(query.transform * point)
+		for rock: DestructibleRock in _scene.excavation._rocks.values():
+			for part: PackedVector2Array in rock.pieces:
+				var polygon: PackedVector2Array = []
+				for point: Vector2 in part: polygon.append(rock.to_global(point))
+				if not Geometry2D.intersect_polygons(footprint, polygon).is_empty(): return false
 	return vessel.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 
@@ -127,6 +148,7 @@ func commit_progress(kind: StringName, proposed: Variant) -> Error:
 	if _busy or not _ready_to_write:
 		return ERR_BUSY
 	var candidate: Dictionary = _state.duplicate(true)
+	candidate.terrain = _scene.excavation.snapshot() if _scene.excavation != null else []
 	candidate.progress = progress_snapshot()
 	candidate.progress[String(kind)] = proposed.duplicate(true) if proposed is Dictionary else _strings(proposed)
 	if not ExpeditionSchema.valid_progress(candidate.progress):
@@ -140,6 +162,8 @@ func commit_progress(kind: StringName, proposed: Variant) -> Error:
 
 
 func apply_progress(progress: Dictionary) -> void:
+	if _scene.extended_expedition and progress.missions.size() == 2:
+		progress.missions = ShelfChapterData.upgrade_missions(progress.missions)
 	_scene.discoveries.restore_discoveries(_names(progress.discoveries))
 	_scene.research.restore_completed(_names(progress.research))
 	_scene.upgrades.restore_installed(_names(progress.upgrades))
@@ -153,6 +177,8 @@ func continue_expedition() -> Error:
 	if validated.error != OK:
 		return _report("Checkpoint validation failed; vessel unchanged.", validated.error)
 	var saved: Dictionary = validated.data
+	if _scene.excavation != null and _scene.excavation.restore(saved.terrain) != OK:
+		return _report("Terrain checkpoint rejected; vessel unchanged.", ERR_INVALID_DATA)
 	var at: Vector2 = Vector2(saved.player.position[0], saved.player.position[1])
 	var angle: float = saved.player.rotation
 	var relocated: bool = not position_clear(at, angle)
@@ -167,11 +193,15 @@ func continue_expedition() -> Error:
 	_scene.station.end_interaction()
 	_scene.station_menu.hide()
 	_scene.submarine.scanner.reset_session()
+	if _scene.torpedoes != null:
+		_scene.torpedoes.reset_session()
 	_scene.submarine.sonar.reset_session()
 	_scene.submarine.passive.reset_session()
 	_scene.ambient.reset_session()
 	_scene.creature.reset_session()
 	_scene.predator.reset_session()
+	if _scene.extension != null:
+		for grazer: AcousticCreature in _scene.extension.wildlife: grazer.reset_session()
 	if _scene.gameplay_audio != null:
 		_scene.gameplay_audio.reset_session()
 	apply_progress(saved.progress)
@@ -190,6 +220,8 @@ func continue_expedition() -> Error:
 	_scene.route_check.elapsed_seconds = 0.0 if relocated else saved.route.elapsed_seconds
 	_scene._refresh_route_status()
 	_scene._refresh_scan_status()
+	if _scene.narrative != null:
+		_scene.narrative.legacy_conclusion = bool(saved.get("legacy_conclusion",false))
 	vessel.reset_physics_interpolation()
 	var camera: Camera2D = vessel.get_node("Camera2D") as Camera2D
 	camera.reset_smoothing()

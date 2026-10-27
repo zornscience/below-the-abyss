@@ -1,5 +1,9 @@
 # BTA-044 implementation verification
 
+> Historical build `519e98f` and original chapter. The current expanded build uses
+> [feedback verification](../feedback/verification.md), `capture_feedback.gd` and
+> `drive_expanded_expedition.gd`; the original capture remains for the old package.
+
 **No external study has run. Human participants evaluated: 0.** The checked-in
 results_template.json remains empty. Synthetic unit/native fixtures are test data,
 not fabricated human responses. Five unfamiliar people and evaluated feedback are

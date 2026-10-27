@@ -35,7 +35,7 @@ func _key(code: Key) -> void:
 
 
 func _spawn() -> void:
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta024-capture-controls.json"
 	_scene.research_path = RESEARCH_PATH
 	_scene.discovery_path = DISCOVERY_PATH

@@ -29,3 +29,4 @@ scripts/ui/bloom_choice_panel.gd
 scripts/world/shelf_chapter_data.gd
 tests/fixtures/drive_story_choice.gd
 tests/integration/test_light_bloom.gd
+tools/run_tests.py

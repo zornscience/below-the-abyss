@@ -120,12 +120,16 @@ func _focus() -> void:
 	if not _buttons.is_empty():
 		(_buttons[-2] if _response else _buttons[0]).grab_focus()
 	scroll.set_deferred("scroll_vertical",0)
-	if _response: _reset_read_scroll.call_deferred()
+	if _response: _queue_read_scroll.call_deferred()
+func _queue_read_scroll() -> void:
+	# Bound one-shot connections are disconnected if this panel is freed.
+	if not get_tree().process_frame.is_connected(_reset_read_scroll):
+		get_tree().process_frame.connect(_reset_read_scroll,CONNECT_ONE_SHOT)
 func _reset_read_scroll() -> void:
 	# Accessibility font reflow and focus-follow finish after the initial layout.
-	await get_tree().process_frame
 	var footer: Control = page.get_meta("footer") as Control
-	if page.visible and _response and footer.is_ancestor_of(get_viewport().gui_get_focus_owner()):
+	var focus: Control = get_viewport().gui_get_focus_owner()
+	if page.visible and _response and focus!=null and footer.is_ancestor_of(focus):
 		scroll.scroll_vertical = 0
 func refresh_comfort() -> void:
 	if body==null: return

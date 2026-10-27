@@ -60,8 +60,8 @@ existing continental-shelf name.
 ## Verification and review
 
 [All alignment changed files](alignment-changed-files.txt). Local Godot 4.6.3:
-full GUT **541/541**, **26,162 assertions**, no failures/errors/skips, **395.619 s**;
-focused story suite **35/35**, **297 assertions**; import, **227** parser checks and
+initial full GUT **541/541**, **26,162 assertions**, no failures/errors/skips, **395.619 s**;
+final focused story suite **37/37**, **306 assertions**; import, **227** parser checks and
 startup passed; Python **6/6**; actual-input fresh/Continue **8/8**. Both outcomes
 also loaded from the actual pre-alignment PR #28 fixture profiles with zero replay
 signals, retaining their existing values and flags. Four native graphical runs
@@ -71,7 +71,11 @@ playtesting. The virtual X11/Mesa display has a known unsupported-VSync warning.
 
 
 
-The follow-up PR links the final hosted CI jobs and Linux export/smoke artifacts. Reproduce using the existing commands:
+The final full-suite rerun and hosted CI evidence are linked in the PR. A layout
+reflow callback was corrected after the first hosted run: it uses a bound one-shot
+connection, which disconnects on destruction, and tolerates a focusless viewport.
+Both cases have regression tests. Test tooling now annotates precise GUT/logged
+engine failures in GitHub checks while retaining all existing failure rules. Reproduce using the existing commands:
 
 ```sh
 python3 tools/validate_godot.py

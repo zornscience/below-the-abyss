@@ -164,11 +164,11 @@ reports a known unsupported VSync warning; no Godot script/parse errors are acce
 
 ## Evidence and acceptance
 
-Local verification on 2026-10-27: full GUT **541/541**, **26,162 assertions**,
+Initial alignment verification on 2026-10-27: full GUT **541/541**, **26,162 assertions**,
 zero failures/errors/skips, 395.619 seconds. Godot import, **227** standalone script
 checks and startup passed. Python tooling: **6/6**. The focused story suite has
-35 passing tests (14 unit, 21 integration). Native screenshots are rendered by
-Godot, not mockups or generated assets. Hosted run evidence is added in the PR.
+37 passing tests (14 unit, 23 integration). Native screenshots are rendered by
+Godot, not mockups or generated assets. The final full rerun and hosted run evidence are recorded in the PR.
 
 | Requirement | Verification |
 | --- | --- |

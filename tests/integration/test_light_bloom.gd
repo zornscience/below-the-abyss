@@ -300,3 +300,23 @@ func test_bloom_text_uses_character_roles_and_keeps_the_anomaly_unexplained() ->
 	text += scene.research.definition(LightBloomEncounter.SCAN).description
 	for secret: String in ["Vael","Hush","Deep Heart","betrayal","Lantern-1"]:
 		assert_false(text.contains(secret))
+func test_response_reading_layout_is_safe_when_the_viewport_has_no_focus() -> void:
+	_collect()
+	await wait_process_frames(4)
+	viewport.gui_release_focus()
+	assert_null(viewport.gui_get_focus_owner())
+	scene.bloom.panel._reset_read_scroll()
+	assert_true(scene.bloom.modal())
+
+func test_pending_reading_reflow_is_disconnected_when_a_panel_is_destroyed() -> void:
+	var transient: BloomChoicePanel = BloomChoicePanel.new()
+	add_child(transient)
+	transient.setup(scene.bloom)
+	transient.show_response("Wick: Reading stored.")
+	transient._queue_read_scroll()
+	var callback: Callable = transient._reset_read_scroll
+	assert_true(get_tree().process_frame.is_connected(callback))
+	transient.free()
+	assert_false(callback.is_valid())
+	await wait_process_frames(4)
+	assert_true(is_instance_valid(scene.bloom.panel))

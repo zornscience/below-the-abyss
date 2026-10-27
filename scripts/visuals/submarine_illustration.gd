@@ -1,15 +1,18 @@
 extends Node2D
 ## Presentation-only facing/propeller/lamplight. Never rotates the physics body.
+var reduced_motion: bool = false
 var _phase: float = 0.0
 
 
 func _process(delta: float) -> void:
+	var old_facing: float = scale.x
 	var body: CharacterBody2D = get_parent() as CharacterBody2D
 	if absf(body.velocity.x) > 12.0:
 		scale.x = -1.0 if body.velocity.x < 0.0 else 1.0
-	if body.is_physics_processing():
+	if body.is_physics_processing() and not reduced_motion:
 		_phase = fmod(_phase + delta * (4.0 + body.velocity.length() * 0.06), TAU)
-	queue_redraw()
+	if not reduced_motion or old_facing != scale.x:
+		queue_redraw()
 
 
 func _draw() -> void:

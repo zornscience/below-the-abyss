@@ -130,6 +130,6 @@ func cancel() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if is_visible_in_tree() and not event.is_echo() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")):
+	if is_visible_in_tree() and not event.is_echo() and InputBindings.is_menu_back(event):
 		get_viewport().set_input_as_handled()
 		cancel()

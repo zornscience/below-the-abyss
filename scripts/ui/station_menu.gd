@@ -12,6 +12,8 @@ var _station: WeakRef
 
 
 func _ready() -> void:
+	(%NoticeUp as Button).pressed.connect(func() -> void: (%DescriptionScroll as ScrollContainer).scroll_vertical -= 100)
+	(%NoticeDown as Button).pressed.connect(func() -> void: (%DescriptionScroll as ScrollContainer).scroll_vertical += 100)
 	(%Undock as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%OpenStationStory as Button).pressed.connect(func() -> void: story_requested.emit())
 	(%OpenBoard as Button).pressed.connect(show_board)
@@ -55,7 +57,7 @@ func present(station: ServiceStation) -> void:
 		button.focus_entered.connect(_read_notice.bind(notice.title, notice.description))
 		list.add_child(button)
 		controls.append(button)
-	controls.append(%OpenMissions)
+	controls.append_array([%OpenMissions, %NoticeUp, %NoticeDown])
 	_wire_focus(controls)
 	(%NoticeText as Label).text = "No notices posted." if notices.is_empty() else "Read an informational notice, or open Missions to intentionally accept objectives."
 	show()
@@ -134,7 +136,7 @@ func _read_notice(title: String, description: String) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")):
+	if visible and not event.is_echo() and InputBindings.is_menu_back(event):
 		get_viewport().set_input_as_handled()
 		if _missions_page.visible:
 			show_board()

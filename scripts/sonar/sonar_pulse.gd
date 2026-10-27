@@ -4,6 +4,7 @@ extends Node2D
 
 signal target_revealed(event_id: StringName, target_id: StringName)
 const EPSILON: float = 0.000000001
+var reduced_flashing: bool = false
 var _event: AcousticEvent
 var _rules: ActiveSonarProfile
 var _bus: WeakRef
@@ -95,6 +96,8 @@ func _draw() -> void:
 	var fade: float = 1.0
 	if _rules.fade_seconds > 0.0:
 		fade = clampf((_event.range_units / _rules.travel_speed + _rules.fade_seconds - _elapsed) / _rules.fade_seconds, 0.0, 1.0)
+	if reduced_flashing:
+		fade *= 0.45
 	var radius: float = get_radius()
 	if radius > 0.0:
 		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 256, Color(0.42, 0.95, 0.87, fade * 0.9), 3.0, true)

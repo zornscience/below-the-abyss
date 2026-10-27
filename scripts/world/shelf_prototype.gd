@@ -6,6 +6,9 @@ extends MovementPrototype
 var audio: SoundscapeMixer
 var gameplay_audio: GameplayAudio
 var audio_settings: AudioSettingsPanel
+var input_context: InputContext
+var accessibility_service: UiAccessibility
+var accessibility_panel: AccessibilityPanel
 var narrative: NarrativeService
 var expedition_log: ExpeditionLog
 var _story_from_station: bool = false
@@ -170,8 +173,52 @@ func _ready() -> void:
 	details.bind_story(narrative)
 	# Concise skippable opening: read on the existing start/pause page, expand via log.
 	(route_menu.get_node("%Brief") as Label).text = "NERIS / Shelf Base: a scientific expedition is missing.\nAn unexplained sequence still reaches the shelf receivers.\nPing the plate east of base, approach and Interact to scan.\nSurvey Twin Spires, return safely. Expedition log: full briefing."
+	input_context = InputContext.new()
+	add_child(input_context)
+	input_context.setup(settings)
+	input_context.method_changed.connect(_refresh_prompts)
+	input_context.controller_lost.connect(_controller_lost)
+	accessibility_panel = AccessibilityPanel.new()
+	$SettingsLayer.add_child(accessibility_panel)
+	accessibility_panel.close_requested.connect(func() -> void:
+		open_route_menu()
+		(route_menu.get_node("%Accessibility") as Button).grab_focus())
+	route_menu.accessibility_requested.connect(open_accessibility)
+	accessibility_service = UiAccessibility.new()
+	add_child(accessibility_service)
+	accessibility_service.setup(self)
+	_refresh_prompts()
 	_refresh_route_status()
 	open_route_menu()
+
+
+func open_accessibility() -> void:
+	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible or expedition_log.visible or audio_settings.visible:
+		return
+	submarine.velocity = Vector2.ZERO
+	submarine.set_simulation_enabled(false)
+	route_layer.hide()
+	accessibility_panel.present(settings, settings_path)
+
+
+func _controller_lost() -> void:
+	if _menu != null:
+		_menu.capturing = false
+		_menu.status.text = "Controller disconnected. Keyboard recovery: arrows / Tab, Enter, Escape."
+		(_menu.get_node("%Quit") as Button).grab_focus()
+	elif submarine.is_physics_processing():
+		open_route_menu()
+	(route_menu.get_node("%Help") as Label).text = "Controller disconnected · Keyboard: arrows / Tab, Enter, Esc · Reconnect to use controller again"
+
+
+func _refresh_prompts() -> void:
+	(hud.get_node("%SettingsHint") as Label).text = "%s: sonar · %s: map · %s: pause" % [input_context.describe(&"sonar_ping"), input_context.describe(&"open_map"), input_context.describe(&"pause")]
+	(route_menu.get_node("%ControlHints") as Label).text = "Move ← %s · → %s · ↑ %s · ↓ %s" % [input_context.describe(&"move_left").get_slice(" / ", 0), input_context.describe(&"move_right").get_slice(" / ", 0), input_context.describe(&"move_up").get_slice(" / ", 0), input_context.describe(&"move_down").get_slice(" / ", 0)]
+	for node: Node in region.find_children("*", "Label", true, false):
+		var label: Label = node as Label
+		if label.text.contains("VESSEL CAN PASS THROUGH"):
+			label.text = "OPTIONAL ↑→ / HARMLESS OBSERVER\n%s: sonar nearby · VESSEL CAN PASS THROUGH" % input_context.describe(&"sonar_ping")
+	_refresh_scan_status()
 
 
 func open_station_story() -> void:
@@ -211,6 +258,8 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if accessibility_panel != null and accessibility_panel.visible:
+		return
 	if expedition_log != null and expedition_log.visible:
 		return
 	if audio_settings != null and audio_settings.visible:
@@ -251,6 +300,8 @@ func open_route_menu() -> void:
 
 
 func resume_route() -> void:
+	if accessibility_panel != null and accessibility_panel.visible:
+		return
 	if expedition_log != null and expedition_log.visible:
 		return
 	if _menu != null or exploration_map.visible or research_log.visible or station_menu.visible:
@@ -276,7 +327,7 @@ func open_map() -> void:
 	route_layer.hide()
 	submarine.velocity = Vector2.ZERO
 	submarine.set_simulation_enabled(false)
-	exploration_map.present(region.to_local(submarine.global_position), InputBindings.describe(settings.snapshot()["bindings"], &"open_map"))
+	exploration_map.present(region.to_local(submarine.global_position), input_context.describe(&"open_map"))
 
 
 func open_research() -> void:
@@ -288,7 +339,7 @@ func open_research() -> void:
 
 func close_research() -> void:
 	research_log.hide()
-	exploration_map.present(region.to_local(submarine.global_position), InputBindings.describe(settings.snapshot()["bindings"], &"open_map"))
+	exploration_map.present(region.to_local(submarine.global_position), input_context.describe(&"open_map"))
 
 
 func open_station() -> Error:
@@ -318,6 +369,13 @@ func _refresh_scan_status() -> void:
 		(%ScanStatus as Label).text = "DEVELOPMENT / Interact: resource tools · Services use normal mode"
 	else:
 		(%ScanStatus as Label).text = station.docking_hint(submarine) if station.is_in_range(submarine.global_position) else String(submarine.scanner.snapshot().text)
+
+	if input_context != null:
+		var label: Label = %ScanStatus
+		if accessibility_service != null and accessibility_service.tight_hud() and not station.is_in_range(submarine.global_position):
+			var state: Dictionary = submarine.scanner.snapshot()
+			label.text = "SCANNING %.0f%% · Interact: cancel" % (state.progress * 100.0) if state.active_id != &"" else label.text.get_slice(" / ", 0)
+		label.text = "[%s] %s" % [input_context.describe(&"interact"), label.text]
 
 
 func close_map() -> void:
@@ -406,6 +464,10 @@ func _refresh_route_status() -> void:
 
 func _refresh_mission_status() -> void:
 	(%MissionStatus as Label).text = missions.status_text() if missions.store.can_write() else "MISSIONS / SAVE BLOCKED · Open station mission board for recovery"
+
+	if accessibility_service != null and accessibility_service.tight_hud() and missions.store.can_write():
+		var records: Dictionary = missions.snapshot()
+		(%MissionStatus as Label).text = "MISSIONS / Survey %s %d/2 · Study %s %d/1" % [String(records["shelf-expedition"].state).to_upper(), records["shelf-expedition"].objectives.size(), String(records["shelf-calibration-study"].state).to_upper(), records["shelf-calibration-study"].objectives.size()]
 
 
 func _save_status() -> void:

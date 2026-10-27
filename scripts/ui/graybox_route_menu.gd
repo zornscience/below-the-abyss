@@ -6,6 +6,7 @@ signal save_requested
 signal recover_requested
 signal new_expedition_requested
 signal resume_requested
+signal accessibility_requested
 signal story_requested
 signal audio_requested
 signal settings_requested
@@ -15,6 +16,7 @@ signal restart_requested
 func _ready() -> void:
 	(%Resume as Button).pressed.connect(func() -> void: resume_requested.emit())
 	(%Settings as Button).pressed.connect(func() -> void: settings_requested.emit())
+	(%Accessibility as Button).pressed.connect(func() -> void: accessibility_requested.emit())
 	(%OpenStory as Button).pressed.connect(func() -> void: story_requested.emit())
 	(%AudioSettings as Button).pressed.connect(func() -> void: audio_requested.emit())
 	(%Restart as Button).pressed.connect(func() -> void: restart_requested.emit())
@@ -34,7 +36,7 @@ func _ready() -> void:
 
 func _wire_main_focus() -> void:
 	var buttons: Array[Button] = []
-	for button: Button in [%Resume, %Settings, %AudioSettings, %OpenStory, %Restart, %SaveExpedition, %NewExpedition, %RecoverExpedition]:
+	for button: Button in [%Resume, %Settings, %AudioSettings, %OpenStory, %Accessibility, %Restart, %SaveExpedition, %NewExpedition, %RecoverExpedition]:
 		if not button.disabled:
 			buttons.append(button)
 	for index: int in range(buttons.size()):
@@ -59,22 +61,22 @@ func configure_save_ui(available: bool, started: bool, enabled: bool, message: S
 
 
 func show_new_confirmation() -> void:
-	(%Help as Label).text = "Arrows / Tab / D-pad: choose · Enter / A: select · Esc / B / Start: cancel"
+	(%Help as Label).text = "Arrows / Tab / D-pad: choose · Enter / A: select · Esc / B: cancel"
 	(%NewConfirmation as Control).show()
-	for control: Control in [%Brief, %Resume, %Settings, %Restart, %Tools, %SaveActions]:
+	for control: Control in [%Brief, %ControlHints, %Resume, %Settings, %Restart, %Tools, %SaveActions]:
 		control.hide()
 	(%CancelNew as Button).grab_focus()
 
 
 func cancel_new() -> void:
-	(%Help as Label).text = "Arrows / Tab / D-pad: navigate · Enter / A: select · Esc / B / Start: resume"
+	(%Help as Label).text = "Arrows / Tab / D-pad: navigate · Enter / A: select · Esc / B: resume"
 	(%NewConfirmation as Control).hide()
-	for control: Control in [%Brief, %Resume, %Settings, %Restart, %Tools, %SaveActions]:
+	for control: Control in [%Brief, %ControlHints, %Resume, %Settings, %Restart, %Tools, %SaveActions]:
 		control.show()
 	focus_resume()
 
 
 func _input(event: InputEvent) -> void:
-	if is_visible_in_tree() and (%NewConfirmation as Control).visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")):
+	if is_visible_in_tree() and (%NewConfirmation as Control).visible and not event.is_echo() and InputBindings.is_menu_back(event):
 		get_viewport().set_input_as_handled()
 		cancel_new()

@@ -31,7 +31,10 @@ func _ready() -> void:
 	(%Reset as Button).pressed.connect(_reset)
 	(%Quit as Button).pressed.connect(_exit_menu)
 	if embedded:
-		(%Quit as Button).text = "Return to movement (discard unsaved edits)"
+		(%Quit as Button).text = "Return to piloting (discard unsaved edits)"
+		$Margin/Scroll/Content/Title.text = "CONTROLS / Gameplay remapping"
+		$Margin/Scroll/Content/Instructions.text = "Choose an action, capture a key/button/stick direction, then Save. Arrows / Tab / D-pad: navigate; Enter / A: select; Escape / B: cancel capture or return. Fixed menu recovery bindings cannot be removed."
+		(%Activate as Button).text = "Try menu controls"
 	settings.settings_changed.connect(_apply_settings)
 	var result: Error = settings.load_settings(settings_path)
 	_apply_settings()
@@ -76,7 +79,7 @@ func _refresh_bindings() -> void:
 
 func _activate() -> void:
 	_activations += 1
-	status.text = "Test activated %d time(s). No gameplay is implemented." % _activations
+	status.text = "Selection confirmed. Choose a gameplay action below." if embedded else "Test activated %d time(s). No gameplay is implemented." % _activations
 
 
 func _change_deadzone(value: float) -> void:
@@ -95,8 +98,8 @@ func _reload() -> void:
 
 
 func _reset() -> void:
-	settings.reset_defaults()
-	status.text = "Defaults restored in memory. Save to persist."
+	settings.reset_input_defaults()
+	status.text = "Control defaults restored in memory. Save to persist."
 
 
 func _begin_remap() -> void:
@@ -131,17 +134,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo() or not event.is_pressed():
 		return
 	if event.is_action_pressed("ui_cancel"):
+		if embedded:
+			_exit_menu()
+			get_viewport().set_input_as_handled()
+			return
 		(%Activate as Button).grab_focus()
 		status.text = "Returned focus to the first control."
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("pause"):
 		_pause_indicator = not _pause_indicator
-		status.text = "Pause input test: %s (no gameplay simulation)." % ("on" if _pause_indicator else "off")
+		status.text = "Pause binding received." if embedded else "Pause input test: %s (no gameplay simulation)." % ("on" if _pause_indicator else "off")
 		get_viewport().set_input_as_handled()
 	else:
 		for action: StringName in InputBindings.ACTIONS:
 			if event.is_action_pressed(action):
-				status.text = "%s input received. Gameplay is not implemented." % String(action).replace("_", " ").capitalize()
+				status.text = ("Control received: %s." if embedded else "%s input received. Gameplay is not implemented.") % String(action).replace("_", " ").capitalize()
 				break
 
 

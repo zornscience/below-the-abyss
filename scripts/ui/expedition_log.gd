@@ -108,6 +108,6 @@ func _debrief() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause") or event.is_action_pressed("open_map")):
+	if visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or (event.is_action_pressed("pause") and not InputBindings.is_menu_navigation(event)) or (event.is_action_pressed("open_map") and not InputBindings.is_menu_navigation(event))):
 		get_viewport().set_input_as_handled()
 		close_requested.emit()

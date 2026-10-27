@@ -111,6 +111,26 @@ routing/requests without starting audio playback handles. See
 [audio direction, API, source/licensing and accessibility](docs/audio_direction.md)
 and [native verification](docs/testing/soundscape.md).
 
+### Implemented BTA-043 input and accessibility policy
+
+Scene-owned InputContext observes deliberate input, formats remap-aware hints and
+releases held actions on active-controller loss; ShelfPrototype pauses or retains
+the current modal. Fixed UI recovery actions remain independent of gameplay
+remapping. Menu navigation/confirm takes priority over remapped Pause/Map actions.
+UiAccessibility caches authored font/styles and coalesces preference/resize/node
+updates. Large menus reparent content into focus-following scroll containers;
+small-screen HUD variants preserve numeric/state information and separate warning
+slots. Cosmetic flags modify existing mote/parallax/propeller/sonar presentation,
+never simulation or acoustic history. No new singleton/dependency or gameplay loop.
+AccessibilityPanel has live preview, explicit Save and scoped cancellation/defaults.
+SettingsStore version 1 accepts optional strictly validated accessibility alongside
+legacy input/audio documents, adding defaults in memory only. Invalid preferences
+remain unchanged until explicit Save preserves rejected bytes in a non-overwriting
+.invalid file before atomic replacement. Input defaults are scoped separately from
+audio/accessibility. Campaign schema remains version 2. See
+[controls, architecture, recovery and limitations](docs/accessibility.md) and
+[tests/native evidence](docs/testing/accessibility.md).
+
 ## 10. Persistence schema
 Store under `user://saves/slot_N.json` using a schema version and separate backup file. Example:
 ```

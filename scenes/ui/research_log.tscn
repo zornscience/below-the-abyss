@@ -37,6 +37,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 24
 [node name="ListScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+follow_focus = true
 layout_mode = 2
 custom_minimum_size = Vector2(230, 180)
 horizontal_scroll_mode = 0
@@ -45,6 +46,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 [node name="DetailScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_scroll_mode = 0
@@ -59,7 +61,7 @@ unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2
 theme_override_font_sizes/font_size = 16
-[node name="Buttons" type="HBoxContainer" parent="Margin/Content"]
+[node name="Buttons" type="HFlowContainer" parent="Margin/Content"]
 layout_mode = 2
 theme_override_constants/separation = 16
 [node name="CloseResearch" type="Button" parent="Margin/Content/Buttons"]
@@ -74,3 +76,12 @@ text = "Retry save"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Recover backup"
+
+[node name="ScrollResearchUp" type="Button" parent="Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Text ↑"
+[node name="ScrollResearchDown" type="Button" parent="Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Text ↓"

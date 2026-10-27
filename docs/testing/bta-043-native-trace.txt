@@ -1,0 +1,50 @@
+=== controller ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA043_FRAME_INTERVALS controller-800 samples=120 mean_ms=24.6631166666667 median_ms=22.63 p95_ms=40.465 renderer=software_llvmpipe
+BTA043_NATIVE_COMPLETE controller-800 wall_seconds=67.735058 route_seconds=50.7333333333317 chapter_events=1 controller_events_only=true mouse_events=0 muted=true large=true reduced=true
+
+=== continue ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA043_CONTINUE_OK controller-800 chapter=true upgrade=true large=true muted=true story_replays=0
+
+=== keyboard ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA043_FRAME_INTERVALS keyboard-1280 samples=120 mean_ms=48.2016166666667 median_ms=46.214 p95_ms=67.096 renderer=software_llvmpipe
+BTA043_NATIVE_COMPLETE keyboard-1280 wall_seconds=63.08793 route_seconds=43.6999999999988 chapter_events=1 controller_events_only=false mouse_events=0 muted=true large=true reduced=true
+
+=== keyboard-continue ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA043_CONTINUE_OK keyboard-1280 chapter=true upgrade=true large=true muted=true story_replays=0
+
+=== 1080 ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA043_FRAME_INTERVALS controller-1920 samples=120 mean_ms=88.3776916666667 median_ms=83.861 p95_ms=122.345 renderer=software_llvmpipe
+BTA043_NATIVE_COMPLETE controller-1920 wall_seconds=91.261368 route_seconds=58.4166666666646 chapter_events=1 controller_events_only=true mouse_events=0 muted=true large=true reduced=true
+
+=== 1080-continue ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+BTA043_CONTINUE_OK controller-1920 chapter=true upgrade=true large=true muted=true story_replays=0

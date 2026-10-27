@@ -174,3 +174,25 @@ static func describe(bindings: Dictionary, action: StringName) -> String:
 				_:
 					names.append("Controller axis %d (%s)" % [axis, "-" if negative else "+"])
 	return " / ".join(names)
+
+
+static func is_menu_navigation(event: InputEvent) -> bool:
+	for action: StringName in MENU_ACTIONS:
+		if action != &"ui_cancel" and event.is_action_pressed(action):
+			return true
+	return false
+
+
+static func is_menu_back(event: InputEvent) -> bool:
+	# Fixed recovery controls take priority over a gameplay remap like Pause=Enter.
+	return event.is_action_pressed("ui_cancel") or (event.is_action_pressed("pause") and not is_menu_navigation(event))
+
+
+static func describe_device(bindings: Dictionary, action: StringName, controller: bool) -> String:
+	var filtered: Dictionary = bindings.duplicate(true)
+	var entries: Array[Dictionary] = []
+	for entry: Dictionary in bindings[String(action)]:
+		if (entry.kind != "key") == controller:
+			entries.append(entry)
+	filtered[String(action)] = entries
+	return describe(filtered, action)

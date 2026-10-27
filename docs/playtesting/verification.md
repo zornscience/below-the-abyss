@@ -27,9 +27,9 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gdisabl
 Recorded local results:
 
 - Headless import + **179 authored script checks** + startup smoke: PASS.
-- Complete GUT: **444/444**, **54 scripts**, **25,499 assertions**, **277.995 seconds**,
+- Complete GUT: **444/444**, **54 scripts**, **25,500 assertions**, **274.639 seconds**,
   no failures/errors/skips. All 430 prior cases retained, plus 14 new cases.
-- Focused new GUT: **14/14**, **122 assertions**, **4.154 seconds**.
+- Focused new GUT: **14/14**, **123 assertions**, **10.860 seconds**.
 - Python analysis: **5/5 passing** synthetic-data cases.
 - `git diff --check`: PASS.
 
@@ -136,9 +136,12 @@ repeating recovery, because rejected-file preservation intentionally blocks reus
   plus empty feedback: **0 participants, 1 session**, sonar distribution [2].
   This report is NOT human research evidence.
 
+The final consent layout places the safe Return default before the disclosure; native 800×600 Large verification confirmed the entire disclosure remains visible before opt-in, with recording OFF. This follow-up does not replace the separately labeled development-build chapter/performance trace.
+
 Actual Godot renders of the exported content:
 
 - [Consent page, recording OFF and Return focused](evidence/bta-044-consent.png)
+- [800×600 Large disclosure after the final focus-order fix](evidence/bta-044-consent-small.png)
 - [HUD after actual scan, Large/muted/reduced effects](evidence/bta-044-hud.png)
 - [Restored log (story spoilers)](evidence/bta-044-continued.png)
 

@@ -30,3 +30,12 @@ BTA044_BUNDLE_FILTERS_PASS playtest=true fixtures=false gut=false
 
 === quit (synthetic/local verification, not human evidence) ===
 Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+=== final small-screen consent review (synthetic UI setup, not human evidence) ===
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+SMALL_LAYOUT scroll=40 return=[P: (24.0, 34.0), S: (744.0, 40.0)] disclosure=[P: (24.0, 82.0), S: (744.0, 242.0)]
+BTA044_SMALL_CONSENT_PASS 800x600 large=true focus=return disclosure_start=visible consent=false

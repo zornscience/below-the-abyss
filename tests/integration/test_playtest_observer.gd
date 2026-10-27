@@ -136,6 +136,8 @@ func test_controller_can_decline_opt_in_export_disable_and_leave_modal() -> void
 	add_child_autofree(panel)
 	panel.present(observer)
 	assert_eq(get_viewport().gui_get_focus_owner(), panel.close_button, "Default focus does not consent")
+	await get_tree().process_frame
+	assert_lt(panel.close_button.get_global_rect().position.y, panel.start_button.get_global_rect().position.y, "Safe default is above the disclosure, so focus starts at its top")
 	await _tap(JOY_BUTTON_B)
 	assert_false(panel.visible)
 	assert_false(observer.recorder.recording)

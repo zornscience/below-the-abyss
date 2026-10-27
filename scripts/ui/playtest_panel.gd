@@ -29,9 +29,10 @@ func _ready() -> void:
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(content)
 	_label(content, "PLAYTEST / Optional local reports", 24)
+	var buttons: Array[Button] = []
+	close_button = _button(content, "Return / Keep current recording choice", buttons, _close)
 	_label(content, "Recording starts OFF each launch. If you choose to record, this game saves a random session ID, build version, gameplay/menu durations, counts of sonar, scans, discoveries, missions, station returns, warnings, hull damage and chapter progress. Only authored event labels and relative times are saved. No names, input recordings, device identifiers, precise location or unrelated files. Nothing is sent online.", 18)
 	_label(content, "You can play without recording, disable it at any time, and decide whether to share the JSON/text report with your facilitator. Existing reports remain locally until you delete them. No recording before you opt in; chapter times cover this session only.", 18)
-	var buttons: Array[Button] = []
 	start_button = _button(content, "I agree / Start local recording", buttons, func() -> void: observer.start(); _refresh())
 	stop_button = _button(content, "Disable recording / Save summary", buttons, func() -> void: observer.stop(); _refresh())
 	export_button = _button(content, "Export current JSON + readable summary", buttons, func() -> void: observer.export_report(); _refresh())
@@ -39,7 +40,6 @@ func _ready() -> void:
 		var result: Error = OS.shell_open(ProjectSettings.globalize_path(observer.store.directory))
 		if result != OK:
 			status_label.text = "Folder could not open. Location: " + ProjectSettings.globalize_path(observer.store.directory))
-	close_button = _button(content, "Return / Keep current recording choice", buttons, _close)
 	_button(content, "Finish session and quit game", buttons, func() -> void: get_tree().quit())
 	status_label = _label(content, "", 16)
 	for index: int in range(buttons.size()):

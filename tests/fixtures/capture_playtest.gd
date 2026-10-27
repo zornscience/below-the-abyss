@@ -188,6 +188,9 @@ func _initialize() -> void:
 	_started = Time.get_ticks_usec()
 	await _activate(_scene.route_menu.get_node("%Playtest") as Control)
 	await _capture("consent")
+	if args.has("--consent-only"):
+		await _shutdown()
+		return
 	assert(not _scene.playtest_observer.recorder.recording)
 	await _activate(_scene.playtest_panel.start_button)
 	assert(_scene.playtest_observer.recorder.recording)

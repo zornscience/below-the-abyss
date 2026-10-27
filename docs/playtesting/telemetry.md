@@ -43,7 +43,7 @@ synchronizes occupancy silently. Domain restore notifications reset observationa
 baselines; sonar/discovery/scan/mission identity suppression remains independent
 of, and never modifies, campaign or acoustic history. Restart retains one recording
 session and its totals; Continue adds a restore milestone without replaying progress.
-A new application launch always requires new consent and creates a new random ID.
+New Expedition uses the existing checkpoint restore path and therefore also records a continue milestone; it retains the current recording session. A new application launch always requires new consent and creates a new random ID.
 
 No names, emails, IPs, device identifiers, precise world/GPS positions, filesystem
 paths, input streams, screenshots or unrelated logs are in a report. Error labels

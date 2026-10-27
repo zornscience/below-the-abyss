@@ -130,3 +130,17 @@ verify production MAIN separately through controller input, save/recovery, unit 
 native screenshots and standalone exports. No next-region gameplay or campaign-wide
 research tree is implied. Review in a separate PR; do not merge automatically.
 See [acceptance and manual course](docs/feedback-two/README.md).
+
+## BTA-046 Resonance foundation and first story choice
+
+BTA-045 remains reserved for the slice release candidate. On review of main after
+PR #27, the tracker has no separate issue/milestone number reserved for Resonance,
+so this focused user-authorized implementation uses BTA-046.
+
+- Scene-owned StoryState, stable authored choices, hidden bounded Resonance and flags.
+- Atomic schema-5 checkpoint extension, silent version-1–4 migration and no replay farming.
+- One optional Zone 1 bloom: timed scan/unharmed or destructive specimen collection.
+- Reuse scanning/sonar/Interact/accessibility; isolated Wick/Okafor/Crane response text.
+- GUT, parser/import/startup, both input devices and separate-process Continue, Linux export.
+- Native graphical evidence, commands, manual acceptance and limitations in
+  [BTA-046 verification](docs/testing/bta-046/README.md). No new region/endings or automatic merge.

@@ -61,6 +61,9 @@ jobs:
       - name: Verify revised expedition, radio and research progression
         run: python3 tools/verify_revision_two.py
 
+      - name: Verify story choice with keyboard, controller and separate-process Continue
+        run: python3 tools/verify_story_choice.py
+
       - name: Test playtest analysis tooling
         run: python3 -m unittest discover -s tests/python -v
 

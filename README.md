@@ -2,7 +2,8 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **playtest feedback round two** — a clean title screen, illustrated
+Current build: **Resonance foundation (BTA-046)** with one optional light-bloom
+story choice, on top of **playtest feedback round two** — a clean title screen, illustrated
 station interior, revised underwater handling/torpedoes, radio-led investigation,
 encrypted wreck logs and a finite research-point talent tree.
 
@@ -28,6 +29,13 @@ encrypted wreck logs and a finite research-point talent tree.
 [Acceptance matrix, APIs/save migration, complete walkthrough, exact commands,
 limitations and native screenshots](docs/feedback-two/README.md). The prior
 [feedback round](docs/feedback/README.md) remains documented as historical behavior.
+
+The optional **light-bloom encounter** near the upper shelf passage uses sonar
+identification and E/A interaction. Scan and leave it intact, or intentionally
+collect a specimen. Dialogue and the colony itself communicate the outcome; no
+numeric morality score appears. Decisions persist immediately in the existing
+expedition checkpoint and cannot be repeated for rewards.
+[API, save migration, commands, screenshots and manual verification](docs/testing/bta-046/README.md).
 
 **The external five-player study has not run.** The [BTA-044 toolkit](docs/playtesting/README.md)
 provides opt-in local reports, participant/facilitator materials and anonymous
@@ -134,7 +142,7 @@ keeping all permanent progress. Cancel leaves the checkpoint alone. **Restart Te
 Route** remains a separate development action. Keyboard and controller navigation
 work in pause/confirmation/station menus.
 
-The normal game now uses `user://saves/expedition.json` (version 2) with a recoverable
+The normal game now uses `user://saves/expedition.json` (version 5; migrates versions 1–4) with a recoverable
 checkpoint backup. Existing narrow save files are validated/imported and preserved;
 their store APIs then delegate writes to the coordinator. Standalone component
 fixtures still use their original stores. Custom isolated settings scenes inject

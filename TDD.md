@@ -165,7 +165,7 @@ Store under `user://saves/slot_N.json` using a schema version and separate backu
 Validate schema, numeric bounds and IDs on load. Write to a temporary file and replace only after successful flush/close; preserve last-known-good backup. Add migration functions for each version change. Do not serialize Godot scene trees or executable objects. Handle malformed saves with user-visible recovery options.
 
 ### Implemented BTA-035 checkpoint contract
-The scene-owned SaveCoordinator uses `user://saves/expedition.json`, schema version 2,
+The scene-owned SaveCoordinator uses `user://saves/expedition.json`, schema version 5 (migrating versions 1–4),
 for vessel pose/resources, region, route telemetry and permanent discovery/research/
 mission/upgrade records. Valid legacy stores import monotonically without deleting
 their files; their optional checkpoint-writer port then routes normal-game commits
@@ -234,3 +234,28 @@ Accelerating torpedoes integrate exact travel distance and own bounded fading wa
 local impact refraction is cosmetic and suppressed by comfort options. Authored
 Resources supply production motion, ordnance tuning and research capabilities.
 [Architecture, exact commands, limits and graphical evidence](docs/feedback-two/README.md).
+
+## Resonance foundation (BTA-046)
+
+StoryState is a scene-owned Node, with validated authored ChoiceData Resources and
+a frozen StoryChoiceCatalog. It is the single authority for hidden Resonance,
+mutually exclusive encounter decisions and whitelisted story flags. No autoload,
+second mission ledger or new save file. Ordinary deltas are bounded to ±15; an
+explicit exceptional-weight definition may use ±25, with no future-zone content.
+Tiers are Listener >=40, Neutral -39..39, Hostile <=-40; values clamp to [-100,100].
+
+Expedition schema 5 adds `story: {resonance, flags, decisions}`. Validation checks
+the ordered clamped sum against known unique decisions/encounters and their flags.
+Versions 1–4 migrate to zero/empty story without inferring past morality or losing
+ordnance, campaign, mission, research, discovery, terrain or vessel records. Existing
+atomic checkpoint/backup/recovery ports remain authoritative. Restoration is silent;
+UI projections refresh explicitly. Monotonic compatible history merges preserve
+live choices during recovery; opposite branches fail without overwriting files.
+
+The bloom research-completion gate writes the positive choice and its research ID
+in one checkpoint transaction before either gameplay completion signal. Failed
+writes leave both uncommitted. Collection uses the same StoryState commit port.
+The narrow LightBloomEncounter adapter reuses sonar eligibility, the typed scanner,
+Interact, simulation pause and accessibility policy; canonical names are confined
+to authored response text. No existing campaign/save IDs are renamed.
+See [contracts, tests and limitations](docs/testing/bta-046/README.md).

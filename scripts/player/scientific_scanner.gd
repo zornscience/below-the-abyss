@@ -54,7 +54,7 @@ func candidate_id() -> StringName:
 	var distance: float = INF
 	for id: StringName in _targets:
 		var target: ScientificScanTarget = _target(id)
-		if target == null or not _known(id) or _research.is_completed(id) or not _in_range(id):
+		if target == null or not eligible(id):
 			continue
 		var current: float = global_position.distance_to(target.global_position)
 		if current < distance or (current == distance and String(id) < String(best)):
@@ -63,7 +63,7 @@ func candidate_id() -> StringName:
 	return best
 
 
-func request_scan() -> Error:
+func request_scan(requested_id: StringName = &"") -> Error:
 	if _research == null:
 		return ERR_UNCONFIGURED
 	if _suspended:
@@ -71,7 +71,7 @@ func request_scan() -> Error:
 	if _active != &"":
 		cancel_scan("CANCELLED / Progress reset")
 		return OK
-	var candidate: StringName = candidate_id()
+	var candidate: StringName = candidate_id() if requested_id==&"" else (requested_id if eligible(requested_id) else &"")
 	if candidate == &"":
 		_feedback_seconds = 2.0
 		_feedback = "NO ELIGIBLE SUBJECT / Discover with sonar and approach within scan range"
@@ -123,7 +123,8 @@ func advance(delta: float) -> Error:
 				_elapsed = 0.0
 				_feedback_seconds = 3.0
 				_feedback = "COMPLETE / " + _research.definition(completed).title + " · Map → Research log"
-				_research.complete_scan(completed)
+				var result: Error = _research.complete_scan(completed)
+				if result!=OK: _feedback = "NOT RECORDED / Save unavailable; no outcome committed. Try again after recovery."
 	state_changed.emit()
 	return OK
 
@@ -152,3 +153,6 @@ func snapshot() -> Dictionary:
 
 func reset_session() -> void:
 	cancel_scan("SCANNER / Discover a subject with sonar, approach, then Interact to scan")
+
+func eligible(id: StringName) -> bool:
+	return _research!=null and _target(id)!=null and _known(id) and not _research.is_completed(id) and _in_range(id)

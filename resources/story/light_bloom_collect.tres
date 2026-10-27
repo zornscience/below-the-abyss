@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone1-light-bloom-collect"
+encounter_id = &"zone1-light-bloom"
+resonance_delta = -15
+flags = Array[StringName]([&"zone1-light-bloom-collected"])
+action_text = "Collect a specimen for Crane"
+response_text = "Wick: The glow has gone.\n\nOkafor: The colony has collapsed. Record the loss.\n\nCrane: One specimen secured for study."

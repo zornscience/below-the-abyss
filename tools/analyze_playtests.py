@@ -22,8 +22,8 @@ ISSUES = {
 KINDS = ['session_start','session_end','sonar','scan_started','scan_completed','discovery','mission_accepted','mission_completed','mission_claimed','milestone','station_return','resource_warning','damage','failure','chapter_completed','error']
 DETAILS = {
     'session_start':['opt_in'], 'session_end':['disabled','quit'], 'sonar':['active_ping'],
-    'scan_started':['shelf-calibration-plate','shelf-overlook-formation','outer-hydrophone-record','outer-vent-study','lost-expedition-blackbox','observer-ecology'], 'scan_completed':['shelf-calibration-plate','shelf-overlook-formation','outer-hydrophone-record','outer-vent-study','lost-expedition-blackbox','observer-ecology'],
-    'discovery':['shelf-navigation-marker','shelf-overlook','shelf-twin-spires','outer-hydrophone','outer-vent-garden','lost-expedition-wreck','observer-habitat'],
+    'scan_started':['shelf-calibration-plate','shelf-overlook-formation','outer-hydrophone-record','outer-vent-study','lost-expedition-blackbox','observer-ecology','zone1-light-bloom-scan'], 'scan_completed':['shelf-calibration-plate','shelf-overlook-formation','outer-hydrophone-record','outer-vent-study','lost-expedition-blackbox','observer-ecology','zone1-light-bloom-scan'],
+    'discovery':['shelf-navigation-marker','shelf-overlook','shelf-twin-spires','outer-hydrophone','outer-vent-garden','lost-expedition-wreck','observer-habitat','zone1-light-bloom-habitat'],
     'mission_accepted':['shelf-expedition','shelf-calibration-study','shelf-outer-search','shelf-wreck-recovery','shelf-wildlife-study'], 'mission_completed':['shelf-expedition','shelf-calibration-study','shelf-outer-search','shelf-wreck-recovery','shelf-wildlife-study'], 'mission_claimed':['shelf-expedition','shelf-calibration-study','shelf-outer-search','shelf-wreck-recovery','shelf-wildlife-study'],
     'milestone':['outbound','twin_spires','returned_to_base','route_restart','continue','new_expedition'], 'station_return':['route_return'],
     'resource_warning':['hull_low','battery_low','oxygen_low','hull_depleted','battery_depleted','oxygen_depleted','depth_caution','depth_danger'],

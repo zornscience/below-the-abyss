@@ -14,7 +14,7 @@ func _capture(name: String) -> void:
 
 
 func _spawn() -> void:
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta041-native.json"
 	_scene.expedition_path = "user://bta041-native-expedition.json"
 	root.add_child.call_deferred(_scene)

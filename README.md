@@ -2,38 +2,44 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current milestone: **BTA-044 — External playtesting preparation**.
-The [playtesting toolkit](docs/playtesting/README.md) supplies a standalone Linux
-package procedure, explicit opt-in local reports, a spoiler-free participant guide,
-facilitator worksheet, questionnaire and anonymous analysis tooling. **The external
-study has not run: at least five unfamiliar human players and evaluated feedback
-are still required.** No human results are claimed.
+Current build: **playtest feedback iteration** (on top of BTA-044). The playable
+region now extends from Shelf Base to the lost expedition wreck, with a hydrophone
+record, chimney-field study and flight-recorder recovery before returning to debrief.
+The original compact shelf remains a development/regression fixture.
 
-BTA-043 controller/accessibility remains available.
-Pause → **Accessibility** provides Compact/Standard/Large text, softer sonar
-highlights, reduced motion, disabled motes and high contrast. Input settings support
-keyboard/controller remapping; restoring controls retains audio/comfort preferences.
-All chapter interfaces support keyboard/controller navigation and text scrolling.
-See [controls, settings compatibility and manual accessibility checks](docs/accessibility.md)
-and [automated/native results and screenshots](docs/testing/accessibility.md).
+- **Learn:** optional contextual mechanic cards; Pause → **Help & tutorials** →
+  **Tutorial messages: OFF** disables them and saves the preference. Help remains
+  available with messages disabled. Tutorials explain controls, not a marked route.
+- **Pilot:** WASD/arrows or left stick; **F / X** sonar; **E / A** dock or scan;
+  **M / Back** map/research; **P / Start** pause; **L / Y** lights.
+- **Torpedoes:** **Space / right trigger** (also right-stick click), remappable.
+  Aim follows the last thrust direction. Blasts excavate authored rock and damage
+  nearby wildlife. The station, wreck hull and perimeter bedrock remain solid.
+  Weapons are optional; there are no kill rewards or ammunition economy.
+- **Prepare:** dock intentionally at Shelf Base, then use the graphical overview
+  for services, upgrades, expedition log or assignments. Free pressure-hull and
+  sonar upgrades persist. Passing through base never refills resources.
+- **Explore:** read recovered scientific records for clues; the map records found
+  landmarks without route arrows. Wildlife responds to sound and supports an
+  optional nonviolent biological study. Passive listening remains silent.
 
-**The Quiet Run** remains the narrative slice. Shelf Base briefs NERIS on the
-missing expedition. Identify and scan the reference plate east of base, survey
-Twin Spires through the cave, then return and dock for an explicit debrief.
-**Expedition log / briefing** is available on the start/pause page; the station
-provides **Expedition log / debrief**. Text is skippable and rereadable.
+The quieter HUD retains numerical resources, depth/rating, pressure/threat warnings
+and sonar/passive instruments. Scan progress and docking prompts appear only in
+context. Idle battery drain is 0.005/s, full thrust adds 0.025/s; a sonar ping costs
+4 battery (over two minutes of full-thrust travel). Oxygen is 0.03/s for the longer
+expedition. See the [feedback change record, controls, save migration, walkthrough,
+limitations and native screenshots](docs/feedback/README.md).
 
-In the log choose **Begin survey / count earlier evidence** to intentionally accept
-the two existing board objectives. Earlier discoveries/scans count. Survey return
-and both station acknowledgements persist through the existing save system; story
-entries reconstruct from those records. No extra save file/schema or reward is added.
-The geological overlook and creature encounters remain optional.
+**The external five-player study has not run.** The [BTA-044 toolkit](docs/playtesting/README.md)
+provides opt-in local reports, participant/facilitator materials and anonymous
+analysis. Automated routes and the user's feedback do not constitute five human
+sessions. The 20–40 minute unfamiliar-player chapter target still needs measurement.
 
-See the [narrative overview and spoiler-marked ending](docs/narrative_slice.md),
-[complete walkthrough, native screenshots, timings and verification](docs/testing/narrative_slice.md),
-[visual style guide](docs/art_direction.md) and [audio direction](docs/audio_direction.md).
-The 20–40 minute unfamiliar-player target requires human playtesting; automation
-provides actual shorter timings, not a claim that target is met.
+Pause → **Accessibility** provides Compact/Standard/Large text, softer effects,
+reduced motion, disabled motes and high contrast. All gameplay actions can be
+remapped for keyboard/controller; menu recovery bindings remain available.
+See [accessibility](docs/accessibility.md), [art direction](docs/art_direction.md),
+[audio direction](docs/audio_direction.md) and historical [narrative slice](docs/narrative_slice.md).
 
 Pause → **Audio settings** retains independent volumes/mute and explicit Save.
 The existing soundscape, station services, upgrades, map/research and optional
@@ -72,8 +78,8 @@ For headless startup validation (exits after 60 engine iterations):
 godot --headless --path . --quit-after 60
 ```
 
-Import and smoke commands must exit with status 0 and no Godot errors. The
-movement prototype is expected; later gameplay systems are not implemented.
+Import and smoke commands must exit with status 0 and no Godot errors.
+The expanded shelf expedition should open on its start/pause menu.
 This smoke check validates startup, not gameplay or a unit test suite.
 
 In the managed cloud environment, initialize writable Godot cache paths before
@@ -89,7 +95,9 @@ cd /workspace/below-the-abyss
 
 ## Continental-shelf exploration graybox (BTA-014)
 
-Run `godot --path .`. Select Begin/Resume with arrows/Tab/Enter or D-pad/stick/A.
+This historical course is available with
+`godot --path . scenes/main/shelf_prototype_fixture.tscn`; normal launch uses the
+expanded expedition documented above. Select Begin/Resume with arrows/Tab/Enter or D-pad/stick/A.
 Pilot east through **02 Cave** to **03 Twin Spires**, then return west through the
 lower passage and ascend to **01 Shelf Base**. The required course stays above
 260 m; an optional overlook and signed pressure trench branch off it. All filled
@@ -371,8 +379,8 @@ controls, screenshot, test results and manual keyboard/controller/frame-cap cour
 
 Hull, battery and oxygen start at 100 units, configured in
 `resources/balance/prototype_resources.tres`. During active simulation, idle
-battery drains at 0.25 units/second, full thrust adds 1.5 units/second, and oxygen
-drains at 0.5 units/second. Hull changes through its damage/repair APIs; BTA-012 now supplies pressure and
+battery drains at 0.005 units/second, full thrust adds 0.025 units/second, and oxygen
+drains at 0.03 units/second (playtest-feedback balance). Hull changes through its damage/repair APIs; BTA-012 now supplies pressure and
 severe-impact damage sources. Movement remains available at zero hull; game-over
 and respawn behavior remain outside scope.
 
@@ -591,7 +599,7 @@ input/remapping, HUD and frame-rate coverage without removing prior tests.
 BTA-023 adds stable discovery IDs, validated atomic discovery persistence/recovery,
 wavefront/passive isolation, restart/reload, map visibility, remapping, controller
 navigation, responsive layout and 30/60/120-step coverage.
-The wrapper enforces a 300-second timeout and fails on nonzero runner exits,
+The wrapper enforces a 420-second timeout and fails on nonzero runner exits,
 logged Godot errors, missing/malformed JUnit output, zero tests, an entirely
 skipped run, or failing/error test cases. It deletes previous results first.
 All normal tests must pass; the summary reports the current suite count. The

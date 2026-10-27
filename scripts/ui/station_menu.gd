@@ -4,6 +4,11 @@ extends Control
 
 signal story_requested
 signal close_requested
+var use_hub: bool = false
+var _hub: VBoxContainer
+var _hub_service: Button
+var _hub_notices: Button
+var _service_back: Button
 var _station: WeakRef
 @onready var _missions_page: MissionBoard = %MissionsPage
 @onready var _services: Control = %ServicesPage
@@ -16,12 +21,20 @@ func _ready() -> void:
 	(%NoticeDown as Button).pressed.connect(func() -> void: (%DescriptionScroll as ScrollContainer).scroll_vertical += 100)
 	(%Undock as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%OpenStationStory as Button).pressed.connect(func() -> void: story_requested.emit())
-	(%OpenBoard as Button).pressed.connect(show_board)
+	(%OpenBoard as Button).pressed.connect(func() -> void:
+		if use_hub: show_missions()
+		else: show_board())
 	(%OpenMissions as Button).pressed.connect(show_missions)
-	_missions_page.back_requested.connect(show_board)
-	(%BackServices as Button).pressed.connect(show_services)
+	_missions_page.back_requested.connect(func() -> void:
+		if use_hub: show_hub()
+		else: show_board())
+	(%BackServices as Button).pressed.connect(func() -> void:
+		if use_hub: show_hub()
+		else: show_services())
 	(%OpenUpgrades as Button).pressed.connect(show_upgrades)
-	(%BackUpgrades as Button).pressed.connect(show_services)
+	(%BackUpgrades as Button).pressed.connect(func() -> void:
+		if use_hub: show_hub()
+		else: show_services())
 	(%RecoverUpgrades as Button).pressed.connect(_recover_upgrades)
 	(%InstallSonar as Button).pressed.connect(_install_upgrade.bind(0))
 	(%InstallDepth as Button).pressed.connect(_install_upgrade.bind(1))
@@ -61,7 +74,8 @@ func present(station: ServiceStation) -> void:
 	_wire_focus(controls)
 	(%NoticeText as Label).text = "No notices posted." if notices.is_empty() else "Read an informational notice, or open Missions to intentionally accept objectives."
 	show()
-	show_services()
+	if use_hub: show_hub()
+	else: show_services()
 
 
 func _wire_focus(controls: Array[Control]) -> void:
@@ -77,7 +91,7 @@ func _refresh() -> void:
 	var names: Array[String] = ["RepairHull", "ChargeBattery", "RefillOxygen", "ServiceAll"]
 	var titles: Array[String] = ["Repair hull", "Charge battery", "Refill oxygen", "Service all"]
 	var previews: PackedStringArray = []
-	var controls: Array[Control] = [%Undock]
+	var controls: Array[Control] = [_service_back if use_hub else %Undock]
 	for index: int in range(names.size()):
 		var button: Button = get_node("%" + names[index]) as Button
 		var quote: Dictionary = station.quote(ServiceStation.SERVICES[index]) if station != null else {"error": ERR_UNCONFIGURED, "reason": "Station unavailable"}
@@ -91,14 +105,15 @@ func _refresh() -> void:
 				previews.append("%s: %.1f / %.1f → %.1f · %s" % [titles[index], quote.before[kind], quote.before["max_" + String(kind)], quote.after[kind], quote.reason])
 			else:
 				previews.append(titles[index] + ": " + String(quote.reason))
-	controls.append(%OpenBoard as Control)
-	controls.append(%OpenUpgrades as Control)
-	controls.append(%OpenStationStory as Control)
+	if not use_hub:
+		controls.append(%OpenBoard as Control)
+		controls.append(%OpenUpgrades as Control)
+		controls.append(%OpenStationStory as Control)
 	_wire_focus(controls)
 	(%ServicePreview as Label).text = "\n".join(previews)
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if focus == null or (focus is Button and (focus as Button).disabled):
-		(%Undock as Button).grab_focus()
+		(_service_back if use_hub else %Undock as Button).grab_focus()
 
 
 func _perform(kind: StringName) -> void:
@@ -115,15 +130,17 @@ func _perform(kind: StringName) -> void:
 
 
 func show_services() -> void:
+	if _hub != null: _hub.hide()
 	_missions_page.hide()
 	_upgrades_page.hide()
 	_board.hide()
 	_services.show()
 	_refresh()
-	(%Undock as Button).grab_focus()
+	(_service_back if use_hub else %Undock as Button).grab_focus()
 
 
 func show_board() -> void:
+	if _hub != null: _hub.hide()
 	_missions_page.hide()
 	_upgrades_page.hide()
 	_services.hide()
@@ -138,6 +155,10 @@ func _read_notice(title: String, description: String) -> void:
 func _input(event: InputEvent) -> void:
 	if visible and not event.is_echo() and InputBindings.is_menu_back(event):
 		get_viewport().set_input_as_handled()
+		if use_hub:
+			if _hub != null and _hub.visible: close_requested.emit()
+			else: show_hub()
+			return
 		if _missions_page.visible:
 			show_board()
 		elif _board.visible or _upgrades_page.visible:
@@ -157,6 +178,7 @@ func _availability_changed() -> void:
 
 
 func show_upgrades() -> void:
+	if _hub != null: _hub.hide()
 	_missions_page.hide()
 	_services.hide()
 	_board.hide()
@@ -226,6 +248,7 @@ func _recover_upgrades() -> void:
 
 
 func show_missions() -> void:
+	if _hub != null: _hub.hide()
 	var station: ServiceStation = _live_station()
 	if station == null:
 		return
@@ -233,3 +256,66 @@ func show_missions() -> void:
 	_board.hide()
 	_upgrades_page.hide()
 	_missions_page.present(station)
+
+
+func show_hub() -> void:
+	if _hub == null:
+		_hub = VBoxContainer.new()
+		var parent: Node = _services.get_parent()
+		parent.add_child(_hub)
+		parent.move_child(_hub,2)
+		_hub.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		var art: StationIllustration = StationIllustration.new()
+		art.custom_minimum_size = Vector2(0,190)
+		art.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		_hub.add_child(art)
+		var grid: GridContainer = GridContainer.new()
+		grid.columns = 2
+		grid.add_theme_constant_override("h_separation",12)
+		grid.add_theme_constant_override("v_separation",12)
+		_hub.add_child(grid)
+		_hub_service = Button.new()
+		_hub_service.text = "⚒  Maintain vessel"
+		_hub_service.pressed.connect(show_services)
+		grid.add_child(_hub_service)
+		for button: Button in [%OpenStationStory,%OpenUpgrades,%OpenBoard]:
+			button.reparent(grid)
+		for button: Button in [_hub_service,%OpenStationStory,%OpenUpgrades,%OpenBoard]:
+			button.custom_minimum_size.y = 60
+			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		(%OpenStationStory as Button).text = "▤  Expedition log"
+		(%OpenUpgrades as Button).text = "◈  Vessel upgrades"
+		(%OpenBoard as Button).text = "◎  Research assignments"
+		var footer: HFlowContainer = HFlowContainer.new()
+		_hub.add_child(footer)
+		(%Undock as Button).reparent(footer)
+		_hub_notices = Button.new()
+		_hub_notices.text = "Station notices"
+		_hub_notices.pressed.connect(show_board)
+		footer.add_child(_hub_notices)
+		var back: Button = Button.new()
+		_service_back = back
+		back.text = "Back to station"
+		back.pressed.connect(show_hub)
+		_services.add_child(back)
+		_wire_focus([back,%RepairHull,%ChargeBattery,%RefillOxygen,%ServiceAll])
+		# These are overview shortcuts, not repeated instructions on every service.
+		(get_node("Margin").find_child("Rules",true,false) as Control).hide()
+	_services.hide()
+	_board.hide()
+	_upgrades_page.hide()
+	_missions_page.hide()
+	_hub.show()
+	(%ServiceFeedback as Label).text = ""
+	(%CheckpointStatus as Label).visible = (%CheckpointStatus as Label).text.to_lower().contains("blocked") or (%CheckpointStatus as Label).text.begins_with("Not ")
+	_wire_focus([_hub_service,%OpenStationStory,%OpenUpgrades,%OpenBoard,_hub_notices,%Undock])
+	var tiles: Array[Control] = [_hub_service,%OpenStationStory,%OpenUpgrades,%OpenBoard]
+	for index: int in range(tiles.size()):
+		var across: Control = tiles[index ^ 1]
+		var vertical: Control = tiles[index ^ 2]
+		tiles[index].focus_neighbor_left = tiles[index].get_path_to(across)
+		tiles[index].focus_neighbor_right = tiles[index].get_path_to(across)
+		tiles[index].focus_neighbor_top = tiles[index].get_path_to(vertical if index >= 2 else %Undock)
+		tiles[index].focus_neighbor_bottom = tiles[index].get_path_to(vertical if index < 2 else %Undock)
+
+	_hub_service.grab_focus()

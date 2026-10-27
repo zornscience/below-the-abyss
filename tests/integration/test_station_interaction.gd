@@ -1,6 +1,6 @@
 extends GutTest
 
-const MAIN: PackedScene = preload("res://scenes/main/main.tscn")
+const MAIN: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 var _scene: ShelfPrototype
 var _paths: Array[String] = []
 

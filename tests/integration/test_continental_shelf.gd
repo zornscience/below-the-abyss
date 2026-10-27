@@ -1,6 +1,6 @@
 extends GutTest
 
-const SCENE: PackedScene = preload("res://scenes/main/main.tscn")
+const SCENE: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 const FIXTURE: PackedScene = preload("res://scenes/main/movement_prototype.tscn")
 var _scene: ShelfPrototype
 var _flight_steps: int = 0
@@ -179,7 +179,7 @@ func test_real_input_flight_completes_the_outbound_and_lower_return_with_reserve
 	assert_true((_scene.get_node("%RouteStatus") as Label).text.begins_with("LOOP COMPLETE"))
 	assert_eq(_scene.hud.battery_gauge.current_value, _scene.submarine.resource_system.battery)
 	# Returning is not a station repair/refill service.
-	assert_lt(_scene.submarine.resource_system.battery, 90.0)
+	assert_lt(_scene.submarine.resource_system.battery, 92.0)
 	gut.p("BTA014 route active_seconds=%.2f full_flight_seconds=%.2f battery=%.2f oxygen=%.2f hull=%.1f" % [
 		_scene.route_check.elapsed_seconds, float(_flight_steps) / Engine.physics_ticks_per_second, _scene.submarine.resource_system.battery,
 		_scene.submarine.resource_system.oxygen, _scene.submarine.hull_system.hull])

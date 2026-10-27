@@ -33,7 +33,7 @@ func setup(research: ResearchRegistry, discoveries: DiscoveryRegistry, targets: 
 
 func _target(id: StringName) -> ScientificScanTarget:
 	var target: ScientificScanTarget = _targets[id].get_ref() as ScientificScanTarget if _targets.has(id) else null
-	return target if is_instance_valid(target) and target.is_inside_tree() and not target.is_queued_for_deletion() else null
+	return target if is_instance_valid(target) and target.is_inside_tree() and not target.is_queued_for_deletion() and target.scan_enabled else null
 
 
 func _known(id: StringName) -> bool:

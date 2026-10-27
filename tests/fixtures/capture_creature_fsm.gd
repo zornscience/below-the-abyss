@@ -21,7 +21,7 @@ func _initialize() -> void:
 		for suffix: String in ["", ".bak", ".tmp", ".rejected"]:
 			if FileAccess.file_exists(path + suffix):
 				DirAccess.remove_absolute(ProjectSettings.globalize_path(path + suffix))
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta030-capture-settings.json"
 	root.add_child.call_deferred(_scene)
 	await _frames(5)

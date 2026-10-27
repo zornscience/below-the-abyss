@@ -43,7 +43,7 @@ func offer(event: AcousticEvent, strength: float, distance: float, local_origin:
 		return ERR_INVALID_PARAMETER
 	if event.event_id == _last_id or (not _pending.is_empty() and event.event_id == _pending.id):
 		return ERR_ALREADY_EXISTS
-	if phase != Phase.QUIET or event.source_id != _threat.trigger_source_id:
+	if phase != Phase.QUIET or event.source_id not in [_threat.trigger_source_id, &"neris-01/torpedo"]:
 		return ERR_UNAVAILABLE
 	return super.offer(event, strength, distance, local_origin)
 

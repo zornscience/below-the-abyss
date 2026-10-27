@@ -1,5 +1,8 @@
 # BTA-035: canonical expedition checkpoints
 
+> Historical BTA-035 format: the playtest-feedback revision now writes schema 3
+> and migrates versions 1/2. See [terrain and expanded-progress compatibility](../feedback/README.md#saves-and-restart-policy).
+
 ## Ownership and migration
 
 `SaveCoordinator` is scene-owned and composes the existing stores/components; no

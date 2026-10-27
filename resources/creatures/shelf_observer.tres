@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/sonar/acoustic_receiver_profile.gd" id="2_hearing"]
 [sub_resource type="Resource" id="Hearing"]
 script = ExtResource("2_hearing")
-accepted_event_types = Array[StringName]([&"active_sonar", &"ambient"])
+accepted_event_types = Array[StringName]([&"active_sonar", &"ambient", &"explosion"])
 maximum_range_units = 650.0
 minimum_strength = 0.2
 

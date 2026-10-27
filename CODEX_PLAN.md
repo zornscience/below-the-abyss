@@ -105,3 +105,17 @@ M0–M2 may take 2–4 months part-time; M3–M4 another 3–6 months; full prod
 4. Open BTA-001 through BTA-004 as GitHub issues.
 5. Ask Codex to implement BTA-001 in a branch; review and merge only after clean clone test.
 6. Keep an `art-provenance.csv` with asset source, author, license and permissions.
+
+## Authorized post-BTA-044 playtest iteration
+
+Implement the user's consolidated feedback on a separate review branch: optional
+saved tutorials, quieter instruments/context prompts, graphical station hub,
+meaningful wildlife research, longer outer-shelf/wreck chapter, slower travel drain,
+and optional torpedoes with radial NPC damage and excavatable terrain (both scope
+choices explicitly confirmed by the user). Preserve numbered milestone fixtures and
+cover actual expanded MAIN with new integrations and an input-driven full route.
+
+Acceptance: [feedback matrix and manual checks](docs/feedback/README.md), native
+Godot screenshots, all prior GUT rules, parser/import/startup, Python tooling,
+controller chapter walkthrough and standalone export smoke. Review through a PR;
+no automatic merge. Human pacing/five-player evaluation remains outstanding.

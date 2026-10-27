@@ -193,3 +193,25 @@ No required account, telemetry or network access. Treat saves as untrusted input
 
 ## 15. Architecture decisions to record
 ADR-001: Godot 4/GDScript. ADR-002: authored regions over procedural world. ADR-003: discrete region transitions first. ADR-004: versioned JSON saves. ADR-005: Steam optional service adapter. Revisit only with evidence and approval.
+
+## Playtest-feedback extension (2026-10-27)
+
+The scene-owned `ShelfExpansion` composes cloned authored catalogs with the existing
+shelf and exposes the previous compact version through a development fixture.
+`TutorialDirector` owns optional hint sequencing; SettingsStore's optional validated
+onboarding group preserves legacy mappings and adds a collision-free weapon binding.
+`PilotContext` and the quiet HUD project existing domain state without route text.
+The station coordinator adds a graphical overview and retains service/domain APIs.
+
+`TorpedoLauncher` owns stepped swept projectiles, bounded effects and registered
+`BlastReceiver`s. Explosions use the existing AcousticEmitter/Bus contract; neither
+active-sonar duplicate/history semantics nor passive-listening behavior changes.
+`DestructibleRock` shares exact clipped polygons between visuals and collision.
+Excavation has authored IDs, a bounded deterministic replay journal and protected
+boundaries; no third-party terrain dependency or singleton is introduced.
+
+Expedition schema 3 adds terrain cuts and a legacy-conclusion flag; strict version
+1/2 migration, atomic checkpoints and explicit backup recovery are retained.
+Terrain is replayed before checkpoint collision clearance. Permanent progress and
+terrain survive route resets; temporary wildlife/projectiles reset. Details and
+limits: [feedback implementation and verification](docs/feedback/README.md).

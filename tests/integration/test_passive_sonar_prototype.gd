@@ -1,6 +1,6 @@
 extends GutTest
 
-const SCENE: PackedScene = preload("res://scenes/main/main.tscn")
+const SCENE: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 const EXAMPLE: PackedScene = preload("res://scenes/main/passive_sonar_example.tscn")
 var _scene: ShelfPrototype
 var _old_fps: int
@@ -43,7 +43,7 @@ func test_real_shelf_receives_ambient_without_ping_energy_or_active_pulses() -> 
 	assert_eq(contacts.size(), 2)
 	assert_true(contacts.any(func(contact: Dictionary) -> bool: return contact.classification == &"mechanical"))
 	assert_true(contacts.any(func(contact: Dictionary) -> bool: return contact.classification == &"geological"))
-	assert_almost_eq(_scene.submarine.resource_system.battery, 100.0 - 200.0 / 60.0 * 0.25, 0.05)
+	assert_almost_eq(_scene.submarine.resource_system.battery, 100.0 - 200.0 / 60.0 * 0.005, 0.001)
 	assert_eq(_scene.submarine.sonar.active_pulse_count(), 0)
 	assert_signal_not_emitted(_scene.submarine.sonar, "pulse_emitted")
 	assert_false((_scene.region.get_node("SonarTargets/shelf-marker") as SonarRevealTarget).is_revealed())

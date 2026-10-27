@@ -1,6 +1,6 @@
 extends GutTest
 
-const MAIN: PackedScene = preload("res://scenes/main/main.tscn")
+const MAIN: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 var _scene: ShelfPrototype
 var _paths: Array[String] = []
 
@@ -147,7 +147,7 @@ func test_checkpoint_reload_and_continue_reconstruct_same_log_without_story_even
 	assert_true(_scene.narrative.is_concluded())
 	assert_true(events.is_empty())
 	assert_eq(ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string(_scene.expedition_path))).error, OK)
-	assert_eq(int(JSON.parse_string(FileAccess.get_file_as_string(_scene.expedition_path)).schema_version), 2)
+	assert_eq(int(JSON.parse_string(FileAccess.get_file_as_string(_scene.expedition_path)).schema_version), 3)
 
 
 func test_restart_and_services_keep_records_and_do_not_repeat_debrief() -> void:

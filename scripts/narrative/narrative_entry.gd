@@ -2,7 +2,7 @@ class_name NarrativeEntry
 extends Resource
 ## Authored text, unlocked from existing persistent domain evidence only.
 
-enum Evidence { BRIEFING, ACCEPTED, MARKER, SCAN, SPIRES, RETURNED, CONCLUDED, GEOLOGY }
+enum Evidence { BRIEFING, ACCEPTED, MARKER, SCAN, SPIRES, RETURNED, CONCLUDED, GEOLOGY, HYDROPHONE, VENT, WRECK }
 @export var stable_id: StringName
 @export var title: String
 @export_multiline var text: String

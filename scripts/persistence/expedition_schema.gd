@@ -2,7 +2,7 @@ class_name ExpeditionSchema
 extends RefCounted
 ## Pure validation/migration. No node restoration or executable data from disk.
 
-const VERSION: int = 2
+const VERSION: int = 3
 const REGION: String = "continental_shelf"
 const DISCOVERIES: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
 const RESEARCH: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
@@ -30,27 +30,33 @@ static func valid_progress(progress: Variant) -> bool:
 	if not progress is Dictionary or progress.size() != 4:
 		return false
 	var discoveries: Array[StringName] = []
-	for point: Resource in DISCOVERIES.points:
+	for point: Resource in ShelfChapterData.discoveries().points:
 		discoveries.append(point.stable_id)
 	var research: Array[StringName] = []
-	for target: Resource in RESEARCH.targets:
+	for target: Resource in ShelfChapterData.research().targets:
 		research.append(target.stable_id)
 	var upgrades: Array[StringName] = []
 	for definition: Resource in UPGRADES.upgrades:
 		upgrades.append(definition.stable_id)
 	return ids(progress.get("discoveries"), discoveries) and ids(progress.get("research"), research) \
 		and ids(progress.get("upgrades"), upgrades) and progress.get("missions") is Dictionary \
-		and MISSIONS.valid_records(progress.missions)
+		and (MISSIONS.valid_records(progress.missions) or ShelfChapterData.missions().valid_records(progress.missions))
 
 
 static func decode(value: Variant) -> Dictionary:
 	if not value is Dictionary or not InputBindings.is_integer(value.get("schema_version")):
 		return {"error": ERR_INVALID_DATA}
 	var version: int = int(value.schema_version)
-	if version not in [1, VERSION]:
+	if version not in [1, 2, VERSION]:
 		return {"error": ERR_UNAVAILABLE}
 	var data: Dictionary = value.duplicate(true)
-	if data.size() != 7 or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id != REGION \
+	if version in [1,2]:
+		if data.size() != 7:
+			return {"error": ERR_INVALID_DATA}
+		data.terrain = []
+		var old: Variant = data.get("progress",{}).get("missions",{}) if data.get("progress") is Dictionary else {}
+		data.legacy_conclusion = old is Dictionary and MISSIONS.valid_records(old) and old["shelf-expedition"].state == "claimed" and old["shelf-calibration-study"].state == "claimed"
+	if data.size() != 9 or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id != REGION \
 		or not data.get("legacy_imported") is bool or data.legacy_imported != true or not data.get("player") is Dictionary \
 		or not data.get("route") is Dictionary or not valid_progress(data.get("progress")):
 		return {"error": ERR_INVALID_DATA}
@@ -81,5 +87,12 @@ static func merge_progress(a: Dictionary, b: Dictionary) -> Dictionary:
 			if String(id) not in merged[key]:
 				merged[key].append(String(id))
 		merged[key].sort()
-	merged.missions = MISSIONS.merge_records(a.missions, b.missions)
+	var left: Dictionary = a.missions
+	var right: Dictionary = b.missions
+	if left.size() == 2 and right.size() == 2:
+		merged.missions = MISSIONS.merge_records(left,right)
+	else:
+		if left.size() == 2: left = ShelfChapterData.upgrade_missions(left)
+		if right.size() == 2: right = ShelfChapterData.upgrade_missions(right)
+		merged.missions = ShelfChapterData.missions().merge_records(left,right)
 	return merged

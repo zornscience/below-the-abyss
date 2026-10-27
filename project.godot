@@ -149,6 +149,15 @@ ui_focus_prev={
 ]
 }
 
+fire_torpedo={
+"deadzone": 0.25,
+"events": [Object(InputEventKey,"physical_keycode":32)
+, Object(InputEventJoypadButton,"device":-1,"button_index":8)
+, Object(InputEventJoypadMotion,"device":-1,"axis":5,"axis_value":1.0)
+]
+}
+
+
 [display]
 
 window/size/viewport_width=1280
@@ -166,3 +175,5 @@ common/physics_interpolation=true
 2d_physics/layer_1="Cave walls"
 2d_physics/layer_2="Submarine"
 2d_physics/layer_3="Route test zones"
+
+2d_physics/layer_4="Acoustic wildlife"

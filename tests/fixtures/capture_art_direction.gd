@@ -27,7 +27,7 @@ func _capture(name: String, at: Vector2) -> void:
 
 func _initialize() -> void:
 	_prefix = "before" if OS.get_cmdline_user_args().has("--before") else "after"
-	_scene = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	_scene = load("res://scenes/main/shelf_prototype_fixture.tscn").instantiate() as ShelfPrototype
 	_scene.settings_path = "user://bta040-art-" + _prefix + ".json"
 	root.add_child.call_deferred(_scene)
 	await _frames(5)

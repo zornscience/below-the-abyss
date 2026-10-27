@@ -6,12 +6,12 @@ const MAX_BYTES: int = 131072
 const MAX_SECONDS: float = 86400.0
 const DETAILS: Dictionary = {
 	"session_start": ["opt_in"], "session_end": ["disabled", "quit"],
-	"sonar": ["active_ping"], "scan_started": ["shelf-calibration-plate", "shelf-overlook-formation"],
-	"scan_completed": ["shelf-calibration-plate", "shelf-overlook-formation"],
-	"discovery": ["shelf-navigation-marker", "shelf-twin-spires", "shelf-overlook"],
-	"mission_accepted": ["shelf-expedition", "shelf-calibration-study"],
-	"mission_completed": ["shelf-expedition", "shelf-calibration-study"],
-	"mission_claimed": ["shelf-expedition", "shelf-calibration-study"],
+	"sonar": ["active_ping"], "scan_started": ["shelf-calibration-plate", "shelf-overlook-formation", "outer-hydrophone-record", "outer-vent-study", "lost-expedition-blackbox", "observer-ecology"],
+	"scan_completed": ["shelf-calibration-plate", "shelf-overlook-formation", "outer-hydrophone-record", "outer-vent-study", "lost-expedition-blackbox", "observer-ecology"],
+	"discovery": ["shelf-navigation-marker", "shelf-twin-spires", "shelf-overlook", "outer-hydrophone", "outer-vent-garden", "lost-expedition-wreck", "observer-habitat"],
+	"mission_accepted": ["shelf-expedition", "shelf-calibration-study", "shelf-outer-search", "shelf-wreck-recovery", "shelf-wildlife-study"],
+	"mission_completed": ["shelf-expedition", "shelf-calibration-study", "shelf-outer-search", "shelf-wreck-recovery", "shelf-wildlife-study"],
+	"mission_claimed": ["shelf-expedition", "shelf-calibration-study", "shelf-outer-search", "shelf-wreck-recovery", "shelf-wildlife-study"],
 	"milestone": ["outbound", "twin_spires", "returned_to_base", "route_restart", "continue", "new_expedition"],
 	"station_return": ["route_return"], "resource_warning": ["hull_low", "battery_low", "oxygen_low", "hull_depleted", "battery_depleted", "oxygen_depleted", "depth_caution", "depth_danger"],
 	"damage": ["impact", "pressure", "creature", "other"],

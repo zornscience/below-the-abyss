@@ -1,6 +1,6 @@
 extends GutTest
 
-const SCENE: PackedScene = preload("res://scenes/main/main.tscn")
+const SCENE: PackedScene = preload("res://scenes/main/shelf_prototype_fixture.tscn")
 var _scene: ShelfPrototype
 var _old_fps: int
 
@@ -106,7 +106,7 @@ func test_gamepad_ping_uses_the_same_action_and_wave_origin_does_not_follow_vess
 	assert_gt(_scene.submarine.global_position.x, origin.x + 20.0)
 	assert_eq(_pulse().global_position, origin)
 	assert_gt(_pulse().get_radius(), 200.0)
-	assert_almost_eq(_scene.submarine.resource_system.battery, 95.3, 0.3)
+	assert_almost_eq(_scene.submarine.resource_system.battery, 95.98675, 0.003)
 
 
 func test_route_settings_and_debug_pauses_freeze_wave_cooldown_and_reveal_clocks() -> void:
@@ -194,7 +194,7 @@ func test_actual_30_60_and_120_render_caps_keep_fixed_physics_sonar_consistent()
 		assert_eq(_scene.submarine.sonar.echo_count(), 2)
 		assert_eq(_scene.submarine.sonar.active_pulse_count(), 0)
 		assert_almost_eq(_scene.submarine.sonar.cooldown_remaining(), 2.05, 0.06)
-		assert_almost_eq(_scene.submarine.resource_system.battery, 95.51, 0.06)
+		assert_almost_eq(_scene.submarine.resource_system.battery, 95.99025, 0.001)
 
 
 func test_sonar_hud_states_fit_the_minimum_window() -> void:

@@ -30,6 +30,8 @@ install untrusted system software on someone else's computer.
 | Move | WASD / arrows | Left stick / D-pad |
 | Interact / dock / scan or cancel scan | E | A |
 | Active sonar | F | X |
+| Torpedo (last thrust direction; optional) | Space | Right trigger / right-stick click |
+| Lights | L | Y |
 | Map / research | M | Back / Select |
 | Pause | Escape / P | Start |
 | Menu navigation | Arrows, Tab / Shift+Tab | D-pad / stick, shoulders |
@@ -41,6 +43,9 @@ for recovery. Read long records using Text ↑/↓ buttons. Unplugging the activ
 controller should pause movement; keyboard recovery remains available.
 
 ## Comfort, saves and leaving
+
+Pause → Help & tutorials lets you reread mechanic explanations or disable tutorial
+messages. The preference persists. No weapon use is required to finish the expedition.
 
 Pause → Accessibility offers Compact/Standard/Large text, contrast and reduced
 visual effects. Audio settings offer mute and separate mix levels. Save each page

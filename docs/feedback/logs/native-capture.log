@@ -1,0 +1,20 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+FEEDBACK_CAPTURE first-helm size=(1280, 800)
+FEEDBACK_CAPTURE station-overview size=(1280, 800)
+STAGED_POSITION (6500.0, 700.0) actual=(6500.0, 700.0) camera=(6500.0, 700.0)
+FEEDBACK_CAPTURE hydrophone-scan size=(1280, 800)
+STAGED_POSITION (21600.0, 1290.0) actual=(21600.0, 1290.0) camera=(21600.0, 1290.0)
+FEEDBACK_CAPTURE expedition-wreck size=(1280, 800)
+STAGED_POSITION (19150.0, 1100.0) actual=(19150.0, 1100.0) camera=(19150.0, 1100.0)
+FEEDBACK_CAPTURE terrain-explosion size=(1280, 800)
+FEEDBACK_CAPTURE unrouted-map size=(1280, 800)
+STAGED_POSITION (1430.0, 420.0) actual=(1430.0, 420.0) camera=(1430.0, 420.0)
+FEEDBACK_CAPTURE wildlife-blast size=(1280, 800)
+STAGED_POSITION (420.0, 480.0) actual=(420.0, 480.0) camera=(420.0, 480.0)
+FEEDBACK_CAPTURE station-compact-large size=(800, 600)
+FEEDBACK_CAPTURE hud-compact-large size=(800, 600)
+FEEDBACK_NATIVE_PASS

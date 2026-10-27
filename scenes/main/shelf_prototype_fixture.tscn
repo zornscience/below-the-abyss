@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="PackedScene" path="res://scenes/main/main.tscn" id="1"]
+[node name="GameRoot" instance=ExtResource("1")]
+extended_expedition = false
+settings_path = "user://shelf_fixture_settings.json"

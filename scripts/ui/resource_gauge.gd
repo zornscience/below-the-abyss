@@ -7,6 +7,7 @@ extends PanelContainer
 @export var accent: Color = Color("85d8cc")
 @export_range(0.0, 1.0) var low_warning_fraction: float = 0.2
 var accessibility_compact: bool = false
+var quiet: bool = false
 var current_value: float = 0.0
 var maximum_value: float = 100.0
 
@@ -42,4 +43,9 @@ func set_reading(current: float, maximum: float) -> void:
 	else:
 		(%Caption as Label).text = caption
 		(%LowWarning as Label).show()
+	if quiet:
+		(%Caption as Label).text = caption.get_slice(" ",0)
+		(%Value as Label).text = "%.0f" % current
+		(%State as Label).visible = depleted or (maximum > 0.0 and current/maximum <= low_warning_fraction)
+		(%LowWarning as Label).hide()
 	(%State as Label).modulate = Color("ffb49e") if depleted else Color("a8c5cd")

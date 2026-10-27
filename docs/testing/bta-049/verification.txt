@@ -8,11 +8,12 @@ XDG_CONFIG_HOME=/workspace/.config
 
 python3 tools/validate_godot.py
   PASS: engine; import; 241 script checks; startup smoke.
-  /tmp/bta049-validation.log; build/ci-logs/{import,parser,smoke,summary}.log
+  /tmp/bta049-validation-delivery.log; build/ci-logs/{import,parser,smoke,summary}.log
 python3 tools/run_tests.py
-  Preflight PASS: 580/580; 26639 assertions; 405.722 s; 65 scripts.
-  /tmp/bta049-full-final.log (before final accessibility-return regression).
-  Final full-suite result follows the clean implementation commit.
+  PASS: 581/581; 26647 assertions; 345.842 s; 65 scripts;
+  failures=0, errors=0, skipped=0. Final committed implementation, including
+  the actual Accessibility-cancel focus regression and all BTA-048 tests.
+  /tmp/bta049-full-delivery.log; build/ci-logs/unit-tests{.log,.xml,-summary.log}
 godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gdisable_colors -gconfig= -gtest=res://tests/integration/test_cinematic_title.gd
   PASS: 7/7; 97 assertions; 9.123 s.
   /tmp/bta049-focused-final.log
@@ -20,7 +21,7 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gdisabl
   six size/text combinations, recovery/prototype controls, resource/pose isolation.
 python3 tools/verify_sunlit_shallows.py
   PASS: 12 launches; both outcomes/devices, full and mid-buoy Continue;
-  no combat or replayed choices/rewards. /tmp/bta049-sunlit.log
+  no combat or replayed choices/rewards. /tmp/bta049-sunlit-delivery.log
 python3 tools/verify_revision_two.py
   PASS: 472.7 simulation seconds; full hull, return battery 72.5869586;
   dock battery 100; 4 research points; 10 torpedoes; no excavation.
@@ -48,5 +49,29 @@ BTA_EVIDENCE_DIR=docs/testing/bta-049/screenshots godot --path . --audio-driver 
   No engine/script errors; expected unsupported-VSync software-driver warning.
   Performance numbers/limitations are in README.md; not GPU certification.
 
-Clean-commit Linux export/smoke and final full-suite/PR status are recorded in
-an evidence-only follow-up after this implementation commit. No main merge.
+python3 tools/install_export_templates.py
+  PASS: checksum-pinned official 4.6.3 Linux templates already installed.
+python3 tools/build_playtest.py
+  PASS: clean implementation commit 95f711f1444ca541b8ebde0decbd82bc1ef6438d;
+  development_dirty=false; Linux x86_64; pinned official engine/templates.
+  build/below-the-abyss-playtest-linux-95f711f1444c.zip
+  Binary SHA256: d5195adc35712f9d01b44ba16e1ca2ab2a5696fa1f91b3e35c614b7ab35ef3a3
+  /tmp/bta049-export.log; build/playtest/{import,export}.log; manifest.json
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-95f711f1444c.zip --log build/playtest/standalone-smoke.log
+  PASS: extracted standalone release launch, default telemetry OFF.
+  /tmp/bta049-standalone.log; build/playtest/standalone-smoke.log
+The follow-up commits contain documentation only; the exported gameplay sources
+remain exactly those of the clean implementation commit above.
+
+git push --set-upstream origin bta-049-halcyon-descent
+  PASS: branch published; no main merge.
+gh pr create --repo zornscience/below-the-abyss --base main --head bta-049-halcyon-descent --title 'BTA-049: Cinematic Title Screen and Visual Identity' --body-file build/bta049-pr-body.md
+  BLOCKED (exit 1): Post "https://api.github.com/graphql": Forbidden
+  /tmp/bta049-pr-create.log
+  The active cloud policy is enforced but excludes api.github.com; a saved draft
+  does not establish active access. Hosted CI has not run; local checks are reported
+  separately. No PR was created and no merge was attempted.
+  Create/review: https://github.com/zornscience/below-the-abyss/compare/main...bta-049-halcyon-descent?expand=1
+  Prepared description: build/bta049-pr-body.md (ignored local handoff artifact).
+All results above are local. Hosted CI has not run because PR creation is blocked.
+No human usability or physical-controller/target-GPU trial is claimed.

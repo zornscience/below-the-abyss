@@ -228,3 +228,19 @@ No screen-read shader, 3D pass, shadow texture or realtime light allocation is a
 Automated input is **not a human usability or physical-controller trial**. Human
 comfort/readability, desktop-GPU performance, Windows/macOS and Steam Deck still
 require native review. No 60 FPS certification or new platform support is claimed.
+
+## Final verification and review status
+
+Local checks passed: **581/581 GUT tests**, 26,647 assertions, 65 test scripts,
+zero failures/errors/skips; **241 parser checks**, import/startup, all **12 canonical
+chapter launches**, legacy revised/expanded routes, eight bloom launches, seven
+Python tests, actual-input Quit, native title/Options/Accessibility/departure and
+clean Linux release/extracted-package smoke. The final implementation commit is
+`95f711f1444ca541b8ebde0decbd82bc1ef6438d`; evidence-only follow-ups do not change
+its exported gameplay. Exact commands, logs, hash and limits: [verification.txt](verification.txt).
+
+The branch is published. Creating the PR returned GitHub API `Forbidden`; the active
+cloud policy excludes that API, so **no PR or hosted CI run was created**. Main was
+not modified. [Create the review PR against main](https://github.com/zornscience/below-the-abyss/compare/main...bta-049-halcyon-descent?expand=1)
+with the prepared local description at `build/bta049-pr-body.md`. The existing
+workflow remains enabled; no automatic merge is requested.

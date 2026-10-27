@@ -5,31 +5,31 @@ BTA-045 is already reserved for the slice release candidate in CODEX_PLAN. The
 GitHub tracker had no non-PR issues or milestones when checked for this work.
 
 README, GDD, TDD, CODEX_PLAN and AGENTS were reviewed along with PR #27, its
-ExpeditionRevision/CampaignData research talents, narrative presentation, scanner,
-research/discovery registries and checkpoint coordinator/schema/store. **No Story
-Bible is present in main's files or searchable content.** Only the user's Resonance
-brief is used. Wick/Okafor/Crane have no existing canonical dialogue service here;
-the three short authored responses are isolated in two ChoiceData Resources. Old
-NERIS/prototype character names, mission IDs and campaign records are untouched.
+narrative/research services and save schema. The Story Bible was absent when PR #28
+was implemented; the user subsequently supplied the 27 October 2026 PDF. The
+[Story Bible and alignment decisions](../../story/README.md) now anchor the plankton
+visual and the isolated Wick/Okafor/Crane dialogue. Original prototype names,
+mission IDs and campaign records remain unchanged; the shallow wreck is a separate
+prototype vessel, not Lantern-1.
 
 ## Playing the encounter
 
 1. Launch `godot --path .`; choose Begin or Continue. Pilot east from Shelf Base
-   through the upper shelf passage. The optional glowing colony sits on the shelf
-   just east of the first upper gate: authored visual `(1330,630)`, scan center
-   `(1330,590)`. A clear approach is `(1280,480)`. No combat, excavation, upgrade or
+   through the upper shelf passage. The optional plankton patch floats above the shelf
+   just east of the first upper gate: visual and scan center `(1330,590)`.
+   A clear approach is `(1280,480)`. No combat, excavation, upgrade or
    mission prerequisite is required.
-2. Use F / controller X for sonar. Normal wavefront discovery identifies the colony;
+2. Use F / controller X for sonar. Normal wavefront discovery identifies the plankton;
    sonar identification alone has no story effect. Within 180 world units the pilot
    context offers E / controller A to study it (current remapped bindings also work).
-3. The explicit choice pauses the simulation. Read that removing the colony will
-   extinguish it. Use arrows/D-pad/stick or Tab and Enter/A to choose:
+3. The explicit choice pauses the simulation. Read that bottling kills the sampled
+   bloom. Use arrows/D-pad/stick or Tab and Enter/A to choose:
    - **Scan and leave the bloom unharmed:** resumes piloting and runs the existing
      three-second scanner. Stay in range; E/A cancels, leaving range interrupts,
      and normal pause freezes scan time. Completion records the biological research
      entry and the positive choice together. The intact bloom subtly warms.
-   - **Collect a specimen for Crane:** intentionally commits the destructive choice,
-     leaves an extinguished stump, and cannot subsequently be scanned. There is no
+   - **Bottle a specimen for Crane:** intentionally commits the destructive choice,
+     extinguishes the plankton patch, and cannot subsequently be scanned. There is no
      inventory, currency, research-point grant or new collection system.
    - **Leave for now:** closes without making a decision.
 4. Wick, Okafor and Crane respond in text. Read the explicit intact/extinguished
@@ -52,7 +52,8 @@ pause rule. No implicit quit autosave was added.
 
 ## Changed files
 
-[Complete file inventory](changed-files.txt). The changes add scene-owned story
+[Original PR #28 file inventory](changed-files.txt); the follow-up PR records the
+additional Story Bible alignment files. The changes add scene-owned story
 Resources/state, the isolated encounter/panel/visual, and focused tests/input driver.
 Existing scanner/research completion gain a narrow optional gate; scene/catalogs
 attach the optional encounter. Persistence extends the canonical schema/store/
@@ -163,11 +164,11 @@ reports a known unsupported VSync warning; no Godot script/parse errors are acce
 
 ## Evidence and acceptance
 
-Local verification on 2026-10-27: full GUT **537/537**, **26,127 assertions**,
-zero failures/errors/skips, 362.518 seconds. Godot import, **227** standalone script
+Initial alignment verification on 2026-10-27: full GUT **541/541**, **26,162 assertions**,
+zero failures/errors/skips, 395.619 seconds. Godot import, **227** standalone script
 checks and startup passed. Python tooling: **6/6**. The focused story suite has
-31 passing tests (14 unit, 17 integration). Native screenshots are rendered by
-Godot, not mockups or generated assets. Hosted run evidence is added in the PR.
+37 passing tests (14 unit, 23 integration). Native screenshots are rendered by
+Godot, not mockups or generated assets. The final full rerun and hosted run evidence are recorded in the PR.
 
 | Requirement | Verification |
 | --- | --- |
@@ -182,7 +183,7 @@ Godot, not mockups or generated assets. Hosted run evidence is added in the PR.
 ![Choice at reference resolution](screenshots/choice-observe.png)
 ![Unharmed response](screenshots/feedback-observe.png)
 ![Destructive response](screenshots/feedback-collect.png)
-![Intact colony in the shelf](screenshots/habitat-observe.png)
+![Intact plankton above the shelf](screenshots/habitat-observe.png)
 ![Choice with Large text at 800×600](screenshots/choice-collect-small.png)
 ![Extinguished response with Large text at 800×600](screenshots/feedback-collect-small.png)
 
@@ -194,7 +195,7 @@ hooks. Collection is an explicit specimen outcome, not a new harvesting/inventor
 system. No rewards, economy, wildlife behavior changes, Vael trust, endings, later
 zone, new playable region or campaign rewrite. Tiers are domain interfaces only;
 one ±15 encounter alone cannot reach either ±40 tier. Ordinary/exceptional balancing
-is provisional pending the absent Story Bible and human playtesting. Text is English
+is provisional as specified by the Story Bible, pending human playtesting. Text is English
 and unvoiced; normal accessibility font/contrast/focus policy applies. The short
 modal pauses the existing simulation; it does not add a dialogue framework or new
 input action. Older numbered milestone scenes remain regression fixtures without

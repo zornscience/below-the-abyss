@@ -6,5 +6,5 @@ stable_id = &"zone1-light-bloom-collect"
 encounter_id = &"zone1-light-bloom"
 resonance_delta = -15
 flags = Array[StringName]([&"zone1-light-bloom-collected"])
-action_text = "Collect a specimen for Crane"
-response_text = "Wick: The glow has gone.\n\nOkafor: The colony has collapsed. Record the loss.\n\nCrane: One specimen secured for study."
+action_text = "Bottle a specimen for Crane"
+response_text = "Wick: Sample sealed. The collected plankton has stopped glowing.\n\nOkafor: The bloom is dead. We could have recorded it without taking it.\n\nCrane: Sample secured. Halcyon will examine it when you return."

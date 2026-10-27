@@ -2,11 +2,35 @@
 """Run pinned GUT tests, retain results, and reject missing/empty test reports."""
 
 import argparse
+import os
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
 
 from validate_godot import LOGS, ROOT, VERSION, run_check
+
+
+def annotate_failure(name: str, report: Path, message: str) -> None:
+    """Expose actionable failures in check annotations as well as retained log ZIPs."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    details = [message]
+    if report.is_file():
+        try:
+            for case in ET.parse(report).getroot().findall(".//testcase"):
+                for failure in case.findall("failure") + case.findall("error"):
+                    details.append(f"{case.get('classname')}/{case.get('name')}: {failure.text or failure.get('message', '')}")
+        except (OSError, ET.ParseError):
+            pass  # The original validation error remains authoritative.
+    log = LOGS / f"{name}.log"
+    if log.is_file():
+        lines = log.read_text(encoding="utf-8", errors="replace").splitlines()
+        for index, line in enumerate(lines):
+            if line.lstrip().startswith(("ERROR:", "SCRIPT ERROR:", "USER ERROR:")):
+                details.append("\n".join(lines[index:index+6]))
+    for detail in details[:10]:
+        escaped = detail[:6000].replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        print(f"::error title=GUT validation failure::{escaped}", flush=True)
 
 
 def main() -> None:
@@ -57,6 +81,7 @@ def main() -> None:
         message = f"FAIL: {error}\n"
         summary.write_text(message, encoding="utf-8")
         print(message, file=sys.stderr)
+        annotate_failure(name, report, message)
         sys.exit(1)
     summary.write_text(message, encoding="utf-8")
     print(message, flush=True)

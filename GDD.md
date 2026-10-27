@@ -127,13 +127,14 @@ fixtures only. [Complete decisions and acceptance](docs/feedback-two/README.md).
 
 ## Approved Resonance foundation (BTA-046)
 
-One optional Zone 1 light-bloom colony offers an intentional, exclusive choice:
+One optional Zone 1 light-bloom plankton patch offers an intentional, exclusive choice:
 record a three-second non-destructive scan (+15 hidden Resonance) or collect a
-specimen for Crane, extinguishing the colony (-15). Leaving or interrupting the
+specimen for Crane, killing the sampled bloom (-15). Leaving or interrupting the
 scan makes no decision. Wick, Okafor and Crane respond in short text; the intact
-colony subtly changes light, or leaves an extinguished stump. No numeric score or
-tier is shown. The Story Bible is absent from this repository; these provisional
-lines use only the user's brief, without later-zone lore or campaign renaming.
+plankton forms a spiral, then scatters, and remains lit after observation or is
+extinguished by bottling. Reduced effects use a static spiral. No numeric score
+or tier is shown. The supplied [Story Bible](docs/story/README.md) anchors these
+responses and visuals without later-zone spoilers or campaign renaming.
 
 The reusable hidden state starts at zero, clamps to [-100,100] and exposes provisional
 Listener/Neutral/Hostile bands at +/-40 for later consumers. This PR does not connect

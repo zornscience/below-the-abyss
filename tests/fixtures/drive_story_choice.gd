@@ -6,6 +6,7 @@ var _outcome: String
 var _resume: bool
 var _captures: String
 var _choice_events: int = 0
+var _arrival_captured: bool = false
 func _frames(count: int = 4) -> void:
 	for _index: int in range(count):
 		await physics_frame
@@ -57,6 +58,9 @@ func _activate(control: Control) -> void:
 func _move(target: Vector2) -> void:
 	for _step: int in range(4800):
 		await _respond_radio()
+		if not _captures.is_empty() and not _arrival_captured and _scene.bloom.visual.arrival_active() and _scene.bloom.visual.arrival_elapsed>0.4:
+			_arrival_captured = true
+			await _capture("arrival-"+_outcome)
 		var desired: Vector2 = ((target - _scene.submarine.global_position)*1.1-_scene.submarine.velocity*0.7).limit_length(160.0) / 240.0
 		var deadzone: float = InputMap.action_get_deadzone("move_left")
 		var encoded: Vector2 = desired.normalized() * lerpf(deadzone, 1.0, desired.length()) if not desired.is_zero_approx() else Vector2.ZERO

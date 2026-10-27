@@ -144,3 +144,13 @@ so this focused user-authorized implementation uses BTA-046.
 - GUT, parser/import/startup, both input devices and separate-process Continue, Linux export.
 - Native graphical evidence, commands, manual acceptance and limitations in
   [BTA-046 verification](docs/testing/bta-046/README.md). No new region/endings or automatic merge.
+
+### Authorized Story Bible alignment follow-up
+
+After PR #28 the user supplied the Story Bible and approved aligning the encounter.
+Replace the rooted bloom with geometric plankton and a presentation-only arrival
+spiral/scatter; show a static alternative for reduced effects. Align the three
+character voices, archive the source PDF and explicitly distinguish the shallow
+prototype wreck from canonical Lantern-1. Preserve schema 5, all stable IDs, flags,
+balancing, progression and gameplay. No later zones or wider Resonance mechanics.
+Review in a separate follow-up PR; do not merge automatically.

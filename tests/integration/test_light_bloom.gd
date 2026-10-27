@@ -143,7 +143,7 @@ func test_mute_and_comfort_modes_keep_explicit_text_and_static_feedback() -> voi
 	assert_true(text.contains("Wick:"))
 	assert_true(text.contains("Okafor:"))
 	assert_true(text.contains("Crane:"))
-	assert_true(text.contains("COLONY EXTINGUISHED"))
+	assert_true(text.contains("BLOOM EXTINGUISHED"))
 	assert_false(text.to_lower().contains("resonance"))
 	assert_false(text.contains("-15"))
 	assert_false(text.contains("+15"))
@@ -243,3 +243,80 @@ func test_small_large_text_choice_has_keyboard_controller_recovery_and_reading_c
 	assert_false(collect.disabled)
 	assert_eq(observe.get_node(observe.focus_next),collect)
 	assert_true(collect.get_node(collect.focus_next).is_visible_in_tree())
+
+func test_arrival_spirals_around_vessel_pauses_then_scatters_without_story_effects() -> void:
+	var visual: LightBloomVisual = scene.bloom.visual
+	var at: Vector2 = Vector2(1280,480)
+	assert_eq(visual.global_position,Vector2(1330,590))
+	visual.advance_arrival(0.0,at,true)
+	assert_true(visual.arrival_active())
+	assert_eq(visual.arrival_center,visual.to_local(at))
+	visual.advance_arrival(1.0,at,true)
+	var elapsed: float = visual.arrival_elapsed
+	visual.advance_arrival(10.0,at,false)
+	assert_eq(visual.arrival_elapsed,elapsed)
+	visual.advance_arrival(3.2,at,true)
+	assert_false(visual.arrival_active())
+	assert_eq(visual.arrival_center,Vector2.ZERO)
+	visual.advance_arrival(0.1,at,true)
+	assert_false(visual.arrival_active())
+	assert_eq(scene.story.snapshot(),StoryState.fresh())
+func test_reduced_effects_and_restored_outcomes_never_replay_arrival() -> void:
+	var visual: LightBloomVisual = scene.bloom.visual
+	visual.reduced_effects = true
+	visual.advance_arrival(0.1,Vector2(1280,480),true)
+	assert_false(visual.arrival_active())
+	assert_eq(visual.arrival_center,Vector2.ZERO)
+	visual.reduced_effects = false
+	visual.advance_arrival(1.0,Vector2(1280,480),true)
+	assert_false(visual.arrival_active())
+	visual.set_outcome(false,true)
+	visual.advance_arrival(1.0,Vector2(1280,480),true)
+	assert_false(visual.arrival_active())
+	assert_eq(visual.reaction,0.0)
+func test_bottled_plankton_is_extinguished_without_a_seabed_stump() -> void:
+	_collect()
+	assert_false(scene.bloom.visual.plankton_visible())
+	assert_false(scene.bloom.visual.specimen_view)
+	for node: Node in scene.bloom.panel.body.find_children("*","Node2D",true,false):
+		if node is LightBloomVisual:
+			assert_true(node.specimen_view)
+			assert_false(node.plankton_visible())
+	assert_eq(ExpeditionSchema.VERSION,5)
+	assert_eq(scene.story.definition(LightBloomEncounter.OBSERVE).resonance_delta,15)
+	assert_eq(scene.story.definition(LightBloomEncounter.COLLECT).resonance_delta,-15)
+func test_bloom_text_uses_character_roles_and_keeps_the_anomaly_unexplained() -> void:
+	_approach()
+	scene.bloom.interact()
+	var text: String = ""
+	for node: Node in scene.bloom.panel.body.get_children():
+		if node is Label: text += node.text
+	assert_true(text.contains("plankton"))
+	assert_true(text.contains("spiral"))
+	assert_true(text.contains("Dr. Okafor"))
+	assert_true(text.contains("Director Crane"))
+	text += scene.story.definition(LightBloomEncounter.OBSERVE).response_text
+	text += scene.story.definition(LightBloomEncounter.COLLECT).response_text
+	text += scene.research.definition(LightBloomEncounter.SCAN).description
+	for secret: String in ["Vael","Hush","Deep Heart","betrayal","Lantern-1"]:
+		assert_false(text.contains(secret))
+func test_response_reading_layout_is_safe_when_the_viewport_has_no_focus() -> void:
+	_collect()
+	await wait_process_frames(4)
+	viewport.gui_release_focus()
+	assert_null(viewport.gui_get_focus_owner())
+	scene.bloom.panel._reset_read_scroll()
+	assert_true(scene.bloom.modal())
+
+func test_pending_reading_reflow_is_disconnected_when_a_panel_is_destroyed() -> void:
+	var transient: BloomChoicePanel = BloomChoicePanel.new()
+	add_child(transient)
+	transient.setup(scene.bloom)
+	transient.show_response("Wick: Reading stored.")
+	transient._queue_read_scroll()
+	var callback: Callable = transient._reset_read_scroll
+	assert_true(get_tree().process_frame.is_connected(callback))
+	transient.free()
+	assert_false(callback.is_valid())
+	await wait_process_frames(4)
+	assert_true(is_instance_valid(scene.bloom.panel))

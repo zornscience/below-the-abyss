@@ -47,7 +47,7 @@ static func discoveries(include_story: bool = false) -> DiscoveryCatalog:
 		var bloom: PointOfInterest = PointOfInterest.new()
 		bloom.stable_id = &"zone1-light-bloom-habitat"
 		bloom.sonar_target_id = &"zone1-light-bloom-echo"
-		bloom.display_name = "Light-bloom colony"
+		bloom.display_name = "Light-bloom plankton"
 		bloom.map_position = Vector2(1330,590)
 		catalog.points.append(bloom)
 	return catalog

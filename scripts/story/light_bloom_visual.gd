@@ -1,33 +1,81 @@
 class_name LightBloomVisual
 extends Node2D
-## Original illustrated colony, with a static comfort-mode reaction.
+## Geometric plankton; arrival is presentation only and never changes story state.
+const ARRIVAL_SECONDS: float = 3.2
+const PARTICLES: int = 96
 var collected: bool = false
 var observed: bool = false
-var reduced_effects: bool = false
+var specimen_view: bool = false
 var reaction: float = 0.0
+var arrival_started: bool = false
+var arrival_elapsed: float = 0.0
+var arrival_center: Vector2 = Vector2.ZERO
+var reduced_effects: bool = false:
+	set(value):
+		reduced_effects = value
+		if value:
+			reaction = 0.0
+			arrival_center = Vector2.ZERO
+			if arrival_started: arrival_elapsed = ARRIVAL_SECONDS
+		queue_redraw()
 func set_outcome(is_collected: bool, is_observed: bool, animate: bool = false) -> void:
 	collected = is_collected
 	observed = is_observed
 	reaction = 1.4 if animate and not reduced_effects else 0.0
+	if collected or observed:
+		arrival_started = true
+		arrival_elapsed = ARRIVAL_SECONDS
+		arrival_center = Vector2.ZERO
 	queue_redraw()
+func advance_arrival(delta: float, vessel_position: Vector2, simulating: bool) -> void:
+	if not simulating or collected or observed or not is_finite(delta) or delta<0.0: return
+	if not arrival_started:
+		if global_position.distance_to(vessel_position)>180.0: return
+		arrival_started = true
+		arrival_elapsed = ARRIVAL_SECONDS if reduced_effects else 0.0
+	if arrival_elapsed>=ARRIVAL_SECONDS: return
+	arrival_elapsed = minf(ARRIVAL_SECONDS,arrival_elapsed+delta)
+	var scatter: float = clampf((arrival_elapsed-2.0)/1.2,0.0,1.0)
+	arrival_center = to_local(vessel_position)*(1.0-scatter)
+	queue_redraw()
+func arrival_active() -> bool:
+	return arrival_started and arrival_elapsed<ARRIVAL_SECONDS and not reduced_effects
+func plankton_visible() -> bool:
+	return not collected
 func _process(delta: float) -> void:
-	if reaction > 0.0:
+	if reaction>0.0:
 		reaction = maxf(0.0,reaction-delta)
 		queue_redraw()
 func _draw() -> void:
-	var pulse: float = sin((1.4-reaction)/1.4*PI)*0.12 if reaction>0.0 else 0.0
-	if collected:
-		draw_line(Vector2(-12,0),Vector2(1,-10),Color("586d70"),5,true)
-		draw_line(Vector2(1,-10),Vector2(15,-5),Color("586d70"),4,true)
-		draw_circle(Vector2(0,-9),5,Color("203d43"))
+	if collected and specimen_view:
+		# The vial appears only in the dialogue illustration, never as seabed debris.
+		draw_style_box(_vial(),Rect2(-15,-46,30,58))
+		draw_line(Vector2(-12,-50),Vector2(12,-50),Color("a6c3c5"),4,true)
+		for index: int in range(12): draw_circle(Vector2(sin(index*2.4)*9,-7-index*2),1.2,Color("526b70"))
 		return
-	var center: Vector2 = Vector2(0,-42)
-	for index: int in range(7):
-		var angle: float = -PI+index*PI/6.0
-		var tip: Vector2 = center+Vector2.from_angle(angle)*Vector2(40,35)*(1.0+pulse)
-		var petal: PackedVector2Array = PackedVector2Array([Vector2(-5,0),center+Vector2.from_angle(angle-0.25)*22,tip,center+Vector2.from_angle(angle+0.25)*22,Vector2(6,0)])
-		draw_polygon(petal,PackedColorArray([Color("284c52"),Color("488078"),Color("add9b4") if observed else Color("82bcc0"),Color("386d73"),Color("284c52")]))
-	for index: int in range(5,0,-1):
-		draw_circle(center,float(index)*7.0,Color(0.55,0.85,0.72,0.025+(0.008 if observed else 0.0)))
-	draw_circle(center,8,Color("d6e5b1") if observed else Color("a2d8d2"))
-	draw_line(Vector2.ZERO,center,Color("7aab91"),3,true)
+	if collected and reaction<=0.0: return
+	var scatter: float = clampf((arrival_elapsed-2.0)/1.2,0.0,1.0) if arrival_active() else 0.0
+	var center: Vector2 = arrival_center if arrival_active() else Vector2.ZERO
+	var tone: Color = Color("dce7b3") if observed else Color("9ee3dd")
+	var fade: float = 1.0
+	if collected:
+		scatter = 1.0-reaction/1.4
+		fade = reaction/1.4
+		tone = Color("6c9797")
+	for index: int in range(PARTICLES):
+		var fraction: float = float(index)/float(PARTICLES-1)
+		var angle: float = fraction*TAU*1.85
+		var radius: float = 7.0+fraction*55.0
+		var point: Vector2 = Vector2.from_angle(angle)*Vector2(radius,radius*0.48)
+		point += Vector2.from_angle(index*2.39996)*scatter*24.0
+		point += center
+		var size: float = 1.0+float(index%3)*0.35
+		draw_circle(point,size*3.0,Color(tone,0.09*fade))
+		draw_circle(point,size,Color(tone,0.85*fade))
+func _vial() -> StyleBoxFlat:
+	var style: StyleBoxFlat = StyleBoxFlat.new()
+	style.bg_color = Color("152d36")
+	style.border_color = Color("7f9fa5")
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(8)
+	return style

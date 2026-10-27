@@ -17,7 +17,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	target = scene.region.get_node(String(SCAN)) as ScientificScanTarget
 	target.hide()
 	visual = LightBloomVisual.new()
-	visual.position = Vector2(1330,630)
+	visual.position = target.position
 	scene.region.add_child(visual)
 	panel = BloomChoicePanel.new()
 	add_child(panel)
@@ -29,6 +29,9 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	if scene.saves!=null: scene.saves.checkpoint_restored.connect(refresh_state)
 	_comfort_changed()
 	refresh_state()
+func _process(delta: float) -> void:
+	if scene!=null:
+		visual.advance_arrival(delta,scene.submarine.global_position,scene.submarine.is_physics_processing())
 func in_range() -> bool:
 	return scene.submarine.global_position.distance_to(target.global_position)<=scene.research.definition(SCAN).radius
 func identified() -> bool:

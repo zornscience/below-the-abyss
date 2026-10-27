@@ -2,7 +2,7 @@ class_name ExpeditionSchema
 extends RefCounted
 ## Pure validation/migration. No node restoration or executable data from disk.
 
-const VERSION: int = 5
+const VERSION: int = 6
 const REGION: String = "continental_shelf"
 const DISCOVERIES: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
 const RESEARCH: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
@@ -40,14 +40,14 @@ static func valid_progress(progress: Variant) -> bool:
 		upgrades.append(definition.stable_id)
 	return ids(progress.get("discoveries"), discoveries) and ids(progress.get("research"), research) \
 		and ids(progress.get("upgrades"), upgrades) and progress.get("missions") is Dictionary \
-		and (MISSIONS.valid_records(progress.missions) or ShelfChapterData.missions().valid_records(progress.missions))
+		and (MISSIONS.valid_records(progress.missions) or ShelfChapterData.missions().valid_records(progress.missions) or SunlitShallowsData.valid_records(progress.missions))
 
 
 static func decode(value: Variant) -> Dictionary:
 	if not value is Dictionary or not InputBindings.is_integer(value.get("schema_version")):
 		return {"error": ERR_INVALID_DATA}
 	var version: int = int(value.schema_version)
-	if version not in [1, 2, 3, 4, VERSION]:
+	if version not in [1, 2, 3, 4, 5, VERSION]:
 		return {"error": ERR_UNAVAILABLE}
 	var data: Dictionary = value.duplicate(true)
 	if version in [1,2]:
@@ -69,6 +69,10 @@ static func decode(value: Variant) -> Dictionary:
 	for choice: Resource in StoryState.CATALOG.choices:
 		if choice.research_record_id!=&"" and ((String(choice.research_record_id) in data.progress.research)!=(String(choice.stable_id) in data.story.decisions)):
 			return {"error": ERR_INVALID_DATA}
+	if data.progress.missions.has(String(SunlitShallowsData.MISSION)):
+		var objectives: Array = data.progress.missions[String(SunlitShallowsData.MISSION)].objectives
+		if ("recover-maras-message" in objectives or "return-message-to-halcyon" in objectives) and String(SunlitShallowsData.BUOY) not in data.progress.research: return {"error":ERR_INVALID_DATA}
+		if "study-light-bloom" in objectives and not (String(LightBloomEncounter.OBSERVE) in data.story.decisions or String(LightBloomEncounter.COLLECT) in data.story.decisions): return {"error":ERR_INVALID_DATA}
 	data.story.resonance = int(data.story.resonance)
 	data.schema_version = VERSION
 	var player: Dictionary = data.player
@@ -101,7 +105,11 @@ static func merge_progress(a: Dictionary, b: Dictionary) -> Dictionary:
 		merged[key].sort()
 	var left: Dictionary = a.missions
 	var right: Dictionary = b.missions
-	if left.size() == 2 and right.size() == 2:
+	if left.size()==6 or right.size()==6:
+		if left.size()!=6: left = SunlitShallowsData.upgrade_records(left)
+		if right.size()!=6: right = SunlitShallowsData.upgrade_records(right)
+		merged.missions = SunlitShallowsData.missions().merge_records(left,right)
+	elif left.size() == 2 and right.size() == 2:
 		merged.missions = MISSIONS.merge_records(left,right)
 	else:
 		if left.size() == 2: left = ShelfChapterData.upgrade_missions(left)

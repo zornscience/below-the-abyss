@@ -31,6 +31,11 @@ func has_flag(id: StringName) -> bool:
 	return String(id) in _data.flags
 func has_decision(id: StringName) -> bool:
 	return String(id) in _data.decisions
+func knows_encounter(id: StringName) -> bool:
+	if _catalog==null: return false
+	for choice: ChoiceData in _catalog.choices:
+		if choice.encounter_id==id: return true
+	return false
 func resolved(encounter_id: StringName) -> bool:
 	if _catalog == null: return false
 	for id: String in _data.decisions:

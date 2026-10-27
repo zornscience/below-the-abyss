@@ -154,3 +154,26 @@ character voices, archive the source PDF and explicitly distinguish the shallow
 prototype wreck from canonical Lantern-1. Preserve schema 5, all stable IDs, flags,
 balancing, progression and gameplay. No later zones or wider Resonance mechanics.
 Review in a separate follow-up PR; do not merge automatically.
+
+## BTA-047 — The Sunlit Shallows
+
+User-authorized complete canonical Zone 1, based on the supplied Story Bible,
+starting from main after PR #29. The issue/milestone tracker contains no newer
+reserved number; BTA-045 release candidate and BTA-046 Resonance retain their IDs.
+
+- Interactive Halcyon briefing, Lantern-2/Wick and contextual first-dive guidance.
+- Existing exclusive light-bloom decision; new sonar-discovered, deliberately
+  scanned Lantern-1 emergency buoy with Mara's exact message and permanent log.
+- Meaningful return/debrief using the existing mission ledger, scientific records,
+  domain return signals and atomic checkpoint. Both choices complete without combat.
+- Compatible presentation mapping: retain prototype NERIS/Shelf Base/wreck IDs and
+  prior records; never identify the shallow prototype wreck as Lantern-1.
+- Schema 6 accepts prior versions and two/five/six-mission catalogues; no new save
+  file, campaign architecture, economy, playable Zone 2 or ending.
+- Preserve technology, station services, creatures, weapons and legacy route fixtures.
+- Full GUT/import/parser/startup/Linux export, actual-input fresh/Continue routes,
+  native screenshots, small-window/muted/comfort verification. Human comprehension
+  and pacing remain separate evaluation gates.
+
+[Implementation, route, migration, evidence and limitations](docs/testing/bta-047/README.md).
+Review in a separate PR; do not merge automatically.

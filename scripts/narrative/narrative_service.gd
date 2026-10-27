@@ -21,6 +21,11 @@ var _emitted: Array[StringName] = []
 var _links: Array[Dictionary] = []
 var _concluded_seen: bool = false
 var radio_assignments: bool = false
+var entries_provider: Callable
+var guidance_provider: Callable
+var conclusion_provider: Callable
+var debrief_ready_provider: Callable
+var debrief_provider: Callable
 var debrief_guard: Callable
 var progress_guard: Callable
 
@@ -92,6 +97,7 @@ func _state(id: StringName) -> String:
 
 
 func is_concluded() -> bool:
+	if conclusion_provider.is_valid(): return bool(conclusion_provider.call())
 	if extended_chapter and not legacy_conclusion:
 		if missions == null or _state(ShelfChapterData.OUTER) != "claimed" or _state(ShelfChapterData.WRECK) != "claimed": return false
 	return missions != null and _state(MAIN) == "claimed" and _state(SCIENCE) == "claimed" \
@@ -119,6 +125,7 @@ func _eligible(evidence: NarrativeEntry.Evidence) -> bool:
 
 
 func available_entries() -> Array[NarrativeEntry]:
+	if entries_provider.is_valid(): return entries_provider.call()
 	var entries: Array[NarrativeEntry] = []
 	if _catalog != null:
 		for entry: NarrativeEntry in _catalog.entries:
@@ -146,6 +153,7 @@ func begin_survey() -> Error:
 
 
 func can_debrief() -> bool:
+	if debrief_ready_provider.is_valid(): return bool(debrief_ready_provider.call())
 	if debrief_guard.is_valid() and not debrief_guard.call(): return false
 	if extended_chapter and not legacy_conclusion:
 		for id: StringName in [ShelfChapterData.OUTER,ShelfChapterData.WRECK]:
@@ -156,6 +164,7 @@ func can_debrief() -> bool:
 
 
 func debrief(station: ServiceStation) -> Error:
+	if debrief_provider.is_valid(): return debrief_provider.call(station)
 	if not progress_allowed():
 		return ERR_UNAUTHORIZED
 	if is_concluded():
@@ -172,6 +181,7 @@ func debrief(station: ServiceStation) -> Error:
 
 
 func guidance() -> String:
+	if guidance_provider.is_valid(): return String(guidance_provider.call())
 	if missions == null:
 		return "EXPEDITION LOG / OFFLINE"
 	if radio_assignments and _state(ShelfChapterData.OUTER)=="available": return "BASE RADIO / Depart station to receive and accept the investigation"
@@ -202,3 +212,9 @@ func required_missions() -> Array[StringName]:
 	var ids: Array[StringName] = [MAIN,SCIENCE]
 	if extended_chapter: ids.append_array([ShelfChapterData.OUTER,ShelfChapterData.WRECK])
 	return ids
+
+func presentation_changed() -> void:
+	_concluded_seen = is_concluded()
+	for record: NarrativeEntry in available_entries():
+		if record.stable_id not in _emitted: _emitted.append(record.stable_id)
+	log_changed.emit()

@@ -9,6 +9,7 @@ var _dock_body: VBoxContainer
 var _title_body: VBoxContainer
 var _radio_body: VBoxContainer
 var _buttons: Array[Button] = []
+var _story_back: Callable
 var _dock_tab: String = "home"
 var _scrolls: Dictionary = {}
 var _tools: Dictionary = {}
@@ -16,7 +17,7 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	revision = owner_revision
 	layer = 80
 	title_page = _screen()
-	_title_body = _content(title_page)
+	_title_body = _content(title_page,true)
 	dock_page = _screen()
 	_dock_body = _content(dock_page,true)
 	radio_page = _screen()
@@ -64,6 +65,8 @@ func _clear(column: VBoxContainer) -> void:
 	_buttons.clear()
 	for child: Node in column.get_children():
 		column.remove_child(child)
+		add_child(child)
+		if child is CanvasItem: child.hide()
 		child.queue_free()
 func _label(column: Container, text: String, font: int = 18) -> Label:
 	var label: Label = Label.new()
@@ -83,6 +86,9 @@ func _button(column: Container, text: String, callback: Callable, disabled: bool
 	if not disabled: _buttons.append(button)
 	return button
 func _focus() -> void:
+	for tools: Control in _tools.values():
+		for child: Node in tools.get_children():
+			while child in _buttons: _buttons.erase(child)
 	var panel: Control = radio_page if radio_page.visible else (dock_page if dock_page.visible else title_page)
 	if _tools.has(panel) and (_tools[panel] as Control).visible:
 		for child: Node in (_tools[panel] as Control).get_children(): _buttons.append(child as Button)
@@ -98,14 +104,17 @@ func show_title() -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_color_override("font_color",Color("d5e6d7"))
 	var portrait: SubmarinePortrait = SubmarinePortrait.new()
-	portrait.custom_minimum_size.y = 210
+	portrait.vessel_name = "LANTERN-2" if revision.scene.chapter!=null else "NERIS  /  01"
+	portrait.custom_minimum_size.y = 120 if get_viewport().get_visible_rect().size.y<700 else 210
 	_title_body.add_child(portrait)
 	var controls: HBoxContainer = HBoxContainer.new()
 	_title_body.add_child(controls)
 	var available: bool = revision.scene.saves != null and revision.scene.saves.has_checkpoint()
-	_button(controls,"Continue expedition" if available else "Begin expedition",revision.start,not revision.can_write()).name = "Begin"
+	_button(controls,revision.scene.chapter.primary_title() if revision.scene.chapter!=null else ("Continue expedition" if available else "Begin expedition"),revision.start_from_title,not revision.can_write()).name = "Begin"
 	_button(controls,"Options",show_options)
 	_button(controls,"Quit",func() -> void: get_tree().quit())
+	if revision.scene.chapter!=null and revision.scene.chapter.can_offer_prototype():
+		_button(_title_body,"Prototype expedition / legacy checkpoint",revision.scene.chapter.start_prototype,not revision.can_write()).name = "PrototypeExpedition"
 	_label(_title_body,"A scientific voyage into the unknown",18).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	if not revision.can_write():
 		_label(_title_body,"Existing save needs recovery. Your files have been preserved.")
@@ -124,24 +133,27 @@ func show_options() -> void:
 	_focus()
 func show_dock(tab: String = "home") -> void:
 	_dock_tab = tab
-	(_tools[dock_page] as Control).visible = tab!="home"
+	var canonical: bool = revision.scene.chapter!=null and revision.scene.chapter.active
+	(_tools[dock_page] as Control).visible = tab!="home" or canonical
 	_clear(_dock_body)
 	dock_page.show()
-	_label(_dock_body,"SHELF BASE  /  "+{"home":"OPERATIONS","technology":"RESEARCH TECHNOLOGY","logs":"DECODED RECORDS","radio":"RADIO ARCHIVE"}[tab],28)
+	_label(_dock_body,("HALCYON STATION  /  " if canonical else "SHELF BASE  /  ")+{"home":"OPERATIONS","technology":"RESEARCH TECHNOLOGY","logs":"EXPEDITION LOG" if canonical else "DECODED RECORDS","radio":"RADIO ARCHIVE"}[tab],28)
 	if tab=="home":
 		var art: StationInterior = StationInterior.new()
-		art.custom_minimum_size.y = clampf(get_viewport().get_visible_rect().size.y*0.46,220,380)
+		art.station_name = "HALCYON STATION" if canonical else "SHELF BASE"
+		art.custom_minimum_size.y = (120 if get_viewport().get_visible_rect().size.y<700 else 220) if canonical else clampf(get_viewport().get_visible_rect().size.y*0.46,220,380)
 		_dock_body.add_child(art)
 		_label(_dock_body,revision.docking_report)
 		var row: HBoxContainer = HBoxContainer.new()
 		_dock_body.add_child(row)
 		_button(row,"Research technology",func() -> void: show_dock("technology")).name = "Technology"
-		_button(row,"Expedition logs",func() -> void: show_dock("logs"))
+		_button(row,"Expedition log" if canonical else "Expedition logs",func() -> void: show_dock("logs")).name = "DockLogs"
+		if canonical: _button(_dock_body,"First expedition debrief",revision.scene.chapter.show_debrief).name = "ChapterDebrief"
 		_button(row,"Radio archive",func() -> void: show_dock("radio"))
 		_button(_dock_body,"Depart station",revision.undock).name = "Depart"
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],24)
-		_label(_dock_body,"A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
+		_label(_dock_body,"Assign the points currently available; each rank costs one. Reassignment is free while docked. This expedition grants an acknowledgement, not additional research points." if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
 		var branches: HBoxContainer = HBoxContainer.new()
 		_dock_body.add_child(branches)
 		for branch: String in ["sonar","hull"]:
@@ -163,10 +175,10 @@ func show_dock(tab: String = "home") -> void:
 		_label(_dock_body,revision.feedback)
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	elif tab=="logs":
-		_label(_dock_body,revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research.",20)
+		_label(_dock_body,revision.scene.chapter.log_text() if canonical else (revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research."),20)
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	else:
-		_label(_dock_body,revision.archive_text(),20)
+		_label(_dock_body,revision.scene.chapter.log_text() if canonical else revision.archive_text(),20)
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	_focus()
 func _assign(branch: String, difference: int) -> void:
@@ -176,6 +188,7 @@ func _respec() -> void:
 	revision.respec()
 	show_dock("technology")
 func show_radio(id: String, body: String, offer: bool) -> void:
+	_story_back = Callable()
 	_clear(_radio_body)
 	radio_page.show()
 	_label(_radio_body,"INCOMING TRANSMISSION  /  SHELF BASE",28)
@@ -193,8 +206,36 @@ func _input(event: InputEvent) -> void:
 		return
 	if not modal() or event.is_echo() or not InputBindings.is_menu_back(event): return
 	get_viewport().set_input_as_handled()
-	if radio_page.visible: revision.defer_transmission()
+	if radio_page.visible:
+		if _story_back.is_valid(): _story_back.call()
+		else: revision.defer_transmission()
 	elif dock_page.visible:
 		if _dock_tab=="home": revision.undock()
 		else: show_dock()
 	else: show_title()
+
+func show_story_page(title: String, text: String, action: String, callback: Callable, id: StringName, back: Callable) -> void:
+	_story_back = back
+	_clear(_radio_body)
+	radio_page.show()
+	_label(_radio_body,title,28)
+	_label(_radio_body,text,22)
+	_button(_radio_body,action,callback).name = id
+	_button(_radio_body,"Back",back).name = "StoryBack"
+	_focus()
+	((_tools[radio_page] as Control).get_child(0) as Control).grab_focus()
+	_queue_story_read.call_deferred()
+func add_story_option(text: String, callback: Callable, id: StringName) -> void:
+	_button(_radio_body,text,callback).name = id
+	_focus()
+	((_tools[radio_page] as Control).get_child(0) as Control).grab_focus()
+	_queue_story_read.call_deferred()
+func add_story_notice(text: String) -> void:
+	_label(_radio_body,text)
+
+func _queue_story_read() -> void:
+	if not get_tree().process_frame.is_connected(_reset_story_read): get_tree().process_frame.connect(_reset_story_read,CONNECT_ONE_SHOT)
+func _reset_story_read() -> void:
+	var focus: Control = get_viewport().gui_get_focus_owner()
+	if radio_page.visible and _story_back.is_valid() and focus!=null and (_tools[radio_page] as Control).is_ancestor_of(focus):
+		(_scrolls[radio_page] as ScrollContainer).scroll_vertical = 0

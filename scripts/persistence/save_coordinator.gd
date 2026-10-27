@@ -180,7 +180,10 @@ func apply_progress(progress: Dictionary) -> void:
 	_scene.discoveries.restore_discoveries(_names(progress.discoveries))
 	_scene.research.restore_completed(_names(progress.research))
 	_scene.upgrades.restore_installed(_names(progress.upgrades))
-	_scene.missions.restore_records(progress.missions)
+	var projected: Dictionary = _scene.missions.snapshot()
+	for id: String in projected:
+		if progress.missions.has(id): projected[id] = progress.missions[id].duplicate(true)
+	_scene.missions.restore_records(projected)
 
 
 func continue_expedition() -> Error:
@@ -350,3 +353,13 @@ func commit_story(value: Dictionary, choice_id: StringName) -> Error:
 			candidate.progress.research.append(String(choice.research_record_id))
 			candidate.progress.research.sort()
 	return _write(candidate,"Story decision saved with expedition progress.")
+
+func commit_research_checkpoint(proposed: Array[StringName]) -> Error:
+	# Evidence recovery is an explicit, safe local checkpoint, not a periodic autosave.
+	if _busy or not _ready_to_write or not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) \
+		or _scene.submarine.damage_system.warning_state==SubmarineDamageSystem.WarningState.EXCEEDED \
+		or _scene.predator.threat.phase in [PredatorState.Phase.ALERT,PredatorState.Phase.PURSUE]: return ERR_UNAVAILABLE
+	var candidate: Dictionary = snapshot()
+	candidate.progress.research = _strings(proposed)
+	if not ExpeditionSchema.valid_progress(candidate.progress): return ERR_INVALID_DATA
+	return _write(candidate,"Emergency recording and safe vessel checkpoint saved together.")

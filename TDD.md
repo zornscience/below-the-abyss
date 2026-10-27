@@ -266,3 +266,32 @@ and uses a static alternative for reduced effects. Collection removes the glowin
 patch rather than leaving a plant stump; the response illustration shows an unlit
 vial. This presentation alignment changes no choice IDs, deltas, flags, save schema,
 mission/sonar/scanner contracts or checkpoint semantics.
+
+## Canonical chapter adapter — BTA-047
+
+Scene-owned `SunlitShallows` projects authored narrative Resources over existing
+MissionService, ResearchRegistry, StoryState and GrayboxRouteCheck signals.
+MissionObjective adds STORY_CHOICE and RETURN_AFTER_SCAN; the latter requires a
+real base-entry event after eligible evidence, rather than old COMPLETE telemetry.
+The chapter has one stable mission record; there is no second ledger/log save.
+Prior permanent bloom/scanning evidence counts on acceptance; rewards are idempotent.
+
+The scanner's existing completion gate commits the buoy research record together
+with a clear, non-dangerous vessel checkpoint **before** scan_completed or dialogue.
+Save failure grants nothing. Narrative presentation callbacks let the existing log
+project canonical entries and debrief; silent restoration never re-emits evidence.
+Read-only buoy replay and log access do not rescan or repeat rewards.
+
+Expedition schema 6 retains the existing eleven top-level fields. Versions 1–5,
+old two/five-mission catalogues and narrow-store imports remain validated. The
+six-mission catalogue adds an available/unaccepted canonical mission, retaining
+old records verbatim. Scene projection preserves unseen records in the coordinator;
+monotonic recovery keeps decisions, acknowledgements and buoy evidence. Loading
+alone does not replace the old checkpoint. Explicit chapter launch discloses its
+new departure pose; the legacy prototype title option remains available.
+
+Canonical display names are presentation mappings; source acoustic/save IDs and the
+old shallow wreck are unchanged. Protected limits at y=800/x=3900 prevent entering
+future depths; camera/map bounds match the first course. Explicit prototype mode
+disables these chapter-only bounds and restores existing outer-course behavior.
+See [APIs, commands, migrations and verification](docs/testing/bta-047/README.md).

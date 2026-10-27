@@ -30,13 +30,13 @@ func test_version_one_migrates_in_memory_without_overwriting_original() -> void:
 	var document: Dictionary = _store.load_checkpoint()
 	assert_eq(document.error, OK)
 	assert_true(document.migrated)
-	assert_eq(document.data.schema_version, 5)
+	assert_eq(document.data.schema_version, 6)
 	assert_eq(document.data.player.rotation, 0.0)
 	assert_eq(document.data.player.sonar_cooldown, 0.0)
 	assert_eq(document.data.progress.missions["shelf-calibration-study"].state, "claimed")
 	assert_eq(FileAccess.get_file_as_string(_store.path), text)
 	assert_eq(_store.write_checkpoint(document.data), OK)
-	assert_eq(JSON.parse_string(FileAccess.get_file_as_string(_store.path)).schema_version, 5.0)
+	assert_eq(JSON.parse_string(FileAccess.get_file_as_string(_store.path)).schema_version, 6.0)
 
 
 func test_missing_atomic_roundtrip_and_checkpoint_backup_preserve_latest_claims() -> void:
@@ -56,7 +56,7 @@ func test_wrong_versions_types_fields_regions_and_resource_bounds_are_rejected()
 		var data: Dictionary = _document()
 		data[key] = "invalid"
 		invalid.append(data)
-	for value: Variant in [0, 6, -1, 1.1, true, "2"]:
+	for value: Variant in [0, 7, -1, 1.1, true, "2"]:
 		var data: Dictionary = _document()
 		data.schema_version = value
 		invalid.append(data)

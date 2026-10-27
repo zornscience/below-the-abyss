@@ -11,13 +11,15 @@ var _catalog: MissionCatalog
 var _records: Dictionary = {}
 var _discoveries: DiscoveryRegistry
 var _research: ResearchRegistry
+var _story: StoryState
 var _route: GrayboxRouteCheck
+var progress_filter: Callable
 var _busy: bool = false
 var _route_returns: Dictionary[String, bool] = {}
 
 
 func setup(catalog: MissionCatalog, discoveries: DiscoveryRegistry, research: ResearchRegistry,
-		route: GrayboxRouteCheck, path: String) -> Error:
+		route: GrayboxRouteCheck, path: String, story: StoryState = null) -> Error:
 	if _catalog != null:
 		return ERR_ALREADY_IN_USE
 	if catalog == null or not catalog.is_valid() or discoveries == null or research == null or route == null:
@@ -26,10 +28,13 @@ func setup(catalog: MissionCatalog, discoveries: DiscoveryRegistry, research: Re
 		for objective: MissionObjective in definition.objectives:
 			if objective.kind == MissionObjective.Kind.DISCOVERY and not discoveries.knows_id(objective.target_id):
 				return ERR_INVALID_PARAMETER
-			if objective.kind == MissionObjective.Kind.SCAN and not research.knows_id(objective.target_id):
+			if objective.kind in [MissionObjective.Kind.SCAN,MissionObjective.Kind.RETURN_AFTER_SCAN] and not research.knows_id(objective.target_id):
 				return ERR_INVALID_PARAMETER
 			if objective.kind == MissionObjective.Kind.ROUTE_RETURN and objective.target_id != &"continental-shelf-loop":
 				return ERR_INVALID_PARAMETER
+			if objective.kind == MissionObjective.Kind.STORY_CHOICE and (story==null or not story.knows_encounter(objective.target_id)):
+				return ERR_INVALID_PARAMETER
+	_story = story
 	_catalog = catalog.duplicate(true) as MissionCatalog
 	_discoveries = discoveries
 	_research = research
@@ -42,6 +47,8 @@ func setup(catalog: MissionCatalog, discoveries: DiscoveryRegistry, research: Re
 	discoveries.point_discovered.connect(_point_discovered)
 	research.scan_completed.connect(_scan_completed)
 	route.stage_changed.connect(_route_changed)
+	route.base_returned.connect(_base_returned)
+	if story!=null: story.choice_applied.connect(_story_choice)
 	# Restore silently. No completion/reward events are replayed by loading.
 	missions_changed.emit()
 	return OK
@@ -65,6 +72,8 @@ func _satisfied(objective: MissionObjective) -> bool:
 			return _discoveries.state_of(objective.target_id) == DiscoveryRegistry.State.DISCOVERED
 		MissionObjective.Kind.SCAN:
 			return _research.is_completed(objective.target_id)
+		MissionObjective.Kind.STORY_CHOICE:
+			return _story!=null and _story.resolved(objective.target_id)
 		MissionObjective.Kind.ROUTE_RETURN:
 			return _route.stage == GrayboxRouteCheck.Stage.COMPLETE
 	return false
@@ -72,11 +81,12 @@ func _satisfied(objective: MissionObjective) -> bool:
 
 func _collect(candidate: Dictionary) -> void:
 	for definition: MissionDefinition in _catalog.missions:
+		if progress_filter.is_valid() and not progress_filter.call(definition.stable_id): continue
 		var record: Dictionary = candidate[String(definition.stable_id)]
 		if record.state != "accepted":
 			continue
 		for objective: MissionObjective in definition.objectives:
-			var witnessed_return: bool = objective.kind == MissionObjective.Kind.ROUTE_RETURN and _route_returns.has(String(definition.stable_id) + "/" + String(objective.stable_id))
+			var witnessed_return: bool = objective.kind in [MissionObjective.Kind.ROUTE_RETURN,MissionObjective.Kind.RETURN_AFTER_SCAN] and _route_returns.has(String(definition.stable_id) + "/" + String(objective.stable_id))
 			if (_satisfied(objective) or witnessed_return) and String(objective.stable_id) not in record.objectives:
 				record.objectives.append(String(objective.stable_id))
 		record.objectives.sort()
@@ -164,6 +174,7 @@ func _scan_completed(_id: StringName) -> void:
 func _route_changed(stage: GrayboxRouteCheck.Stage) -> void:
 	if stage == GrayboxRouteCheck.Stage.COMPLETE:
 		for definition: MissionDefinition in _catalog.missions:
+			if progress_filter.is_valid() and not progress_filter.call(definition.stable_id): continue
 			if _records[String(definition.stable_id)].state == "accepted":
 				for objective: MissionObjective in definition.objectives:
 					if objective.kind == MissionObjective.Kind.ROUTE_RETURN:
@@ -181,6 +192,7 @@ func status_text() -> String:
 
 
 func _exit_tree() -> void:
+	if _route!=null and _route.base_returned.is_connected(_base_returned): _route.base_returned.disconnect(_base_returned)
 	if _route != null and _route.stage_changed.is_connected(_route_changed):
 		_route.stage_changed.disconnect(_route_changed)
 
@@ -193,3 +205,14 @@ func restore_records(records: Dictionary) -> Error:
 	# Retain bounded, witnessed returns on same-process recovery; fresh nodes start empty.
 	missions_changed.emit()
 	return OK
+
+func _story_choice(_id: StringName, _encounter: StringName) -> void:
+	reconcile()
+func _base_returned() -> void:
+	for definition: MissionDefinition in _catalog.missions:
+		if progress_filter.is_valid() and not progress_filter.call(definition.stable_id): continue
+		if _records[String(definition.stable_id)].state!="accepted": continue
+		for objective: MissionObjective in definition.objectives:
+			if objective.kind==MissionObjective.Kind.RETURN_AFTER_SCAN and _research.is_completed(objective.target_id):
+				_route_returns[String(definition.stable_id)+"/"+String(objective.stable_id)] = true
+	reconcile()

@@ -62,6 +62,19 @@ class AnalysisTests(unittest.TestCase):
         data['resonance'] = 15
         with self.assertRaises(ValueError): a.validate_report(data)
 
+    def test_sunlit_progress_uses_bounded_identifiers_without_recording_dialogue(self):
+        data = report()
+        for kind, detail in [('discovery','sunlit-lantern1-buoy'),
+                             ('scan_completed','sunlit-lantern1-buoy-record'),
+                             ('mission_completed','sunlit-shallows-expedition'),
+                             ('chapter_completed','the_sunlit_shallows')]:
+            data['events'].append(dict(kind=kind,detail=detail,seconds=1,amount=0))
+            data['counts'][kind] = 1
+        data.update(completed=True,completion_seconds=1,completion_active_seconds=1)
+        a.validate_report(data)
+        data['events'][-1]['detail'] = "It isn't empty down there."
+        with self.assertRaises(ValueError): a.validate_report(data)
+
     def test_malformed_or_personal_telemetry_rejected(self):
         for key, value in [('email','x'),('device_id','x'),('active_seconds',float('nan')),('events',[{'raw_key':'A'}])]:
             data = copy.deepcopy(report()); data[key] = value

@@ -1,0 +1,35 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_sunlit_review.gd
+* test_new_game_archives_progress_resets_every_domain_and_preserves_preferences
+* test_failed_new_game_rolls_back_byte_identical_campaign_and_keeps_live_state
+* test_new_game_confirmation_cancel_does_not_change_a_save
+* test_keyboard_can_confirm_new_game_and_reach_fresh_briefing
+* test_controller_can_confirm_new_game_and_reach_fresh_briefing
+5/5 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 5
+Passing Tests         5
+Asserts              38
+Time              9.228s
+
+
+Ran Tests matching "new_game"
+---- All tests passed! ----
+

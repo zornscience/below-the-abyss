@@ -1,0 +1,461 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (271 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | InputContext[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | UiAccessibility[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | AcousticCreature[39m[0m
+[   1% ] [90m[1mupdate_scripts_classes[22m | AmbientFishSchool[39m[0m
+[   1% ] [90m[1mupdate_scripts_classes[22m | CreatureNavigation[39m[0m
+[   1% ] [90m[1mupdate_scripts_classes[22m | CreatureProfile[39m[0m
+[   2% ] [90m[1mupdate_scripts_classes[22m | CreatureState[39m[0m
+[   2% ] [90m[1mupdate_scripts_classes[22m | FishSchoolProfile[39m[0m
+[   2% ] [90m[1mupdate_scripts_classes[22m | FishSchoolState[39m[0m
+[   3% ] [90m[1mupdate_scripts_classes[22m | HammerheadCreature[39m[0m
+[   3% ] [90m[1mupdate_scripts_classes[22m | PredatorCreature[39m[0m
+[   4% ] [90m[1mupdate_scripts_classes[22m | PredatorProfile[39m[0m
+[   4% ] [90m[1mupdate_scripts_classes[22m | PredatorState[39m[0m
+[   4% ] [90m[1mupdate_scripts_classes[22m | WreckScavenger[39m[0m
+[   5% ] [90m[1mupdate_scripts_classes[22m | AudioCue[39m[0m
+[   5% ] [90m[1mupdate_scripts_classes[22m | GameplayAudio[39m[0m
+[   5% ] [90m[1mupdate_scripts_classes[22m | SoundscapeMixer[39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | SoundscapeProfile[39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | CampaignData[39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | ExpeditionRevision[39m[0m
+[   7% ] [90m[1mupdate_scripts_classes[22m | ResearchExperienceData[39m[0m
+[   7% ] [90m[1mupdate_scripts_classes[22m | ResearchExperienceRules[39m[0m
+[   8% ] [90m[1mupdate_scripts_classes[22m | ResearchTree[39m[0m
+[   8% ] [90m[1mupdate_scripts_classes[22m | BlastEffect[39m[0m
+[   8% ] [90m[1mupdate_scripts_classes[22m | BlastProfile[39m[0m
+[   9% ] [90m[1mupdate_scripts_classes[22m | BlastReceiver[39m[0m
+[   9% ] [90m[1mupdate_scripts_classes[22m | DestructibleRock[39m[0m
+[   9% ] [90m[1mupdate_scripts_classes[22m | ExcavationState[39m[0m
+[  10% ] [90m[1mupdate_scripts_classes[22m | ExcavationSystem[39m[0m
+[  10% ] [90m[1mupdate_scripts_classes[22m | TorpedoLauncher[39m[0m
+[  11% ] [90m[1mupdate_scripts_classes[22m | TorpedoProjectile[39m[0m
+[  11% ] [90m[1mupdate_scripts_classes[22m | TorpedoTrail[39m[0m
+[  11% ] [90m[1mupdate_scripts_classes[22m | InputBindings[39m[0m
+[  12% ] [90m[1mupdate_scripts_classes[22m | SettingsStore[39m[0m
+[  12% ] [90m[1mupdate_scripts_classes[22m | SubmarineUpgrades[39m[0m
+[  12% ] [90m[1mupdate_scripts_classes[22m | UpgradeCatalog[39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | UpgradeDefinition[39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | MissionCatalog[39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | MissionDefinition[39m[0m
+[  14% ] [90m[1mupdate_scripts_classes[22m | MissionObjective[39m[0m
+[  14% ] [90m[1mupdate_scripts_classes[22m | MissionService[39m[0m
+[  15% ] [90m[1mupdate_scripts_classes[22m | NarrativeCatalog[39m[0m
+[  15% ] [90m[1mupdate_scripts_classes[22m | NarrativeEntry[39m[0m
+[  15% ] [90m[1mupdate_scripts_classes[22m | NarrativeService[39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | ShelfStoryDetails[39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | TutorialDirector[39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | DiscoveryStore[39m[0m
+[  17% ] [90m[1mupdate_scripts_classes[22m | ExpeditionSchema[39m[0m
+[  17% ] [90m[1mupdate_scripts_classes[22m | ExpeditionStore[39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | MissionStore[39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | ResearchStore[39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | SaveCoordinator[39m[0m
+[  19% ] [90m[1mupdate_scripts_classes[22m | UpgradeStore[39m[0m
+[  19% ] [90m[1mupdate_scripts_classes[22m | BoundedResource[39m[0m
+[  19% ] [90m[1mupdate_scripts_classes[22m | ScientificScanner[39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | SubmarineController[39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | SubmarineDamageConfig[39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | SubmarineDamageSystem[39m[0m
+[  21% ] [90m[1mupdate_scripts_classes[22m | SubmarineHullSystem[39m[0m
+[  21% ] [90m[1mupdate_scripts_classes[22m | SubmarineMotion[39m[0m
+[  22% ] [90m[1mupdate_scripts_classes[22m | SubmarineResourceConfig[39m[0m
+[  22% ] [90m[1mupdate_scripts_classes[22m | SubmarineResourceSystem[39m[0m
+[  22% ] [90m[1mupdate_scripts_classes[22m | PlaytestObserver[39m[0m
+[  23% ] [90m[1mupdate_scripts_classes[22m | PlaytestRecorder[39m[0m
+[  23% ] [90m[1mupdate_scripts_classes[22m | PlaytestReport[39m[0m
+[  23% ] [90m[1mupdate_scripts_classes[22m | PlaytestStore[39m[0m
+[  24% ] [90m[1mupdate_scripts_classes[22m | AcousticBus[39m[0m
+[  24% ] [90m[1mupdate_scripts_classes[22m | AcousticContractExample[39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | AcousticDispatchProfile[39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | AcousticEmissionProfile[39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | AcousticEmitter[39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | AcousticEvent[39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | AcousticReceiver[39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | AcousticReceiverProfile[39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | ActiveSonarProfile[39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | AmbientAcousticField[39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | AmbientEmissionProfile[39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | AmbientSoundEmitter[39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | PassiveReceiver[39m[0m
+[  29% ] [90m[1mupdate_scripts_classes[22m | PassiveSonarExample[39m[0m
+[  29% ] [90m[1mupdate_scripts_classes[22m | PassiveSonarProfile[39m[0m
+[  29% ] [90m[1mupdate_scripts_classes[22m | SonarEmitter[39m[0m
+[  30% ] [90m[1mupdate_scripts_classes[22m | SonarPulse[39m[0m
+[  30% ] [90m[1mupdate_scripts_classes[22m | SonarRevealTarget[39m[0m
+[  30% ] [90m[1mupdate_scripts_classes[22m | ServiceStation[39m[0m
+[  31% ] [90m[1mupdate_scripts_classes[22m | StationNotice[39m[0m
+[  31% ] [90m[1mupdate_scripts_classes[22m | StationProfile[39m[0m
+[  31% ] [90m[1mupdate_scripts_classes[22m | ChoiceData[39m[0m
+[  32% ] [90m[1mupdate_scripts_classes[22m | EmergencyBuoyVisual[39m[0m
+[  32% ] [90m[1mupdate_scripts_classes[22m | LightBloomEncounter[39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | LightBloomVisual[39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | StoryChoiceCatalog[39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | StoryState[39m[0m
+[  34% ] [90m[1mupdate_scripts_classes[22m | SunlitDressing[39m[0m
+[  34% ] [90m[1mupdate_scripts_classes[22m | SunlitFieldGuide[39m[0m
+[  34% ] [90m[1mupdate_scripts_classes[22m | SunlitShallows[39m[0m
+[  35% ] [90m[1mupdate_scripts_classes[22m | SunlitShallowsData[39m[0m
+[  35% ] [90m[1mupdate_scripts_classes[22m | AccessibilityPanel[39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | AudioSettingsPanel[39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | BloomChoicePanel[39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | ExpeditionInterface[39m[0m
+[  37% ] [90m[1mupdate_scripts_classes[22m | ExpeditionLog[39m[0m
+[  37% ] [90m[1mupdate_scripts_classes[22m | ExplorationMap[39m[0m
+[  37% ] [90m[1mupdate_scripts_classes[22m | ExplorationMapCanvas[39m[0m
+[  38% ] [90m[1mupdate_scripts_classes[22m | GrayboxRouteMenu[39m[0m
+[  38% ] [90m[1mupdate_scripts_classes[22m | InputTestMenu[39m[0m
+[  38% ] [90m[1mupdate_scripts_classes[22m | InstrumentGlyph[39m[0m
+[  39% ] [90m[1mupdate_scripts_classes[22m | MechanicsHelp[39m[0m
+[  39% ] [90m[1mupdate_scripts_classes[22m | MissionBoard[39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | MissionTracker[39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | PassiveContactsPanel[39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | PilotContext[39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | PlaytestPanel[39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | PrototypeResourcePanel[39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | RadioNotifications[39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | ResearchLog[39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | ResourceGauge[39m[0m
+[  43% ] [90m[1mupdate_scripts_classes[22m | ScientificDiscoveryPopup[39m[0m
+[  43% ] [90m[1mupdate_scripts_classes[22m | StationMenu[39m[0m
+[  43% ] [90m[1mupdate_scripts_classes[22m | SubmarineHud[39m[0m
+[  44% ] [90m[1mupdate_scripts_classes[22m | ThreatIndicator[39m[0m
+[  44% ] [90m[1mupdate_scripts_classes[22m | TutorialCard[39m[0m
+[  44% ] [90m[1mupdate_scripts_classes[22m | UiDialogLayout[39m[0m
+[  45% ] [90m[1mupdate_scripts_classes[22m | UiTypography[39m[0m
+[  45% ] [90m[1mupdate_scripts_classes[22m | BenthicGarden[39m[0m
+[  45% ] [90m[1mupdate_scripts_classes[22m | CreaturePaint[39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | ExcavationSediment[39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | ExpeditionWreck[39m[0m
+[  47% ] [90m[1mupdate_scripts_classes[22m | HalcyonDeparture[39m[0m
+[  47% ] [90m[1mupdate_scripts_classes[22m | HalcyonDescent[39m[0m
+[  47% ] [90m[1mupdate_scripts_classes[22m | MarineAnimalPaint[39m[0m
+[  48% ] [90m[1mupdate_scripts_classes[22m | OuterShelfInk[39m[0m
+[  48% ] [90m[1mupdate_scripts_classes[22m | ResearchTreeIllustration[39m[0m
+[  48% ] [90m[1mupdate_scripts_classes[22m | SeascapeRelief[39m[0m
+[  49% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  49% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | StationIllustration[39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | StationInterior[39m[0m
+[  51% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  51% ] [90m[1mupdate_scripts_classes[22m | SubmarinePortrait[39m[0m
+[  51% ] [90m[1mupdate_scripts_classes[22m | SunlitRockDressing[39m[0m
+[  52% ] [90m[1mupdate_scripts_classes[22m | ContinentalShelf[39m[0m
+[  52% ] [90m[1mupdate_scripts_classes[22m | DepthMapping[39m[0m
+[  52% ] [90m[1mupdate_scripts_classes[22m | DepthRegion[39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | DiscoveryCatalog[39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | DiscoveryRegistry[39m[0m
+[  54% ] [90m[1mupdate_scripts_classes[22m | GrayboxRock[39m[0m
+[  54% ] [90m[1mupdate_scripts_classes[22m | GrayboxRouteCheck[39m[0m
+[  54% ] [90m[1mupdate_scripts_classes[22m | GrayboxRouteZone[39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | MovementPrototype[39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | PointOfInterest[39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | ResearchCatalog[39m[0m
+[  56% ] [90m[1mupdate_scripts_classes[22m | ResearchRegistry[39m[0m
+[  56% ] [90m[1mupdate_scripts_classes[22m | ScanDefinition[39m[0m
+[  56% ] [90m[1mupdate_scripts_classes[22m | ScientificScanTarget[39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | ShelfChapterData[39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | ShelfExpansion[39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | ShelfPrototype[39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | SunlitRegionLayout[39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | SunlitSurveyData[39m[0m
+[  59% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  59% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  59% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  62% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  62% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  62% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  65% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  65% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  65% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  67% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  67% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  68% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  68% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  68% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  69% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  69% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  69% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  70% ] [90m[1mupdate_scripts_classes[22m | PassiveTestRig[39m[0m
+[  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | RejectingSonarBattery[39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | ShelfRouteDriver[39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | SonarTestRig[39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  74% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  74% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  78% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  78% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  79% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  79% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  79% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  82% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  82% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  84% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  84% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  84% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  85% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  85% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  89% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  89% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  91% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  91% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  91% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  92% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  92% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  94% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  94% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  94% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  96% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  96% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  97% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  97% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  97% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  98% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  98% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  98% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  99% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started Scanning actions... (53 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | descent_water.svg[39m[0m
+[   1% ] [90m[1m_update_scan_actions[22m | halcyon_modules.svg[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | lantern_2.svg[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | shelf_cliff.svg[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | basalt.png[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | descent_water.png[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | halcyon_modules.png[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | lantern_2.png[39m[0m
+[  14% ] [90m[1m_update_scan_actions[22m | searchlight.png[39m[0m
+[  16% ] [90m[1m_update_scan_actions[22m | shelf_cliff.png[39m[0m
+[  18% ] [90m[1m_update_scan_actions[22m | neris.svg[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | basalt_strata.png[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | bloom_thumbnail.png[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | emergency_buoy.png[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | fish_atlas.png[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | kelp_atlas.png[39m[0m
+[  29% ] [90m[1m_update_scan_actions[22m | marine_animals.png[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | plate_thumbnail.png[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | rock_edge.png[39m[0m
+[  35% ] [90m[1m_update_scan_actions[22m | school_species.png[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | service_cradle.png[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | shelf_panorama.png[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | acknowledge.wav[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | battery.wav[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | biological.wav[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | bubble.wav[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | complete.wav[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | creak.wav[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | current.wav[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | damage.wav[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | dock.wav[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | echo.wav[39m[0m
+[  59% ] [90m[1m_update_scan_actions[22m | engine.wav[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | geological.wav[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | hull.wav[39m[0m
+[  64% ] [90m[1m_update_scan_actions[22m | impact.wav[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | mechanical.wav[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | ocean.wav[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | oxygen.wav[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | ping.wav[39m[0m
+[  74% ] [90m[1m_update_scan_actions[22m | predator_alert.wav[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | predator_pursue.wav[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | radio.wav[39m[0m
+[  79% ] [90m[1m_update_scan_actions[22m | retreat.wav[39m[0m
+[  81% ] [90m[1m_update_scan_actions[22m | scan.wav[39m[0m
+[  83% ] [90m[1m_update_scan_actions[22m | scan_start.wav[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | service.wav[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | tension.wav[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | ui.wav[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | underwater_blast.wav[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | unknown.wav[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | art-provenance.csv[39m[0m
+[  96% ] [90m[1m_update_scan_actions[22m | audio-provenance.csv[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (52 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   1% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   3% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   5% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   7% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   9% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  11% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  13% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  15% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  16% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  18% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  20% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  22% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  24% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  26% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  28% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  30% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  32% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  33% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  35% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  37% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  39% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  41% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  43% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  45% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  47% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  49% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  50% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  52% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  54% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  56% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  58% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  60% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  62% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  64% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  66% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  67% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  69% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  71% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  73% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  75% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  77% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  79% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  81% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  83% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  84% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  86% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  88% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  90% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  92% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  94% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  96% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing pre-reimport operations...[39m[0m
+[   0% ] [90m[1mreimport[22m | art-provenance.csv[39m[0m
+[   1% ] [90m[1mreimport[22m | art-provenance.csv[39m[0m
+[   1% ] [90m[1mreimport[22m | art-provenance.csv[39m[0m
+[   3% ] [90m[1mreimport[22m | shelf_panorama.png[39m[0m
+[   5% ] [90m[1mreimport[22m | service_cradle.png[39m[0m
+[   7% ] [90m[1mreimport[22m | school_species.png[39m[0m
+[   9% ] [90m[1mreimport[22m | rock_edge.png[39m[0m
+[  11% ] [90m[1mreimport[22m | plate_thumbnail.png[39m[0m
+[  13% ] [90m[1mreimport[22m | marine_animals.png[39m[0m
+[  15% ] [90m[1mreimport[22m | kelp_atlas.png[39m[0m
+[  16% ] [90m[1mreimport[22m | fish_atlas.png[39m[0m
+[  18% ] [90m[1mreimport[22m | emergency_buoy.png[39m[0m
+[  20% ] [90m[1mreimport[22m | bloom_thumbnail.png[39m[0m
+[  22% ] [90m[1mreimport[22m | descent_water.svg[39m[0m
+[  24% ] [90m[1mreimport[22m | halcyon_modules.svg[39m[0m
+[  26% ] [90m[1mreimport[22m | lantern_2.svg[39m[0m
+[  28% ] [90m[1mreimport[22m | shelf_cliff.svg[39m[0m
+[  30% ] [90m[1mreimport[22m | basalt.png[39m[0m
+[  32% ] [90m[1mreimport[22m | descent_water.png[39m[0m
+[  33% ] [90m[1mreimport[22m | basalt_strata.png[39m[0m
+[  35% ] [90m[1mreimport[22m | neris.svg[39m[0m
+[  35% ] [90m[1mreimport[22m | neris.svg[39m[0m
+[  37% ] [90m[1mreimport[22m | shelf_cliff.png[39m[0m
+[  39% ] [90m[1mreimport[22m | halcyon_modules.png[39m[0m
+[  41% ] [90m[1mreimport[22m | searchlight.png[39m[0m
+[  43% ] [90m[1mreimport[22m | art-provenance.csv[39m[0m
+[  45% ] [90m[1mreimport[22m | shelf_panorama.png[39m[0m
+[  47% ] [90m[1mreimport[22m | service_cradle.png[39m[0m
+[  49% ] [90m[1mreimport[22m | school_species.png[39m[0m
+[  50% ] [90m[1mreimport[22m | rock_edge.png[39m[0m
+[  52% ] [90m[1mreimport[22m | plate_thumbnail.png[39m[0m
+[  54% ] [90m[1mreimport[22m | marine_animals.png[39m[0m
+[  56% ] [90m[1mreimport[22m | kelp_atlas.png[39m[0m
+[  58% ] [90m[1mreimport[22m | fish_atlas.png[39m[0m
+[  60% ] [90m[1mreimport[22m | emergency_buoy.png[39m[0m
+[  62% ] [90m[1mreimport[22m | bloom_thumbnail.png[39m[0m
+[  64% ] [90m[1mreimport[22m | descent_water.svg[39m[0m
+[  66% ] [90m[1mreimport[22m | halcyon_modules.svg[39m[0m
+[  67% ] [90m[1mreimport[22m | lantern_2.svg[39m[0m
+[  69% ] [90m[1mreimport[22m | shelf_cliff.svg[39m[0m
+[  71% ] [90m[1mreimport[22m | basalt.png[39m[0m
+[  73% ] [90m[1mreimport[22m | descent_water.png[39m[0m
+[  75% ] [90m[1mreimport[22m | basalt_strata.png[39m[0m
+[  77% ] [90m[1mreimport[22m | neris.svg[39m[0m
+[  79% ] [90m[1mreimport[22m | shelf_cliff.png[39m[0m
+[  81% ] [90m[1mreimport[22m | halcyon_modules.png[39m[0m
+[  83% ] [90m[1mreimport[22m | searchlight.png[39m[0m
+[  84% ] [90m[1mreimport[22m | lantern_2.png[39m[0m
+[  86% ] [90m[1mreimport[22m | unknown.wav[39m[0m
+[  88% ] [90m[1mreimport[22m | underwater_blast.wav[39m[0m
+[  90% ] [90m[1mreimport[22m | ui.wav[39m[0m
+[  92% ] [90m[1mreimport[22m | tension.wav[39m[0m
+[  94% ] [90m[1mreimport[22m | service.wav[39m[0m
+[  96% ] [90m[1mreimport[22m | scan_start.wav[39m[0m
+[  98% ] [90m[1mreimport[22m | Finalizing Asset Import...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (52 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing post-reimport operations...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m

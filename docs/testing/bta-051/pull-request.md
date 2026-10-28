@@ -100,3 +100,18 @@ remain compatible, including an already-cleared pre-revision gate.
 archive limitations](https://github.com/zornscience/below-the-abyss/blob/bta-051-expanded-sunlit-shallows/docs/testing/bta-051/revision/README.md).
 No additional PR or automatic merge. Hosted CI status must be checked on GitHub;
 local evidence is labeled separately.
+
+Latest local acceptance: **641/641 GUT tests, 41,217 assertions, no skips/errors**;
+engine pin/import/271 parsers/startup; 12 canonical fresh/Continue launches; legacy
+expanded and revised routes; 8 bloom choice/Continue launches; 7 Python tests;
+clean Linux release export and extracted standalone smoke. Both native complete
+chapter routes pass (controller/observe/1280×800, keyboard/collect/800×600 Large Text,
+High Contrast, comfort and mute), with 74 retained native walkthrough screenshots.
+All three sizes/modes also pass the 66-view / 36-live-sample Compatibility probe.
+
+The [revision gallery and performance report](https://github.com/zornscience/below-the-abyss/blob/bta-051-expanded-sunlit-shallows/docs/testing/bta-051/revision/README.md)
+include new-game confirmation, three-shot excavation, rough passages, turtle/eel,
+warning → head ram → safe retreat, buoy return and debrief. Human art/controller/
+audio evaluation and target-GPU 60 FPS remain unverified. Campaign archiving has
+reported-I/O rollback and preserves originals, but is not a multi-file power-loss
+transaction and has no in-game archive-restore selector. No automatic merge.

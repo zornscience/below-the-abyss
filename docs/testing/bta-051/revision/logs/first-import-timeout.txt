@@ -4,4 +4,3 @@ Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--vers
 
 Running import: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--editor', '--import']
 FAIL: import timed out; see /workspace/below-the-abyss/build/ci-logs/import.log
-

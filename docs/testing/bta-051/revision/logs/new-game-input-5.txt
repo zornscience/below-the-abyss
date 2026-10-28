@@ -32,4 +32,3 @@ Time              9.228s
 
 Ran Tests matching "new_game"
 ---- All tests passed! ----
-

@@ -11,6 +11,7 @@ mode. No new region, mission, story choice, currency or save file is introduced.
   **(420,80), 20 m**. A fixed surface collider keeps the hull submerged; decorative
   waves never move collision. Existing **0.25 m/world unit** mapping is unchanged.
   Ordinary shelf floor y=800 is 200 m: a roughly 180 m descent from departure.
+  New optional lower caves reach about 285 m, within the stock 300 m rating.
   The existing optional deep vent remains a local pressure hazard, not Zone 2.
 - The main route is open water; rockfall excavation is optional. Grounded shelters,
   a blind alcove and three additional horizontal plugs provide side exploration.
@@ -19,7 +20,8 @@ mode. No new region, mission, story choice, currency or save file is introduced.
   excavation journal and torpedo interfaces.
 - Visible specimens, the reference plate and the bloom can be scanned by approaching
   and activating Interact, without a preceding ping. Terrain line of sight prevents
-  scanning through cave roofs. Hidden buoy acquisition still requires the outbound
+  scanning through cave roofs. An authored, bounded surface allowance permits inspection
+  of the legacy wreck’s hull around its embedded recorder anchor. Hidden buoy acquisition still requires the outbound
   sonar wavefront. Passive listening does not discover targets or generate pings.
 - Torpedo count is alongside hull/power/oxygen. Floating scan/route/docking words and
   docking-radius drawings are removed. Optional tutorial cards remain configurable

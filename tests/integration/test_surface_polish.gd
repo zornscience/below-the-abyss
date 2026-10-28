@@ -119,3 +119,15 @@ func test_context_prompt_stays_short_at_small_large_text_departure() -> void:
 	game.submarine.set_simulation_enabled(true)
 	await wait_process_frames(12)
 	assert_lt(game.pilot_context.size.y,120.0)
+
+func test_visible_wreck_surface_allowance_is_bounded_and_cave_roof_stays_occluding() -> void:
+	var wreck: ScanDefinition = ShelfChapterData.research(true).targets.filter(func(target: ScanDefinition) -> bool: return target.stable_id==&"lost-expedition-blackbox")[0]
+	assert_false(wreck.requires_sonar)
+	assert_eq(wreck.visibility_surface_radius,96.0)
+	assert_true(wreck.is_valid())
+	wreck.visibility_surface_radius = 96.001
+	assert_false(wreck.is_valid())
+	wreck.visibility_surface_radius = NAN
+	assert_false(wreck.is_valid())
+	game.submarine.global_position = Vector2(10600,410)
+	assert_false(game.submarine.scanner.eligible(&"sunlit-basalt-arch"))

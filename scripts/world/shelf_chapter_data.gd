@@ -65,6 +65,8 @@ static func research(encrypted: bool = false) -> ResearchCatalog:
 	for item: Dictionary in SCIENCE:
 		var target: ScanDefinition = ScanDefinition.new()
 		target.requires_sonar = false
+		# The recorder anchor is embedded in the wreck; inspecting its hull is visible.
+		if item.id=="lost-expedition-blackbox": target.visibility_surface_radius = 96.0
 		target.stable_id = StringName(item.id)
 		target.required_poi_id = StringName(item.poi)
 		target.classification = item.type

@@ -11,9 +11,9 @@ var _initial_position: Vector2
 const TEXT: Dictionary = {
 	"movement":["Take the helm","Use {move} to thrust. Release to coast; reverse to brake. Pause for controls, help or station orders."],
 	"sonar":["See with sound","{sonar}: send a sonar pulse. Each ping costs 4 battery, much more than ordinary travel. Reveals arrive with the wave."],
-	"scan":["Recover scientific evidence","Approach a revealed subject and press {interact} to scan. Stay in range; press again to cancel. A progress bar appears above the instruments."],
+	"scan":["Recover scientific evidence","Approach a visible subject and press {interact} to scan. Hidden subjects first need sonar. Stay in range and line of sight; press again to cancel. Watch the contextual progress bar."],
 	"map":["Keep your own bearings","{map}: open discovered landmarks and research. The map records what you found; it does not draw a route for you."],
-	"station":["Dock and prepare","Inside the station ring, slow down and press {interact}. Repair, refill and upgrades are intentional; arriving alone restores nothing."],
+	"station":["Dock and prepare","Near the station cradle, slow down and press {interact}. Repair, refill and upgrades are intentional; arriving alone restores nothing."],
 	"depth":["Respect the pressure rating","Depth is shown beside your hull rating. CAUTION means you are near it; DANGER means ascend. Install the pressure hull before a deep investigation."],
 	"wildlife":["A living acoustic landmark","Grazers investigate nearby sound, then return to feeding. Passive listening is silent. You can study wildlife without harming it."],
 	"torpedo":["A tool with consequences","{fire}: fire in your last thrust direction (2 battery; 1.2s rearm). Explosions excavate soft rock and damage nearby wildlife. Hard perimeter bedrock and the station remain solid."]}
@@ -36,12 +36,12 @@ func _preferences_changed() -> void:
 		message_changed.emit("","")
 func _body(id: String) -> String:
 	var text: String = TEXT[id][1]
-	if _scene.revision!=null and id=="station": text = "Inside the station ring, slow down and press {interact}. Docking automatically repairs, refills and rearms. Spend or freely reassign your finite research points in Research technology."
+	if _scene.revision!=null and id=="station": text = "Near the station cradle, slow down and press {interact}. Docking automatically repairs, refills and rearms. Spend or freely reassign your finite research points in Research technology."
 	if _scene.revision!=null and id=="torpedo": text = "{fire}: launch one of ten torpedoes in the direction NERIS faces. The torpedo accelerates and leaves a fading wake. Explosions excavate soft rock and damage wildlife. Dock to rearm."
 	if _scene.revision!=null and id=="movement": text = "Use {move} to thrust. NERIS takes time to accelerate in water; release to coast and reverse to brake. Base will radio an investigation after you depart."
 	if _scene.chapter!=null and _scene.chapter.active:
 		if id=="depth": text = "Watch hull, battery and oxygen. Pings cost more power than cruising. Return to Halcyon and deliberately dock to repair and refill; passing the station restores nothing."
-		text = text.replace("NERIS","Lantern-2").replace("Base will radio an investigation after you depart.","Study the light bloom, then search near Twin Spires for Lantern-1’s buoy.")
+		text = text.replace("NERIS","Lantern-2").replace("Base will radio an investigation after you depart.","Study the light bloom, then follow the open shelf toward the reported buoy search area.")
 	return text.replace("{move}"," / ".join([_scene.input_context.describe(&"move_up"),_scene.input_context.describe(&"move_left"),_scene.input_context.describe(&"move_down"),_scene.input_context.describe(&"move_right")])).replace("{sonar}",_scene.input_context.describe(&"sonar_ping")).replace("{interact}",_scene.input_context.describe(&"interact")).replace("{map}",_scene.input_context.describe(&"open_map")).replace("{fire}",_scene.input_context.describe(&"fire_torpedo"))
 func show_hint(id: String, repeat: bool = false) -> void:
 	if not TEXT.has(id) or not _scene.settings.snapshot().onboarding.enabled or (not repeat and (_shown.has(id) or id in _scene.settings.snapshot().onboarding.seen)):

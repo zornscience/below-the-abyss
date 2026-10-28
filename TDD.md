@@ -351,3 +351,31 @@ Texture-local surface displacement uses explicit cosmetic phase, no engine TIME 
 screen reads, and freezes in comfort modes. Shared vessel footprint, terrain polygons,
 carving, camera, navigation, domain signals, checkpoints and schema are unchanged.
 [Native review matrix and reproducible commands](docs/testing/bta-049/revision/README.md).
+
+
+## Canonical environment presentation — BTA-050
+
+SunlitDressing composes scene-owned illustrated sprites, two Parallax2D layers,
+clipped rock trim and two bounded MultiMeshInstance2D particle batches (36 marine
+snow/sediment points, four bubbles). Existing simulation-enabled/settings signals
+control the independent cosmetic clock. No physics, acoustic or persistence writes.
+Plants use immutable authored roots; lost physical support hides the plant following
+an existing excavation geometry_changed notification. Reduced Motion freezes all
+cosmetic transforms/parallax, Reduced Particles hides both batches, and softer-
+effects/reduced_flashing removes supplementary shafts. No new preference/schema.
+
+SunlitRockDressing remembers materials, swaps a single painted texture sample for
+legacy octave noise while the canonical dressing is visible, and intersects trim
+with the actual current polygons. Obsolete trim is removed immediately on edits;
+rebuilding is deferred until visible and adds only Polygon2D draw nodes. Unchanged
+trim is reused on reopening. No new bodies/shapes.
+The old procedural atmosphere/relief/garden are hidden for this chapter, including
+large offscreen command lists; prototype mode restores their original visibility
+and materials. Fish retain owner motion/collision/state logic and use a canonical
+presentation flag only; the buoy retains existing reveal/recovery authority.
+
+Capture tooling records exact authored player poses, terrain SHA256, camera zoom
+and centers. Frame-time samples run actual MAIN simulation after warm-up, separately
+from staged stills and the normal-input complete chapter. Source camera code is
+unchanged; comparison tolerates only subpixel smoothing differences. No GPU/human
+certification follows from headless checks or cloud software rendering.

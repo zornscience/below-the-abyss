@@ -155,3 +155,27 @@ parallax and bounded motes remain; no screen-read pass, realtime shadows or ligh
 simulation. Full scene material and renderer limits remain in the revision evidence.
 
 [Current native screenshots, asset workflow, art-review limits and exact commands](testing/bta-049/revision/README.md).
+
+
+## BTA-050 — Sunlit Shallows illustrated environment
+
+Use PR #33's painted material language in the canonical 0–200 m route: weathered
+basalt, thin restrained mineral deposits, organic olive/teal vegetation, quiet
+scientific hardware, soft depth haze and readable small fish. Foreground solids
+keep their exact collision outlines. Painted edge trim stays inside current stone;
+plants cannot block piloting, and lost supports hide them after excavation.
+Distant illustration stays lower contrast than solid walls and never depicts
+undiscovered architecture, a playable next region or new interaction markers.
+
+The scene owns all art/comfort state and restores the previous prototype visuals
+on chapter switching. Two inexpensive parallax planes use existing static hardware/
+optics; baked diffuse light plus sparse shafts replace broad procedural decoration.
+Thirty-six sediment/marine-snow points and four rising bubbles share two cached
+particle masks and batched draws. Motion updates at most 15 Hz, stops with
+simulation/reduced motion and never moves a physics body. No fullscreen screen-read,
+noise postprocess, realtime shadows or new runtime dependency.
+
+[Asset dimensions, unchanged generation masters, provenance and import settings](../assets/art/sunlit/README.md).
+[Native before/after, measured costs and visual-review limitations](testing/bta-050/README.md).
+Final human art approval, source cleanup, GPU profiling and external playtests remain
+review gates. Do not equate a green test suite with a professional-art acceptance.

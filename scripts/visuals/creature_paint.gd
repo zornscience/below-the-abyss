@@ -3,12 +3,35 @@ extends Node2D
 var phase: float = 0.0
 var hostile: bool = false
 var reduced_motion: bool = false
+const FISH: Texture2D = preload("res://assets/art/sunlit/fish_atlas.png")
+var sunlit_art: bool = false:
+	set(value):
+		sunlit_art = value
+		queue_redraw()
+var _redraw_time: float = 0.0
+var _frames: Array[AtlasTexture] = []
+func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	for index: int in range(2):
+		var atlas: AtlasTexture = AtlasTexture.new()
+		atlas.atlas = FISH
+		atlas.region = Rect2(Vector2(FISH.get_width()*0.5*index,0),Vector2(FISH.get_width()*0.5,FISH.get_height()))
+		_frames.append(atlas)
 func _process(delta: float) -> void:
 	var creature: AcousticCreature = get_parent() as AcousticCreature
+	var previous: float = scale.x
 	if not creature._suspended and not reduced_motion: phase += delta*4.0
 	if absf(creature.velocity.x)>2: scale.x = signf(creature.velocity.x)
-	queue_redraw()
+	_redraw_time += delta
+	if not sunlit_art or previous!=scale.x or (_redraw_time>=1.0/15.0 and not reduced_motion and not creature._suspended):
+		_redraw_time = 0.0
+		queue_redraw()
 func _draw() -> void:
+	if sunlit_art and _frames.size()==2:
+		draw_set_transform(Vector2.ZERO,0.0 if reduced_motion else sin(phase*0.5)*0.015)
+		draw_texture_rect(_frames[1 if hostile else 0],Rect2(-44,-36,72,72),false)
+		draw_set_transform(Vector2.ZERO)
+		return
 	var points: PackedVector2Array = []
 	var colors: PackedColorArray = []
 	for index: int in range(25):

@@ -1,0 +1,584 @@
+{
+  "1280-normal-departure": {
+    "camera_center": "(640.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 566.0,
+      "median_ms": 179.49,
+      "objects": 1935.0,
+      "p95_ms": 320.967,
+      "physics_ms": 12.944,
+      "process_ms": 292.691,
+      "texture_mib": 54.0888395309448
+    },
+    "player": "(420.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-normal-early-exploration": {
+    "camera_center": "(899.8869, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(900.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-normal-emergency-buoy": {
+    "camera_center": "(3260.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(3500.0, 620.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-normal-kelp-seabed": {
+    "camera_center": "(1779.81, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(1780.0, 530.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-normal-plankton": {
+    "camera_center": "(1280.108, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 587.0,
+      "median_ms": 198.819,
+      "objects": 2047.0,
+      "p95_ms": 317.566,
+      "physics_ms": 19.652,
+      "process_ms": 125.025,
+      "texture_mib": 54.0888395309448
+    },
+    "player": "(1280.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-normal-return-halcyon": {
+    "camera_center": "(700.8567, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(700.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-normal-twin-spires": {
+    "camera_center": "(3260.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 383.0,
+      "median_ms": 225.161,
+      "objects": 1784.0,
+      "p95_ms": 442.701,
+      "physics_ms": 15.884,
+      "process_ms": 219.02,
+      "texture_mib": 54.0888395309448
+    },
+    "player": "(3300.0, 550.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-departure": {
+    "camera_center": "(640.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 416.0,
+      "median_ms": 144.361,
+      "objects": 1785.0,
+      "p95_ms": 267.09,
+      "physics_ms": 21.276,
+      "process_ms": 240.703,
+      "texture_mib": 54.0888395309448
+    },
+    "player": "(420.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-early-exploration": {
+    "camera_center": "(899.1631, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(900.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-emergency-buoy": {
+    "camera_center": "(3260.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(3500.0, 620.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-kelp-seabed": {
+    "camera_center": "(1776.922, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(1780.0, 530.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-plankton": {
+    "camera_center": "(1280.435, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 437.0,
+      "median_ms": 145.379,
+      "objects": 1897.0,
+      "p95_ms": 245.551,
+      "physics_ms": 20.147,
+      "process_ms": 270.067,
+      "texture_mib": 54.0888395309448
+    },
+    "player": "(1280.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-return-halcyon": {
+    "camera_center": "(700.9346, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(700.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1280-reduced-twin-spires": {
+    "camera_center": "(3260.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 233.0,
+      "median_ms": 119.727,
+      "objects": 1634.0,
+      "p95_ms": 147.89,
+      "physics_ms": 13.362,
+      "process_ms": 85.762,
+      "texture_mib": 54.0888395309448
+    },
+    "player": "(3300.0, 550.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1280,
+      800
+    ]
+  },
+  "1920-normal-departure": {
+    "camera_center": "(960.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 4197.0,
+      "median_ms": 305.199,
+      "objects": 5637.0,
+      "p95_ms": 446.591,
+      "physics_ms": 9.629,
+      "process_ms": 301.87,
+      "texture_mib": 62.7633180618286
+    },
+    "player": "(420.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-normal-early-exploration": {
+    "camera_center": "(960.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(900.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-normal-emergency-buoy": {
+    "camera_center": "(2940.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(3500.0, 620.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-normal-kelp-seabed": {
+    "camera_center": "(1779.81, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(1780.0, 530.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-normal-plankton": {
+    "camera_center": "(1280.108, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 4199.0,
+      "median_ms": 232.868,
+      "objects": 5681.0,
+      "p95_ms": 268.192,
+      "physics_ms": 13.415,
+      "process_ms": 189.872,
+      "texture_mib": 62.7633180618286
+    },
+    "player": "(1280.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-normal-return-halcyon": {
+    "camera_center": "(960.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(700.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-normal-twin-spires": {
+    "camera_center": "(2940.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 3988.0,
+      "median_ms": 216.064,
+      "objects": 5389.0,
+      "p95_ms": 254.808,
+      "physics_ms": 22.684,
+      "process_ms": 184.401,
+      "texture_mib": 62.7633180618286
+    },
+    "player": "(3300.0, 550.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-departure": {
+    "camera_center": "(960.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 4047.0,
+      "median_ms": 222.931,
+      "objects": 5487.0,
+      "p95_ms": 332.48,
+      "physics_ms": 19.069,
+      "process_ms": 184.946,
+      "texture_mib": 62.7633180618286
+    },
+    "player": "(420.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-early-exploration": {
+    "camera_center": "(960.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(900.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-emergency-buoy": {
+    "camera_center": "(2940.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(3500.0, 620.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-kelp-seabed": {
+    "camera_center": "(1779.81, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(1780.0, 530.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-plankton": {
+    "camera_center": "(1280.108, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 4049.0,
+      "median_ms": 274.664,
+      "objects": 5531.0,
+      "p95_ms": 414.4,
+      "physics_ms": 15.472,
+      "process_ms": 231.17,
+      "texture_mib": 62.7633180618286
+    },
+    "player": "(1280.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-return-halcyon": {
+    "camera_center": "(960.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(700.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "1920-reduced-twin-spires": {
+    "camera_center": "(2940.0, 400.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 3838.0,
+      "median_ms": 247.007,
+      "objects": 5239.0,
+      "p95_ms": 586.037,
+      "physics_ms": 15.725,
+      "process_ms": 164.793,
+      "texture_mib": 62.7633180618286
+    },
+    "player": "(3300.0, 550.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      1920,
+      1080
+    ]
+  },
+  "800-normal-departure": {
+    "camera_center": "(420.0, 480.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 367.0,
+      "median_ms": 125.246,
+      "objects": 1575.0,
+      "p95_ms": 373.677,
+      "physics_ms": 14.831,
+      "process_ms": 121.641,
+      "texture_mib": 49.8134489059448
+    },
+    "player": "(420.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-normal-early-exploration": {
+    "camera_center": "(899.6786, 480.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(900.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-normal-emergency-buoy": {
+    "camera_center": "(3496.65, 500.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(3500.0, 620.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-normal-kelp-seabed": {
+    "camera_center": "(1778.711, 500.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(1780.0, 530.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-normal-plankton": {
+    "camera_center": "(1280.474, 480.0474)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 548.0,
+      "median_ms": 120.303,
+      "objects": 1988.0,
+      "p95_ms": 257.281,
+      "physics_ms": 13.629,
+      "process_ms": 96.598,
+      "texture_mib": 49.9384489059448
+    },
+    "player": "(1280.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-normal-return-halcyon": {
+    "camera_center": "(705.8099, 480.2905)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(700.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-normal-twin-spires": {
+    "camera_center": "(3163.885, 500.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 376.0,
+      "median_ms": 86.168,
+      "objects": 1616.0,
+      "p95_ms": 175.861,
+      "physics_ms": 15.196,
+      "process_ms": 60.204,
+      "texture_mib": 49.9384489059448
+    },
+    "player": "(3300.0, 550.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-departure": {
+    "camera_center": "(420.0, 480.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 217.0,
+      "median_ms": 77.24,
+      "objects": 1425.0,
+      "p95_ms": 143.966,
+      "physics_ms": 15.776,
+      "process_ms": 76.18,
+      "texture_mib": 49.9384489059448
+    },
+    "player": "(420.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-early-exploration": {
+    "camera_center": "(889.5637, 480.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(900.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-emergency-buoy": {
+    "camera_center": "(3489.619, 500.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(3500.0, 620.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-kelp-seabed": {
+    "camera_center": "(1773.265, 500.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(1780.0, 530.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-plankton": {
+    "camera_center": "(1281.469, 480.1469)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 398.0,
+      "median_ms": 79.125,
+      "objects": 1839.0,
+      "p95_ms": 153.685,
+      "physics_ms": 17.538,
+      "process_ms": 59.926,
+      "texture_mib": 49.9384489059448
+    },
+    "player": "(1280.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-return-halcyon": {
+    "camera_center": "(739.402, 481.9701)",
+    "camera_zoom": "(1.0, 1.0)",
+    "player": "(700.0, 480.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  },
+  "800-reduced-twin-spires": {
+    "camera_center": "(3242.981, 500.0)",
+    "camera_zoom": "(1.0, 1.0)",
+    "performance": {
+      "draw_calls": 230.0,
+      "median_ms": 75.654,
+      "objects": 1486.0,
+      "p95_ms": 122.605,
+      "physics_ms": 11.729,
+      "process_ms": 63.531,
+      "texture_mib": 49.9384489059448
+    },
+    "player": "(3300.0, 550.0)",
+    "terrain_sha256": "2ab1adfc5bb346a7ec6930b89c89f9118995638e16031751b196ffc699f8a5c8",
+    "viewport": [
+      800,
+      600
+    ]
+  }
+}

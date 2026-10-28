@@ -122,6 +122,7 @@ func _apply_node(node: Node) -> void:
 		node.set_process(not bool(_preferences.reduced_motion) and not bool(_preferences.reduced_particles))
 	if script != null and script.resource_path.ends_with("/submarine_illustration.gd"):
 		node.set("reduced_motion", bool(_preferences.reduced_motion))
+	if node is SunlitDressing: node.apply_preferences(_preferences)
 	if node is CreaturePaint: node.reduced_motion = bool(_preferences.reduced_motion)
 	if node is TorpedoTrail: node.reduced = bool(_preferences.reduced_particles) or bool(_preferences.reduced_motion)
 	if node is BlastEffect:

@@ -2,7 +2,7 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **BTA-049 — The Halcyon Descent cinematic title and shared illustrated identity**,
+Current build: **BTA-050 — Illustrated Sunlit Shallows environment**,
 on **The Sunlit Shallows**, the canonical first expedition.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
 recover missing acoustician Mara Voss's emergency buoy. Bring the recording home
@@ -31,6 +31,8 @@ for a first-expedition debrief. The Twilight Shelf is a future chapter, not play
 - **Optional tools:** ten facing-fired torpedoes (Space/right trigger/right-stick
   click), accelerating wakes and comfort-aware blasts remain available. Combat is
   not required. Sonar pings cost substantially more battery than normal cruising.
+
+[BTA-050 environment: asset inventory, native comparisons, performance and manual review](docs/testing/bta-050/README.md).
 
 [BTA-049 review revision: typography, bounded dialogs, painted art and native before/after evidence](docs/testing/bta-049/revision/README.md).
 [Original title implementation record](docs/testing/bta-049/README.md).

@@ -129,3 +129,9 @@ remains pending; original PNG masters unchanged. No external dependency added.
 Hosted Actions status is separate from local checks and is not asserted here.
 
 Retained console text trims trailing whitespace only; messages/results are unchanged.
+
+DELIVERY
+Dedicated branch pushed successfully. gh pr create failed at api.github.com/graphql
+with Forbidden; curl HEAD confirms proxy CONNECT 403. The current managed policy
+omits api.github.com. PR not created and no merge performed; hosted CI unverified.
+Prepared review URL and complete description are in README.md and pull-request.md.

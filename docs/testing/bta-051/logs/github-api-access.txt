@@ -1,0 +1,7 @@
+Read-only access probe: curl --head --max-time 20 https://api.github.com
+CONNECT tunnel failed, response 403
+HTTP/1.1 403 Forbidden
+server: envoy
+
+Managed runtime policy lists github.com but not api.github.com among effective allowed hosts.
+No alternate-host/proxy bypass attempted.

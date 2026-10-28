@@ -152,6 +152,8 @@ docs/testing/bta-051/logs/first-full-suite-timeout.txt
 docs/testing/bta-051/logs/focused-29.txt
 docs/testing/bta-051/logs/full-gut.txt
 docs/testing/bta-051/logs/full-suite.xml
+docs/testing/bta-051/logs/github-api-access.txt
+docs/testing/bta-051/logs/github-pr-creation.txt
 docs/testing/bta-051/logs/legacy-expanded.txt
 docs/testing/bta-051/logs/legacy-revision.txt
 docs/testing/bta-051/logs/linux-build-result.json

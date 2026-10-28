@@ -219,3 +219,13 @@ with `--outcome=collect --small --high-contrast --comfort --survey-studies
 `--stop-after-map` for the short final annotation review. The matrix stores
 66 requested milestone PNGs plus the original route's additional captures;
 [capture inventory](route-matrix/capture.json) validates their exact dimensions.
+
+## Delivery status
+
+The dedicated branch is pushed. Automatic PR creation failed at the managed
+proxy: `Post https://api.github.com/graphql: Forbidden`; a read-only API probe
+confirms `CONNECT tunnel failed, response 403`. The runtime's effective domain
+list includes github.com but omits api.github.com. No PR or merge is claimed.
+[Open the prepared review PR](https://github.com/zornscience/below-the-abyss/pull/new/bta-051-expanded-sunlit-shallows)
+and use [the prepared description](pull-request.md), or allow api.github.com so
+the CLI can finish creation. Hosted Actions have not been verified.

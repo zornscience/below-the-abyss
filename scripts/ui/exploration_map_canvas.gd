@@ -63,7 +63,12 @@ func _draw() -> void:
 			for segment: int in range(12):
 				draw_arc(report,radius,segment*TAU/12.0,(segment+0.65)*TAU/12.0,8,Color("dfba7d"),2,true)
 		draw_arc(report,13,0,TAU,32,Color("dfba7d"),2,true)
-		draw_string(font,report+Vector2(18,26),report_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"hud"),Color("dfba7d"))
+		var caption_size: int = UiTypography.for_control(self,&"hud")
+		var caption_width: float = font.get_string_size(report_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,caption_size).x
+		var caption_at: Vector2 = report+Vector2(18,26)
+		caption_at.x = clampf(caption_at.x,8,maxf(8,size.x-caption_width-8))
+		caption_at.y = clampf(caption_at.y,caption_size+8,size.y-8)
+		draw_string(font,caption_at,report_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,caption_size,Color("dfba7d"))
 	var player: Vector2 = _point(player_position)
 	var direction: Vector2 = player_direction.normalized() if survey_enabled else Vector2.UP
 	var side: Vector2 = direction.orthogonal()

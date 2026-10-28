@@ -91,6 +91,11 @@ func _compose() -> void:
 	vent_light.rotation = -PI*0.5
 	vent_light.z_index = -3
 	_shafts.append(vent_light)
+	var margin_light: Sprite2D = _sprite(HalcyonDescent.SEARCHLIGHT,Rect2(-20,-170,1100,340),Color(0.83,0.45,0.20,0.11))
+	margin_light.position = Vector2(14000,1670)
+	margin_light.rotation = -PI*0.5
+	margin_light.z_index = -3
+	_shafts.append(margin_light)
 	_refresh_plants.call_deferred()
 	apply_preferences({"reduced_motion":reduced_motion,"reduced_flashing":reduced_effects,"reduced_particles":reduced_particles})
 
@@ -106,7 +111,10 @@ func _sprite(texture: Texture2D,rectangle: Rect2,tint: Color,parent: Node = null
 
 func _backgrounds() -> void:
 	var far: Parallax2D = _layer(Vector2(0.16,0.10),-6)
-	_sprite(PANORAMA,Rect2(-1400,-750,7000,1500),Color(0.24,0.40,0.44,0.35),far)
+	var panorama: Sprite2D = _sprite(PANORAMA,Rect2(-1400,-750,7000,1500),Color(0.24,0.40,0.44,0.35),far)
+	var fade: ShaderMaterial = ShaderMaterial.new()
+	fade.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
+	panorama.material = fade
 	var middle: Parallax2D = _layer(Vector2(0.42,0.25),-4)
 	for index: int in range(10):
 		var relief: Sprite2D = _sprite(HalcyonDescent.CLIFF,Rect2(-600+index*1100,-120,650,1150),Color(0.38,0.65,0.66,0.13),middle)

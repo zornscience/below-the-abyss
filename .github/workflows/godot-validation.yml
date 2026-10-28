@@ -13,7 +13,7 @@ jobs:
   validate:
     name: Godot 4.6.3 import, parser and smoke
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 40
     env:
       CI_LOG_DIR: ${{ github.workspace }}/build/ci-logs
     steps:

@@ -58,12 +58,15 @@ def main() -> None:
             arguments += ["-gconfig=", "-gtest=res://tests/fixtures/intentional_failure.gd"]
         command_error = None
         try:
-            # The expanded mission/route walkthrough keeps real-time physics coverage.
-            run_check(name, arguments, timeout=600)
+            # The 624-test expanded region suite retains real-time physics coverage.
+            # Keep a bounded run; the post-PR34 600s budget now expires near the end.
+            run_check(name, arguments, timeout=900)
         except RuntimeError as error:
             command_error = error
         # Removed before execution: an existing report cannot make a failed or
         # zero-test run look successful.
+        if command_error and not report.is_file():
+            raise RuntimeError(f"{command_error}; no JUnit report was produced")
         result = ET.parse(report).getroot()
         cases = result.findall(".//testcase")
         failures = len(result.findall(".//failure"))

@@ -8,6 +8,7 @@ var buoy: EmergencyBuoyVisual
 var guide: SunlitFieldGuide
 var dressing: SunlitDressing
 var departure: HalcyonDeparture
+var _water_polygon: PackedVector2Array
 var _water_color: Color
 var boundary: StaticBody2D
 var _needs_rebase: bool = false
@@ -17,6 +18,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	scene = owner_scene
 	assert(DATA.is_valid())
 	_water_color = (scene.region.get_node("Water") as Polygon2D).color
+	_water_polygon = (scene.region.get_node("Water") as Polygon2D).polygon
 	dressing = SunlitDressing.new()
 	dressing.z_index = -2
 	scene.region.add_child(dressing)
@@ -125,6 +127,7 @@ func _activate(value: bool) -> void:
 	dressing.visible = value
 	departure.visible = value
 	(scene.region.get_node("Water") as Polygon2D).color = Color("123643") if value else _water_color
+	(scene.region.get_node("Water") as Polygon2D).polygon = SunlitSurveyData._rect(Rect2(0,0,22000,2600)) if value else _water_polygon
 	boundary.visible = value
 	boundary.collision_layer = 1 if value else 0
 	(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2" if value else "NERIS / 01"

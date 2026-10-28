@@ -227,7 +227,8 @@ func show_dock(tab: String = "home") -> void:
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
 		if canonical: _label(_dock_body,"RESEARCH XP %d · BONUS POINTS %d/%d" % [ResearchExperienceData.total(revision.campaign.science),ResearchExperienceData.points(revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points],&"body")
-		_label(_dock_body,"First species scans earn 20 XP; new scientific studies earn 30 XP. Each 100 XP adds one research point, limited to two extra points in this chapter. Existing scans never award XP again. Reassignment is free while docked." if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
+		var xp_rules: ResearchExperienceRules = ResearchExperienceData.RULES
+		_label(_dock_body,("First species scans earn %d XP; new scientific studies earn %d XP. Each %d XP adds one research point, limited to %d extra points in this chapter. Existing scans never award XP again. Reassignment is free while docked." % [xp_rules.species_xp,xp_rules.study_xp,xp_rules.xp_per_point,xp_rules.maximum_extra_points]) if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
 		var branches: HBoxContainer = HBoxContainer.new()
 		_dock_body.add_child(branches)
 		for branch: String in ["sonar","hull"]:

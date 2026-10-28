@@ -58,6 +58,7 @@ func setup(game: ShelfPrototype) -> void:
 
 func _restored() -> void:
 	ambient.reset_session()
+	_simulation(scene.submarine.is_physics_processing())
 	_refresh()
 
 func _add_school(id: String,at: Vector2,species: int,population: int) -> void:
@@ -111,7 +112,9 @@ func set_enabled(value: bool) -> void:
 
 func _simulation(enabled: bool) -> void:
 	if _enabled:
-		for animal: AcousticCreature in scene.extension.wildlife: animal.set_suspended(true)
+		for animal: AcousticCreature in scene.extension.wildlife:
+			animal.set_suspended(true)
+			animal.visible = false
 	for school: AmbientFishSchool in schools:
 		school.visible = _enabled
 		school.receiver.enabled = enabled and _enabled

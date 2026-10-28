@@ -83,8 +83,15 @@ func test_clipped_painted_edges_stay_in_actual_stone_and_excavation_removes_old_
 			# Boundary points use the same numerical clipping contour; test an inset sample.
 			var local: Vector2 = polygon.position+point.lerp(_center(polygon.polygon),0.01)
 			assert_true(paint.contains_stone(local),str(local))
+	var old_changed: Array[Node] = []
+	var old_unchanged: Array[Node] = []
+	for item: Dictionary in paint._surfaces:
+		var source: Node = item.source.get_ref()
+		if source is DestructibleRock and source.rock_id=="central-shelf": old_changed.append_array(item.trims)
+		elif source is DestructibleRock and source.rock_id=="ceiling": old_unchanged.append_array(item.trims)
 	assert_gt(game.excavation.excavate(Vector2(1490,650),70),0)
-	assert_eq(paint.get_child_count(),0,"Obsolete trim is removed immediately, not left over a cut passage.")
+	for old: Node in old_changed: assert_false(old.get_parent()==paint,"Changed trim is removed immediately.")
+	for old: Node in old_unchanged: assert_eq(old.get_parent(),paint,"Unchanged trim is reused rather than clipped again.")
 	await wait_process_frames(5)
 	assert_false(paint.contains_stone(Vector2(1490,650)))
 	assert_false(game.chapter.dressing._plants[5].visible,"Unsupported kelp vanishes when its actual support is excavated.")

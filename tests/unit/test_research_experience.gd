@@ -66,6 +66,15 @@ func test_xp_configuration_rejects_invalid_or_duplicate_authored_rules() -> void
 	assert_true(rules.is_valid())
 	rules.maximum_extra_points = 3
 	assert_false(rules.is_valid())
+
 	rules.maximum_extra_points = 2
 	rules.species_ids.append(rules.study_ids[0])
 	assert_false(rules.is_valid())
+
+func test_malformed_legacy_progress_is_rejected_before_migration_reads_nested_fields() -> void:
+	for invalid: Variant in [null,[],true,"bad",{}, {"research":null}]:
+		var data: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
+		data.schema_version = 6
+		data.prototype.campaign.erase("science")
+		data.progress = invalid
+		assert_eq(ExpeditionSchema.decode(data).error,ERR_INVALID_DATA)

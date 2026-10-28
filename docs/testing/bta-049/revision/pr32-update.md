@@ -5,7 +5,7 @@ changes are on the existing `bta-049-halcyon-descent` branch, not in its frozen 
 diff. No replacement PR or automatic merge was created.
 
 - Central semantic typography across every production UI: Standard body/dialog
-  buttons 16px, menu buttons 17px, headings 18–20px, HUD/mission 16px, secondary14px.
+  buttons 16px, menu buttons 17px, headings 18–20px, HUD/mission 16px, secondary 14px.
   Compact remains distinct; Large remains 125%, without accumulated scaling.
 - Centered, bounded, scrollable dialogs with visible underwater surroundings;
   preserved input/focus, pause, recovery, radio and accessibility behavior.
@@ -22,7 +22,11 @@ diff. No replacement PR or automatic merge was created.
 | --- | --- |
 | ![Original title](https://github.com/zornscience/below-the-abyss/raw/refs/heads/bta-049-halcyon-descent/docs/testing/bta-049/revision/before/800-standard-title.png) | ![Revised title](https://github.com/zornscience/below-the-abyss/raw/refs/heads/bta-049-halcyon-descent/docs/testing/bta-049/revision/after/800-standard-title.png) |
 
-Exact completed results and release identity are linked from the revision record.
+Completed locally: 587/587 GUT tests, 26,744 assertions, 246 parser checks,
+import/startup, all canonical and legacy input routes, seven Python tests, native
+menu/chapter captures, clean Linux export and extracted standalone smoke. Source
+release: `e50dfd1df356695ad656accb74488c17c205df3c`. Exact commands and release
+identity are linked from the revision record.
 Local CI-equivalent verification is distinct from a hosted Actions result. The
 existing workflow filters do not run for a push to an already merged PR branch.
 Human art/usability approval, physical-controller and desktop-GPU review remain open.

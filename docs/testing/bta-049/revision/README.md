@@ -238,3 +238,25 @@ runs are not a controlled hardware comparison. Desktop-GPU profiling, atlas/over
 review and final art-source optimization remain necessary before performance approval.
 Reduced Motion/effects/particles provide the existing static alternative, without
 changing gameplay or save state. [Raw native observations](logs/shared-native-runtime.txt).
+
+
+## Completed local verification
+
+**587/587 GUT tests**, 26,744 assertions, 67 scripts, no failures/errors/skips;
+import/startup and **246 parser checks**; all twelve canonical launches and legacy
+expanded/revised/bloom routes; seven Python tests; actual-input Quit; the complete
+native 800×600 Large Text chapter; 83 native evidence PNGs. Linux release from clean
+implementation commit `e50dfd1df356695ad656accb74488c17c205df3c` and extracted standalone smoke
+both pass. Follow-up commits only record evidence/documentation. [Exact commands,
+release SHA256 and raw result links](verification.txt).
+
+The complete suite passed in 464.798 seconds with no competing Godot process. A
+previous contended rerun reached its existing 600-second bound; no timeout, workflow
+check or test was disabled. Three historical font assertions now check the requested
+semantic sizes instead of requiring the superseded oversized defaults. Six additional
+unit/integration tests cover roles/scales, popup parity, wrapped action widths, bounded
+long prose, actual controller scrolling, focus recovery, resize and cleanup.
+
+[Prepared PR #32 update](pr32-update.md) includes screenshot links. GitHub API access
+returns `Forbidden`; the update cannot be posted from this environment. The merged
+PR's diff remains frozen independently of that API limitation. No new PR or merge.

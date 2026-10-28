@@ -101,6 +101,10 @@ docs/testing/bta-049/revision/logs/expanded-expedition.txt
 docs/testing/bta-049/revision/logs/full-gut-summary.txt
 docs/testing/bta-049/revision/logs/full-gut.txt
 docs/testing/bta-049/revision/logs/full-gut.xml
+docs/testing/bta-049/revision/logs/linux-export.txt
+docs/testing/bta-049/revision/logs/linux-release.json
+docs/testing/bta-049/revision/logs/linux-smoke-summary.txt
+docs/testing/bta-049/revision/logs/linux-standalone-runtime.txt
 docs/testing/bta-049/revision/logs/native-small-chapter.txt
 docs/testing/bta-049/revision/logs/parser-inventory.txt
 docs/testing/bta-049/revision/logs/python-tests.txt

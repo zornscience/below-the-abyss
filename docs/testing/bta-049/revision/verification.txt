@@ -43,11 +43,22 @@ No runtime gameplay, schema, stable ID, collision, navigation or camera rule cha
 
 PASS native shared-art/menu capture, no fixed FPS, no competing Godot process
   Keyboard Options; controller Accessibility/Begin/launch; muted; all three sizes;
-  Large/High Contrast and same hardware in gameplay. Nine additional PNGs.
+  Large/High Contrast and same hardware in gameplay. Eight additional PNGs.
   150 frame intervals after 30 warm-up frames, per view. Raw observations in logs/.
   Software rendering does not meet the 60 FPS target; no hardware certification.
 
-Clean committed-source Linux export/smoke evidence is recorded after this source commit.
+PASS python3 tools/build_playtest.py
+  Source/build ID: e50dfd1df356695ad656accb74488c17c205df3c
+  development_dirty=false; checksum-pinned 4.6.3 templates; Linux x86_64 release.
+  Package: build/below-the-abyss-playtest-linux-e50dfd1df356.zip
+  Executable SHA256: aa2fa28074ce9ec43a9bddf61534a681ada5fe77966f65ca6472813f410fb378
+PASS python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-e50dfd1df356.zip
+  --log build/playtest/standalone-smoke.log
+  Extracted standalone launch; expected build ID; default telemetry OFF.
+  Documentation-only follow-ups do not change this exported runtime.
+
+Total native PNG evidence: 83 (22 baseline + 44 UI matrix + 9 complete-route + 8 shared-art/menu).
+No conceptual images are presented as Godot captures.
 
 PR constraint: #32 was already merged externally. Its review diff cannot accept new
 commits. Revisions stay on its existing branch; no new PR or merge is authorized.

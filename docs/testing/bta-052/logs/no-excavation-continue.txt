@@ -1,0 +1,3 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=collect input=keyboard resumed=true choices=0 claims=0 simulation_seconds=1.5 wall_seconds=1.771258 research_xp=80 shots=0 muted=true

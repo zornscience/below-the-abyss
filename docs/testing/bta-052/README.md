@@ -119,6 +119,87 @@ radio/UI sounds. Human evaluation of music, feel and art is still needed.
 
 ## Results and limitations
 
-Final command results and screenshot inventory are recorded alongside this document
-once verification completes. Native renders use Mesa llvmpipe software rendering;
+Final command results, retained logs and screenshot inventory are recorded below. Native renders use Mesa llvmpipe software rendering;
 no claim of target-hardware 60 FPS or professional art/audio acceptance is made.
+
+## Native review gallery
+
+These are actual Compatibility-rendered Godot frames from automated input routes,
+not generated concept images or mockups. [Inventory with exact dimensions](screenshots.json).
+
+| Review | Native evidence |
+| --- | --- |
+| Above-water Halcyon, ammo deck, compact interaction prompt | [1280×800](screenshots/observe-surface-departure.png), [800×600 Large Text / High Contrast](screenshots/collect-surface-departure-small.png), [1920×1080](screenshots/1920/collect-surface-departure.png) |
+| Five upgrade icons, costs, capability comparisons | [Standard](screenshots/observe-technology-icons.png), [Large Text, scrollable](screenshots/collect-technology-icons-small.png) |
+| Direct bloom interaction and nonnumeric outcome | [Choice](screenshots/observe-bloom-choice.png), [Response](screenshots/observe-bloom-outcome.png), [Small controller choice](screenshots/collect-bloom-choice-small.png) |
+| Optional excavation, rough cave, safe reverse exit | [Entrance](screenshots/observe-optional-cave-before.png), [Inside](screenshots/observe-optional-cave-inside.png), [Blind alcove](screenshots/observe-dead-end-alcove.png) |
+| Existing illustrated fauna in the new shelf | [School](screenshots/observe-fish-school.png), [Turtle](screenshots/observe-sea-turtle.png), [Eel](screenshots/observe-moray-eel.png) |
+| Returning sonar and retained radio archive | [Sonar returns](screenshots/observe-sonar-buoy-arrival.png), [Transcript](screenshots/observe-maras-message.png), [Small transcript](screenshots/collect-maras-message-small.png) |
+| Detailed torpedo, headlight contact, typed incoming radio | [Native 1920×1080 in flight](screenshots/1920/collect-torpedo-in-flight.png), [Underwater detonation](screenshots/1920/collect-underwater-detonation-2.png) |
+| Complete expedition and station return | [Return](screenshots/observe-halcyon-return.png), [Completion](screenshots/observe-chapter-complete.png), [Small debrief](screenshots/collect-debrief-small.png) |
+
+For the intentional layout comparison, [PR #35's former submerged departure](../bta-051/revision/route-800/collect-halcyon-return-small.png)
+uses the old deep dock; the new surface departure above deliberately changes the spawn
+and camera's authored bounds. These are not identical collision scenes or camera poses.
+
+### Environment-specific commands used here
+
+The managed workspace has writable XDG directories; a normal desktop uses its own
+standard user-data directories. Native evidence used an existing Xorg display and
+Mesa software rendering. Example exact invocation (use a separate test profile):
+
+```sh
+export XDG_CACHE_HOME=/workspace/.cache
+export XDG_DATA_HOME=/workspace/.local/share
+export XDG_CONFIG_HOME=/workspace/.config
+mkdir -p /tmp/bta052-native-review
+DISPLAY=:98 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2 \
+BTA_EVIDENCE_DIR=/tmp/bta052-native-review \
+godot --path . --audio-driver Dummy --rendering-method gl_compatibility \
+  --disable-render-loop --fixed-fps 60 \
+  --script res://tests/fixtures/drive_sunlit_environment.gd --quit-after 90000 -- \
+  --profile=bta052-review --input=keyboard --outcome=observe --survey-studies --fauna-demo
+```
+
+For the small controller review, use `--input=controller --outcome=collect --small
+--high-contrast` with a different profile. For 1920×1080 use `--wide`. To prove
+no excavation is necessary, run `drive_sunlit_shallows.gd` headlessly with
+`--profile=bta052-no-blast --input=keyboard --outcome=collect --comfort
+--no-excavation`, then run again with `--resume`. Only those dedicated automation
+profiles are reset by a fresh fixture run; normal game data is not used.
+
+
+## Completed local verification
+
+| Check | Result / retained evidence |
+| --- | --- |
+| Godot version, import, parser and startup | **PASS** — pinned 4.6.3; 280 script checks, import and startup, plus 11 changed-script rechecks. [Validator](logs/validation.txt), [rechecks](logs/parser-rechecks.txt) |
+| Entire GUT suite after the final scan adjustment | **665/665 PASS**, 41,641 assertions, no failures/errors/skips, 407.011 s. [Runner](logs/gut-runner.txt), [full output](logs/gut-suite.txt), [JUnit](logs/gut-suite.xml) |
+| Canonical chapter matrix | **12/12 input processes PASS**: both choices/devices, completed Continue and quit-at-buoy/Continue. [Matrix](logs/chapter-matrix.txt) |
+| Optional excavation proof | **PASS** — fresh keyboard chapter completes with **zero shots / zero cuts**; separate-process Continue retains it with zero replayed choices/claims. [Fresh](logs/no-excavation.txt), [Continue](logs/no-excavation-continue.txt) |
+| Prior expedition / revised radio-research expedition / story-choice matrix | **PASS** — both legacy full routes, eight story-choice processes and all seven Python analysis tests. [Combined log](logs/legacy-routes.txt) |
+| Native graphical input routes | **PASS** — 1280×800 keyboard observation with all studies/optional cave/fauna; 800×600 controller collection with Large Text, High Contrast, muted/reduced settings; 1920×1080 keyboard collection. [1280](logs/native-1280.txt), [800](logs/native-800.txt), [1920](logs/native-1920.txt) |
+| Small departure prompt layout recheck | **PASS** — bounded compact prompt after layout; actual controller input to map. [Log](logs/native-800-surface-recheck.txt) |
+| Clean Linux release export | **PASS**, source/build `5fa398063c1511acc0d703f031131d4efb773512`, dirty=false. [Manifest/output](logs/linux-export.txt) |
+| Extracted standalone Linux startup | **PASS**, isolated data/config/cache, telemetry off. [Log](logs/standalone-smoke.txt) |
+| GitHub Actions service | **Not run here**: GitHub PR creation returns `Forbidden` from `api.github.com/graphql`. Local commands above reproduce the workflow checks. [Actual attempt](logs/github-pr-attempt.txt) |
+
+The Linux binary SHA-256 is
+`d498920a66eb6891cc3f37fbc9a3f87c219f937bbe3f9c610fef7293dc735a23`.
+The archive is `build/below-the-abyss-playtest-linux-5fa398063c15.zip` (not committed).
+Reproduce its standalone check with:
+
+```sh
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-5fa398063c15.zip \
+  --log build/playtest/bta052-standalone-smoke.log
+```
+
+The updated CI wrapper includes the no-excavation variant in a canonical keyboard
+route; the separately retained fresh/Continue proof above exercises the same flags.
+No human playtest was performed. Audio was muted/Dummy in graphical captures; mix,
+feel, readability preferences and target-GPU performance still need human/hardware
+review. Animated effects are bounded and exercised by the model/input checks; still
+images alone do not prove their subjective quality. No FPS benchmark was performed
+by these accelerated captures. New work adds at most nine terrain rays per cached
+20 Hz lamp update, sixteen reflection probes per accepted ping, 32 live return nodes
+and one Music-bus loop; these are implementation budgets, not measured FPS claims.

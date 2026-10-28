@@ -1,0 +1,55 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_surface_polish.gd
+* test_surface_departure_is_submerged_and_surface_blocks_full_ascent
+* test_open_water_route_needs_no_blasting_and_optional_tunnels_remain_solid
+* test_visible_bloom_can_be_observed_without_emitting_sonar
+* test_visible_subject_scans_directly_but_wall_and_hidden_buoy_still_gate
+* test_engine_and_torpedo_upgrade_reconstruct_baselines_and_keep_inflight_snapshot
+* test_ammunition_is_in_resource_deck_and_no_world_helper_labels_exist
+* test_radio_types_follows_and_expires_without_accepting_or_erasing_message
+    --- Awaiting 4 idle frames  ---
+* test_context_prompt_stays_short_at_small_large_text_departure
+* test_visible_wreck_surface_allowance_is_bounded_and_cave_roof_stays_occluding
+9/9 passed.
+
+
+res://tests/unit/test_scientific_scanner.gd
+* test_hidden_targets_are_ineligible_and_never_show_scientific_metadata
+* test_inclusive_range_boundary_and_outside_rejection
+* test_completion_and_repeated_attempts_emit_exactly_once
+* test_intentional_second_activation_cancels_and_resets_progress
+* test_leaving_range_interrupts_without_banking_partial_progress
+* test_removed_target_interrupts_safely
+* test_pause_preserves_progress_rejects_activation_and_invalid_time_preserves_state
+* test_30_60_120_steps_complete_at_same_simulation_deadline
+* test_nearest_selection_and_lexical_id_tie_are_deterministic
+* test_invalid_catalogs_and_bindings_are_rejected_without_reconfiguring
+* test_restore_is_atomic_merges_and_never_replays_completion_events
+* test_restart_cancels_partial_scan_and_preserves_completed_records
+12/12 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                21
+Passing Tests        21
+Asserts             200
+Time              21.826s
+
+
+---- All tests passed! ----
+

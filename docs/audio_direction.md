@@ -164,5 +164,5 @@ external samples or dependencies. Frequencies and envelopes share the loop perio
 The sixth bounded loop routes to **Music**, independently adjustable/mutable using
 the existing audio settings; radio ducking and the quiet paused/menu mix apply.
 It creates no gameplay AcousticEvents. Exact peak/RMS/hash are in
-`assets/audio-provenance.csv`. Native audio routing is tested; human listening and
+`assets/audio-provenance.csv`. Godot audio routing/import/mute are tested; human listening and
 headphone mastering remain review work.

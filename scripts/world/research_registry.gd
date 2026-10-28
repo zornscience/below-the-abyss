@@ -14,7 +14,9 @@ func configure(catalog: ResearchCatalog) -> Error:
 		return ERR_INVALID_PARAMETER
 	if _catalog != null:
 		return ERR_ALREADY_IN_USE
-	_catalog = catalog.duplicate(true) as ResearchCatalog
+	_catalog = ResearchCatalog.new()
+	_catalog.region_id = catalog.region_id
+	for entry: ScanDefinition in catalog.targets: _catalog.targets.append(entry.duplicate(false) as ScanDefinition)
 	return OK
 
 
@@ -30,7 +32,7 @@ func definition(id: StringName) -> ScanDefinition:
 	if _catalog != null:
 		for entry: ScanDefinition in _catalog.targets:
 			if entry.stable_id == id:
-				return entry.duplicate(true) as ScanDefinition
+				return entry.duplicate(false) as ScanDefinition
 	return null
 
 

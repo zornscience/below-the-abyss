@@ -14,6 +14,7 @@ var _small: bool = false
 var _wall_started: int = 0
 var _clock: RouteClock
 var _pings: int = 0
+var _threat_captured: bool = false
 class RouteClock extends Node:
 	var player: SubmarineController
 	var seconds: float = 0.0
@@ -67,7 +68,7 @@ func _activate(control: Control) -> void:
 	quit(1)
 
 
-func _move(target: Vector2) -> void:
+func _move(target: Vector2,precise: bool = false) -> void:
 	for _step: int in range(4800):
 		await _respond_radio()
 		if not _captures.is_empty() and not _arrival_captured and _scene.bloom.visual.arrival_active() and _scene.bloom.visual.arrival_elapsed>0.4:
@@ -92,7 +93,8 @@ func _move(target: Vector2) -> void:
 				motion.axis_value = encoded.x if axis == JOY_AXIS_LEFT_X else encoded.y
 				Input.parse_input_event(motion)
 		await physics_frame
-		if _scene.submarine.global_position.distance_to(target) < (28.0 if _keyboard else 12.0) and _scene.submarine.velocity.length() < (150.0 if _keyboard else 30.0):
+		# Digital steering has a 12-unit dead band on each axis (17 diagonally).
+		if _scene.submarine.global_position.distance_to(target) < (18.0 if precise else (28.0 if _keyboard else 12.0)) and _scene.submarine.velocity.length() < (15.0 if precise else (150.0 if _keyboard else 30.0)):
 			_release_motion()
 			await _frames(20)
 			return
@@ -290,9 +292,17 @@ func _expanded_course() -> void:
 		await _capture("buoy-missed-ping")
 	if OS.get_cmdline_user_args().has("--fauna-demo"):
 		var hull: float = _scene.submarine.hull_system.hull
-		await _move(Vector2(19000,900))
+		# Leave braking room inside the leash and space for a genuine head-first run,
+		# rather than settling on top of a stationary animal (which cannot ram).
+		await _move(Vector2(19300,900) if _keyboard else Vector2(19000,900),_keyboard)
 		await _capture("hammerhead-warning")
-		await _frames(240)
+		# A free patrol may initially be swimming away; wait, without moving either
+		# actor or altering its state, for the normal perception / warning / charge.
+		if _keyboard:
+			for unused: int in range(1800):
+				if _scene.submarine.hull_system.hull<hull: break
+				await physics_frame
+		else: await _frames(240)
 		assert(_scene.submarine.hull_system.hull<hull)
 		await _capture("hammerhead-ram")
 		await _move(Vector2(19000,650))
@@ -354,6 +364,11 @@ func _initialize() -> void:
 	_scene.torpedoes.fired.connect(func(_id: StringName) -> void: _shots+=1)
 	_scene.torpedoes.detonated.connect(func(_id: StringName,at: Vector2) -> void:
 		if not _captures.is_empty() and at.x>4500 and at.x<5050: _capture("underwater-detonation-"+str(_shots)))
+	if not _captures.is_empty():
+		_scene.chapter.guide.hammerhead.threat_changed.connect(func() -> void:
+			if not _threat_captured and _scene.chapter.guide.hammerhead.threat.phase==PredatorState.Phase.ALERT:
+				_threat_captured = true
+				_capture("hammerhead-warning-start"))
 	_scene.story.choice_applied.connect(func(_id: StringName,_encounter: StringName) -> void: _choice_events+=1)
 	_scene.missions.acknowledgement_claimed.connect(func(_id: StringName,_ack: StringName) -> void: _ack_events+=1)
 	_scene.research.scan_completed.connect(func(_id: StringName) -> void: _scan_events+=1)

@@ -106,7 +106,7 @@ func present(position: Vector2, binding_hint: String) -> void:
 func _navigate(operation: int) -> void:
 	if operation in [-1,1]: canvas.zoom = clampf(canvas.zoom*(2.0 if operation==1 else 0.5),1,4)
 	elif operation==0: canvas.center = canvas.player_position
-	else: canvas.center.x += signi(operation)*canvas.bounds.size.x/canvas.zoom*0.4
+	else: canvas.center.x = canvas._view().get_center().x+signi(operation)*canvas.bounds.size.x/canvas.zoom*0.4
 	canvas.queue_redraw()
 
 

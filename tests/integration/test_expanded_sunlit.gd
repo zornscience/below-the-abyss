@@ -281,8 +281,10 @@ func test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_control
 	game.exploration_map._navigate(1)
 	assert_eq(canvas.zoom,2.0)
 	var center: float = canvas.center.x
+	var edge: float = canvas._view().position.x
 	game.exploration_map._navigate(2)
 	assert_gt(canvas.center.x,center)
+	assert_gt(canvas._view().position.x,edge,"First east pan must move the actual clamped view.")
 	game.exploration_map._navigate(0)
 	assert_eq(canvas.center,canvas.player_position)
 	assert_false(canvas.points.any(func(point: PointOfInterest) -> bool: return point.stable_id==SunlitShallowsData.POI))

@@ -1,0 +1,126 @@
+BTA-050 verification record
+Source base: origin/main 8e1343263a742f828bef830442c3e3a4ec1c8403 (merged PR #33)
+Branch: bta-050-sunlit-environment-art
+Engine: 4.6.3.stable.official.7d41c59c4; GUT 9.6.1; Compatibility renderer.
+Local day: 2026-10-27 America/Chicago; retained process logs use UTC 2026-10-28.
+
+Environment for all commands:
+  export XDG_CACHE_HOME=/workspace/.cache
+  export XDG_DATA_HOME=/workspace/.local/share
+  export XDG_CONFIG_HOME=/workspace/.config
+Native display additionally:
+  export DISPLAY=:98 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2
+Existing dummy Xorg, Mesa llvmpipe software rendering, no new desktop dependency.
+
+COMPLETED EARLIER CHECKS
+python3 tools/validate_godot.py
+  PASS exact engine; headless import; 249 standalone authored parser checks;
+  60-frame main startup. logs/validation-summary.txt and parser-inventory.txt.
+  This inventory run preceded the final hidden-trim deferral. The final complete
+  GUT/runtime and final import/export cover that source; final checks noted below.
+python3 -m unittest discover -s tests/python -v
+  PASS 7/7. logs/python-tests.txt.
+Targeted Godot environment/title/art integration run:
+  PASS 16/16 before the final additional lazy-initialization test.
+  logs/focused-presentation.txt. Final full suite supersedes this result.
+
+NATIVE COMPARISON AND PROFILING
+python3 tools/capture_sunlit_environment.py --output docs/testing/bta-050/after \
+  --baseline docs/testing/bta-050/before
+  PASS 42 native after screenshots and 18 actual-playable samples, error-free.
+  Original baseline archive uses main 8e13432 project/assets/resources/scripts/scenes
+  plus only this capture fixture, imported in /tmp/bta050-baseline. Native command:
+  python3 tools/capture_sunlit_environment.py --project /tmp/bta050-baseline \
+    --output docs/testing/bta-050/before
+  Both run alone, unfixed FPS, same renderer, 20 warm-up + 60 sampled frames/pose.
+  Raw profile.json and profile-runtime.txt in before/after; performance.md all rows.
+
+Final alignment correction is in the fixture only: reset teleport interpolation,
+force existing camera update and zero-time depth refresh. Fresh stills:
+python3 tools/capture_sunlit_environment.py --stills-only \
+  --project /tmp/bta050-baseline --output docs/testing/bta-050/before
+python3 tools/capture_sunlit_environment.py --stills-only \
+  --output docs/testing/bta-050/after --baseline docs/testing/bta-050/before
+python3 tools/capture_sunlit_environment.py --stills-only --wide \
+  --output docs/testing/bta-050/after --baseline docs/testing/bta-050/before
+  PASS all 84 PNG dimensions; 42 exactly matching terrain fingerprints, player
+  coordinates, camera centers/zoom. Last wide refresh includes final water-colored
+  clear color. No image processing/compositing. Stills pause staged poses, not flight.
+  Camera field in original profile.json precedes warm-up; capture.json is final.
+  Profiles precede clear-color/hidden-mesh-init-only final changes (same visible draws).
+python3 tools/report_sunlit_environment.py
+  PASS 18 unfiltered comparisons. Draws fall; texture memory rises about 52 MiB;
+  software frame intervals generally regress. No 60 FPS target-hardware claim.
+
+BOUNDED RUNNER ATTEMPTS AND CORRECTION
+python3 tools/run_tests.py (initial run)
+  FAIL at the existing 600-second bound, without a recorded assertion failure.
+  The process was stopped before JUnit XML, and the runner correctly failed.
+  Hidden canonical rock clipping was being rebuilt for every title/prototype scene.
+  Deferred clipping until visible, retained dirty geometry and reuses unchanged trim.
+  Added a regression test; timeout was not raised and existing tests not weakened.
+  The second bounded run also exceeded 600 seconds, after the submarine-upgrade
+  tests, without an assertion failure. It is retained in logs/bounded-gut-timeout.txt
+  and logs/bounded-runner-result.txt. The direct full-GUT command below provides
+  a complete report without changing any CI limit, test or engine timing setting.
+  Do not interpret this as a passing bounded run or a hosted Actions result.
+
+FINAL RUNS
+timeout 900 godot --headless --path . --script res://addons/gut/gut_cmdln.gd \
+  -gexit -gdisable_colors \
+  -gjunit_xml_file=$PWD/docs/testing/bta-050/logs/full-suite.xml
+  PASS 595/595 tests, 68 scripts, 27,027 assertions, 498.2 seconds.
+  No skipped tests, failures or errors. XML and logs/full-gut.txt retained.
+  No fixed-FPS override or gameplay timing changes in this complete GUT run.
+
+python3 tools/verify_sunlit_shallows.py
+  PASS 12 canonical launches: both outcomes and devices, full and mid-expedition
+  separate-process Continue, no combat. logs/canonical-input-routes.txt.
+python3 tools/verify_revision_two.py
+  PASS real production controller route, encrypted logs, return/debrief and finite
+  research rewards; simulation 472.70 seconds, return hull 100, dock battery 100,
+  4 research points, 10 torpedoes, no excavations. logs/legacy-revision-route.txt.
+python3 tools/verify_expanded_expedition.py
+  PASS old expanded route, scans, debrief, hull 100, no excavation; 320.72 simulation
+  seconds. logs/expanded-route.txt.
+python3 tools/verify_story_choice.py
+  PASS eight launches: both outcomes/devices, mute and separate-process Continue.
+  logs/bloom-input-routes.txt.
+
+python3 tools/validate_godot.py (final source, including sparse capture fixture)
+  PASS exact Godot 4.6.3; headless import; 250 script checks; startup smoke.
+  logs/validation-summary.txt and parser-inventory.txt replace earlier inventory.
+DISPLAY=:98 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2 \
+BTA_EVIDENCE_DIR=$PWD/docs/testing/bta-050/route \
+  godot --path . --audio-driver Dummy --rendering-method gl_compatibility \
+  --disable-render-loop --fixed-fps 60 \
+  --script res://tests/fixtures/drive_sunlit_environment.gd --quit-after 24000 -- \
+  --profile=bta050-native-sparse-final --outcome=observe --input=controller
+  PASS complete real-input chapter, normal effects/particles/motion, muted;
+  76.13 simulation seconds; one choice, one claim, hull 100, ten torpedoes,
+  no shots/excavations. Ten native 1280x800 screenshots under route/.
+  logs/native-chapter-route.txt retains exact command, renderer and completion.
+  Thin inherited fixture forces only evidence frames to draw on the native renderer;
+  simulation/input/assertions unchanged, not a realtime performance measurement.
+  The continuous-render trial was stopped before switching to this documented
+  fixture. All performance profiles instead use the normal live render loop.
+  Only known unsupported-VSync warning; no errors, leaks or interpolation warnings.
+
+python3 tools/run_tests.py (final unchanged bounded retry, alone)
+  PASS tests=595, passed=595, failures=0, errors=0, skipped=0.
+  GUT 68 scripts, 27,027 assertions, 473.312 seconds, below unchanged 600-second bound.
+  logs/bounded-final-gut.txt and bounded-final-summary.txt. Earlier failures retained.
+  Hosted GitHub Actions results are not available through the blocked API.
+
+Linux export result follows in the final docs-only evidence commit.
+
+LIMITATIONS / ACCEPTANCE
+Automated keyboard/controller InputEvents exercise real actions, focus, movement,
+physics, acoustics, scanner, station and persistence. No human participant, physical
+controller, desktop GPU, audio-device/mute listening test or production art approval
+is claimed. Both comfort screenshot modes mute audio; written story/status remain.
+Actual-input route captures are separate from staged art comparison captures.
+Existing UI/save/domain files and collision/camera/navigation data remain unchanged.
+Software-rendered observations miss 16.67 ms; hardware profiling is required.
+AI-generated PNG source/provenance and pending project license are explicit;
+editable human-painted layers, atlas/alpha/repeat review remain external work.

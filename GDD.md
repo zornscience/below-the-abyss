@@ -198,3 +198,15 @@ underwater scene visible; semantic 16 px body text, 18–20 px headings and 17 p
 menu controls replace oversized defaults. Existing Compact/Standard/Large, contrast
 and comfort preferences remain. This changes presentation only; it adds no content,
 mechanic, progression or save field. Visual acceptance remains a reviewer decision.
+
+
+## Approved Sunlit Shallows environmental art — BTA-050
+
+The user requested a substantial illustrated pass for the existing canonical
+0–200 m chapter. Organic kelp variants, worn basalt/mineral detail, layered hazy
+scenery, scientific station infrastructure, marine snow/bubbles and painted fish/
+emergency-buoy presentation enrich the same route. The geometric plankton remains
+unchanged in a natural surrounding garden. All details remain decorative; terrain
+outlines, passage clearance, camera, target positions, progression, resources,
+choices and UI remain authoritative. No new region, discovery, mission or mechanic.
+[Native comparisons, performance and pending human-review limits](docs/testing/bta-050/README.md).

@@ -1,0 +1,48 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+SUNLIT_ART_CAPTURE 800-normal-departure
+SUNLIT_ART_CAPTURE 800-normal-early-exploration
+SUNLIT_ART_CAPTURE 800-normal-kelp-seabed
+SUNLIT_ART_CAPTURE 800-normal-plankton
+SUNLIT_ART_CAPTURE 800-normal-twin-spires
+SUNLIT_ART_CAPTURE 800-normal-emergency-buoy
+SUNLIT_ART_CAPTURE 800-normal-return-halcyon
+SUNLIT_ART_CAPTURE 800-reduced-departure
+SUNLIT_ART_CAPTURE 800-reduced-early-exploration
+SUNLIT_ART_CAPTURE 800-reduced-kelp-seabed
+SUNLIT_ART_CAPTURE 800-reduced-plankton
+SUNLIT_ART_CAPTURE 800-reduced-twin-spires
+SUNLIT_ART_CAPTURE 800-reduced-emergency-buoy
+SUNLIT_ART_CAPTURE 800-reduced-return-halcyon
+SUNLIT_ART_CAPTURE 1280-normal-departure
+SUNLIT_ART_CAPTURE 1280-normal-early-exploration
+SUNLIT_ART_CAPTURE 1280-normal-kelp-seabed
+SUNLIT_ART_CAPTURE 1280-normal-plankton
+SUNLIT_ART_CAPTURE 1280-normal-twin-spires
+SUNLIT_ART_CAPTURE 1280-normal-emergency-buoy
+SUNLIT_ART_CAPTURE 1280-normal-return-halcyon
+SUNLIT_ART_CAPTURE 1280-reduced-departure
+SUNLIT_ART_CAPTURE 1280-reduced-early-exploration
+SUNLIT_ART_CAPTURE 1280-reduced-kelp-seabed
+SUNLIT_ART_CAPTURE 1280-reduced-plankton
+SUNLIT_ART_CAPTURE 1280-reduced-twin-spires
+SUNLIT_ART_CAPTURE 1280-reduced-emergency-buoy
+SUNLIT_ART_CAPTURE 1280-reduced-return-halcyon
+SUNLIT_ART_CAPTURE 1920-normal-departure
+SUNLIT_ART_CAPTURE 1920-normal-early-exploration
+SUNLIT_ART_CAPTURE 1920-normal-kelp-seabed
+SUNLIT_ART_CAPTURE 1920-normal-plankton
+SUNLIT_ART_CAPTURE 1920-normal-twin-spires
+SUNLIT_ART_CAPTURE 1920-normal-emergency-buoy
+SUNLIT_ART_CAPTURE 1920-normal-return-halcyon
+SUNLIT_ART_CAPTURE 1920-reduced-departure
+SUNLIT_ART_CAPTURE 1920-reduced-early-exploration
+SUNLIT_ART_CAPTURE 1920-reduced-kelp-seabed
+SUNLIT_ART_CAPTURE 1920-reduced-plankton
+SUNLIT_ART_CAPTURE 1920-reduced-twin-spires
+SUNLIT_ART_CAPTURE 1920-reduced-emergency-buoy
+SUNLIT_ART_CAPTURE 1920-reduced-return-halcyon
+SUNLIT_ART_CAPTURE_PASS

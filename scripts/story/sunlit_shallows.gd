@@ -47,6 +47,9 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	sign.text = "200 m SURVEY LIMIT\nTwilight Shelf · future expedition"
 	UiTypography.style(sign,&"secondary")
 	boundary.add_child(sign)
+	dressing.configure(scene.region,boundary,[scene.creature,scene.predator])
+	scene.submarine.simulation_enabled_changed.connect(dressing.set_simulating)
+	scene.excavation.geometry_changed.connect(dressing.refresh_surfaces)
 	_previous_scan_gate = scene.research.completion_gate
 	scene.research.completion_gate = _before_scan_completion
 	scene.research.scan_completed.connect(_scan_completed)

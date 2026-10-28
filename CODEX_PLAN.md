@@ -218,3 +218,19 @@ Preserve all prior tests/routes/export. Do not create another PR or merge. PR #3
 was already merged externally before this request, so follow-up commits on its
 existing branch cannot become part of that closed review diff. See the revision
 record for exact validation results and remaining external review limits.
+
+
+## BTA-050 — Sunlit Shallows environmental art overhaul
+
+User-authorized art-only milestone from main after merged PR #33 (`8e13432`).
+Replace canonical geometric vegetation/scenery/fauna with reusable illustrated
+assets, layered atmospheric perspective, textured geology and Halcyon/buoy detail.
+Keep every collision, mission/research location, camera rule, resource, input/UI,
+progression and save contract. Scope dressing to the existing 0–200 m chapter;
+prototype mode restores its prior presentation. No region, mission, decision,
+upgrade, economy or dependency expansion. Honor existing comfort flags and avoid
+per-frame procedural geology/excess particles. Verify full tests/routes/export,
+actual-input chapter, native same-pose comparisons and measured software-renderer
+frame/draw/memory observations at all three sizes. No target-GPU or human visual
+acceptance claim without those reviews. Separate branch/PR; never merge automatically.
+[Implementation and evidence](docs/testing/bta-050/README.md).

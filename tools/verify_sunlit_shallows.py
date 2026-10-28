@@ -25,7 +25,7 @@ def main():
                 # One of the existing fresh routes also exercises all optional studies,
                 # real pressure exposure, missed ping and supply/rearm recovery.
                 extended = ["--survey-studies", "--vent-damage-demo", "--missed-ping-demo",
-                            "--empty-ammo-demo", "--low-energy-demo"] if (outcome, device)==("observe", "controller") else []
+                            "--empty-ammo-demo", "--low-energy-demo", "--fauna-demo"] if (outcome, device)==("observe", "controller") else []
                 launch(profile, outcome, device, "full", extended)
                 launch(profile, outcome, device, "continue", ["--resume"])
         for outcome, device in [("observe", "keyboard"), ("collect", "controller")]:

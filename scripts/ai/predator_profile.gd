@@ -2,6 +2,8 @@ class_name PredatorProfile
 extends CreatureProfile
 ## One optional encounter, not a creature species/progression pipeline.
 
+@export var hold_during_warning: bool = false
+@export var proximity_alert_radius: float = 0.0
 @export var retreat_hint: String = "RETREAT ↓ PAST 115 m"
 @export var warning_seconds: float = 2.5
 @export var pursuit_seconds: float = 6.0
@@ -31,6 +33,7 @@ func _init() -> void:
 
 
 func is_valid() -> bool:
+	if not is_finite(proximity_alert_radius) or proximity_alert_radius<0 or proximity_alert_radius>1000: return false
 	if not super.is_valid() or not AcousticEvent.valid_token(trigger_source_id) or retreat_hint.is_empty() or retreat_hint.length() > 48:
 		return false
 	for value: float in [warning_seconds, pursuit_seconds, pursuit_speed, pursuit_distance,

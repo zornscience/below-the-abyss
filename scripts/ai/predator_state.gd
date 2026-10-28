@@ -7,6 +7,7 @@ var phase: Phase = Phase.QUIET
 var _threat: PredatorProfile
 var _target: Vector2
 var _target_valid: bool = false
+var _target_visible: bool = true
 var _leash_origin: Vector2
 var _alert_until: float = 0.0
 var _pursue_until: float = 0.0
@@ -32,7 +33,8 @@ func reset_session() -> void:
 	_target_valid = false
 
 
-func set_target(position: Vector2, valid: bool) -> void:
+func set_target(position: Vector2, valid: bool, visible: bool = true) -> void:
+	_target_visible = visible
 	_target_valid = valid and position.is_finite()
 	if _target_valid:
 		_target = position
@@ -57,6 +59,7 @@ func destination() -> Vector2:
 
 
 func speed() -> float:
+	if phase==Phase.ALERT and _threat.hold_during_warning: return 0.0
 	return _threat.pursuit_speed if phase == Phase.PURSUE else super.speed()
 
 
@@ -76,6 +79,12 @@ func advance(delta: float, position: Vector2, blocked: bool = false) -> Error:
 	var result: Error = super.advance(delta, position, blocked)
 	if result != OK:
 		return result
+	# Optional visual awareness is not an AcousticEvent and never enters bus history.
+	if phase==Phase.QUIET and state==State.PATROL and _time>=_recover_until and _threat.proximity_alert_radius>0 \
+		and _target_valid and _target_visible and _rules.center_bounds().has_point(_target) and position.distance_to(_target)<=_threat.proximity_alert_radius:
+		_focus = {"origin":_target,"timestamp":_time}
+		_deadline = _time+_rules.investigation_seconds
+		_transition(State.INVESTIGATE,"VESSEL SIGHTED / RAM WARNING")
 	if phase == Phase.QUIET and state == State.INVESTIGATE:
 		phase = Phase.ALERT
 		_leash_origin = _focus.origin

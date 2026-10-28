@@ -2,7 +2,7 @@
 
 The canonical Sunlit Shallows now extends through a winding shallow survey course
 with optional studies and a clearly warned hydrothermal shaft. Players consult an
-approximate buoy report, clear a physical rockfall with an excavation torpedo,
+approximate buoy report, clear a thick physical rockfall with three well-placed excavation torpedoes,
 identify the hidden buoy only when an active-sonar wavefront reaches it, recover
 Mara's unchanged recording and return to Halcyon. Both bloom choices work; no
 wildlife combat or new chapter is required.
@@ -86,3 +86,17 @@ Software llvmpipe samples do not certify target-hardware performance. The new fi
 atlas is AI-generated, subject thumbnails are offline Godot renders, and project
 licensing remains pending. The overview needs zoom/pan for local geography at small
 resolutions. No automatic merge.
+
+## PR #35 review revision
+
+Additional loop/alcove, interlocking passages and collision-matched jagged basalt;
+a three-shot rough cave-in; illustrated eel/turtle plus optional warned, escapable
+hammerhead head ram; richer bounded underwater impact/bubble effects; radio arrival
+sound and swimming bloom. New Game confirms, archives expedition plus legacy stores,
+and starts fresh while preserving preferences. Schema 7 and permanent stable IDs
+remain compatible, including an already-cleared pre-revision gate.
+
+[Final review route, native gallery, commands, test results, asset provenance and
+archive limitations](https://github.com/zornscience/below-the-abyss/blob/bta-051-expanded-sunlit-shallows/docs/testing/bta-051/revision/README.md).
+No additional PR or automatic merge. Hosted CI status must be checked on GitHub;
+local evidence is labeled separately.

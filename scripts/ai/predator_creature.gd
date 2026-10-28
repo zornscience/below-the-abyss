@@ -29,7 +29,9 @@ func _live_player() -> SubmarineController:
 
 func _before_step(_delta: float) -> void:
 	var player: SubmarineController = _live_player()
-	threat.set_target(_region.to_local(player.global_position) if player != null else Vector2.ZERO, player != null)
+	var target: Vector2 = _region.to_local(player.global_position) if player!=null else Vector2.ZERO
+	var seen: bool = player!=null and ((_rules as PredatorProfile).proximity_alert_radius<=0 or navigation.segment_clear(position,target))
+	threat.set_target(target,player!=null,seen)
 
 
 func _after_step(delta: float) -> void:

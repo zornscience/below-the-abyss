@@ -120,7 +120,7 @@ func _impact(projectile: TorpedoProjectile, at: Vector2) -> void:
 	_effects.append(effect)
 	_emitter.global_position = at
 	_emitter.emit_event(StringName(String(projectile.event_id)+"/blast"), _clock)
-	_scene.audio.request(&"impact")
+	_scene.audio.request(&"underwater_blast")
 	detonated.emit(projectile.event_id, at)
 func reset_session() -> void:
 	for trail: TorpedoTrail in _trails:

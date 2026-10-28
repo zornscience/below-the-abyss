@@ -58,7 +58,7 @@ def main() -> None:
             arguments += ["-gconfig=", "-gtest=res://tests/fixtures/intentional_failure.gd"]
         command_error = None
         try:
-            # The 624-test expanded region suite retains real-time physics coverage.
+            # The expanded region suite retains real-time physics coverage.
             # Keep a bounded run; the post-PR34 600s budget now expires near the end.
             run_check(name, arguments, timeout=900)
         except RuntimeError as error:

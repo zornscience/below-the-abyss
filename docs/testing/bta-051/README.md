@@ -1,5 +1,7 @@
 # BTA-051 — expanded Sunlit Shallows
 
+**PR #35 revision:** [additional passages, three-shot gate, marine life, effects and New Game](revision/README.md). The initial evidence below is historical.
+
 Based on merged PR #34, main `ce64e08`. Branch `bta-051-expanded-sunlit-shallows`.
 Only the canonical first region is expanded; no Twilight Shelf, new alignment choice,
 late-game reveal or wildlife combat requirement. The exact Mara message, both

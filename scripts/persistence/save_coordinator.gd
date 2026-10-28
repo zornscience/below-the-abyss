@@ -4,6 +4,7 @@ extends Node
 
 signal status_changed
 signal checkpoint_restored
+var last_campaign_archive: String = ""
 var status: String = "No expedition save loaded."
 var store: ExpeditionStore = ExpeditionStore.new()
 var _scene: ShelfPrototype
@@ -203,6 +204,11 @@ func continue_expedition() -> Error:
 	var saved: Dictionary = validated.data
 	if _scene.excavation != null and _scene.excavation.restore(saved.terrain) != OK:
 		return _report("Terrain checkpoint rejected; vessel unchanged.", ERR_INVALID_DATA)
+	var layout: SunlitRegionLayout = _scene.region.get_node_or_null("SunlitRegionLayout") as SunlitRegionLayout
+	if layout!=null:
+		layout.preserve_archived_opening(_scene.excavation,saved.progress.discoveries)
+		saved.terrain = _scene.excavation.snapshot()
+		_state.terrain = saved.terrain.duplicate(true)
 	var at: Vector2 = Vector2(saved.player.position[0], saved.player.position[1])
 	var angle: float = saved.player.rotation
 	var relocated: bool = not position_clear(at, angle)
@@ -382,3 +388,58 @@ func commit_research_checkpoint(proposed: Array[StringName]) -> Error:
 				if not _scene.submarine.scanner.eligible(id): return ERR_UNAUTHORIZED
 				awards.append(id)
 	return _write(candidate,"Scientific record and safe vessel checkpoint saved together.",awards)
+
+func begin_new_campaign(replacement: ExpeditionStore = null) -> Error:
+	# Explicit title confirmation only. Archive ALL campaign stores to prevent legacy reimport.
+	if _busy or _scene.submarine.is_physics_processing(): return ERR_BUSY
+	var candidate: Dictionary = snapshot()
+	candidate.story = StoryState.fresh()
+	candidate.legacy_conclusion = false
+	candidate.progress = {"discoveries":[],"research":[],"upgrades":[],"missions":_scene.missions._catalog.initial_records()}
+	candidate.prototype = {"ammunition":10,"campaign":CampaignData.fresh()}
+	candidate.terrain = []
+	candidate.route = {"stage":0,"elapsed_seconds":0.0}
+	candidate.player = {"position":[_scene.region.spawn.global_position.x,_scene.region.spawn.global_position.y],"rotation":0.0,"hull":100.0,"battery":100.0,"oxygen":100.0,"sonar_cooldown":0.0}
+	if ExpeditionSchema.decode(candidate).error!=OK: return ERR_INVALID_DATA
+	var paths: Array[String] = [store.path]
+	for legacy: Variant in [_scene.discovery_store,_scene.research_store,_scene.upgrades.store,_scene.missions.store]:
+		if legacy.path not in paths: paths.append(legacy.path)
+	var archive: String = store.path.get_base_dir().path_join("campaign-archive-%d-%d" % [int(Time.get_unix_time_from_system()),Time.get_ticks_usec()])
+	if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(archive)): return ERR_ALREADY_EXISTS
+	var error: Error = DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(archive))
+	if error!=OK: return _report("New Game cancelled: archive unavailable; current campaign preserved.",error)
+	last_campaign_archive = archive
+	_busy = true
+	var moved: Array[Dictionary] = []
+	var writing_candidate: bool = false
+	for index: int in range(paths.size()):
+		for suffix: String in ["",".bak",".tmp",".invalid",".rejected"]:
+			var original: String = ProjectSettings.globalize_path(paths[index]+suffix)
+			if not FileAccess.file_exists(original): continue
+			var destination: String = ProjectSettings.globalize_path(archive.path_join(str(index)+"-"+paths[index].get_file()+suffix))
+			error = DirAccess.rename_absolute(original,destination)
+			if error!=OK: break
+			moved.append({"from":original,"to":destination})
+		if error!=OK: break
+	if error==OK:
+		writing_candidate = true
+		var writer: ExpeditionStore = replacement if replacement!=null else ExpeditionStore.new()
+		writer.path = store.path
+		writer.load_checkpoint()
+		error = writer.write_checkpoint(candidate)
+	if error!=OK:
+		# Discard only this operation's new candidate, then restore the archived originals.
+		for suffix: String in ["",".bak",".tmp"]:
+			var generated: String = ProjectSettings.globalize_path(store.path+suffix)
+			if writing_candidate and FileAccess.file_exists(generated):
+				DirAccess.remove_absolute(generated)
+		moved.reverse()
+		for item: Dictionary in moved:
+			var rollback: Error = DirAccess.rename_absolute(item.to,item.from)
+			if rollback!=OK:
+				_busy = false
+				return _report("Campaign retained in archive; automatic rollback failed. Archive: "+archive,rollback)
+		_busy = false
+		return _report("New Game cancelled; previous campaign restored. Settings unchanged.",error)
+	_busy = false
+	return _report("New campaign created. Previous campaign archived at "+archive,OK)

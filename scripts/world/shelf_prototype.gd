@@ -545,6 +545,7 @@ func open_settings() -> void:
 func restart_route() -> void:
 	if chapter!=null:
 		for school: AmbientFishSchool in chapter.guide.schools: school.reset_session()
+		for animal: AcousticCreature in chapter.guide.fauna: animal.reset_session()
 		chapter.guide.popup.dismiss()
 		chapter.guide.ambient.reset_session()
 	if bloom!=null: bloom.reset_session()

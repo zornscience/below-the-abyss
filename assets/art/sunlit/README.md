@@ -96,3 +96,37 @@ static habitat must be clear; this is conservative avoidance, not pathfinding.
 
 The underwater scientific subjects remain placeholders, not taxonomic claims about
 real species. Human art, atlas-edge and target-GPU approval remain outstanding.
+
+## PR #35 feedback additions
+
+`marine_animals.png` is a 2172×724 transparent, original OpenAI image_gen output:
+three equal 724×724 cells for a moray eel, sea turtle and hammerhead. The hammerhead
+silhouette was revised with the same tool; the committed master is the unchanged
+edited output, not a human-painted layered source. Exact source identities/hash are
+in provenance.json. Lossless import, mipmaps and linear mipmap filtering match the
+existing schools. Painted widths are 120/88/140 world units, with gentle body roll
+and eel skew; Reduced Motion removes these decorative transforms. Actual movement
+uses the existing acoustic creature navigation. Human anatomy/atlas-edge review and
+production licensing remain outstanding; no new exclusive rights are claimed.
+
+Rough protected rock, the thick rockfall and clipped basalt material share the same
+deterministic authored contours. No decorative false passages are painted over solid
+walls. Seafloor bubbles use twelve fixed source locations, staggered deterministic
+phases and one 36-instance batch. They do not consume gameplay RNG. The plankton
+encounter now drifts locally while alive; its interaction/research location is fixed.
+
+The new underwater detonation uses three bounded batches: ten soft cavitation cloud
+sprites, 28 rising bubble rings and twelve textured fragments, plus a brief existing
+local refraction shader and pressure flash. No extra full-screen shader is added.
+Reduced Effects/Particles/Motion use the launcher's existing comfort policy, removing
+the decorative batches, flash and lens. The remaining quiet ring expires in 0.65 s;
+the full cosmetic effect expires in 2.6 simulation seconds. Audio sources are original
+fixed-seed PCM DSP in `tools/synthesize_feedback_audio.py`, not recordings. Regenerate:
+
+```sh
+python3 tools/synthesize_feedback_audio.py
+```
+
+Radio uses UI volume/mute; muffled blast and occasional cosmetic bubble chirps use
+Effects volume/mute and the existing voice budgets. They generate no gameplay
+AcousticEvents. See [review evidence and limitations](../../../docs/testing/bta-051/revision/README.md).

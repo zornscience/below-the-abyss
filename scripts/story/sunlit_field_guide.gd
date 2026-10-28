@@ -5,12 +5,16 @@ const RADIO_IDS: Array[String] = ["sunlit-map-guidance","sunlit-cavein-guidance"
 var scene: ShelfPrototype
 var layout: SunlitRegionLayout
 var schools: Array[AmbientFishSchool] = []
+var fauna: Array[AcousticCreature] = []
+var hammerhead: HammerheadCreature
+var _hammer_phase: int = 0
 var popup: ScientificDiscoveryPopup
 var ambient: AmbientAcousticField
 var _announced: Array[String] = []
 var _foreign: Array[Dictionary] = []
 var _dust: Array[ExcavationSediment] = []
 var _enabled: bool = false
+var _bubble_clock: float = 0.0
 
 func setup(game: ShelfPrototype) -> void:
 	scene = game
@@ -49,6 +53,7 @@ func setup(game: ShelfPrototype) -> void:
 	for child: Node in scene.region.get_children():
 		if child is OuterShelfInk or child is ExpeditionWreck :
 			_foreign.append({"node":weakref(child),"visible":child.visible})
+	_make_fauna()
 	scene.excavation.geometry_changed.connect(_geometry_changed)
 	scene.torpedoes.detonated.connect(_blast)
 	scene.research.scan_completed.connect(_scanned)
@@ -58,6 +63,7 @@ func setup(game: ShelfPrototype) -> void:
 
 func _restored() -> void:
 	ambient.reset_session()
+	for animal: AcousticCreature in fauna: animal.reset_session()
 	_simulation(scene.submarine.is_physics_processing())
 	_refresh()
 
@@ -115,6 +121,11 @@ func _simulation(enabled: bool) -> void:
 		for animal: AcousticCreature in scene.extension.wildlife:
 			animal.set_suspended(true)
 			animal.visible = false
+	for animal: AcousticCreature in fauna:
+		animal.visible = _enabled and not animal._destroyed
+		animal.collision_layer = 8 if _enabled and not animal._destroyed else 0
+		animal.set_suspended(not _enabled or not enabled)
+	if hammerhead!=null: scene.hud.bind_threat(hammerhead if _enabled else scene.predator)
 	for school: AmbientFishSchool in schools:
 		school.visible = _enabled
 		school.receiver.enabled = enabled and _enabled
@@ -126,11 +137,15 @@ func _announce(id: String,body: String,voice: String) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not _enabled or not scene.submarine.is_physics_processing(): return
+	_bubble_clock += delta
+	if _bubble_clock>=9.0:
+		_bubble_clock = 0.0
+		if scene.submarine.global_position.x>700: scene.audio.request(&"bubble")
 	var at: Vector2 = scene.submarine.global_position
 	if at.x>780:
 		_announce("sunlit-map-guidance","Lantern-2, we've marked the last known location of Lantern-1's emergency buoy signal on your map. The coordinates aren't exact. Open your map ("+scene.input_context.describe(&"open_map")+") and explore toward the marked search area. Charted rock is solid; hatched sectors are not yet surveyed. Select Zoom and Pan with the same menu controls.","Okafor")
 	if at.x>4000 and at.x<4800 and not layout.passage_clear():
-		_announce("sunlit-cavein-guidance","A recent cave-in has blocked the passage. Lantern-2 carries excavation torpedoes. Face the fractured rock and fire ("+scene.input_context.describe(&"fire_torpedo")+") to clear an opening. It must be wide enough for the entire hull. Halcyon can rearm you; the return passage stays open.","Wick")
+		_announce("sunlit-cavein-guidance","A recent cave-in has blocked the passage. Lantern-2 carries excavation torpedoes. This is a thick fractured plug: several well-placed blasts are needed. Face the rock and fire ("+scene.input_context.describe(&"fire_torpedo")+") to clear an opening. It must be wide enough for the entire hull. Halcyon can rearm you; the return passage stays open.","Wick")
 		scene.tutorial.show_hint("torpedo")
 	if SunlitSurveyData.SEARCH.has_point(at) and scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.HIDDEN:
 		_announce("sunlit-search-guidance","We've reached the last reported coordinates, but I don't have a visual contact. Try an active sonar ping ("+scene.input_context.describe(&"sonar_ping")+"). The buoy's acoustic reflector may still respond. The circle is approximate: move within it if the first pulse misses.","Wick")
@@ -203,3 +218,42 @@ func _refresh() -> void:
 	scene.exploration_map.refresh()
 	scene.research_log.refresh_summary()
 	if scene.mission_tracker!=null: scene.mission_tracker.refresh()
+
+func _make_fauna() -> void:
+	for item: Dictionary in [{"id":&"sunlit-moray","kind":0,"bounds":Rect2(8270,550,450,220),"points":PackedVector2Array([Vector2(8380,650),Vector2(8600,690)])},{"id":&"sunlit-turtle","kind":1,"bounds":Rect2(7280,250,650,170),"points":PackedVector2Array([Vector2(7400,335),Vector2(7750,335)])},{"id":&"sunlit-hammerhead","kind":2}]:
+		var animal: AcousticCreature = preload("res://scenes/creatures/acoustic_creature.tscn").instantiate() as AcousticCreature
+		if item.kind==2:
+			animal.set_script(preload("res://scripts/ai/hammerhead_creature.gd"))
+			hammerhead = animal as HammerheadCreature
+			animal.configuration = preload("res://resources/creatures/sunlit_hammerhead.tres")
+		else:
+			animal.configuration = CreatureProfile.new()
+			animal.configuration.navigation_bounds = item.bounds
+			animal.configuration.patrol_points = item.points
+			animal.configuration.patrol_speed = 32 if item.kind==1 else 48
+		animal.creature_id = item.id
+		animal.position = animal.configuration.patrol_points[0]
+		scene.region.add_child(animal)
+		var bind_result: Error = animal.bind_bus(scene.get_node("AcousticBus") as AcousticBus)
+		if bind_result!=OK: push_error("Invalid authored marine animal: "+String(animal.creature_id))
+		var blast: BlastReceiver = BlastReceiver.new()
+		animal.add_child(blast)
+		blast.setup(animal)
+		scene.torpedoes._receivers.append(blast)
+		if animal is HammerheadCreature:
+			var player_result: Error = hammerhead.setup_player(scene.submarine)
+			if player_result!=OK: push_error("Hammerhead player binding failed.")
+			hammerhead.threat_changed.connect(_hammer_changed)
+		var paint: MarineAnimalPaint = MarineAnimalPaint.new()
+		animal.add_child(paint)
+		paint.setup(animal,scene,item.kind)
+		(animal.get_node("StateCaption") as Label).hide()
+		animal.set_suspended(true)
+		animal.hide()
+		fauna.append(animal)
+
+func _hammer_changed() -> void:
+	if hammerhead.threat.phase==_hammer_phase: return
+	_hammer_phase = hammerhead.threat.phase
+	if scene.audio!=null:
+		scene.audio.request(&"predator_alert" if _hammer_phase==PredatorState.Phase.ALERT else (&"predator_pursue" if _hammer_phase==PredatorState.Phase.PURSUE else &"retreat"))

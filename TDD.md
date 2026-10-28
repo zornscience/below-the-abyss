@@ -396,3 +396,12 @@ points; old records migrate with no retroactive award. No independent XP file,
 mutable XP total, mission ledger or Resonance coupling. Scan completion and award
 commit together before signals. Detailed migration/failure semantics and bounded
 rendering optimizations: [BTA-051 decisions](docs/decisions/bta-051-expanded-shallows.md).
+
+## BTA-051 PR #35 review revision
+
+User-authorized additional shallow passages and dead ends, collision-matched rough
+rock and three-shot excavation, illustrated eel/turtle and optional escapable
+hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloom.
+Title New Game explicitly confirms and archives all campaign stores; preferences
+remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
+compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).

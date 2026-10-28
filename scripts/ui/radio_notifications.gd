@@ -1,6 +1,7 @@
 class_name RadioNotifications
 extends Control
 ## Session-only delivery queue; campaign/research/narrative remain the durable authorities.
+signal message_received(id: String)
 const PREVIEW_SECONDS: float = 12.0
 var revision: ExpeditionRevision
 var pending: Array[String] = []
@@ -84,6 +85,7 @@ func enqueue(id: String,body: String,source: String = "Shelf Base",urgent: bool 
 	texts[id] = body
 	sources[id] = source
 	pending.append(id)
+	message_received.emit(id)
 	if selected.is_empty(): _next_preview()
 	if urgent:
 		selected = id

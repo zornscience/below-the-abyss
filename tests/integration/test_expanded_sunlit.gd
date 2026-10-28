@@ -70,12 +70,12 @@ func _scan(id: StringName) -> void:
 	game.submarine.scanner.advance(game.research.definition(id).duration)
 	assert_true(game.research.is_completed(id))
 
-func test_authored_main_route_is_shallow_and_whole_hull_clear_after_one_opening() -> void:
+func test_authored_main_route_is_shallow_and_whole_hull_clear_after_three_blasts() -> void:
 	assert_eq(game.region.camera_bounds,SunlitSurveyData.CAMERA)
 	assert_true(game.saves.position_clear(game.region.spawn.global_position,0))
 	assert_false(_clear(Vector2(4300,480),Vector2(4900,480)))
 	assert_false(game.chapter.guide.layout.passage_clear())
-	assert_gt(game.excavation.excavate(Vector2(4550,480),150),0)
+	for x: float in [4550.0,4690.0,4830.0]: assert_gt(game.excavation.excavate(Vector2(x,480),150),0)
 	await wait_physics_frames(3)
 	assert_true(game.chapter.guide.layout.passage_clear())
 	var previous: Vector2 = game.region.spawn.global_position
@@ -89,23 +89,25 @@ func test_small_cut_or_blocked_shot_cannot_claim_traversal_but_off_center_hull_o
 	game.excavation.excavate(Vector2(4550,480),25)
 	assert_false(game.chapter.guide.layout.passage_clear())
 	assert_eq(game.discoveries.state_of(SunlitSurveyData.CLEARED),DiscoveryRegistry.State.HIDDEN)
-	game.excavation.excavate(Vector2(4550,650),150)
+	for x: float in [4550.0,4690.0,4830.0]: game.excavation.excavate(Vector2(x,650),150)
 	await wait_physics_frames(3)
 	assert_true(game.chapter.guide.layout.passage_clear())
 	assert_true(_clear(Vector2(4300,650),Vector2(4900,650)))
 	assert_eq(game.discoveries.state_of(SunlitSurveyData.CLEARED),DiscoveryRegistry.State.DISCOVERED)
 
-func test_real_projectile_opens_passage_without_harming_wildlife_or_protected_objects() -> void:
+func test_three_real_projectiles_open_passage_without_harming_wildlife_or_protected_objects() -> void:
 	_at(Vector2(4300,480))
 	game.submarine.facing = 1
 	game.submarine.set_simulation_enabled(true)
 	watch_signals(game.torpedoes)
-	assert_eq(game.torpedoes.request_fire(),OK)
-	await wait_physics_frames(90)
+	for shot: int in range(3):
+		assert_eq(game.torpedoes.request_fire(),OK)
+		await wait_physics_frames(90)
+		assert_eq(game.chapter.guide.layout.passage_clear(),shot==2)
 	game.submarine.set_simulation_enabled(false)
 	assert_true(game.chapter.guide.layout.passage_clear())
-	assert_signal_emit_count(game.torpedoes,"detonated",1)
-	assert_eq(game.torpedoes.ammunition,9)
+	assert_signal_emit_count(game.torpedoes,"detonated",3)
+	assert_eq(game.torpedoes.ammunition,7)
 	assert_false(game.creature._destroyed)
 	assert_eq(game.submarine.hull_system.hull,100.0)
 	assert_true(game.excavation.snapshot().any(func(cut: Dictionary) -> bool: return cut.rock=="sunlit-cavein"))
@@ -185,7 +187,7 @@ func test_failed_scan_write_has_no_record_xp_signal_or_popup() -> void:
 	assert_eq(FileAccess.get_file_as_string(game.expedition_path),bytes)
 
 func test_clearance_xp_and_hidden_buoy_discovery_survive_restart_reload_and_no_signal_replay() -> void:
-	game.excavation.excavate(Vector2(4550,480),150)
+	for x: float in [4550.0,4690.0,4830.0]: game.excavation.excavate(Vector2(x,480),150)
 	_scan(&"sunlit-silver-shoal")
 	_identify(SunlitShallowsData.BUOY)
 	game.submarine.set_simulation_enabled(false)

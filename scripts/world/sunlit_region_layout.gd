@@ -20,7 +20,7 @@ func configure(region: ContinentalShelf,excavation: ExcavationSystem) -> void:
 	gate = DestructibleRock.new()
 	gate.name = "FracturedPassage"
 	region.get_node("Terrain").add_child(gate)
-	gate.configure("sunlit-cavein",SunlitSurveyData._rect(SunlitSurveyData.GATE),Color("87948a"))
+	gate.configure("sunlit-cavein",SunlitSurveyData.gate_contour(),Color("87948a"))
 	excavation.register(gate)
 	for child: Node in region.get_node("Terrain").get_children():
 		if child==gate: continue
@@ -62,7 +62,7 @@ func passage_clear() -> bool:
 		for direction: int in [-1,1]:
 			var y: float = 480+offset*12*direction
 			if y<256 or y>764: continue
-			var swept: PackedVector2Array = SunlitSurveyData._rect(Rect2(4480,y-34,220,68))
+			var swept: PackedVector2Array = SunlitSurveyData._rect(Rect2(4440,y-34,600,68))
 			var blocked: bool = false
 			for polygon: PackedVector2Array in gate.pieces:
 				if not Geometry2D.intersect_polygons(swept,polygon).is_empty():
@@ -72,3 +72,12 @@ func passage_clear() -> bool:
 				_passage_y = y
 				return true
 	return false
+
+func preserve_archived_opening(excavation: ExcavationSystem,discoveries: Array) -> void:
+	# PR35 cleared gates are grandfathered; never reopen a permanently cleared route.
+	# Same bounded journal/API, no new flags, event, score or completion emission.
+	if String(SunlitSurveyData.CLEARED) not in discoveries or passage_clear(): return
+	# Derived compatibility geometry consumes no extra cut slots, even at MAX_CUTS.
+	# The already permanent cleared POI reconstructs this widening on each restore.
+	for x: float in [4550.0,4690.0,4830.0,4930.0]: gate.carve(Vector2(x,480),150)
+	excavation.geometry_changed.emit()

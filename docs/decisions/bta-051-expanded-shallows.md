@@ -1,5 +1,7 @@
 # BTA-051 — expanded shallow survey and atomic science XP
 
+**PR #35 feedback update:** [revised geography, three-shot gate, compatibility and New Game](../testing/bta-051/revision/README.md) records the final behavior; initial capture/performance evidence remains historical.
+
 Base: merged PR #34, main ce64e08. Canon is docs/story/Below_the_Abyss_Story_Bible.pdf.
 This expands only the existing Sunlit Shallows expedition. The local optional vent
 is not a playable Twilight Shelf or a revelation about Lantern-1's eventual fate.
@@ -21,8 +23,9 @@ mapping with surface y=0. The vent ends at y=2500 (625 m), below all existing fi
 there is no proximity damage trigger. The shallow vent-margin study is possible
 without entering pressure damage. World signs and urgent text accompany the HUD.
 
-One 150-unit excavation blast opens the rockfall. Completion requires a swept
-220×68 whole-hull opening, not a detonation, count or narrow puncture. Checks cache
+The rough 380-unit-thick rockfall takes three well-placed 150-unit blasts.
+Completion requires a swept 600×68 whole-hull opening, not a detonation, count
+or narrow puncture. Checks cache
 the current topology. Existing excavation records persist cuts; the ordinary
 DiscoveryRegistry records `sunlit-cleared-passage` once when an opening qualifies.
 Ammunition remains ten and deliberate Halcyon docking rearms it. The western return

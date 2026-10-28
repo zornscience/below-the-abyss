@@ -123,7 +123,7 @@ func test_tracker_follows_bloom_recording_return_and_claim() -> void:
 	assert_eq(game.bloom.choose_collect(),OK)
 	game.bloom.leave()
 	assert_true(game.mission_tracker.detail.text.contains("fractured passage"))
-	game.excavation.excavate(Vector2(4560,480),150)
+	for x: float in [4550.0,4690.0,4830.0]: game.excavation.excavate(Vector2(x,480),150)
 	assert_true(game.chapter.guide.layout.passage_clear())
 	assert_true(game.mission_tracker.detail.text.contains("sonar search"))
 	game.submarine.global_position = SunlitSurveyData.BUOY

@@ -10,6 +10,8 @@ const ROOTS: Array[Vector2] = [Vector2(740,800),Vector2(820,800),Vector2(940,800
 	Vector2(2825,735),Vector2(2950,800),Vector2(3080,800),Vector2(3200,800),Vector2(3340,800),
 	Vector2(3510,800),Vector2(3590,800),Vector2(3710,740),Vector2(3800,800)]
 var rocks: SunlitRockDressing
+const BUBBLE_SOURCES: Array[Vector2] = [Vector2(850,782),Vector2(5400,780),Vector2(6800,780),Vector2(8400,782),Vector2(10600,780),Vector2(11780,780),Vector2(13100,780),Vector2(14000,2470),Vector2(15000,780),Vector2(16900,780),Vector2(19100,1000),Vector2(20600,780)]
+const BUBBLE_RISE: Array[float] = [420,420,140,420,300,420,420,420,280,420,420,420]
 var phase: float = 0.0
 var reduced_motion: bool = false
 var reduced_effects: bool = false
@@ -83,7 +85,7 @@ func _compose() -> void:
 	cradle.name = "HalcyonServiceCradle"
 	cradle.z_index = 3
 	_make_snow(36,false)
-	_make_snow(4,true)
+	_make_snow(36,true)
 	_make_snow(8,false)
 	_snow.back().set_meta("vent",true)
 	var vent_light: Sprite2D = _sprite(HalcyonDescent.SEARCHLIGHT,Rect2(-30,-190,1500,380),Color(0.86,0.47,0.20,0.16))
@@ -171,6 +173,10 @@ func _position_snow() -> void:
 		var bubble: bool = batch.get_meta("bubble")
 		for index: int in range(batch.multimesh.instance_count):
 			var at: Vector2 = Vector2(left+fposmod(index*137.731+phase*0.7,3072),200+fposmod(index*97.33+phase*(-5 if bubble else 1.3),560))
+			if bubble:
+				var source: Vector2 = BUBBLE_SOURCES[index/3]
+				# Authored rise ceilings keep bubbles below the island/arch/overhang.
+				at = source+Vector2((index%3-1)*18+sin(index*7.13+phase*0.8)*9,-fposmod(phase*(18+index%5*4)+index*91.37,BUBBLE_RISE[index/3]))
 			if bool(batch.get_meta("vent",false)): at = Vector2(14000+sin(index*2.3+phase*0.4)*110,920+fposmod(index*137.0-phase*8,1450))
 			batch.multimesh.set_instance_transform_2d(index,Transform2D(0,Vector2.ONE*(0.6+float(index%3)*0.2),0,at))
 			batch.multimesh.set_instance_color(index,Color(0.83,0.49,0.23,0.25) if bool(batch.get_meta("vent",false)) else Color(0.62,0.83,0.81,0.28 if bubble else 0.21))

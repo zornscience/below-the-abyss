@@ -6,13 +6,13 @@ const CAMERA: Rect2i = Rect2i(0,0,22000,2600)
 const BUOY: Vector2 = Vector2(20800,620)
 const SEARCH: Rect2 = Rect2(18600,260,3300,490)
 const REPORT: Vector2 = Vector2(20000,500)
-const GATE: Rect2 = Rect2(4550,220,70,580)
+const GATE: Rect2 = Rect2(4550,220,380,580)
 const CLEARED: StringName = &"sunlit-cleared-passage"
 const VENT: Rect2 = Rect2(13200,800,1600,1700)
 const MAIN_ROUTE: Array[Vector2] = [Vector2(1280,480),Vector2(3500,480),Vector2(4300,480),
-	Vector2(4900,480),Vector2(5400,600),Vector2(6850,600),Vector2(7100,360),
-	Vector2(8500,360),Vector2(8750,620),Vector2(9750,620),Vector2(9800,300),
-	Vector2(11500,300),Vector2(11900,400),Vector2(13000,400),Vector2(14000,480),
+	Vector2(4900,480),Vector2(5400,600),Vector2(6850,660),Vector2(7150,660),Vector2(7150,360),
+	Vector2(8500,360),Vector2(8750,620),Vector2(9750,620),Vector2(9800,710),
+	Vector2(11780,710),Vector2(11780,350),Vector2(11900,350),Vector2(13000,400),Vector2(14000,480),
 	Vector2(14700,650),Vector2(16600,650),Vector2(16900,320),Vector2(19000,320),
 	Vector2(19500,480),Vector2(20800,620)]
 const STUDIES: Array[Dictionary] = [
@@ -26,17 +26,42 @@ const STUDIES: Array[Dictionary] = [
 	{"id":"sunlit-vent-survey","title":"Hydrothermal shaft margin","kind":"geological","at":Vector2(14000,1090),"text":"Warm mineral-rich water rises through a basalt fracture. This local shaft descends below the vessel's pressure rating. Its shallow margin can be surveyed without entering damaging pressure; the descent is optional and returns along the same open shaft."}]
 
 static func terrain() -> Array[PackedVector2Array]:
-	return [
+	var authored: Array[PackedVector2Array] = [
 		_rect(Rect2(3900,0,18100,220)),
-		PackedVector2Array([Vector2(3900,800),Vector2(13200,800),Vector2(13450,960),Vector2(13450,2340),Vector2(13750,2500),Vector2(14250,2500),Vector2(14550,2340),Vector2(14550,960),Vector2(14800,800),Vector2(22000,800),Vector2(22000,2600),Vector2(3900,2600)]),
+		PackedVector2Array([Vector2(3900,800),Vector2(13200,800),Vector2(13450,960),Vector2(13450,2340),Vector2(13750,2500),Vector2(14250,2500),Vector2(14550,2340),Vector2(14550,960),Vector2(14800,800),Vector2(18600,800),Vector2(18600,1020),Vector2(19600,1020),Vector2(19600,800),Vector2(22000,800),Vector2(22000,2600),Vector2(3900,2600)]),
 		_rect(Rect2(21920,0,80,2600)),
 		PackedVector2Array([Vector2(5500,220),Vector2(6500,220),Vector2(6460,400),Vector2(6100,440),Vector2(5550,390)]),
 		PackedVector2Array([Vector2(7200,800),Vector2(7220,560),Vector2(7600,500),Vector2(8100,520),Vector2(8200,800)]),
 		PackedVector2Array([Vector2(8850,220),Vector2(9700,220),Vector2(9680,480),Vector2(9250,510),Vector2(8880,450)]),
+		# Two interlocked baffles force a down/across/up passage. Upper lane is a dead end.
+		_rect(Rect2(11250,220,350,400)),_rect(Rect2(12000,500,400,300)),
+		# An island gives a real upper/lower loop; the western high alcove ends blind.
+		_rect(Rect2(6600,490,360,100)),_rect(Rect2(6400,330,500,50)),
 		_rect(Rect2(10000,380,1200,70)),_rect(Rect2(10000,440,120,210)),_rect(Rect2(11080,440,120,210)),
 		PackedVector2Array([Vector2(12100,800),Vector2(12200,570),Vector2(12800,570),Vector2(12900,800)]),
 		PackedVector2Array([Vector2(15000,220),Vector2(16300,220),Vector2(16240,480),Vector2(15700,515),Vector2(15060,470)]),
 		PackedVector2Array([Vector2(17300,800),Vector2(17400,470),Vector2(17900,440),Vector2(18500,490),Vector2(18600,800)])]
+	var result: Array[PackedVector2Array] = []
+	for index: int in range(authored.size()): result.append(rough_contour(authored[index],index))
+	return result
+
+static func rough_contour(polygon: PackedVector2Array,seed_value: int = 0) -> PackedVector2Array:
+	# Authored reproducible contour detail, shared by paint, map and actual collision.
+	# Endpoints remain fixed so attached structures keep their original joins.
+	var result: PackedVector2Array = []
+	for index: int in range(polygon.size()):
+		var a: Vector2 = polygon[index]
+		var b: Vector2 = polygon[(index+1)%polygon.size()]
+		var steps: int = maxi(1,ceili(a.distance_to(b)/150.0))
+		var normal: Vector2 = (b-a).orthogonal().normalized()
+		for step: int in range(steps):
+			var t: float = float(step)/steps
+			var erosion: float = 0.0 if step==0 else sin(step*2.19+index*1.73+seed_value)*12.0+sin(step*0.83+seed_value)*6.0
+			result.append(a.lerp(b,t)+normal*erosion)
+	return result
+
+static func gate_contour() -> PackedVector2Array:
+	return rough_contour(_rect(GATE),39)
 
 static func _rect(rectangle: Rect2) -> PackedVector2Array:
 	return PackedVector2Array([rectangle.position,Vector2(rectangle.end.x,rectangle.position.y),rectangle.end,Vector2(rectangle.position.x,rectangle.end.y)])

@@ -9,7 +9,8 @@ recover missing acoustician Mara Voss's emergency buoy. Bring the recording home
 for a first-expedition debrief. The Twilight Shelf is a future chapter, not playable.
 
 - **Start:** Begin/Continue The Sunlit Shallows, Options and Quit on the illustrated
-  title. Accept a short briefing; asking Okafor about the anomalies is optional.
+  title. **New Game** confirms and archives the current campaign before starting fresh;
+  control/audio/accessibility preferences stay. Accept a short briefing; asking Okafor about the anomalies is optional.
 - **Pilot:** WASD/arrows or left stick; F/X sonar, E/A interact/scan/dock,
   M/Back map/research, P/Start pause. Bindings are remappable. Optional Wick tutorial
   cards can be disabled under Pause → Help & tutorials.
@@ -682,3 +683,7 @@ safe checkpoint, or Restart Test Route; permanent records and cleared terrain re
 · [performance and Fedora/NVIDIA profiling](docs/testing/bta-051/performance.md).
 The 15–20 minute first-time chapter length is a human-playtest target, not a claim
 established by automated steering or accelerated simulation.
+
+PR #35 review adds passages/dead ends, rough rock, a three-shot cave-in, eel/turtle/
+hammerhead, underwater impact/radio effects and New Game. [Review evidence, save
+compatibility and manual route](docs/testing/bta-051/revision/README.md).

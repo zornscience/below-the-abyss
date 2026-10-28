@@ -247,3 +247,12 @@ acoustic, mission, scan and save contracts. No Zone 2 or future-story reveal.
 
 Acceptance/evidence: [BTA-051](docs/testing/bta-051/README.md). Human first-time
 15–20 minute pacing and target-GPU 60 FPS remain explicit unverified targets.
+
+## BTA-051 PR #35 review revision
+
+User-authorized additional shallow passages and dead ends, collision-matched rough
+rock and three-shot excavation, illustrated eel/turtle and optional escapable
+hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloom.
+Title New Game explicitly confirms and archives all campaign stores; preferences
+remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
+compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).

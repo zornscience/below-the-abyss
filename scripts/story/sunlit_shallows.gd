@@ -5,16 +5,20 @@ const DATA: NarrativeCatalog = preload("res://resources/story/sunlit_narrative.t
 var scene: ShelfPrototype
 var active: bool = false
 var buoy: EmergencyBuoyVisual
+var guide: SunlitFieldGuide
 var dressing: SunlitDressing
 var departure: HalcyonDeparture
+var _water_polygon: PackedVector2Array
 var _water_color: Color
 var boundary: StaticBody2D
 var _needs_rebase: bool = false
 var _previous_scan_gate: Callable
+var _plate_description: String = ""
 func setup(owner_scene: ShelfPrototype) -> void:
 	scene = owner_scene
 	assert(DATA.is_valid())
 	_water_color = (scene.region.get_node("Water") as Polygon2D).color
+	_water_polygon = (scene.region.get_node("Water") as Polygon2D).polygon
 	dressing = SunlitDressing.new()
 	dressing.z_index = -2
 	scene.region.add_child(dressing)
@@ -24,13 +28,14 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	scene.region.add_child(departure)
 	departure.hide()
 	buoy = EmergencyBuoyVisual.new()
-	buoy.position = Vector2(3500,620)
+	buoy.position = SunlitSurveyData.BUOY
+	buoy.hide()
 	scene.region.add_child(buoy)
 	boundary = StaticBody2D.new()
 	boundary.collision_layer = 0
 	boundary.collision_mask = 2
 	scene.region.add_child(boundary)
-	for rectangle: Rect2 in [Rect2(120,800,3860,1000),Rect2(3900,220,80,580)]:
+	for rectangle: Rect2 in [Rect2(120,800,3780,1800)]:
 		var collision: CollisionShape2D = CollisionShape2D.new()
 		var shape: RectangleShape2D = RectangleShape2D.new()
 		shape.size = rectangle.size
@@ -43,8 +48,8 @@ func setup(owner_scene: ShelfPrototype) -> void:
 		boundary.add_child(silhouette)
 	boundary.hide()
 	var sign: Label = Label.new()
-	sign.position = Vector2(3480,742)
-	sign.text = "200 m SURVEY LIMIT\nTwilight Shelf · future expedition"
+	sign.position = Vector2(21400,742)
+	sign.text = "END OF SHALLOWS SURVEY\nNo access to the Twilight Shelf"
 	UiTypography.style(sign,&"secondary")
 	boundary.add_child(sign)
 	dressing.configure(scene.region,boundary,[scene.creature,scene.predator])
@@ -57,6 +62,10 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	scene.missions.missions_changed.connect(_refresh)
 	scene.missions.records_restored.connect(_refresh)
 	if scene.saves!=null: scene.saves.checkpoint_restored.connect(_refresh)
+	guide = SunlitFieldGuide.new()
+	add_child(guide)
+	guide.setup(scene)
+	scene.discoveries.registry_changed.connect(_refresh)
 	scene.revision.ui.show_title()
 	_refresh()
 func state() -> String:
@@ -110,9 +119,15 @@ func start_prototype() -> void:
 	scene.revision.start()
 func _activate(value: bool) -> void:
 	active = value
+	guide.set_enabled(value)
+	for definition: ScanDefinition in scene.research._catalog.targets:
+		if definition.stable_id==&"shelf-calibration-plate":
+			if _plate_description.is_empty(): _plate_description = definition.description
+			definition.description = "The engraved reference face checks the scanner against a known scientific baseline. Fine intervals and weathered brass distinguish the manufactured instrument from the surrounding mineral deposits. Halcyon uses these marks to compare field measurements." if value else _plate_description
 	dressing.visible = value
 	departure.visible = value
 	(scene.region.get_node("Water") as Polygon2D).color = Color("123643") if value else _water_color
+	(scene.region.get_node("Water") as Polygon2D).polygon = SunlitSurveyData._rect(Rect2(0,0,22000,2600)) if value else _water_polygon
 	boundary.visible = value
 	boundary.collision_layer = 1 if value else 0
 	(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2" if value else "NERIS / 01"
@@ -123,8 +138,12 @@ func _activate(value: bool) -> void:
 	scene.narrative.debrief_ready_provider = can_debrief if value else Callable()
 	scene.narrative.debrief_provider = debrief if value else Callable()
 	scene.exploration_map.presentation_bounds = SunlitShallowsData.BOUNDS if value else Rect2()
+	scene.exploration_map.presentation_excluded_ids.clear()
+	if value:
+		for point: Dictionary in ShelfChapterData.POINTS:
+			if point.at.x>=3900: scene.exploration_map.presentation_excluded_ids.append(StringName(point.id))
 	scene.exploration_map.canvas.report_caption = "BUOY SEARCH AREA · HALCYON" if value else "LAST CONTACT · BASE REPORT"
-	scene.region.camera_bounds = Rect2i(0,0,3900,800) if value else ShelfChapterData.BOUNDS
+	scene.region.camera_bounds = SunlitSurveyData.CAMERA if value else ShelfChapterData.BOUNDS
 	scene.region.configure_camera(scene.submarine.get_node("Camera2D") as Camera2D)
 	(scene.submarine.get_node("Camera2D") as Camera2D).reset_smoothing()
 	scene.exploration_map.refresh()
@@ -153,7 +172,7 @@ func show_debrief() -> void:
 	var text: String = entry(&"sunlit-debrief").text if concluded() else debrief_text()
 	scene.revision.ui.show_story_page("HALCYON / FIRST EXPEDITION",text,"Return to operations" if concluded() or not can_debrief() else "Submit expedition debrief",_submit_debrief,&"SubmitSunlitDebrief",_back_to_dock)
 func debrief_text() -> String:
-	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Okafor: We still need Lantern-1's buoy recording. Keep to the shallows and search near Twin Spires.\n\n"+guidance()
+	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Okafor: We still need Lantern-1's buoy recording. Keep to the shallows and consult the charted search area on your map.\n\n"+guidance()
 	var response: String = scene.bloom.response_text() if scene.story.resolved(LightBloomEncounter.ENCOUNTER) else "Crane: The light bloom still needs a deliberate study. A scan or a bottled specimen will suffice."
 	return entry(&"sunlit-buoy-recovered").text+"\n\n"+response+"\n\n"+guidance()
 func _submit_debrief() -> void:
@@ -170,7 +189,13 @@ func _back_to_dock() -> void:
 	scene.revision.ui.show_dock()
 func entries() -> Array[NarrativeEntry]:
 	var result: Array[NarrativeEntry] = [entry(&"sunlit-arrival")]
-	if state()!="available": result.append(entry(&"sunlit-orders"))
+	if state()!="available":
+		result.append(entry(&"sunlit-orders"))
+		var field: NarrativeEntry = NarrativeEntry.new()
+		field.stable_id = &"sunlit-field-course"
+		field.title = "Shallows field course"
+		field.text = "Use the map to follow charted passages toward the approximate buoy signal. Clear the fractured rockfall with a facing-fired excavation torpedo. Halcyon rearms the vessel. The volcanic shaft is an optional pressure hazard, not the next chapter. Sonar must reach the hidden buoy before it can be scanned. Unique scientific records earn research XP; revisit them through Map → Research."
+		result.append(field)
 	if scene.story.resolved(LightBloomEncounter.ENCOUNTER):
 		var bloom_entry: NarrativeEntry = NarrativeEntry.new()
 		bloom_entry.stable_id = &"sunlit-bloom-observation"
@@ -187,8 +212,8 @@ func log_text() -> String:
 func guidance() -> String:
 	if concluded(): return "CHAPTER COMPLETE · Mara's message is archived · Twilight Shelf awaits a future expedition"
 	if not scene.story.resolved(LightBloomEncounter.ENCOUNTER): return "Study the light bloom east of Halcyon · scan unharmed or bottle a specimen"
-	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Find Lantern-1's buoy near Twin Spires · sonar, approach, Interact to recover"
-	return "Bring Mara's recording home · return west through the upper passage and dock at Halcyon"
+	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Consult the map · clear the fractured passage · search the reported signal area with sonar"
+	return "Bring Mara's recording home · retrace the surveyed passages west and dock at Halcyon"
 func _scan_completed(id: StringName) -> void:
 	if active and id==SunlitShallowsData.BUOY:
 		scene.revision.ui.notifications.enqueue("sunlit-buoy-recovered",entry(&"sunlit-buoy-recovered").text,"Wick / Mara’s buoy")
@@ -200,10 +225,11 @@ func _choice_applied(id: StringName,_encounter: StringName) -> void:
 func _refresh() -> void:
 	if buoy==null: return
 	buoy.recovered = scene.research.is_completed(SunlitShallowsData.BUOY)
+	buoy.visible = active and scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.DISCOVERED
 	buoy.queue_redraw()
 	if not active: return
-	scene.exploration_map.canvas.has_report = not buoy.recovered
-	scene.exploration_map.canvas.reported_position = Vector2(3500,620)
+	scene.exploration_map.canvas.has_report = scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.HIDDEN
+	scene.exploration_map.canvas.reported_position = SunlitSurveyData.REPORT
 	scene.exploration_map.canvas.queue_redraw()
 
 func can_offer_prototype() -> bool:
@@ -216,7 +242,7 @@ func can_offer_prototype() -> bool:
 func close_buoy_message() -> void:
 	scene.revision.ui.notifications.collapse()
 func _before_scan_completion(id: StringName) -> Error:
-	if id!=SunlitShallowsData.BUOY:
+	if id==LightBloomEncounter.SCAN or not active:
 		return _previous_scan_gate.call(id) if _previous_scan_gate.is_valid() else OK
 	if scene.saves==null or not scene.submarine.scanner.eligible(id): return ERR_UNAVAILABLE
 	var proposed: Array[StringName] = scene.research.completed_ids()

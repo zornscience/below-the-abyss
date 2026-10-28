@@ -1,0 +1,1 @@
+PASS: extracted standalone release launch, default telemetry OFF, build 63bf6aacd842f62a9ddc4475bd9f7dcb9b439aea

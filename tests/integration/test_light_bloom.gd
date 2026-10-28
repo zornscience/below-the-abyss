@@ -150,6 +150,7 @@ func test_mute_and_comfort_modes_keep_explicit_text_and_static_feedback() -> voi
 func test_old_checkpoint_migrates_with_zero_story_and_preserved_prototype_progress() -> void:
 	var old: Dictionary = scene.saves.snapshot()
 	old.schema_version = 4
+	old.prototype.campaign.erase("science")
 	old.erase("story")
 	old.prototype.ammunition = 7
 	var decoded: Dictionary = ExpeditionSchema.decode(old)
@@ -174,6 +175,7 @@ func test_all_previous_checkpoint_versions_migrate_with_zero_story_state() -> vo
 	for version: int in [1,2,3,4]:
 		var old: Dictionary = source.duplicate(true)
 		old.schema_version = version
+		old.prototype.campaign.erase("science")
 		old.erase("story")
 		if version<=3: old.erase("prototype")
 		if version<=2:
@@ -214,6 +216,7 @@ func test_opposite_branch_backup_conflict_preserves_files_and_live_choice() -> v
 	var data: Dictionary = scene.saves.snapshot()
 	data.story = opposite.snapshot()
 	data.progress.research.append(String(LightBloomEncounter.SCAN))
+	data.prototype.campaign.science = ResearchExperienceData.reconcile(data.prototype.campaign.science,data.progress.research)
 	var file: FileAccess = FileAccess.open(path+".expedition.json.bak",FileAccess.WRITE)
 	file.store_string(JSON.stringify(data))
 	file.close()
@@ -282,7 +285,7 @@ func test_bottled_plankton_is_extinguished_without_a_seabed_stump() -> void:
 		if node is LightBloomVisual:
 			assert_true(node.specimen_view)
 			assert_false(node.plankton_visible())
-	assert_eq(ExpeditionSchema.VERSION,6)
+	assert_eq(ExpeditionSchema.decode(scene.saves.snapshot()).error,OK)
 	assert_eq(scene.story.definition(LightBloomEncounter.OBSERVE).resonance_delta,15)
 	assert_eq(scene.story.definition(LightBloomEncounter.COLLECT).resonance_delta,-15)
 func test_bloom_text_uses_character_roles_and_keeps_the_anomaly_unexplained() -> void:

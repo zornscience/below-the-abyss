@@ -1,0 +1,3 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SCANNER_BENCH {"batches":7,"calls_per_batch":1000,"median_ms":244.864,"samples_ms":[228.706,235.119,244.082,244.864,305.956,307.921,373.167],"targets":8}

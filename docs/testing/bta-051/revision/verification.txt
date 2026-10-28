@@ -1,0 +1,97 @@
+PR #35 review revision / BTA-051 — 2026-10-28
+Implementation source: 35b72a213fab6888457d037d9a01f21a0b9443d3
+Branch: bta-051-expanded-sunlit-shallows; existing PR #35, not another PR.
+Godot 4.6.3.stable.official.7d41c59c4; GUT 9.6.1.
+
+AUTOMATED PASS
+python3 tools/validate_godot.py
+  Exact engine pin, headless editor import, 271 script checks and startup smoke.
+  logs/validation.txt. Four final edited scripts checked again with --check-only;
+  logs/final-parser.txt. First stale editor-cache import timeout retained separately.
+python3 tools/run_tests.py
+  641/641 tests; 41,217 assertions; 715.205s; failures/errors/skips = 0.
+  logs/full-gut.txt, logs/full-suite.xml. No test removed or disabled.
+  17 additional tests cover new behavior; existing tests extended for three shots,
+  new title focus order, bounded bubble count and concave painted-trim geometry.
+  Earlier harness failures and their corrections: logs/development-checks.txt;
+  corrected focused environment/review suite: 22/22 (logs/harness-fixes-22.txt).
+python3 tools/synthesize_feedback_audio.py
+  All three committed PCM files regenerate byte-identically; hashes retained in
+  logs/audio-reproducibility.txt and logs/asset-checksums.json.
+
+CLEAN LINUX RELEASE PASS
+Source cloned locally into /tmp/pr35-clean-export, no .godot or ignored GUT copied.
+python3 tools/build_playtest.py
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-35b72a213fab.zip --log /tmp/pr35-standalone.log
+  development_dirty=false; exact source above; extracted standalone launch succeeds
+  away from editor/source, with isolated local data and default telemetry OFF.
+  Binary SHA256 0c748076102663a3ead681b3430022ef78765e2fe7069fcc5211b189c38e26da.
+  logs/clean-import.txt, linux-export.txt, linux-manifest.json, standalone-result.txt.
+  The package is a local verification artifact, not an uploaded public release.
+
+BOUNDARIES
+These are automated tests, not first-time human or physical-controller acceptance.
+Native screenshot capture uses Mesa llvmpipe / software Compatibility, Dummy audio.
+Audio listening quality and target desktop GPU 60 FPS remain unverified.
+Archive rollback handles reported I/O errors, not a multi-file power-loss transaction.
+Artwork is original AI output with provenance; production licensing/human review pending.
+
+INPUT-DRIVEN HEADLESS PASS (all CI route entry points)
+python3 tools/verify_sunlit_shallows.py
+  12 separate launches: four fresh chapters (both choices x keyboard/controller),
+  four full Continue runs, two quit-at-buoy and two Continue-from-buoy returns.
+  Fresh/complete Continue never repeats choice or claim rewards. Buoy checkpoints
+  complete their first remaining debrief exactly once. All runs muted/comfort mode.
+  Extended controller case: 865.183 simulation seconds / 165.438 wall seconds,
+  260 XP, 13 shots (10 intentionally wasted then docking/rearm + 3 excavation shots),
+  all optional studies, real pressure exposure/recovery, missed ping/energy failure,
+  upper blind alcove, turtle/eel and hammerhead damage/escape. Logs retained.
+python3 tools/verify_expanded_expedition.py
+  PASS controller expedition/scans/debrief, no excavation, full hull; legacy fixture.
+python3 tools/verify_revision_two.py
+  PASS controller expedition/docking/encrypted logs/finite rewards; return hull100,
+  dock battery100, research points4, ammo10, no excavation; legacy prototype.
+python3 tools/verify_story_choice.py
+  PASS eight launches: both bloom outcomes x both devices + separate-process Continue;
+  completed choices emit zero repeats on restore. Muted audio.
+python3 -m unittest discover -s tests/python -v
+  PASS 7/7 in 0.001s.
+
+NATIVE 1280x800 PASS
+Controller / observe / all optional studies / fauna / audio muted / normal effects.
+SUNLIT_CHAPTER_WALK_PASS choices=1 claims=1 simulation_seconds=656.883333333065
+  wall_seconds=232.148208 research_xp=260 shots=3.
+logs/native-1280.txt and route-1280/*.png. No rendering errors; known llvmpipe
+V-Sync capability warning only. Evidence frames explicitly drawn; not a performance run.
+
+NATIVE 800x600 PASS
+Keyboard / collect / fauna / Large Text + High Contrast + reduced motion/effects/
+particles / audio muted. After evidence-only digital-steering corrections (09d4e79):
+SUNLIT_CHAPTER_WALK_PASS choices=1 claims=1 simulation_seconds=419.899999999947
+  wall_seconds=128.917689 research_xp=80 shots=3.
+logs/native-800.txt; route-800/*.png. Actual ALERT-start, moving head ram, ascent,
+sonar message, Halcyon return/debrief and completion captured. No errors/leaks;
+known llvmpipe V-Sync capability warning only. Final fixture check-only parse passes.
+Production scripts/assets are unchanged from 35b72a2; later 09d4e79 changes only the
+optional keyboard fauna driver's stopping tolerance, wait and warning screenshot.
+
+LIVE NATIVE PROFILE PASS
+python3 tools/capture_sunlit_survey.py --output docs/testing/bta-051/revision/profile --baseline docs/testing/bta-051/after
+  PASS 66 native captures at 800x600/1280x800/1920x1080, normal and reduced;
+  dimensions verified, 36 live samples with 60 wall-frame intervals each, no errors.
+  Six shared views match original player pose/zoom/camera framing. Geometry changes
+  intentionally. 14 selected stills retained; all raw samples/counters retained.
+  See performance.md; this software renderer run does not establish hardware 60 FPS.
+
+HOSTED DELIVERY LIMITATION
+GitHub git fetch works; existing PR #35 head branch is the branch being updated.
+GitHub GraphQL API query returns Forbidden (logs/hosted-api-block.txt). Hosted check
+status and PR-description edits cannot be verified/performed here. No hosted CI
+success is claimed. Updated body is prepared in ../pull-request.md and all review
+material is committed on the PR branch. Do not merge automatically.
+
+HUMAN ACCEPTANCE NOT RUN
+No first-time human walkthrough, physical gamepad, speaker/headphone listening,
+modest desktop GPU performance or final art acceptance is claimed. Automated actual
+Godot keyboard/joypad events, native captures and software-renderer samples are
+reported separately above. Archives lack an in-game restore UI and power-loss journal.

@@ -5,7 +5,7 @@
 script = ExtResource("2")
 stable_id = &"sunlit-arrival"
 title = "Halcyon Station"
-text = "HALCYON STATION / Meridian Deep Institute\nStation funding: Tethys Extraction\n\nOkafor: I'm Dr. Elias Okafor. Our survey sub, Lantern-1, vanished while investigating the Halvard Anomalies. Its pilot, Dr. Mara Voss, is an acoustician—and a friend.\n\nWick: Lantern-2 is ready. I'll help you bring it home.\n\nCrane: Observe the light bloom. Lantern-1's emergency buoy surfaced weeks after the loss; search the shallows near Twin Spires and recover its recorder."
+text = "HALCYON STATION / Meridian Deep Institute\nStation funding: Tethys Extraction\n\nOkafor: I'm Dr. Elias Okafor. Our survey sub, Lantern-1, vanished while investigating the Halvard Anomalies. Its pilot, Dr. Mara Voss, is an acoustician—and a friend.\n\nWick: Lantern-2 is ready. I'll help you bring it home.\n\nCrane: Observe the light bloom. Lantern-1's emergency buoy surfaced weeks after the loss; consult the map's last reported signal area and recover its recorder. Stay in the shallows; the volcanic shaft is optional."
 [sub_resource type="Resource" id="E1"]
 script = ExtResource("2")
 stable_id = &"sunlit-anomalies"
@@ -15,7 +15,7 @@ text = "Okafor: Lights gathering into geometric patterns. A repeating sound we c
 script = ExtResource("2")
 stable_id = &"sunlit-orders"
 title = "First-dive orders"
-text = "THE SUNLIT SHALLOWS / 0–200 m\n\nFollow the station pylons east. Study the light bloom, then continue through the upper passage to Twin Spires. Use sonar to identify the emergency buoy and Interact to recover its recorder. Return by the same passage and deliberately dock at Halcyon.\n\nWick: Watch battery and oxygen. Pings cost more power than cruising. If supplies run low, return; the station can refill them. The map keeps your discoveries. Combat is not required."
+text = "THE SUNLIT SHALLOWS / 0–200 m\n\nConsult the map, then follow the station pylons east. Study the light bloom and use an excavation torpedo to clear the fractured passage beyond Twin Spires. Survey the kelp, arches and canyons toward the approximate signal area. Only a sonar wave reaching the buoy identifies it; approach and Interact to recover its recorder. Retrace the surveyed passages and deliberately dock at Halcyon.\n\nWick: Watch battery and oxygen. Pings cost more power than cruising. If supplies run low, return; the station can refill them. The map keeps your discoveries. First scientific records earn research XP; repeated scans do not. The deep vent is optional: check the fitted pressure rating and ascend on a warning. Combat against wildlife is not required."
 [sub_resource type="Resource" id="E3"]
 script = ExtResource("2")
 stable_id = &"sunlit-buoy-recovered"

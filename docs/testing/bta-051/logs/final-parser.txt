@@ -1,0 +1,36 @@
+Running bta051-final-parser-0: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-final-parser-1: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_field_guide.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_field_guide.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-final-parser-2: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_dressing.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_dressing.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-final-parser-3: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map_canvas.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map_canvas.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-final-parser-4: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/expedition_interface.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/expedition_interface.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-final-parser-5: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-final-parser-6: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_survey_matrix.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_survey_matrix.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+PASS: seven final edited scripts rechecked after the complete 267-script validation

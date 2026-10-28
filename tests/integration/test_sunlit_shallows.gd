@@ -40,7 +40,7 @@ func _bloom(collect: bool) -> void:
 	game.bloom.leave()
 func _buoy() -> void:
 	game.submarine.sonar.advance(10.0)
-	game.submarine.global_position = Vector2(3500,620)
+	game.submarine.global_position = SunlitSurveyData.BUOY
 	game.submarine.velocity = Vector2.ZERO
 	game.route_check.sample(false,true,1.0)
 	assert_eq(game.submarine.sonar.request_ping(),OK)
@@ -101,7 +101,7 @@ func test_aggressive_choice_also_completes_without_combat_or_extra_rewards() -> 
 func test_buoy_is_hidden_until_wavefront_and_intentional_scan_then_persists() -> void:
 	_launch()
 	assert_false(game.chapter.log_text().contains(SunlitShallowsData.MESSAGE))
-	game.submarine.global_position = Vector2(3500,620)
+	game.submarine.global_position = SunlitSurveyData.BUOY
 	assert_ne(game.submarine.scanner.request_scan(SunlitShallowsData.BUOY),OK)
 	_buoy()
 	var saved: Dictionary = game.saves.store.read_file(game.expedition_path).data
@@ -127,20 +127,21 @@ func test_old_return_does_not_count_until_message_is_recovered_and_brought_home(
 func test_boundaries_camera_and_map_stay_in_zone1_and_prototype_can_be_restored() -> void:
 	_launch()
 	assert_eq(game.chapter.boundary.collision_layer,1)
-	assert_eq(game.region.camera_bounds,Rect2i(0,0,3900,800))
+	assert_eq(game.region.camera_bounds,SunlitSurveyData.CAMERA)
 	assert_eq(game.exploration_map.canvas.bounds,SunlitShallowsData.BOUNDS)
-	assert_lte(game.region.depth_at_world(Vector2(3500,620)),200.0)
+	assert_lte(game.region.depth_at_world(SunlitSurveyData.BUOY),200.0)
 	game.chapter._activate(false)
 	assert_eq(game.chapter.boundary.collision_layer,0)
 	assert_eq(game.region.camera_bounds,ShelfChapterData.BOUNDS)
 func test_version_five_adds_unaccepted_chapter_without_rewriting_legacy_claims() -> void:
 	var document: Dictionary = game.saves.snapshot()
 	document.schema_version = 5
+	document.prototype.campaign.erase("science")
 	document.progress.missions.erase(String(SunlitShallowsData.MISSION))
 	var old: Dictionary = document.progress.duplicate(true)
 	var loaded: Dictionary = ExpeditionSchema.decode(document)
 	assert_eq(loaded.error,OK)
-	assert_eq(loaded.data.schema_version,6)
+	assert_eq(loaded.data.schema_version,ExpeditionSchema.VERSION)
 	assert_eq(loaded.data.progress,old)
 	var merged: Dictionary = ExpeditionSchema.merge_progress(loaded.data.progress,game.saves.progress_snapshot())
 	assert_eq(merged.missions[String(SunlitShallowsData.MISSION)].state,"available")
@@ -169,7 +170,7 @@ func test_briefing_focus_visits_every_action_and_never_duplicates_footer_control
 	assert_eq(current,visited[0])
 func test_buoy_checkpoint_failure_leaves_no_record_message_or_completion() -> void:
 	_launch()
-	game.submarine.global_position = Vector2(3500,620)
+	game.submarine.global_position = SunlitSurveyData.BUOY
 	game.submarine.sonar.request_ping()
 	game.submarine.sonar.advance(2.0)
 	assert_eq(game.submarine.scanner.request_scan(SunlitShallowsData.BUOY),OK)
@@ -184,7 +185,7 @@ func test_pause_freezes_buoy_scanning_and_mute_does_not_hide_its_message() -> vo
 	var audio: Dictionary = game.settings.snapshot().audio
 	audio.muted = true
 	game.settings.set_audio(audio)
-	game.submarine.global_position = Vector2(3500,620)
+	game.submarine.global_position = SunlitSurveyData.BUOY
 	game.submarine.sonar.request_ping()
 	game.submarine.sonar.advance(2.0)
 	game.submarine.scanner.request_scan(SunlitShallowsData.BUOY)
@@ -250,10 +251,10 @@ func test_zone_boundary_blocks_swept_motion_and_upgrades_do_not_open_zone2() -> 
 	game.submarine.global_position = Vector2(3050,650)
 	assert_true(game.submarine.test_move(game.submarine.global_transform,Vector2(0,500),collision))
 	assert_lte(collision.get_travel().y,150.0)
-	game.submarine.global_position = Vector2(3750,650)
+	game.submarine.global_position = Vector2(21800,650)
 	assert_true(game.submarine.test_move(game.submarine.global_transform,Vector2(1000,0),collision))
 	assert_lte(collision.get_travel().x,150.0)
-	assert_eq(game.region.camera_bounds.end.y,800)
+	assert_eq(game.region.camera_bounds.end.y,2600)
 func test_large_small_window_briefing_keeps_reading_controls_and_all_actions_reachable() -> void:
 	viewport.size = Vector2i(800,600)
 	var comfort: Dictionary = game.settings.snapshot().accessibility

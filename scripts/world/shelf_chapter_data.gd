@@ -32,6 +32,7 @@ static func terrain_ids() -> Array[String]:
 	var ids: Array[String] = ["ceiling","seabed-and-trench","central-shelf","overlook-pillar","west-spire","east-spire"]
 	for rock: Dictionary in ROCKS:
 		ids.append(rock.id)
+	ids.append("sunlit-cavein")
 	return ids
 static func discoveries(include_story: bool = false) -> DiscoveryCatalog:
 	var catalog: DiscoveryCatalog = load("res://resources/regions/shelf_discoveries.tres").duplicate(true) as DiscoveryCatalog
@@ -54,8 +55,9 @@ static func discoveries(include_story: bool = false) -> DiscoveryCatalog:
 		buoy.stable_id = SunlitShallowsData.POI
 		buoy.sonar_target_id = SunlitShallowsData.ECHO
 		buoy.display_name = "Emergency buoy"
-		buoy.map_position = Vector2(3500,620)
+		buoy.map_position = SunlitSurveyData.BUOY
 		catalog.points.append(buoy)
+		catalog.points.append_array(SunlitSurveyData.points())
 	return catalog
 static func research(encrypted: bool = false) -> ResearchCatalog:
 	var catalog: ResearchCatalog = load("res://resources/regions/shelf_research.tres").duplicate(true) as ResearchCatalog
@@ -71,7 +73,19 @@ static func research(encrypted: bool = false) -> ResearchCatalog:
 		catalog.targets.append(target)
 	if encrypted:
 		catalog.targets.append(preload("res://resources/story/light_bloom_scan.tres").duplicate(true) as ScanDefinition)
-		catalog.targets.append(preload("res://resources/story/sunlit_buoy_scan.tres").duplicate(true) as ScanDefinition)
+		var buoy: ScanDefinition = preload("res://resources/story/sunlit_buoy_scan.tres").duplicate(true) as ScanDefinition
+		buoy.position = SunlitSurveyData.BUOY
+		buoy.subject_texture = preload("res://assets/art/sunlit/emergency_buoy.png")
+		catalog.targets.append(buoy)
+		catalog.targets.append_array(SunlitSurveyData.studies())
+		for entry: ScanDefinition in catalog.targets:
+			if entry.subject_texture!=null: continue
+			if entry.stable_id==&"zone1-light-bloom-scan": entry.subject_texture = preload("res://assets/art/sunlit/bloom_thumbnail.png")
+			elif entry.stable_id==&"shelf-calibration-plate": entry.subject_texture = preload("res://assets/art/sunlit/plate_thumbnail.png")
+			elif entry.classification=="biological":
+				entry.subject_texture = preload("res://assets/art/sunlit/fish_atlas.png")
+				entry.subject_region = Rect2(0,0,887,887)
+			else: entry.subject_texture = preload("res://assets/art/sunlit/basalt_strata.png")
 	return catalog
 static func missions() -> MissionCatalog:
 	var catalog: MissionCatalog = load("res://resources/missions/shelf_missions.tres").duplicate(true) as MissionCatalog

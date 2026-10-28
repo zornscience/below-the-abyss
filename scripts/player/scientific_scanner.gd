@@ -6,6 +6,7 @@ signal state_changed
 var _research: ResearchRegistry
 var _discoveries: DiscoveryRegistry
 var _targets: Dictionary[StringName, WeakRef] = {}
+var _definitions: Dictionary[StringName,ScanDefinition] = {}
 var _active: StringName
 var _elapsed: float = 0.0
 var _suspended: bool = false
@@ -17,6 +18,7 @@ func setup(research: ResearchRegistry, discoveries: DiscoveryRegistry, targets: 
 	if research == null or discoveries == null or research.region_id() != discoveries.region_id() or targets.size() > 128:
 		return ERR_INVALID_PARAMETER
 	var prepared: Dictionary[StringName, WeakRef] = {}
+	var definitions: Dictionary[StringName,ScanDefinition] = {}
 	for target: ScientificScanTarget in targets:
 		if target == null or not target.is_inside_tree() or prepared.has(target.target_id):
 			return ERR_INVALID_PARAMETER
@@ -24,9 +26,11 @@ func setup(research: ResearchRegistry, discoveries: DiscoveryRegistry, targets: 
 		if definition == null or not discoveries.knows_id(definition.required_poi_id):
 			return ERR_INVALID_PARAMETER
 		prepared[target.target_id] = weakref(target)
+		definitions[target.target_id] = definition
 	_research = research
 	_discoveries = discoveries
 	_targets = prepared
+	_definitions = definitions
 	reset_session()
 	return OK
 
@@ -37,13 +41,13 @@ func _target(id: StringName) -> ScientificScanTarget:
 
 
 func _known(id: StringName) -> bool:
-	var definition: ScanDefinition = _research.definition(id)
+	var definition: ScanDefinition = _definitions.get(id) as ScanDefinition
 	return definition != null and _discoveries.state_of(definition.required_poi_id) == DiscoveryRegistry.State.DISCOVERED
 
 
 func _in_range(id: StringName) -> bool:
 	var target: ScientificScanTarget = _target(id)
-	var definition: ScanDefinition = _research.definition(id)
+	var definition: ScanDefinition = _definitions.get(id) as ScanDefinition
 	return target != null and definition != null and global_position.distance_to(target.global_position) <= definition.radius
 
 
@@ -77,7 +81,7 @@ func request_scan(requested_id: StringName = &"") -> Error:
 		_feedback = "NO ELIGIBLE SUBJECT / Discover with sonar and approach within scan range"
 		for id: StringName in _targets:
 			if _known(id) and _in_range(id) and _research.is_completed(id):
-				_feedback = "ALREADY RECORDED / " + _research.definition(id).title
+				_feedback = "ALREADY RECORDED / " + _definitions[id].title
 		state_changed.emit()
 		return ERR_UNAVAILABLE
 	_active = candidate
@@ -109,20 +113,20 @@ func advance(delta: float) -> Error:
 	for id: StringName in _targets:
 		var target: ScientificScanTarget = _target(id)
 		if target != null:
-			target.present(_known(id), _research.definition(id).classification, _research.is_completed(id))
+			target.present(_known(id), _definitions[id].classification, _research.is_completed(id))
 	if _active != &"":
 		if _target(_active) == null or not _known(_active) or not _in_range(_active):
 			cancel_scan("INTERRUPTED / Subject removed or out of range; progress reset")
 		elif _research.is_completed(_active):
 			cancel_scan("ALREADY RECORDED / No duplicate research")
 		else:
-			_elapsed = minf(_elapsed + delta, _research.definition(_active).duration)
-			if _elapsed + 0.000000001 >= _research.definition(_active).duration:
+			_elapsed = minf(_elapsed + delta, _definitions[_active].duration)
+			if _elapsed + 0.000000001 >= _definitions[_active].duration:
 				var completed: StringName = _active
 				_active = &""
 				_elapsed = 0.0
 				_feedback_seconds = 3.0
-				_feedback = "COMPLETE / " + _research.definition(completed).title + " · Map → Research log"
+				_feedback = "COMPLETE / " + _definitions[completed].title + " · Map → Research log"
 				var result: Error = _research.complete_scan(completed)
 				if result!=OK: _feedback = "NOT RECORDED / Save unavailable; no outcome committed. Try again after recovery."
 	state_changed.emit()
@@ -131,13 +135,13 @@ func advance(delta: float) -> Error:
 
 func snapshot() -> Dictionary:
 	if _active != &"":
-		var definition: ScanDefinition = _research.definition(_active)
+		var definition: ScanDefinition = _definitions[_active]
 		return {"active_id": _active, "progress": _elapsed / definition.duration,
 			"text": "%s / %s · %.0f%% · activate Interact again to cancel" % ["PAUSED" if _suspended else "SCANNING", definition.title, _elapsed / definition.duration * 100.0]}
 	var candidate: StringName = candidate_id()
 	var text: String = _feedback
 	if candidate != &"" and _feedback_seconds <= 0.0:
-		var definition: ScanDefinition = _research.definition(candidate)
+		var definition: ScanDefinition = _definitions[candidate]
 		text = "READY / %s · range %.0f units · Interact: scan" % [definition.title, definition.radius]
 	if candidate == &"" and _research != null and _feedback_seconds <= 0.0:
 		var known: bool = false

@@ -1,0 +1,73 @@
+Running sunlit-observe-keyboard-full: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-keyboard', '--outcome=observe', '--input=keyboard']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-keyboard', '--outcome=observe', '--input=keyboard']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=keyboard resumed=false choices=1 claims=1 simulation_seconds=374.799999999988 wall_seconds=105.765377 research_xp=100 shots=3 muted=true
+
+Running sunlit-observe-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-keyboard', '--outcome=observe', '--input=keyboard', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-keyboard', '--outcome=observe', '--input=keyboard', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=keyboard resumed=true choices=0 claims=0 simulation_seconds=1.5 wall_seconds=2.849263 research_xp=100 shots=0 muted=true
+
+Running sunlit-observe-controller-full: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-controller', '--outcome=observe', '--input=controller', '--survey-studies', '--vent-damage-demo', '--missed-ping-demo', '--empty-ammo-demo', '--low-energy-demo', '--fauna-demo']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-controller', '--outcome=observe', '--input=controller', '--survey-studies', '--vent-damage-demo', '--missed-ping-demo', '--empty-ammo-demo', '--low-energy-demo', '--fauna-demo']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=controller resumed=false choices=1 claims=1 simulation_seconds=865.183333332875 wall_seconds=165.437998 research_xp=260 shots=13 muted=true
+
+Running sunlit-observe-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-controller', '--outcome=observe', '--input=controller', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-observe-controller', '--outcome=observe', '--input=controller', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=controller resumed=true choices=0 claims=0 simulation_seconds=1.5 wall_seconds=2.310778 research_xp=260 shots=0 muted=true
+
+Running sunlit-collect-keyboard-full: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-keyboard', '--outcome=collect', '--input=keyboard']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-keyboard', '--outcome=collect', '--input=keyboard']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=collect input=keyboard resumed=false choices=1 claims=1 simulation_seconds=371.816666666657 wall_seconds=83.74107 research_xp=80 shots=3 muted=true
+
+Running sunlit-collect-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-keyboard', '--outcome=collect', '--input=keyboard', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-keyboard', '--outcome=collect', '--input=keyboard', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=collect input=keyboard resumed=true choices=0 claims=0 simulation_seconds=1.5 wall_seconds=2.522006 research_xp=80 shots=0 muted=true
+
+Running sunlit-collect-controller-full: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-controller', '--outcome=collect', '--input=controller']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-controller', '--outcome=collect', '--input=controller']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=collect input=controller resumed=false choices=1 claims=1 simulation_seconds=521.433333333188 wall_seconds=133.888376 research_xp=80 shots=3 muted=true
+
+Running sunlit-collect-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-controller', '--outcome=collect', '--input=controller', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-collect-controller', '--outcome=collect', '--input=controller', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=collect input=controller resumed=true choices=0 claims=0 simulation_seconds=1.5 wall_seconds=3.401432 research_xp=80 shots=0 muted=true
+
+Running sunlit-observe-keyboard-quit-at-buoy: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-observe', '--outcome=observe', '--input=keyboard', '--stop-at-buoy']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-observe', '--outcome=observe', '--input=keyboard', '--stop-at-buoy']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_BUOY_CHECKPOINT_PASS outcome=observe input=keyboard
+
+Running sunlit-observe-keyboard-continue-from-buoy: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-observe', '--outcome=observe', '--input=keyboard', '--resume', '--checkpoint=buoy']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-observe', '--outcome=observe', '--input=keyboard', '--resume', '--checkpoint=buoy']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=keyboard resumed=true choices=0 claims=1 simulation_seconds=167.933333333359 wall_seconds=34.605428 research_xp=100 shots=0 muted=true
+
+Running sunlit-collect-controller-quit-at-buoy: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-collect', '--outcome=collect', '--input=controller', '--stop-at-buoy']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-collect', '--outcome=collect', '--input=controller', '--stop-at-buoy']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_BUOY_CHECKPOINT_PASS outcome=collect input=controller
+
+Running sunlit-collect-controller-continue-from-buoy: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-collect', '--outcome=collect', '--input=controller', '--resume', '--checkpoint=buoy']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta051-1793214467630959977-mid-collect', '--outcome=collect', '--input=controller', '--resume', '--checkpoint=buoy']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=collect input=controller resumed=true choices=0 claims=1 simulation_seconds=229.183333333408 wall_seconds=62.574169 research_xp=80 shots=0 muted=true
+
+PASS: canonical chapter, both paths/devices, full and mid-expedition Continue, no combat

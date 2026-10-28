@@ -79,12 +79,24 @@ func test_clipped_painted_edges_stay_in_actual_stone_and_excavation_removes_old_
 	for node: Node in paint.get_children():
 		var polygon: Polygon2D = node as Polygon2D
 		assert_not_null(polygon.texture)
-		for point: Vector2 in polygon.polygon:
-			# Boundary points use the same numerical clipping contour; test an inset sample.
-			var local: Vector2 = polygon.position+point.lerp(_center(polygon.polygon),0.01)
-			assert_true(paint.contains_stone(local),str(local))
+		# Rough clipped outlines can be concave: their vertex average is not necessarily
+		# inside. Inset toward each triangle's interior instead of crossing a notch.
+		var triangles: PackedInt32Array = Geometry2D.triangulate_polygon(polygon.polygon)
+		assert_false(triangles.is_empty())
+		for index: int in range(0,triangles.size(),3):
+			var points: PackedVector2Array = PackedVector2Array([polygon.polygon[triangles[index]],polygon.polygon[triangles[index+1]],polygon.polygon[triangles[index+2]]])
+			for point: Vector2 in points:
+				var local: Vector2 = polygon.position+point.lerp(_center(points),0.01)
+				assert_true(paint.contains_stone(local),str(local))
+	var old_changed: Array[Node] = []
+	var old_unchanged: Array[Node] = []
+	for item: Dictionary in paint._surfaces:
+		var source: Node = item.source.get_ref()
+		if source is DestructibleRock and source.rock_id=="central-shelf": old_changed.append_array(item.trims)
+		elif source is DestructibleRock and source.rock_id=="ceiling": old_unchanged.append_array(item.trims)
 	assert_gt(game.excavation.excavate(Vector2(1490,650),70),0)
-	assert_eq(paint.get_child_count(),0,"Obsolete trim is removed immediately, not left over a cut passage.")
+	for old: Node in old_changed: assert_false(old.get_parent()==paint,"Changed trim is removed immediately.")
+	for old: Node in old_unchanged: assert_eq(old.get_parent(),paint,"Unchanged trim is reused rather than clipped again.")
 	await wait_process_frames(5)
 	assert_false(paint.contains_stone(Vector2(1490,650)))
 	assert_false(game.chapter.dressing._plants[5].visible,"Unsupported kelp vanishes when its actual support is excavated.")
@@ -131,7 +143,7 @@ func test_prototype_switch_restores_legacy_materials_and_hides_all_new_dressing(
 func test_pause_and_restart_preserve_authored_placements_progress_and_particle_bound() -> void:
 	var art: SunlitDressing = game.chapter.dressing
 	assert_eq(art._snow[0].multimesh.instance_count,36)
-	assert_eq(art._snow[1].multimesh.instance_count,4)
+	assert_eq(art._snow[1].multimesh.instance_count,36)
 	var plants: Array[Vector2] = []
 	for plant: Sprite2D in art._plants: plants.append(plant.position)
 	var state: Dictionary = game.story.snapshot()

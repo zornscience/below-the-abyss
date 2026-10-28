@@ -96,5 +96,63 @@
     "date_local": "2026-10-27 America/Chicago",
     "license_status": "Project license pending; no new rights claim",
     "import": "lossless RGBA/RGB; mipmaps; linear mipmap filtering"
+  },
+  {
+    "asset": "assets/art/sunlit/school_species.png",
+    "generation_file": "exec-f5f2637c-7763-481c-bd2b-001b41833d5d.png",
+    "sha256": "3f723f067df7c036d581d7a8c2cb038b6019cf0904e22d55cd5a4402f9a8c938",
+    "dimensions": [
+      2172,
+      724
+    ],
+    "bytes": 945739,
+    "tool": "OpenAI image_gen",
+    "date_local": "2026-10-28 America/Chicago",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless RGBA; mipmaps; linear mipmap filtering; three equal-width cells"
+  },
+  {
+    "asset": "assets/art/sunlit/bloom_thumbnail.png",
+    "source": "Native Godot render of repository LightBloomVisual; tools/render_science_thumbnails.gd",
+    "sha256": "33ee80a433fb4baffa2daa01b6189e0991596c5b709e63fac2779b7030671573",
+    "dimensions": [
+      256,
+      128
+    ],
+    "bytes": 5946,
+    "tool": "Godot 4.6.3 Compatibility viewport readback",
+    "date_local": "2026-10-28 America/Chicago",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless RGBA; mipmaps; linear mipmap filtering"
+  },
+  {
+    "asset": "assets/art/sunlit/plate_thumbnail.png",
+    "source": "Native Godot render of repository ShelfStoryDetails; tools/render_science_thumbnails.gd",
+    "sha256": "c6000ad9b03bb31e7a446494aa31139e763f667c8c2ab000dfa5e76c5fb1f3fc",
+    "dimensions": [
+      256,
+      128
+    ],
+    "bytes": 598,
+    "tool": "Godot 4.6.3 Compatibility viewport readback",
+    "date_local": "2026-10-28 America/Chicago",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless RGBA; mipmaps; linear mipmap filtering"
+  },
+  {
+    "asset": "assets/art/sunlit/marine_animals.png",
+    "generation_file": "exec-c9cf916a-8fa9-4746-8899-cf62ad383e21.png",
+    "edited_from": "exec-8d181667-fc56-4400-bbc6-6ad46262f6c4.png",
+    "sha256": "904bb0f05763254a25f9f05457492f09c269d0dcc6362be03d7d7e41c2a7e0f2",
+    "dimensions": [
+      2172,
+      724
+    ],
+    "bytes": 1311966,
+    "tool": "OpenAI image_gen; original generation and hammerhead silhouette edit",
+    "date_local": "2026-10-28 America/Chicago",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless RGBA; mipmaps; three equal 724x724 cells; linear mipmap filtering",
+    "brief": "Original side-view illustrated moray eel, sea turtle and identifiable hammerhead; cool teal/olive, material detail, transparent background. Existing Sunlit Shallows visual language. Not a scientific taxonomy or human-painted source."
   }
 ]

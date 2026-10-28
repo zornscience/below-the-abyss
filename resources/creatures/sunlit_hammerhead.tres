@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="PredatorProfile" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/ai/predator_profile.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_receiver_profile.gd" id="2"]
+[sub_resource type="Resource" id="Hearing"]
+script = ExtResource("2")
+accepted_event_types = Array[StringName]([&"active_sonar",&"explosion"])
+maximum_range_units = 450.0
+minimum_strength = 0.2
+[resource]
+script = ExtResource("1")
+navigation_bounds = Rect2(18640, 810, 920, 170)
+patrol_points = PackedVector2Array(18800,910,19200,910)
+body_radius = 30.0
+grid_spacing = 32.0
+proximity_alert_radius = 220.0
+warning_seconds = 2.5
+hold_during_warning = true
+pursuit_seconds = 6.0
+investigation_seconds = 10.5
+pursuit_speed = 185.0
+pursuit_distance = 650.0
+target_distance = 700.0
+contact_radius = 76.0
+contact_damage = 6.0
+damage_cooldown = 3.5
+return_speed = 95.0
+retreat_hint = "HEAD RAM WARNING · ASCEND TO LEAVE"
+hearing = SubResource("Hearing")

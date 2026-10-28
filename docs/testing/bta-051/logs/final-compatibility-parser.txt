@@ -1,0 +1,31 @@
+Running bta051-map-parser-0: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_field_guide.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_field_guide.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-map-parser-1: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-map-parser-2: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-map-parser-3: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map_canvas.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map_canvas.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-map-parser-4: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expanded_sunlit.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expanded_sunlit.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running bta051-map-parser-5: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+PASS: six final compatibility/presentation scripts checked

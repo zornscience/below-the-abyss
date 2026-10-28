@@ -234,3 +234,25 @@ actual-input chapter, native same-pose comparisons and measured software-rendere
 frame/draw/memory observations at all three sizes. No target-GPU or human visual
 acceptance claim without those reviews. Separate branch/PR; never merge automatically.
 [Implementation and evidence](docs/testing/bta-050/README.md).
+
+
+## BTA-051 — expanded Sunlit Shallows and performance optimization
+
+User-authorized focused milestone after merged PR #34. Enlarge only the canonical
+opening chapter, contextual map/report guidance, a physical excavation traversal
+gate, optional rated-depth vent, sonar-only buoy, lightweight illustrated schools,
+scientific notifications and atomic capped research XP. Preserve both bloom paths,
+legacy records and all prior controls/services/technology. Reuse all existing
+acoustic, mission, scan and save contracts. No Zone 2 or future-story reveal.
+
+Acceptance/evidence: [BTA-051](docs/testing/bta-051/README.md). Human first-time
+15–20 minute pacing and target-GPU 60 FPS remain explicit unverified targets.
+
+## BTA-051 PR #35 review revision
+
+User-authorized additional shallow passages and dead ends, collision-matched rough
+rock and three-shot excavation, illustrated eel/turtle and optional escapable
+hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloom.
+Title New Game explicitly confirms and archives all campaign stores; preferences
+remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
+compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).

@@ -6,6 +6,8 @@ const PARTICLES: int = 96
 var collected: bool = false
 var observed: bool = false
 var specimen_view: bool = false
+var swim_phase: float = 0.0
+var _swim_redraw: float = 0.0
 var reaction: float = 0.0
 var arrival_started: bool = false
 var arrival_elapsed: float = 0.0
@@ -28,7 +30,14 @@ func set_outcome(is_collected: bool, is_observed: bool, animate: bool = false) -
 		arrival_center = Vector2.ZERO
 	queue_redraw()
 func advance_arrival(delta: float, vessel_position: Vector2, simulating: bool) -> void:
-	if not simulating or collected or observed or not is_finite(delta) or delta<0.0: return
+	if not simulating or collected or not is_finite(delta) or delta<0.0: return
+	if not reduced_effects:
+		swim_phase = fmod(swim_phase+delta,1200)
+		_swim_redraw += delta
+		if _swim_redraw>=1.0/20.0:
+			_swim_redraw = fmod(_swim_redraw,1.0/20.0)
+			queue_redraw()
+	if observed: return
 	if not arrival_started:
 		if global_position.distance_to(vessel_position)>180.0: return
 		arrival_started = true
@@ -68,6 +77,7 @@ func _draw() -> void:
 		var radius: float = 7.0+fraction*55.0
 		var point: Vector2 = Vector2.from_angle(angle)*Vector2(radius,radius*0.48)
 		point += Vector2.from_angle(index*2.39996)*scatter*24.0
+		if not reduced_effects: point += Vector2(sin(swim_phase*0.7+index*0.37)*9,cos(swim_phase*0.54+index*0.61)*6)
 		point += center
 		var size: float = 1.0+float(index%3)*0.35
 		draw_circle(point,size*3.0,Color(tone,0.09*fade))

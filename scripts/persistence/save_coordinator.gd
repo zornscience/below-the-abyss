@@ -4,6 +4,7 @@ extends Node
 
 signal status_changed
 signal checkpoint_restored
+var last_campaign_archive: String = ""
 var status: String = "No expedition save loaded."
 var store: ExpeditionStore = ExpeditionStore.new()
 var _scene: ShelfPrototype
@@ -29,6 +30,7 @@ func setup(scene: ShelfPrototype, path: String) -> Error:
 		_state = document.data
 		if scene.story.restore(_state.story)!=OK: return _report("Conflicting story checkpoint; live progress and files preserved.",ERR_BUSY)
 		_state.progress = ExpeditionSchema.merge_progress(_state.progress, progress_snapshot())
+		_state.prototype.campaign.science = ResearchExperienceData.reconcile(_state.prototype.campaign.science,_state.progress.research)
 		apply_progress(_state.progress)
 		_has_checkpoint = true
 	elif document.error == ERR_FILE_NOT_FOUND and not FileAccess.file_exists(path + ".bak"):
@@ -113,6 +115,7 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 			point.y += signf(point.y) * (capsule.height*0.5-capsule.radius)
 			footprint.append(query.transform * point)
 		for rock: DestructibleRock in _scene.excavation._rocks.values():
+			if (rock.collision_layer & vessel.collision_mask)==0: continue
 			for part: PackedVector2Array in rock.pieces:
 				var polygon: PackedVector2Array = []
 				for point: Vector2 in part: polygon.append(rock.to_global(point))
@@ -121,12 +124,13 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 
 
 func safe_to_save() -> bool:
-	return not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
+	return _scene.submarine.hull_system.hull>0 and _scene.submarine.resource_system.oxygen>0 \
+		and not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
 		and _scene.submarine.damage_system.warning_state != SubmarineDamageSystem.WarningState.EXCEEDED \
 		and _scene.predator.threat.phase not in [PredatorState.Phase.ALERT, PredatorState.Phase.PURSUE]
 
 
-func _write(candidate: Dictionary, message: String) -> Error:
+func _write(candidate: Dictionary, message: String, scientific_awards: Array[StringName] = []) -> Error:
 	if _busy or not _ready_to_write:
 		return _report("Save blocked; recover the existing checkpoint before writing.", ERR_BUSY)
 	_busy = true
@@ -136,10 +140,15 @@ func _write(candidate: Dictionary, message: String) -> Error:
 		return _report("Conflicting story decisions; existing checkpoint preserved.",reconciled.error)
 	candidate.story = reconciled.data
 	candidate.progress = ExpeditionSchema.merge_progress(candidate.progress, _state.progress)
+	candidate.prototype.campaign = CampaignData.merge_earned(candidate.prototype.campaign,_state.prototype.campaign)
+	candidate.prototype.campaign.science = ResearchExperienceData.reconcile(candidate.prototype.campaign.science,candidate.progress.research,scientific_awards)
 	var result: Error = store.write_checkpoint(candidate)
 	if result == OK:
 		_state = candidate.duplicate(true)
 		_has_checkpoint = true
+		if _scene.revision!=null and _scene.revision.campaign.science!=candidate.prototype.campaign.science:
+			_scene.revision.campaign.science = candidate.prototype.campaign.science.duplicate(true)
+			_scene.revision.research_changed.emit()
 	_report(message if result == OK else "Not saved (%s). Files preserved; recover or inspect checkpoint." % error_string(result), result)
 	_busy = false
 	return result
@@ -195,6 +204,11 @@ func continue_expedition() -> Error:
 	var saved: Dictionary = validated.data
 	if _scene.excavation != null and _scene.excavation.restore(saved.terrain) != OK:
 		return _report("Terrain checkpoint rejected; vessel unchanged.", ERR_INVALID_DATA)
+	var layout: SunlitRegionLayout = _scene.region.get_node_or_null("SunlitRegionLayout") as SunlitRegionLayout
+	if layout!=null:
+		layout.preserve_archived_opening(_scene.excavation,saved.progress.discoveries)
+		saved.terrain = _scene.excavation.snapshot()
+		_state.terrain = saved.terrain.duplicate(true)
 	var at: Vector2 = Vector2(saved.player.position[0], saved.player.position[1])
 	var angle: float = saved.player.rotation
 	var relocated: bool = not position_clear(at, angle)
@@ -352,14 +366,80 @@ func commit_story(value: Dictionary, choice_id: StringName) -> Error:
 		if choice.research_record_id!=&"" and String(choice.research_record_id) not in candidate.progress.research:
 			candidate.progress.research.append(String(choice.research_record_id))
 			candidate.progress.research.sort()
-	return _write(candidate,"Story decision saved with expedition progress.")
+	var awards: Array[StringName] = []
+	if _scene.chapter!=null and _scene.chapter.active and choice_id!=&"":
+		var definition: ChoiceData = _scene.story.definition(choice_id)
+		if definition.research_record_id!=&"": awards.append(definition.research_record_id)
+	return _write(candidate,"Story decision saved with expedition progress.",awards)
 
 func commit_research_checkpoint(proposed: Array[StringName]) -> Error:
 	# Evidence recovery is an explicit, safe local checkpoint, not a periodic autosave.
-	if _busy or not _ready_to_write or not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) \
+	if _busy or not _ready_to_write or _scene.submarine.hull_system.hull<=0 or _scene.submarine.resource_system.oxygen<=0 \
+		or not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) \
 		or _scene.submarine.damage_system.warning_state==SubmarineDamageSystem.WarningState.EXCEEDED \
 		or _scene.predator.threat.phase in [PredatorState.Phase.ALERT,PredatorState.Phase.PURSUE]: return ERR_UNAVAILABLE
 	var candidate: Dictionary = snapshot()
 	candidate.progress.research = _strings(proposed)
 	if not ExpeditionSchema.valid_progress(candidate.progress): return ERR_INVALID_DATA
-	return _write(candidate,"Emergency recording and safe vessel checkpoint saved together.")
+	var awards: Array[StringName] = []
+	if _scene.chapter!=null and _scene.chapter.active:
+		for id: StringName in proposed:
+			if not _scene.research.is_completed(id):
+				if not _scene.submarine.scanner.eligible(id): return ERR_UNAUTHORIZED
+				awards.append(id)
+	return _write(candidate,"Scientific record and safe vessel checkpoint saved together.",awards)
+
+func begin_new_campaign(replacement: ExpeditionStore = null) -> Error:
+	# Explicit title confirmation only. Archive ALL campaign stores to prevent legacy reimport.
+	if _busy or _scene.submarine.is_physics_processing(): return ERR_BUSY
+	var candidate: Dictionary = snapshot()
+	candidate.story = StoryState.fresh()
+	candidate.legacy_conclusion = false
+	candidate.progress = {"discoveries":[],"research":[],"upgrades":[],"missions":_scene.missions._catalog.initial_records()}
+	candidate.prototype = {"ammunition":10,"campaign":CampaignData.fresh()}
+	candidate.terrain = []
+	candidate.route = {"stage":0,"elapsed_seconds":0.0}
+	candidate.player = {"position":[_scene.region.spawn.global_position.x,_scene.region.spawn.global_position.y],"rotation":0.0,"hull":100.0,"battery":100.0,"oxygen":100.0,"sonar_cooldown":0.0}
+	if ExpeditionSchema.decode(candidate).error!=OK: return ERR_INVALID_DATA
+	var paths: Array[String] = [store.path]
+	for legacy: Variant in [_scene.discovery_store,_scene.research_store,_scene.upgrades.store,_scene.missions.store]:
+		if legacy.path not in paths: paths.append(legacy.path)
+	var archive: String = store.path.get_base_dir().path_join("campaign-archive-%d-%d" % [int(Time.get_unix_time_from_system()),Time.get_ticks_usec()])
+	if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(archive)): return ERR_ALREADY_EXISTS
+	var error: Error = DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(archive))
+	if error!=OK: return _report("New Game cancelled: archive unavailable; current campaign preserved.",error)
+	last_campaign_archive = archive
+	_busy = true
+	var moved: Array[Dictionary] = []
+	var writing_candidate: bool = false
+	for index: int in range(paths.size()):
+		for suffix: String in ["",".bak",".tmp",".invalid",".rejected"]:
+			var original: String = ProjectSettings.globalize_path(paths[index]+suffix)
+			if not FileAccess.file_exists(original): continue
+			var destination: String = ProjectSettings.globalize_path(archive.path_join(str(index)+"-"+paths[index].get_file()+suffix))
+			error = DirAccess.rename_absolute(original,destination)
+			if error!=OK: break
+			moved.append({"from":original,"to":destination})
+		if error!=OK: break
+	if error==OK:
+		writing_candidate = true
+		var writer: ExpeditionStore = replacement if replacement!=null else ExpeditionStore.new()
+		writer.path = store.path
+		writer.load_checkpoint()
+		error = writer.write_checkpoint(candidate)
+	if error!=OK:
+		# Discard only this operation's new candidate, then restore the archived originals.
+		for suffix: String in ["",".bak",".tmp"]:
+			var generated: String = ProjectSettings.globalize_path(store.path+suffix)
+			if writing_candidate and FileAccess.file_exists(generated):
+				DirAccess.remove_absolute(generated)
+		moved.reverse()
+		for item: Dictionary in moved:
+			var rollback: Error = DirAccess.rename_absolute(item.to,item.from)
+			if rollback!=OK:
+				_busy = false
+				return _report("Campaign retained in archive; automatic rollback failed. Archive: "+archive,rollback)
+		_busy = false
+		return _report("New Game cancelled; previous campaign restored. Settings unchanged.",error)
+	_busy = false
+	return _report("New campaign created. Previous campaign archived at "+archive,OK)

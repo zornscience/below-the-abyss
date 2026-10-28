@@ -1,0 +1,66 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_expanded_sunlit.gd
+* test_authored_main_route_is_shallow_and_whole_hull_clear_after_one_opening
+* test_small_cut_or_blocked_shot_cannot_claim_traversal_but_off_center_hull_opening_counts
+* test_real_projectile_opens_passage_without_harming_wildlife_or_protected_objects
+    --- Awaiting 90 physics frames  ---
+* test_empty_ammunition_preserves_a_clear_return_and_deliberate_station_rearms
+* test_hidden_buoy_has_no_sprite_prompt_map_marker_or_collision_until_wavefront
+* test_failed_sonar_energy_cost_never_reveals_or_starts_cooldown
+* test_first_science_scan_commits_xp_and_record_atomically_and_repeat_only_reviews
+* test_failed_scan_write_has_no_record_xp_signal_or_popup
+* test_clearance_xp_and_hidden_buoy_discovery_survive_restart_reload_and_no_signal_replay
+* test_real_depth_mapping_warns_then_damages_and_ascent_stops_damage_at_all_rates
+* test_school_habitats_avoid_solids_and_use_one_batch_per_population
+* test_popup_is_nonblocking_bounded_and_yields_to_pressure_radio_and_pause
+* test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_controls
+* test_small_large_text_ui_fits_and_muting_never_hides_field_information
+* test_pressure_radio_takes_priority_once_and_pause_does_not_advance_it
+* test_primary_write_failure_recovers_record_and_xp_together_without_completion_replay
+* test_depleted_hull_cannot_replace_safe_checkpoint_and_continue_preserves_science
+* test_passive_ambient_contacts_cannot_reveal_buoy_startle_schools_or_award_xp
+18/18 passed.
+
+
+res://tests/unit/test_research_experience.gd
+* test_authored_awards_thresholds_and_cap_are_derived_not_stacked
+* test_imported_and_prototype_records_never_gain_retroactive_xp
+* test_unknown_duplicate_malformed_or_orphan_awards_are_rejected
+* test_backup_merges_earned_once_and_keeps_allocations_intentional
+* test_version_six_migrates_records_without_xp_or_loss_of_prior_state
+* test_xp_configuration_rejects_invalid_or_duplicate_authored_rules
+* test_malformed_legacy_progress_is_rejected_before_migration_reads_nested_fields
+7/7 passed.
+
+
+res://tests/unit/test_fish_schools.gd
+* test_population_and_invalid_configuration_are_bounded
+* test_schooling_separation_and_smooth_turns_stay_in_habitat
+* test_only_eligible_loud_sounds_startle_once_with_bounded_history
+* test_fixed_step_school_motion_matches_at_30_60_120_and_reset
+4/4 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               3
+Tests                29
+Passing Tests        29
+Asserts            9945
+Time              51.039s
+
+
+---- All tests passed! ----

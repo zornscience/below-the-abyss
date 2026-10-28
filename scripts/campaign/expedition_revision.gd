@@ -76,7 +76,7 @@ func _commit(value: Dictionary) -> Error:
 	if not CampaignData.valid(value) or not can_write(): return ERR_INVALID_DATA
 	var result: Error = scene.saves.commit_prototype({"ammunition":scene.torpedoes.ammunition,"campaign":value})
 	if result==OK:
-		campaign = value.duplicate(true)
+		campaign = scene.saves._state.prototype.campaign.duplicate(true)
 		scene.upgrades.reapply()
 		research_changed.emit()
 	feedback = "Research allocation saved. Reassignment is free at base." if result==OK else "Change not saved; previous allocation preserved. Recover the checkpoint before retrying."
@@ -186,6 +186,9 @@ func accept_transmission(id: String, offer: bool) -> void:
 func defer_transmission() -> void:
 	ui.notifications.defer_current()
 func _refresh_map_marker() -> void:
+	if scene.chapter!=null and scene.chapter.active:
+		scene.chapter._refresh()
+		return
 	var accepted: bool = scene.missions.snapshot()[String(ShelfChapterData.OUTER)].state!="available"
 	scene.exploration_map.canvas.reported_position = Vector2(3560,650)
 	scene.exploration_map.canvas.has_report = accepted and scene.discoveries.state_of(NarrativeService.SPIRES)!=DiscoveryRegistry.State.DISCOVERED

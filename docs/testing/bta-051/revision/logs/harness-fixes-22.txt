@@ -1,0 +1,82 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_sunlit_environment.gd
+* test_art_contains_no_bodies_targets_or_progress_and_clock_cannot_move_player
+* test_comfort_preferences_freeze_parallax_plants_and_particles_without_changing_state
+* test_clipped_painted_edges_stay_in_actual_stone_and_excavation_removes_old_trim
+* test_hidden_trim_defers_clipping_until_visible_and_reuses_built_pieces
+* test_prototype_switch_restores_legacy_materials_and_hides_all_new_dressing
+* test_pause_and_restart_preserve_authored_placements_progress_and_particle_bound
+* test_each_comfort_flag_is_independent_and_fish_motion_remains_presentation_only
+* test_cosmetic_clock_is_equivalent_at_30_60_120_steps
+8/8 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 8
+Passing Tests         8
+Asserts            4358
+Time              13.989s
+
+
+---- All tests passed! ----
+
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_sunlit_review.gd
+* test_new_game_archives_progress_resets_every_domain_and_preserves_preferences
+* test_failed_new_game_rolls_back_byte_identical_campaign_and_keeps_live_state
+* test_new_game_confirmation_cancel_does_not_change_a_save
+* test_new_game_reload_cannot_reimport_archived_legacy_discoveries
+* test_upper_dead_end_and_lower_loop_are_clear_but_blind_wall_is_solid
+* test_old_cleared_gate_restores_as_open_without_reward_or_acoustic_replay
+* test_hammerhead_sight_warning_pursuit_head_ram_and_safe_exit
+    --- Awaiting 120 physics frames  ---
+    --- Awaiting 160 physics frames  ---
+    --- Awaiting 180 physics frames  ---
+* test_hammerhead_pause_and_fauna_restart_preserve_permanent_records
+* test_radio_cue_only_for_new_delivery_respects_mute_and_never_emits_gameplay_sound
+* test_new_fauna_use_existing_blast_deduplication_and_restart_restores_health
+* test_bloom_swims_only_during_simulation_and_remains_removed_after_collection
+* test_underwater_blast_is_bounded_and_comfort_removes_decorations
+* test_keyboard_can_confirm_new_game_and_reach_fresh_briefing
+* test_controller_can_confirm_new_game_and_reach_fresh_briefing
+14/14 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                14
+Passing Tests        14
+Asserts             110
+Time              46.997s
+
+
+---- All tests passed! ----

@@ -1,6 +1,7 @@
 class_name RadioNotifications
 extends Control
 ## Session-only delivery queue; campaign/research/narrative remain the durable authorities.
+signal message_received(id: String)
 const PREVIEW_SECONDS: float = 12.0
 var revision: ExpeditionRevision
 var pending: Array[String] = []
@@ -79,12 +80,17 @@ func _button(text: String,callback: Callable,id: String) -> Button:
 	_controls.append(button)
 	button.focus_entered.connect(func() -> void: _choice = _controls.find(button))
 	return button
-func enqueue(id: String,body: String,source: String = "Shelf Base") -> void:
-	if texts.has(id) or (id not in ExpeditionRevision.TRANSMISSIONS and id!="sunlit-buoy-recovered"): return
+func enqueue(id: String,body: String,source: String = "Shelf Base",urgent: bool = false) -> void:
+	if texts.has(id) or (id not in ExpeditionRevision.TRANSMISSIONS and id!="sunlit-buoy-recovered" and id not in SunlitFieldGuide.RADIO_IDS): return
 	texts[id] = body
 	sources[id] = source
 	pending.append(id)
+	message_received.emit(id)
 	if selected.is_empty(): _next_preview()
+	if urgent:
+		selected = id
+		if id not in _previewed: _previewed.append(id)
+		_remaining = PREVIEW_SECONDS
 	refresh()
 func contains_message(id: String) -> bool:
 	return id in pending

@@ -10,6 +10,8 @@ const ROOTS: Array[Vector2] = [Vector2(740,800),Vector2(820,800),Vector2(940,800
 	Vector2(2825,735),Vector2(2950,800),Vector2(3080,800),Vector2(3200,800),Vector2(3340,800),
 	Vector2(3510,800),Vector2(3590,800),Vector2(3710,740),Vector2(3800,800)]
 var rocks: SunlitRockDressing
+const BUBBLE_SOURCES: Array[Vector2] = [Vector2(850,782),Vector2(5400,780),Vector2(6800,780),Vector2(8400,782),Vector2(10600,780),Vector2(11780,780),Vector2(13100,780),Vector2(14000,2470),Vector2(15000,780),Vector2(16900,780),Vector2(19100,1000),Vector2(20600,780)]
+const BUBBLE_RISE: Array[float] = [420,420,140,420,300,420,420,420,280,420,420,420]
 var phase: float = 0.0
 var reduced_motion: bool = false
 var reduced_effects: bool = false
@@ -24,6 +26,9 @@ var _shafts: Array[Sprite2D] = []
 var _snow: Array[MultiMeshInstance2D] = []
 var _redraw_time: float = 0.0
 var _simulating: bool = false
+var _configured: bool = false
+var _composed: bool = false
+var _camera: Camera2D
 
 func _ready() -> void:
 	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
@@ -31,18 +36,30 @@ func _ready() -> void:
 	visibility_changed.connect(_visibility)
 
 func configure(region: Node2D,boundary: Node2D,animals: Array[AcousticCreature]) -> void:
+	_camera = region.get_viewport().get_camera_2d()
 	_legacy_atmosphere = region.get_node("Atmosphere") as CanvasItem
 	_legacy_visible = _legacy_atmosphere.visible
 	for child: Node in region.get_children():
 		if child is SeascapeRelief or child is BenthicGarden:
 			_legacy_relief.append({"node":weakref(child),"visible":(child as CanvasItem).visible})
-	_backgrounds()
 	rocks = SunlitRockDressing.new()
 	rocks.name = "PaintedRockEdges"
 	rocks.z_index = 3
 	add_child(rocks)
 	rocks.configure(region,boundary)
-	for index: int in range(ROOTS.size()):
+	for animal: AcousticCreature in animals:
+		for child: Node in animal.get_children():
+			if child is CreaturePaint: _fish.append(child)
+	_configured = true
+	_visibility()
+
+func _compose() -> void:
+	_composed = true
+	_backgrounds()
+	var roots: Array[Vector2] = ROOTS.duplicate()
+	for x: int in range(4100,21800,260): roots.append(Vector2(x,800))
+	roots.append_array([Vector2(6400,430),Vector2(7750,500),Vector2(9300,500),Vector2(10600,380),Vector2(12700,570),Vector2(15700,510),Vector2(17900,450)])
+	for index: int in range(roots.size()):
 		var plant: Sprite2D = Sprite2D.new()
 		var atlas: AtlasTexture = AtlasTexture.new()
 		atlas.atlas = KELP
@@ -54,26 +71,35 @@ func configure(region: Node2D,boundary: Node2D,animals: Array[AcousticCreature])
 		var anchor_x: float = 0.55 if species==0 else (0.62 if species==1 else 0.5)
 		if index%3==1: anchor_x = 1.0-anchor_x
 		plant.offset = -Vector2(atlas.get_width()*anchor_x,atlas.get_height()*(0.96 if upper else 0.94))
-		plant.position = ROOTS[index]-Vector2(0,2)
+		plant.position = roots[index]-Vector2(0,2)
 		var height: float = 60.0+float((index*23)%80)
 		if index in [4,5,6,7,8,18,19,20]: height *= 0.65
 		plant.scale = Vector2.ONE*height/atlas.get_height()
 		plant.flip_h = index%3==1
 		plant.modulate = Color(0.59,0.79,0.73,0.92)
 		plant.z_index = 1
-		plant.set_meta("authored_root",ROOTS[index])
+		plant.set_meta("authored_root",roots[index])
 		add_child(plant)
 		_plants.append(plant)
 	var cradle: Sprite2D = _sprite(CRADLE,Rect2(180,414,480,320),Color(0.85,0.93,0.90))
 	cradle.name = "HalcyonServiceCradle"
 	cradle.z_index = 3
-	for animal: AcousticCreature in animals:
-		for child: Node in animal.get_children():
-			if child is CreaturePaint: _fish.append(child)
 	_make_snow(36,false)
-	_make_snow(4,true)
+	_make_snow(36,true)
+	_make_snow(8,false)
+	_snow.back().set_meta("vent",true)
+	var vent_light: Sprite2D = _sprite(HalcyonDescent.SEARCHLIGHT,Rect2(-30,-190,1500,380),Color(0.86,0.47,0.20,0.16))
+	vent_light.position = Vector2(14000,2470)
+	vent_light.rotation = -PI*0.5
+	vent_light.z_index = -3
+	_shafts.append(vent_light)
+	var margin_light: Sprite2D = _sprite(HalcyonDescent.SEARCHLIGHT,Rect2(-20,-170,1100,340),Color(0.83,0.45,0.20,0.11))
+	margin_light.position = Vector2(14000,1670)
+	margin_light.rotation = -PI*0.5
+	margin_light.z_index = -3
+	_shafts.append(margin_light)
 	_refresh_plants.call_deferred()
-	_visibility()
+	apply_preferences({"reduced_motion":reduced_motion,"reduced_flashing":reduced_effects,"reduced_particles":reduced_particles})
 
 func _sprite(texture: Texture2D,rectangle: Rect2,tint: Color,parent: Node = null) -> Sprite2D:
 	var sprite: Sprite2D = Sprite2D.new()
@@ -87,14 +113,17 @@ func _sprite(texture: Texture2D,rectangle: Rect2,tint: Color,parent: Node = null
 
 func _backgrounds() -> void:
 	var far: Parallax2D = _layer(Vector2(0.16,0.10),-6)
-	_sprite(PANORAMA,Rect2(-1400,-750,7000,1500),Color(0.24,0.40,0.44,0.35),far)
+	var panorama: Sprite2D = _sprite(PANORAMA,Rect2(-1400,-750,7000,1500),Color(0.24,0.40,0.44,0.35),far)
+	var fade: ShaderMaterial = ShaderMaterial.new()
+	fade.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
+	panorama.material = fade
 	var middle: Parallax2D = _layer(Vector2(0.42,0.25),-4)
-	for index: int in range(5):
+	for index: int in range(10):
 		var relief: Sprite2D = _sprite(HalcyonDescent.CLIFF,Rect2(-600+index*1100,-120,650,1150),Color(0.38,0.65,0.66,0.13),middle)
 		var edge: ShaderMaterial = ShaderMaterial.new()
 		edge.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
 		relief.material = edge
-	for x: int in [450,1150,2050,2900,3500]:
+	for x: int in [450,1150,2050,2900,3500,5600,7400,9400,11000,12800,15400,17700,20400]:
 		var shaft: Sprite2D = _sprite(HalcyonDescent.SEARCHLIGHT,Rect2(-30,-100,900,200),Color(0.76,0.87,0.75,0.045))
 		shaft.position = Vector2(x,100)
 		shaft.rotation = PI*0.5+0.12
@@ -139,12 +168,18 @@ func _make_snow(count: int,bubble: bool) -> void:
 	_position_snow()
 
 func _position_snow() -> void:
+	var left: float = floorf(to_local(_camera.global_position).x/1024.0)*1024.0-1024.0 if is_instance_valid(_camera) else -1024.0
 	for batch: MultiMeshInstance2D in _snow:
 		var bubble: bool = batch.get_meta("bubble")
 		for index: int in range(batch.multimesh.instance_count):
-			var at: Vector2 = Vector2(120+fposmod(index*137.731+phase*0.7,3780),200+fposmod(index*97.33+phase*(-5 if bubble else 1.3),560))
+			var at: Vector2 = Vector2(left+fposmod(index*137.731+phase*0.7,3072),200+fposmod(index*97.33+phase*(-5 if bubble else 1.3),560))
+			if bubble:
+				var source: Vector2 = BUBBLE_SOURCES[index/3]
+				# Authored rise ceilings keep bubbles below the island/arch/overhang.
+				at = source+Vector2((index%3-1)*18+sin(index*7.13+phase*0.8)*9,-fposmod(phase*(18+index%5*4)+index*91.37,BUBBLE_RISE[index/3]))
+			if bool(batch.get_meta("vent",false)): at = Vector2(14000+sin(index*2.3+phase*0.4)*110,920+fposmod(index*137.0-phase*8,1450))
 			batch.multimesh.set_instance_transform_2d(index,Transform2D(0,Vector2.ONE*(0.6+float(index%3)*0.2),0,at))
-			batch.multimesh.set_instance_color(index,Color(0.62,0.83,0.81,0.28 if bubble else 0.21))
+			batch.multimesh.set_instance_color(index,Color(0.83,0.49,0.23,0.25) if bool(batch.get_meta("vent",false)) else Color(0.62,0.83,0.81,0.28 if bubble else 0.21))
 
 func set_simulating(value: bool) -> void:
 	_simulating = value
@@ -153,6 +188,7 @@ func set_simulating(value: bool) -> void:
 func _visibility() -> void:
 	var active: bool = is_visible_in_tree()
 	if rocks!=null: rocks.set_active(active)
+	if active and _configured and not _composed: _compose()
 	if active and rocks!=null: _refresh_plants.call_deferred()
 	if is_instance_valid(_legacy_atmosphere): _legacy_atmosphere.visible = false if active else _legacy_visible
 	for item: Dictionary in _legacy_relief:

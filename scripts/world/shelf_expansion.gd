@@ -64,8 +64,19 @@ func setup(region: ContinentalShelf, include_story: bool = false) -> ExcavationS
 		var buoy_echo: SonarRevealTarget = preload("res://scenes/props/sonar_reveal_target.tscn").instantiate() as SonarRevealTarget
 		buoy_echo.target_id = SunlitShallowsData.ECHO
 		buoy_echo.caption = "Emergency buoy"
-		buoy_echo.position = Vector2(3500,620)
+		buoy_echo.position = SunlitSurveyData.BUOY
 		region.get_node("SonarTargets").add_child(buoy_echo)
+	if include_story:
+		var layout: SunlitRegionLayout = SunlitRegionLayout.new()
+		region.add_child(layout)
+		layout.configure(region,excavation)
+		for point: PointOfInterest in SunlitSurveyData.points():
+			if point.stable_id==SunlitSurveyData.CLEARED: continue
+			var echo: SonarRevealTarget = preload("res://scenes/props/sonar_reveal_target.tscn").instantiate() as SonarRevealTarget
+			echo.target_id = point.sonar_target_id
+			echo.caption = point.display_name
+			echo.position = point.map_position
+			region.get_node("SonarTargets").add_child(echo)
 	var station_art: StationIllustration = StationIllustration.new()
 	station_art.position = Vector2(180,250)
 	station_art.size = Vector2(480,195)

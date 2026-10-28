@@ -1,0 +1,1 @@
+PASS: 66 native screenshots; exact dimensions; 36 live samples; no errors. Six shared views compare player/zoom/framing; expanded views use actual new camera limits.

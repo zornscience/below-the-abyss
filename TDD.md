@@ -165,7 +165,7 @@ Store under `user://saves/slot_N.json` using a schema version and separate backu
 Validate schema, numeric bounds and IDs on load. Write to a temporary file and replace only after successful flush/close; preserve last-known-good backup. Add migration functions for each version change. Do not serialize Godot scene trees or executable objects. Handle malformed saves with user-visible recovery options.
 
 ### Implemented BTA-035 checkpoint contract
-The scene-owned SaveCoordinator uses `user://saves/expedition.json`, schema version 5 (migrating versions 1–4),
+The scene-owned SaveCoordinator uses `user://saves/expedition.json`, schema version 7 (migrating versions 1–6),
 for vessel pose/resources, region, route telemetry and permanent discovery/research/
 mission/upgrade records. Valid legacy stores import monotonically without deleting
 their files; their optional checkpoint-writer port then routes normal-game commits
@@ -379,3 +379,29 @@ and centers. Frame-time samples run actual MAIN simulation after warm-up, separa
 from staged stills and the normal-input complete chapter. Source camera code is
 unchanged; comparison tolerates only subpixel smoothing differences. No GPU/human
 certification follows from headless checks or cloud software rendering.
+
+
+## Expanded shallow survey and research XP — BTA-051
+
+SunlitSurveyData/RegionLayout compose a canonical 21800-unit extension, protected
+terrain and a journalled excavation gate; the legacy prototype stays available.
+The required path remains at ≤200 m, with an optional closed vent reaching 625 m.
+Existing pressure/sonar/scan/mission APIs remain authoritative. Map sector charting
+is derived from discovered POIs. The buoy retains its stable IDs and is hidden
+until first sonar-wavefront discovery, then permanent independently of echo life.
+
+Schema 7 adds only campaign.science `{credited, imported}` to the existing atomic
+checkpoint. Unique validated scientific IDs derive XP and up to two extra talent
+points; old records migrate with no retroactive award. No independent XP file,
+mutable XP total, mission ledger or Resonance coupling. Scan completion and award
+commit together before signals. Detailed migration/failure semantics and bounded
+rendering optimizations: [BTA-051 decisions](docs/decisions/bta-051-expanded-shallows.md).
+
+## BTA-051 PR #35 review revision
+
+User-authorized additional shallow passages and dead ends, collision-matched rough
+rock and three-shot excavation, illustrated eel/turtle and optional escapable
+hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloom.
+Title New Game explicitly confirms and archives all campaign stores; preferences
+remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
+compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).

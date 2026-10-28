@@ -45,6 +45,7 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	notifications = RadioNotifications.new()
 	add_child(notifications)
 	notifications.setup(revision)
+	notifications.message_received.connect(func(_id: String) -> void: revision.scene.audio.request(&"radio"))
 func _title_visibility() -> void:
 	title_art.visible = title_page.visible
 	var world: Node2D = revision.scene.get_node("WorldRoot") as Node2D
@@ -141,6 +142,7 @@ func show_title() -> void:
 	_title_body.add_child(controls)
 	var available: bool = revision.scene.saves != null and revision.scene.saves.has_checkpoint()
 	_button(controls,revision.scene.chapter.primary_title() if revision.scene.chapter!=null else ("Continue expedition" if available else "Begin expedition"),revision.start_from_title,not revision.can_write()).name = "Begin"
+	_button(controls,"New Game",show_new_game_confirmation).name = "NewGame"
 	_button(controls,"Options",show_options).name = "TitleOptions"
 	_button(controls,"Quit",func() -> void: get_tree().quit()).name = "TitleQuit"
 	if revision.scene.chapter!=null and revision.scene.chapter.can_offer_prototype():
@@ -226,7 +228,9 @@ func show_dock(tab: String = "home") -> void:
 		_button(_dock_body,"Depart station",revision.undock).name = "Depart"
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
-		_label(_dock_body,"Assign the points currently available; each rank costs one. Reassignment is free while docked. This expedition grants an acknowledgement, not additional research points." if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
+		if canonical: _label(_dock_body,"RESEARCH XP %d · BONUS POINTS %d/%d" % [ResearchExperienceData.total(revision.campaign.science),ResearchExperienceData.points(revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points],&"body")
+		var xp_rules: ResearchExperienceRules = ResearchExperienceData.RULES
+		_label(_dock_body,("First species scans earn %d XP; new scientific studies earn %d XP. Each %d XP adds one research point, limited to %d extra points in this chapter. Existing scans never award XP again. Reassignment is free while docked." % [xp_rules.species_xp,xp_rules.study_xp,xp_rules.xp_per_point,xp_rules.maximum_extra_points]) if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
 		var branches: HBoxContainer = HBoxContainer.new()
 		_dock_body.add_child(branches)
 		for branch: String in ["sonar","hull"]:
@@ -305,3 +309,33 @@ func _reset_story_read() -> void:
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if radio_page.visible and _story_back.is_valid() and focus!=null and (_tools[radio_page] as Control).is_ancestor_of(focus):
 		(_scrolls[radio_page] as ScrollContainer).scroll_vertical = 0
+
+func show_new_game_confirmation() -> void:
+	if not title_page.visible: return
+	title_page.hide()
+	show_story_page("START A NEW GAME?","Start the story again with a fresh campaign. Discoveries, research, missions, talents, terrain and the bloom decision will reset. Your current campaign files will be archived first. Control, audio and accessibility settings are preserved.",_new_game_button_text(),_confirm_new_game,&"ConfirmNewGame",_cancel_new_game)
+
+func _new_game_button_text() -> String:
+	return "Archive current campaign and start New Game"
+
+func _cancel_new_game() -> void:
+	radio_page.hide()
+	show_title()
+
+func _confirm_new_game() -> void:
+	var game: ShelfPrototype = revision.scene
+	var result: Error = game.saves.begin_new_campaign()
+	if result!=OK:
+		add_story_notice(game.saves.status)
+		return
+	var fresh: ShelfPrototype = load("res://scenes/main/main.tscn").instantiate() as ShelfPrototype
+	fresh.settings_path = game.settings_path
+	fresh.expedition_path = game.expedition_path
+	var parent: Node = game.get_parent()
+	parent.add_child(fresh)
+	if get_tree().current_scene==game: get_tree().current_scene = fresh
+	(game.get_node("WorldRoot") as Node2D).hide()
+	title_page.hide()
+	radio_page.hide()
+	game.queue_free()
+	fresh.chapter.start()

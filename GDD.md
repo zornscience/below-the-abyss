@@ -210,3 +210,26 @@ unchanged in a natural surrounding garden. All details remain decorative; terrai
 outlines, passage clearance, camera, target positions, progression, resources,
 choices and UI remain authoritative. No new region, discovery, mission or mechanic.
 [Native comparisons, performance and pending human-review limits](docs/testing/bta-050/README.md).
+
+
+### Sunlit Shallows survey extension — BTA-051 prototype
+
+The first expedition follows the shallow continental course beyond Twin Spires,
+clears one thick fractured rockfall using several excavation torpedoes, and searches an
+approximate emergency-buoy report with active sonar. Quiet scientific observations
+along the way are optional; a hydrothermal shaft provides a clearly warned,
+retraceable pressure hazard, not access to another story zone. The exact Mara
+recording, light-bloom Resonance decision and Halcyon debrief remain unchanged.
+Scientific XP is independent of alignment: first species 20, study 30, one point
+per 100, initially capped at two bonus research points. Historical prototype
+rewards and free station talent reassignment remain available. Intended first-time
+pacing is 15–20 minutes, pending human evaluation.
+
+## BTA-051 PR #35 review revision
+
+User-authorized additional shallow passages and dead ends, collision-matched rough
+rock and three-shot excavation, illustrated eel/turtle and optional escapable
+hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloom.
+Title New Game explicitly confirms and archives all campaign stores; preferences
+remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
+compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).

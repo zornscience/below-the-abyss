@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SoundscapeProfile" load_steps=45 format=3]
+[gd_resource type="Resource" script_class="SoundscapeProfile" load_steps=51 format=3]
 
 [ext_resource type="Script" path="res://scripts/audio/soundscape_profile.gd" id="profile"]
 [ext_resource type="Script" path="res://scripts/audio/audio_cue.gd" id="cue"]
@@ -23,6 +23,12 @@
 [ext_resource type="AudioStream" path="res://assets/audio/predator_pursue.wav" id="predator_pursue"]
 [ext_resource type="AudioStream" path="res://assets/audio/retreat.wav" id="retreat"]
 [ext_resource type="AudioStream" path="res://assets/audio/ui.wav" id="ui"]
+
+[ext_resource type="AudioStream" path="res://assets/audio/radio.wav" id="radio"]
+
+[ext_resource type="AudioStream" path="res://assets/audio/underwater_blast.wav" id="underwater_blast"]
+
+[ext_resource type="AudioStream" path="res://assets/audio/bubble.wav" id="bubble"]
 
 [sub_resource type="Resource" id="Cue_ping"]
 script = ExtResource("cue")
@@ -192,6 +198,31 @@ bus = "UI"
 gain_db = -12.0
 minimum_interval = 0.15
 
+[sub_resource type="Resource" id="Cue_radio"]
+script = ExtResource("cue")
+cue_id = &"radio"
+stream = ExtResource("radio")
+bus = "UI"
+gain_db = -12.0
+minimum_interval = 0.6
+
+[sub_resource type="Resource" id="Cue_underwater_blast"]
+script = ExtResource("cue")
+maximum_voices = 2
+cue_id = &"underwater_blast"
+stream = ExtResource("underwater_blast")
+bus = "Effects"
+gain_db = -8.0
+minimum_interval = 0.25
+
+[sub_resource type="Resource" id="Cue_bubble"]
+script = ExtResource("cue")
+cue_id = &"bubble"
+stream = ExtResource("bubble")
+bus = "Effects"
+gain_db = -12.0
+minimum_interval = 0.25
+
 [resource]
 script = ExtResource("profile")
-cues = Array[ExtResource("cue")]([SubResource("Cue_ping"), SubResource("Cue_echo"), SubResource("Cue_mechanical"), SubResource("Cue_geological"), SubResource("Cue_biological"), SubResource("Cue_unknown"), SubResource("Cue_creak"), SubResource("Cue_impact"), SubResource("Cue_damage"), SubResource("Cue_battery"), SubResource("Cue_oxygen"), SubResource("Cue_hull"), SubResource("Cue_dock"), SubResource("Cue_service"), SubResource("Cue_scan_start"), SubResource("Cue_complete"), SubResource("Cue_acknowledge"), SubResource("Cue_predator_alert"), SubResource("Cue_predator_pursue"), SubResource("Cue_retreat"), SubResource("Cue_ui")])
+cues = Array[ExtResource("cue")]([SubResource("Cue_ping"), SubResource("Cue_echo"), SubResource("Cue_mechanical"), SubResource("Cue_geological"), SubResource("Cue_biological"), SubResource("Cue_unknown"), SubResource("Cue_creak"), SubResource("Cue_impact"), SubResource("Cue_damage"), SubResource("Cue_battery"), SubResource("Cue_oxygen"), SubResource("Cue_hull"), SubResource("Cue_dock"), SubResource("Cue_service"), SubResource("Cue_scan_start"), SubResource("Cue_complete"), SubResource("Cue_acknowledge"), SubResource("Cue_predator_alert"), SubResource("Cue_predator_pursue"), SubResource("Cue_retreat"), SubResource("Cue_ui"), SubResource("Cue_radio"), SubResource("Cue_underwater_blast"), SubResource("Cue_bubble")])

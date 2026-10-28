@@ -2,7 +2,7 @@ class_name ExpeditionSchema
 extends RefCounted
 ## Pure validation/migration. No node restoration or executable data from disk.
 
-const VERSION: int = 6
+const VERSION: int = 7
 const REGION: String = "continental_shelf"
 const DISCOVERIES: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
 const RESEARCH: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
@@ -47,7 +47,7 @@ static func decode(value: Variant) -> Dictionary:
 	if not value is Dictionary or not InputBindings.is_integer(value.get("schema_version")):
 		return {"error": ERR_INVALID_DATA}
 	var version: int = int(value.schema_version)
-	if version not in [1, 2, 3, 4, 5, VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, VERSION]:
 		return {"error": ERR_UNAVAILABLE}
 	var data: Dictionary = value.duplicate(true)
 	if version in [1,2]:
@@ -62,10 +62,16 @@ static func decode(value: Variant) -> Dictionary:
 	if version <= 4:
 		if data.size()!=10: return {"error": ERR_INVALID_DATA}
 		data.story = StoryState.fresh()
+	if version<=6 and data.get("prototype") is Dictionary and data.prototype.get("campaign") is Dictionary:
+		if not valid_progress(data.get("progress")): return {"error":ERR_INVALID_DATA}
+		var old_campaign: Dictionary = data.prototype.campaign
+		if version>=4 and (old_campaign.size()!=4 or old_campaign.has("science")): return {"error":ERR_INVALID_DATA}
+		old_campaign.science = ResearchExperienceData.reconcile(ResearchExperienceData.fresh(),data.get("progress",{}).get("research",[]))
 	if data.size() != 11 or not StoryState.valid_snapshot(data.get("story")) or not valid_prototype(data.get("prototype")) or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id != REGION \
 		or not data.get("legacy_imported") is bool or data.legacy_imported != true or not data.get("player") is Dictionary \
 		or not data.get("route") is Dictionary or not valid_progress(data.get("progress")):
 		return {"error": ERR_INVALID_DATA}
+	if not ResearchExperienceData.valid_against(data.prototype.campaign.science,data.progress.research): return {"error":ERR_INVALID_DATA}
 	for choice: Resource in StoryState.CATALOG.choices:
 		if choice.research_record_id!=&"" and ((String(choice.research_record_id) in data.progress.research)!=(String(choice.stable_id) in data.story.decisions)):
 			return {"error": ERR_INVALID_DATA}

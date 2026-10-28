@@ -67,3 +67,66 @@ this is not dynamic visibility/occlusion or a new light-toggle mechanic.
    as improvements, and obtain target-GPU and human readability/art approval.
 
 This is a proposed asset pipeline, not implementation of another playable region.
+
+## BTA-051 additions
+
+| Asset | Dimensions | Provenance and use |
+| --- | --- | --- |
+| school_species.png | 2172×724 | Original unchanged OpenAI `image_gen` output, transparent three 724×724 cells: silver shoal, amber darter, blue grazer. Shared by each school's MultiMesh and its scientific notification. |
+| bloom_thumbnail.png | 256×128 | Offline Godot render of the actual repository LightBloomVisual. |
+| plate_thumbnail.png | 256×128 | Offline Godot render of the actual repository ShelfStoryDetails calibration plate. |
+
+All three import losslessly with mipmaps and linear mipmap filtering. Exact bytes,
+hashes and origins are in provenance.json; the fish output is AI generated, not a
+human-painted layered master. Existing BTA-049/050 raster masters are unmodified.
+Regenerate the two subject thumbnails using the pinned engine, not a network call:
+
+```sh
+godot --path . --script res://tools/render_science_thumbnails.gd
+```
+
+The expanded layout reuses basalt strata/trim, kelp variants, the Halcyon cradle,
+searchlight shafts and background relief. Its protected collision geometry is
+separate from these decorations; only the authored rockfall is excavatable.
+Soft excavation dust uses a cached 64×64 native GradientTexture2D and one batch;
+eight textured falling fragments use a second batch. Both expire in four simulation
+seconds and obey comfort flags. Ambient schools use one MultiMesh/one receiver
+per group, no fish collision bodies and a bounded fixed-step model. Their entire
+static habitat must be clear; this is conservative avoidance, not pathfinding.
+
+The underwater scientific subjects remain placeholders, not taxonomic claims about
+real species. Human art, atlas-edge and target-GPU approval remain outstanding.
+
+## PR #35 feedback additions
+
+`marine_animals.png` is a 2172×724 transparent, original OpenAI image_gen output:
+three equal 724×724 cells for a moray eel, sea turtle and hammerhead. The hammerhead
+silhouette was revised with the same tool; the committed master is the unchanged
+edited output, not a human-painted layered source. Exact source identities/hash are
+in provenance.json. Lossless import, mipmaps and linear mipmap filtering match the
+existing schools. Painted widths are 120/88/140 world units, with gentle body roll
+and eel skew; Reduced Motion removes these decorative transforms. Actual movement
+uses the existing acoustic creature navigation. Human anatomy/atlas-edge review and
+production licensing remain outstanding; no new exclusive rights are claimed.
+
+Rough protected rock, the thick rockfall and clipped basalt material share the same
+deterministic authored contours. No decorative false passages are painted over solid
+walls. Seafloor bubbles use twelve fixed source locations, staggered deterministic
+phases and one 36-instance batch. They do not consume gameplay RNG. The plankton
+encounter now drifts locally while alive; its interaction/research location is fixed.
+
+The new underwater detonation uses three bounded batches: ten soft cavitation cloud
+sprites, 28 rising bubble rings and twelve textured fragments, plus a brief existing
+local refraction shader and pressure flash. No extra full-screen shader is added.
+Reduced Effects/Particles/Motion use the launcher's existing comfort policy, removing
+the decorative batches, flash and lens. The remaining quiet ring expires in 0.65 s;
+the full cosmetic effect expires in 2.6 simulation seconds. Audio sources are original
+fixed-seed PCM DSP in `tools/synthesize_feedback_audio.py`, not recordings. Regenerate:
+
+```sh
+python3 tools/synthesize_feedback_audio.py
+```
+
+Radio uses UI volume/mute; muffled blast and occasional cosmetic bubble chirps use
+Effects volume/mute and the existing voice budgets. They generate no gameplay
+AcousticEvents. See [review evidence and limitations](../../../docs/testing/bta-051/revision/README.md).

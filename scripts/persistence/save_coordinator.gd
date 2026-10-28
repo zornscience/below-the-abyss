@@ -113,6 +113,7 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 			point.y += signf(point.y) * (capsule.height*0.5-capsule.radius)
 			footprint.append(query.transform * point)
 		for rock: DestructibleRock in _scene.excavation._rocks.values():
+			if (rock.collision_layer & vessel.collision_mask)==0: continue
 			for part: PackedVector2Array in rock.pieces:
 				var polygon: PackedVector2Array = []
 				for point: Vector2 in part: polygon.append(rock.to_global(point))
@@ -121,12 +122,13 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 
 
 func safe_to_save() -> bool:
-	return not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
+	return _scene.submarine.hull_system.hull>0 and _scene.submarine.resource_system.oxygen>0 \
+		and not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
 		and _scene.submarine.damage_system.warning_state != SubmarineDamageSystem.WarningState.EXCEEDED \
 		and _scene.predator.threat.phase not in [PredatorState.Phase.ALERT, PredatorState.Phase.PURSUE]
 
 
-func _write(candidate: Dictionary, message: String) -> Error:
+func _write(candidate: Dictionary, message: String, scientific_awards: Array[StringName] = []) -> Error:
 	if _busy or not _ready_to_write:
 		return _report("Save blocked; recover the existing checkpoint before writing.", ERR_BUSY)
 	_busy = true
@@ -136,10 +138,15 @@ func _write(candidate: Dictionary, message: String) -> Error:
 		return _report("Conflicting story decisions; existing checkpoint preserved.",reconciled.error)
 	candidate.story = reconciled.data
 	candidate.progress = ExpeditionSchema.merge_progress(candidate.progress, _state.progress)
+	candidate.prototype.campaign = CampaignData.merge_earned(candidate.prototype.campaign,_state.prototype.campaign)
+	candidate.prototype.campaign.science = ResearchExperienceData.reconcile(candidate.prototype.campaign.science,candidate.progress.research,scientific_awards)
 	var result: Error = store.write_checkpoint(candidate)
 	if result == OK:
 		_state = candidate.duplicate(true)
 		_has_checkpoint = true
+		if _scene.revision!=null and _scene.revision.campaign.science!=candidate.prototype.campaign.science:
+			_scene.revision.campaign.science = candidate.prototype.campaign.science.duplicate(true)
+			_scene.revision.research_changed.emit()
 	_report(message if result == OK else "Not saved (%s). Files preserved; recover or inspect checkpoint." % error_string(result), result)
 	_busy = false
 	return result
@@ -352,14 +359,25 @@ func commit_story(value: Dictionary, choice_id: StringName) -> Error:
 		if choice.research_record_id!=&"" and String(choice.research_record_id) not in candidate.progress.research:
 			candidate.progress.research.append(String(choice.research_record_id))
 			candidate.progress.research.sort()
-	return _write(candidate,"Story decision saved with expedition progress.")
+	var awards: Array[StringName] = []
+	if _scene.chapter!=null and _scene.chapter.active and choice_id!=&"":
+		var definition: ChoiceData = _scene.story.definition(choice_id)
+		if definition.research_record_id!=&"": awards.append(definition.research_record_id)
+	return _write(candidate,"Story decision saved with expedition progress.",awards)
 
 func commit_research_checkpoint(proposed: Array[StringName]) -> Error:
 	# Evidence recovery is an explicit, safe local checkpoint, not a periodic autosave.
-	if _busy or not _ready_to_write or not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) \
+	if _busy or not _ready_to_write or _scene.submarine.hull_system.hull<=0 or _scene.submarine.resource_system.oxygen<=0 \
+		or not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) \
 		or _scene.submarine.damage_system.warning_state==SubmarineDamageSystem.WarningState.EXCEEDED \
 		or _scene.predator.threat.phase in [PredatorState.Phase.ALERT,PredatorState.Phase.PURSUE]: return ERR_UNAVAILABLE
 	var candidate: Dictionary = snapshot()
 	candidate.progress.research = _strings(proposed)
 	if not ExpeditionSchema.valid_progress(candidate.progress): return ERR_INVALID_DATA
-	return _write(candidate,"Emergency recording and safe vessel checkpoint saved together.")
+	var awards: Array[StringName] = []
+	if _scene.chapter!=null and _scene.chapter.active:
+		for id: StringName in proposed:
+			if not _scene.research.is_completed(id):
+				if not _scene.submarine.scanner.eligible(id): return ERR_UNAUTHORIZED
+				awards.append(id)
+	return _write(candidate,"Scientific record and safe vessel checkpoint saved together.",awards)

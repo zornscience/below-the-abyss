@@ -65,7 +65,7 @@ func test_legacy_completed_checkpoint_migrates_without_erasing_the_ending() -> v
 	var raw: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))
 	var decoded: Dictionary = ExpeditionSchema.decode(raw)
 	assert_eq(decoded.error,OK)
-	assert_eq(decoded.data.schema_version,6)
+	assert_eq(decoded.data.schema_version,ExpeditionSchema.VERSION)
 	assert_eq(decoded.data.terrain,[])
 	assert_true(decoded.data.has("legacy_conclusion"))
 func test_completed_legacy_checkpoint_migrates_without_requiring_outer_missions() -> void:

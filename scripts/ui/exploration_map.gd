@@ -5,6 +5,7 @@ extends Control
 signal research_requested
 signal close_requested
 var presentation_bounds: Rect2
+var presentation_excluded_ids: Array[StringName] = []
 var registry: DiscoveryRegistry
 var store: DiscoveryStore
 var survey_controls: Array[Button] = []
@@ -47,6 +48,7 @@ func refresh() -> void:
 	if presentation_bounds.has_area():
 		canvas.bounds = presentation_bounds
 		canvas.points = canvas.points.filter(func(point: PointOfInterest) -> bool: return presentation_bounds.has_point(point.map_position))
+	canvas.points = canvas.points.filter(func(point: PointOfInterest) -> bool: return point.stable_id not in presentation_excluded_ids)
 	var list: VBoxContainer = %LandmarkList
 	for child: Node in list.get_children():
 		list.remove_child(child)

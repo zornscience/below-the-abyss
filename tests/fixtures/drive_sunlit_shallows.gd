@@ -352,6 +352,13 @@ func _initialize() -> void:
 		await _activate(_control("Depart"))
 		await _supply_edge_cases()
 		await _map_lesson()
+		if OS.get_cmdline_user_args().has("--stop-after-map"):
+			print("SUNLIT_MAP_REVIEW_PASS")
+			_clock.queue_free()
+			_scene.queue_free()
+			await _frames(4)
+			quit()
+			return
 		await _move(Vector2(1280,480))
 		await _tap(JOY_BUTTON_X)
 		await _frames(100)

@@ -138,6 +138,10 @@ func _activate(value: bool) -> void:
 	scene.narrative.debrief_ready_provider = can_debrief if value else Callable()
 	scene.narrative.debrief_provider = debrief if value else Callable()
 	scene.exploration_map.presentation_bounds = SunlitShallowsData.BOUNDS if value else Rect2()
+	scene.exploration_map.presentation_excluded_ids.clear()
+	if value:
+		for point: Dictionary in ShelfChapterData.POINTS:
+			if point.at.x>=3900: scene.exploration_map.presentation_excluded_ids.append(StringName(point.id))
 	scene.exploration_map.canvas.report_caption = "BUOY SEARCH AREA · HALCYON" if value else "LAST CONTACT · BASE REPORT"
 	scene.region.camera_bounds = SunlitSurveyData.CAMERA if value else ShelfChapterData.BOUNDS
 	scene.region.configure_camera(scene.submarine.get_node("Camera2D") as Camera2D)

@@ -106,7 +106,7 @@ func set_enabled(value: bool) -> void:
 				echo.receiver.enabled = value
 				echo.visible = value
 	scene.exploration_map.canvas.survey_enabled = value
-	(scene.exploration_map.get_node("Margin/Content/Body/Side/Legend") as Label).text = "▲ YOU / orientation\n⚓ HALCYON\n■ CHARTED terrain\n▧ UNSURVEYED\n○ REPORTED search area\n□ DISCOVERED landmark" if value else "▲ YOU / vessel position\n□ DISCOVERED landmark\n— PUBLIC survey boundary"
+	(scene.exploration_map.find_child("Legend",true,false) as Label).text = "▲ YOU / orientation\n⚓ HALCYON\n■ CHARTED terrain\n▧ UNSURVEYED\n○ REPORTED search area\n□ DISCOVERED landmark" if value else "▲ YOU / vessel position\n□ DISCOVERED landmark\n— PUBLIC survey boundary"
 	_simulation(scene.submarine.is_physics_processing())
 	_refresh()
 

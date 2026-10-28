@@ -266,10 +266,14 @@ func test_popup_is_nonblocking_bounded_and_yields_to_pressure_radio_and_pause() 
 	assert_eq(popup.remaining,remaining)
 
 func test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_controls() -> void:
+	# Old prototype discoveries remain stored, but cannot become canonical wreck markers.
+	assert_eq(game.discoveries.discover(&"lost-expedition-wreck",&"legacy-import"),OK)
+	assert_eq(game.discoveries.state_of(&"lost-expedition-wreck"),DiscoveryRegistry.State.DISCOVERED)
 	game.open_map()
 	var canvas: ExplorationMapCanvas = game.exploration_map.canvas
 	assert_true(canvas.survey_enabled)
 	assert_true(canvas.has_report)
+	assert_false(canvas.points.any(func(point: PointOfInterest) -> bool: return point.stable_id==&"lost-expedition-wreck"))
 	assert_eq(canvas.charted.size(),1)
 	assert_false(canvas.survey_polygons.is_empty())
 	assert_eq(canvas.player_direction,game.submarine.facing_direction())
@@ -291,6 +295,10 @@ func test_small_large_text_ui_fits_and_muting_never_hides_field_information() ->
 	prefs.reduced_motion = true
 	prefs.reduced_particles = true
 	game.settings.set_accessibility(prefs)
+	await wait_process_frames(4)
+	# Starting/returning to the chapter after Large Text has reparented map content.
+	game.chapter._activate(false)
+	game.chapter._activate(true)
 	var audio: Dictionary = game.settings.snapshot().audio
 	audio.muted = true
 	game.settings.set_audio(audio)

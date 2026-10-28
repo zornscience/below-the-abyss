@@ -48,7 +48,7 @@ func _draw() -> void:
 	var font: Font = ThemeDB.fallback_font
 	if survey_enabled:
 		_draw_survey()
-	draw_string(font, start - Vector2(0, 8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
+	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	for index: int in range(points.size()):
 		var point: PointOfInterest = points[index]
 		var at: Vector2 = _point(point.map_position)
@@ -56,7 +56,7 @@ func _draw() -> void:
 		if selected_id == point.stable_id:
 			draw_arc(at, 12, 0, TAU, 32, Color("f4dc94"), 2.0, true)
 		draw_string(font, at + Vector2(10, -8), str(index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
-	if has_report:
+	if has_report and (not survey_enabled or _view().has_point(reported_position)):
 		var report: Vector2 = _point(reported_position)
 		if survey_enabled:
 			var radius: float = maxf(13,_point(reported_position+Vector2(1300,0)).x-report.x)
@@ -86,7 +86,7 @@ func _draw_survey() -> void:
 		if shape.size()>=3: draw_colored_polygon(shape,Color("63817d"))
 	var station: Vector2 = _point(Vector2(420,480))
 	draw_rect(Rect2(station-Vector2(5,5),Vector2(10,10)),Color("f4dc94"))
-	draw_string(ThemeDB.fallback_font,station+Vector2(10,-10),"HALCYON",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("f4dc94"))
+	draw_string(ThemeDB.fallback_font,station+Vector2(5,-24),"HALCYON",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("f4dc94"))
 	# Hatching identifies unsurveyed space even with high contrast / no colour cues.
 	for x: int in range(5000,22000,1000):
 		var at: Vector2 = Vector2(x,500)
@@ -97,4 +97,4 @@ func _draw_survey() -> void:
 			var pixel: Vector2 = _point(at)
 			draw_line(pixel-Vector2(5,5),pixel+Vector2(5,5),Color("68858b"),2)
 	if charted.size()==1:
-		draw_string(ThemeDB.fallback_font,Vector2(24,size.y-14),"UNSURVEYED · sonar records extend the chart",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("b4c8c7"))
+		draw_string(ThemeDB.fallback_font,Vector2(24,size.y-14),"HATCHED = UNSURVEYED",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("b4c8c7"))

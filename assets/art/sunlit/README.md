@@ -67,3 +67,32 @@ this is not dynamic visibility/occlusion or a new light-toggle mechanic.
    as improvements, and obtain target-GPU and human readability/art approval.
 
 This is a proposed asset pipeline, not implementation of another playable region.
+
+## BTA-051 additions
+
+| Asset | Dimensions | Provenance and use |
+| --- | --- | --- |
+| school_species.png | 2172×724 | Original unchanged OpenAI `image_gen` output, transparent three 724×724 cells: silver shoal, amber darter, blue grazer. Shared by each school's MultiMesh and its scientific notification. |
+| bloom_thumbnail.png | 256×128 | Offline Godot render of the actual repository LightBloomVisual. |
+| plate_thumbnail.png | 256×128 | Offline Godot render of the actual repository ShelfStoryDetails calibration plate. |
+
+All three import losslessly with mipmaps and linear mipmap filtering. Exact bytes,
+hashes and origins are in provenance.json; the fish output is AI generated, not a
+human-painted layered master. Existing BTA-049/050 raster masters are unmodified.
+Regenerate the two subject thumbnails using the pinned engine, not a network call:
+
+```sh
+godot --path . --script res://tools/render_science_thumbnails.gd
+```
+
+The expanded layout reuses basalt strata/trim, kelp variants, the Halcyon cradle,
+searchlight shafts and background relief. Its protected collision geometry is
+separate from these decorations; only the authored rockfall is excavatable.
+Soft excavation dust uses a cached 64×64 native GradientTexture2D and one batch;
+eight textured falling fragments use a second batch. Both expire in four simulation
+seconds and obey comfort flags. Ambient schools use one MultiMesh/one receiver
+per group, no fish collision bodies and a bounded fixed-step model. Their entire
+static habitat must be clear; this is conservative avoidance, not pathfinding.
+
+The underwater scientific subjects remain placeholders, not taxonomic claims about
+real species. Human art, atlas-edge and target-GPU approval remain outstanding.

@@ -190,3 +190,11 @@ and modular station art used at the immediate Halcyon departure, not promotional
 3D imagery or new geography. Existing Begin/Continue/options/recovery/legacy access
 and all exploration mechanics remain intact. Comfort modes provide a static version;
 no narrative spoilers, new regions, objectives or mechanics.
+
+
+The user-requested BTA-049 revision replaces the geometric title masters with shared
+painted hardware, rock and optics. Compact, centered, scrollable dialogs keep the
+underwater scene visible; semantic 16 px body text, 18–20 px headings and 17 px main
+menu controls replace oversized defaults. Existing Compact/Standard/Large, contrast
+and comfort preferences remain. This changes presentation only; it adds no content,
+mechanic, progression or save field. Visual acceptance remains a reviewer decision.

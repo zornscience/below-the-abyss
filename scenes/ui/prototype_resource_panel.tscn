@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/prototype_resource_panel.gd" id="1_panel"]
 
 [sub_resource type="Theme" id="Theme_panel"]
-default_font_size = 20
+default_font_size = 16
 
 [sub_resource type="StyleBoxFlat" id="Style_panel"]
 bg_color = Color(0.055, 0.07, 0.08, 1)

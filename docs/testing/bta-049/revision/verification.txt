@@ -1,0 +1,55 @@
+BTA-049 requested revision — local verification, 2026-10-28 UTC
+
+Godot: 4.6.3.stable.official.7d41c59c4
+GUT: 9.6.1
+Base branch: bta-049-halcyon-descent at 02837fb
+Remote main observed: 8c1980e, already-merged PR #32
+
+PASS python3 tools/validate_godot.py
+  Import; 246 standalone GDScript parser checks; startup smoke.
+PASS python3 tools/run_tests.py
+  587/587 tests; 67 scripts; 26,744 assertions; 464.798 seconds.
+  No failures/errors/skips. Final isolated run, no competing Godot process.
+  Earlier contended run hit its 600-second bound; no timeout was loosened.
+PASS python3 tools/verify_sunlit_shallows.py
+  12 launches: both outcomes and devices, full Continue and buoy-checkpoint Continue.
+PASS python3 tools/verify_revision_two.py
+  472.7 simulation seconds; hull 100; return battery 72.5869586; dock battery 100;
+  research points 4; ammunition 10; excavations 0.
+PASS python3 tools/verify_expanded_expedition.py
+  320.7166667 simulation seconds; hull 100; battery 73.6623615; oxygen 90.2625;
+  excavations 0.
+PASS python3 tools/verify_story_choice.py
+  Eight launches: both bloom outcomes/devices plus separate-process Continue.
+PASS python3 -m unittest discover -s tests/python -v
+  Seven tests.
+PASS actual-input Quit fixture, no forced quit timer
+  --headless --script res://tests/fixtures/capture_halcyon_descent.gd -- --quit-test
+PASS python3 tools/capture_interface_review.py --output <after-directory>
+  44 native captures; exact PNG dimensions; no Godot errors/exit leaks.
+  Eleven pages each: 800x600 Standard, 1280x800 Standard, 1920x1080 Standard,
+  and 800x600 Large/High Contrast/static comfort/muted.
+  Baseline: 22 native 800x600/1280x800 screenshots from isolated 02837fb source.
+PASS native normal-input complete chapter, 800x600 Large Text/muted/static comfort
+  --script res://tests/fixtures/drive_sunlit_shallows.gd -- --comfort --small
+  --profile=bta049-revised-native-small --outcome=observe --input=controller
+  choices=1; claims=1; simulation_seconds=76.1333333; no combat/excavation;
+  nine native route captures. Emulated Godot controller events, not a human session.
+
+Completed raw logs and JUnit are retained under logs/.
+Native UI frame/font inventory: after/native-metrics.json.
+Six generated source PNGs match unchanged originals and recorded SHA256.
+No runtime gameplay, schema, stable ID, collision, navigation or camera rule changed.
+
+PASS native shared-art/menu capture, no fixed FPS, no competing Godot process
+  Keyboard Options; controller Accessibility/Begin/launch; muted; all three sizes;
+  Large/High Contrast and same hardware in gameplay. Nine additional PNGs.
+  150 frame intervals after 30 warm-up frames, per view. Raw observations in logs/.
+  Software rendering does not meet the 60 FPS target; no hardware certification.
+
+Clean committed-source Linux export/smoke evidence is recorded after this source commit.
+
+PR constraint: #32 was already merged externally. Its review diff cannot accept new
+commits. Revisions stay on its existing branch; no new PR or merge is authorized.
+GitHub API probe: gh pr view 32 returned api.github.com/graphql Forbidden.
+No hosted CI success or reviewer visual acceptance is claimed.

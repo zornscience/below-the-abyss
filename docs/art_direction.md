@@ -1,7 +1,9 @@
 # Below the Abyss — visual direction / BTA-040
 
-This is an original, implemented visual study for review, not approved final production
-art. No external artwork, generated mockups, fonts or new dependency is included.
+This document retains the original BTA-040 study and subsequent revisions. The
+user-requested BTA-049 review revision below supersedes its vector-only asset policy.
+Artwork is for review, not approved final production art. No new font or runtime
+dependency is included.
 
 ## Palette and hierarchy
 
@@ -121,3 +123,35 @@ Slow waves, particulate drift and parallax have a static Reduced Motion alternat
 No fullscreen postprocessing, 3D, realtime shadows or new rendering dependency.
 Sources/provenance remain in assets/art-provenance.csv; licensing is pending with
 the rest of the project. [Asset workflow, native comparison and measurements](testing/bta-049/README.md).
+
+
+## BTA-049 requested review revision — illustrated assets and restrained type
+
+The user explicitly authorized a richer asset-driven treatment and smaller type
+across every interface. The new `assets/art/painted` masters are AI-generated PNGs,
+not hand-painted by a human, photographed, downloaded from a stock library or built
+from more geometric drawing primitives. Weathered porcelain/steel Lantern-2, recessed
+Halcyon habitat/lab/dock modules, stratified basalt, suspended-water light and textured
+optics share the palette above. Title and gameplay load the same vessel/station/beam.
+The playable vessel remains 80x48 world units over its original collision capsule.
+Existing walls retain exact collision rims; illustration does not imply extra holes.
+
+The original SVGs remain as silhouette/reference sources and historical fixtures.
+Source PNGs, generator-file identities, dimensions and hashes are recorded in
+`assets/art/painted/provenance.json`. Project licensing remains pending: generation
+does not establish a new license or claim exclusive rights. No external dependency.
+
+UiTypography is the semantic source of body, heading, menu, instrument and secondary
+metrics. Standard prose is 16 px, dialog headings 18–20, title controls 17, secondary
+14 and HUD/mission 16. Compact uses 90% with a 14 px floor; Large remains 125%.
+Do not restore oversized defaults or shrink Large to make content fit: constrain the
+panel, wrap prose and scroll. Keep text and focus outlines legible over opaque panel
+surfaces, with only the surrounding world dimmed.
+
+Painted surface reflections use a small, texture-local displacement of the water
+layer. Cosmetic phase is explicit and freezes with Reduced Motion/softer effects.
+The lamp is a shared transparent painted texture, not layered polygon wedges. Slow
+parallax and bounded motes remain; no screen-read pass, realtime shadows or lighting
+simulation. Full scene material and renderer limits remain in the revision evidence.
+
+[Current native screenshots, asset workflow, art-review limits and exact commands](testing/bta-049/revision/README.md).

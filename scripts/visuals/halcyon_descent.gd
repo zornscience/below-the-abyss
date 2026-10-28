@@ -1,21 +1,50 @@
 class_name HalcyonDescent
 extends Control
 ## Presentation clock only. No player, physics, input, random-stream or save access.
-const VESSEL: Texture2D = preload("res://assets/art/identity/lantern_2.svg")
-const STATION: Texture2D = preload("res://assets/art/identity/halcyon_modules.svg")
-const WATER: Texture2D = preload("res://assets/art/identity/descent_water.svg")
-const CLIFF: Texture2D = preload("res://assets/art/identity/shelf_cliff.svg")
+const VESSEL: Texture2D = preload("res://assets/art/painted/lantern_2.png")
+const STATION: Texture2D = preload("res://assets/art/painted/halcyon_modules.png")
+const WATER: Texture2D = preload("res://assets/art/painted/descent_water.png")
+const CLIFF: Texture2D = preload("res://assets/art/painted/shelf_cliff.png")
+const SEARCHLIGHT: Texture2D = preload("res://assets/art/painted/searchlight.png")
 const PARTICLE_COUNT: int = 42
 var phase: float = 0.0
 var reduced_motion: bool = false
 var reduced_effects: bool = false
 var reduced_particles: bool = false
 var _redraw_time: float = 0.0
+var _water: TextureRect
+var _cliffs: Array[TextureRect] = []
 
 func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	focus_mode = Control.FOCUS_NONE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_water = TextureRect.new()
+	_water.texture = WATER
+	_water.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_water.stretch_mode = TextureRect.STRETCH_SCALE
+	_water.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_water.show_behind_parent = true
+	_water.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var paint: ShaderMaterial = ShaderMaterial.new()
+	paint.shader = preload("res://assets/shaders/title_water.gdshader")
+	_water.material = paint
+	add_child(_water)
+	for index: int in range(3):
+		var relief: TextureRect = TextureRect.new()
+		relief.texture = CLIFF
+		relief.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		relief.stretch_mode = TextureRect.STRETCH_SCALE
+		relief.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		relief.show_behind_parent = true
+		var edges: ShaderMaterial = ShaderMaterial.new()
+		edges.shader = preload("res://assets/shaders/illustration_edge.gdshader")
+		relief.material = edges
+		add_child(relief)
+		_cliffs.append(relief)
+	_layout_relief()
+	resized.connect(_layout_relief)
 	resized.connect(queue_redraw)
 	visibility_changed.connect(_visibility_changed)
 
@@ -25,7 +54,11 @@ func apply_preferences(value: Dictionary) -> void:
 	reduced_particles = bool(value.reduced_particles)
 	# Use a stable authored pose for the static comfort alternative.
 	if reduced_motion: phase = 0.0
+	if _water!=null:
+		(_water.material as ShaderMaterial).set_shader_parameter("motion_amount",0.0 if reduced_motion or reduced_effects else 1.0)
+		(_water.material as ShaderMaterial).set_shader_parameter("phase",phase)
 	set_process(not reduced_motion and is_visible_in_tree())
+	_layout_relief()
 	queue_redraw()
 
 func _visibility_changed() -> void:
@@ -37,26 +70,15 @@ func _process(delta: float) -> void:
 	_redraw_time += delta
 	if _redraw_time>=1.0/30.0:
 		_redraw_time = fmod(_redraw_time,1.0/30.0)
+		(_water.material as ShaderMaterial).set_shader_parameter("phase",phase)
+		_layout_relief()
 		queue_redraw()
 
 func _draw() -> void:
 	if size.x<=0 or size.y<=0: return
-	draw_texture_rect(WATER,Rect2(Vector2.ZERO,size),false)
-	var surface: float = size.y*0.28
-	var drift: float = sin(phase*0.07)*4.0
-	# Two low-contrast shelves, then one close cut face; left remains navigation space.
-	draw_texture_rect(CLIFF,Rect2(size.x*0.63+drift,size.y*0.34,size.x*0.42,size.y*0.85),false,Color(0.52,0.69,0.73,0.34))
-	draw_texture_rect(CLIFF,Rect2(size.x*0.80-drift,size.y*0.42,size.x*0.38,size.y*0.91),false,Color(0.61,0.77,0.79,0.70))
+	var surface: float = size.y*0.235
 	var station_width: float = size.x*0.255
 	draw_texture_rect(STATION,Rect2(size.x*0.595,surface-station_width*0.32,station_width,station_width*0.375),false,Color(0.69,0.78,0.76))
-	# Narrow ocean surface and broken reflections, never a full-screen displacement pass.
-	for index: int in range(25):
-		var x: float = size.x*(0.44+index*0.024)
-		var wave: float = 0.0 if reduced_motion else sin(phase*0.3+index*0.8)*1.4
-		draw_line(Vector2(x,surface+wave),Vector2(x+size.x*0.018,surface+wave),Color(0.35,0.55,0.56,0.14),1.0,true)
-	for index: int in range(7):
-		var width: float = (15.0+index*6)*size.x/1280.0
-		draw_line(Vector2(size.x*0.721-width*0.5,surface+8+index*5),Vector2(size.x*0.721+width*0.5,surface+8+index*5),Color(0.71,0.65,0.47,0.10-index*0.01),1.0,true)
 	if not reduced_particles:
 		for index: int in range(PARTICLE_COUNT):
 			var x: float = fposmod(index*0.6180339+phase*0.0006,1.0)
@@ -66,9 +88,19 @@ func _draw() -> void:
 	var vessel_scale: float = clampf(size.x/560.0,1.55,3.3)
 	draw_set_transform(center,0.16,Vector2.ONE*vessel_scale)
 	var illumination: float = 1.0 if reduced_effects or reduced_motion else 0.97+sin(phase*0.4)*0.03
-	for index: int in range(4):
-		var reach: float = 95.0+index*22.0
-		draw_colored_polygon(PackedVector2Array([Vector2(29,0),Vector2(reach,-reach*0.15),Vector2(reach,reach*0.15)]),Color(0.68,0.78,0.63,0.024*illumination))
+	draw_texture_rect(SEARCHLIGHT,Rect2(19,-28,240,56),false,Color(0.74,0.86,0.79,0.38*illumination))
 	draw_texture_rect(VESSEL,Rect2(-40,-24,80,48),false)
 	draw_set_transform(Vector2.ZERO)
-	draw_texture_rect(CLIFF,Rect2(size.x*0.91+drift*1.5,size.y*0.66,size.x*0.25,size.y*0.65),false,Color(0.35,0.47,0.48))
+
+
+func _layout_relief() -> void:
+	if _cliffs.size()!=3: return
+	var drift: float = sin(phase*0.07)*4.0
+	var rectangles: Array[Rect2] = [Rect2(size.x*0.63+drift,size.y*0.34,size.x*0.42,size.y*0.85),
+		Rect2(size.x*0.80-drift,size.y*0.42,size.x*0.38,size.y*0.91),
+		Rect2(size.x*0.91+drift*1.5,size.y*0.66,size.x*0.25,size.y*0.65)]
+	var tints: Array[Color] = [Color(0.52,0.69,0.73,0.34),Color(0.61,0.77,0.79,0.70),Color(0.35,0.47,0.48)]
+	for index: int in range(3):
+		_cliffs[index].position = rectangles[index].position
+		_cliffs[index].size = rectangles[index].size
+		_cliffs[index].modulate = tints[index]

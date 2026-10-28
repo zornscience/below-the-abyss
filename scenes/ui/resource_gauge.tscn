@@ -21,13 +21,13 @@ script = ExtResource("2")
 [node name="Caption" type="Label" parent="Content/Header"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "HULL INTEGRITY"
 
 [node name="Value" type="Label" parent="Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
+metadata/typography_role = &"measurement"
 text = "0.0 / 100.0"
 
 [node name="Bar" type="ProgressBar" parent="Content"]
@@ -43,11 +43,11 @@ layout_mode = 2
 [node name="State" type="Label" parent="Content/StatusRow"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "AVAILABLE"
 
 [node name="LowWarning" type="Label" parent="Content/StatusRow"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 theme_override_colors/font_color = Color(0.96, 0.84, 0.54, 1)

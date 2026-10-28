@@ -1,7 +1,7 @@
 class_name UiAccessibility
 extends Node
 ## Scene-owned presentation policy. Reflows on preferences/resize/content minima only.
-const SCALE: Dictionary = {"compact": 0.9, "standard": 1.0, "large": 1.25}
+const SCALE: Dictionary = UiTypography.SCALE
 var _scene: ShelfPrototype
 var _preferences: Dictionary = SettingsStore.default_accessibility()
 var _queued: bool = false
@@ -73,6 +73,7 @@ func apply() -> void:
 	_walk(_scene)
 	for screen: Control in [_scene.route_menu, _scene.station_menu, _scene.exploration_map, _scene.research_log, _scene.expedition_log]:
 		_wrap_screen(screen)
+		if screen!=_scene.route_menu and screen!=_scene.exploration_map: UiDialogLayout.fit_screen(screen,Vector2(940,580))
 	var threat_content: Control = _scene.hud.get_node("%ThreatIndicator").get_node("Content") as Control
 	if tight_hud():
 		threat_content.add_theme_constant_override("separation", 1)
@@ -100,7 +101,16 @@ func _walk(node: Node) -> void:
 
 func _apply_node(node: Node) -> void:
 	if node is Control and _interface(node):
+		node.set_meta("typography_scale",String(_preferences.ui_scale))
+		node.set_meta("typography_high_contrast",bool(_preferences.high_contrast))
 		_apply_control(node as Control)
+		if node is ExplorationMapCanvas or node is ResearchTreeIllustration:
+			node.queue_redraw()
+		if node.has_meta("dialog_size"): UiDialogLayout.fit_panel(node as Control)
+		if node is AccessibilityPanel or node is AudioSettingsPanel or node is MechanicsHelp or node is PlaytestPanel or node is InputTestMenu:
+			UiDialogLayout.fit_screen(node as Control)
+	elif node is Label and node.has_meta("typography_role"):
+		UiTypography.apply(node,String(_preferences.ui_scale))
 	if node is SonarPulse:
 		(node as SonarPulse).reduced_flashing = bool(_preferences.reduced_flashing)
 	if node is SonarRevealTarget:
@@ -125,12 +135,7 @@ func _apply_node(node: Node) -> void:
 
 func _apply_control(control: Control) -> void:
 	if control is Label or control is BaseButton:
-		if not control.has_meta("a11y_font"):
-			control.set_meta("a11y_font", control.get_theme_font_size("font_size"))
-		var font_size: int = maxi(16, roundi(float(control.get_meta("a11y_font")) * float(SCALE[_preferences.ui_scale])))
-		control.add_theme_font_size_override("font_size", font_size)
-		if control is OptionButton:
-			(control as OptionButton).get_popup().add_theme_font_size_override("font_size", font_size)
+		UiTypography.apply(control,String(_preferences.ui_scale))
 		if not control.has_meta("a11y_color"):
 			control.set_meta("a11y_color", [control.has_theme_color_override("font_color"), control.get_theme_color("font_color")])
 		var color: Array = control.get_meta("a11y_color")
@@ -180,7 +185,7 @@ func _apply_control(control: Control) -> void:
 
 
 func _wrap_screen(screen: Control) -> void:
-	var large: bool = _preferences.ui_scale == "large" or OS.has_feature("playtest") or OS.get_cmdline_user_args().has("--playtest")
+	var large: bool = screen!=_scene.exploration_map or _preferences.ui_scale == "large"
 	var parent: Node = screen.get_node_or_null("Margin")
 	var content: Control
 	if screen == _scene.route_menu:
@@ -202,8 +207,9 @@ func _wrap_screen(screen: Control) -> void:
 			parent.add_child(scroll)
 			content.reparent(scroll)
 			content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			content.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		if scroll != null and screen == _scene.route_menu:
-			scroll.custom_minimum_size = _scene.get_viewport().get_visible_rect().size - Vector2(48, 48)
+			scroll.custom_minimum_size = UiDialogLayout.bounds(_scene.get_viewport().get_visible_rect().size,Vector2(760,540)).size-Vector2(36,32)
 	elif scroll != null:
 		var child: Node = scroll.get_child(0)
 		child.reparent(parent)

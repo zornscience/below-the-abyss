@@ -42,7 +42,7 @@ func setup(value: ExpeditionRevision) -> void:
 	speaker = Label.new()
 	preview = Label.new()
 	for label: Label in [speaker,preview]:
-		label.add_theme_font_size_override("font_size",16)
+		UiTypography.style(label,&"body")
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		content.add_child(label)
@@ -51,7 +51,7 @@ func setup(value: ExpeditionRevision) -> void:
 	scroll.custom_minimum_size.y = 120
 	content.add_child(scroll)
 	transcript = Label.new()
-	transcript.add_theme_font_size_override("font_size",16)
+	UiTypography.style(transcript,&"body")
 	transcript.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	transcript.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(transcript)

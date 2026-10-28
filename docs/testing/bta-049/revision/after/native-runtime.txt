@@ -1,0 +1,50 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+INTERFACE_CAPTURE 800-standard-title
+INTERFACE_CAPTURE 800-standard-briefing
+INTERFACE_CAPTURE 800-standard-choice
+INTERFACE_CAPTURE 800-standard-radio
+INTERFACE_CAPTURE 800-standard-research
+INTERFACE_CAPTURE 800-standard-expedition-log
+INTERFACE_CAPTURE 800-standard-station
+INTERFACE_CAPTURE 800-standard-technology
+INTERFACE_CAPTURE 800-standard-debrief
+INTERFACE_CAPTURE 800-standard-settings
+INTERFACE_CAPTURE 800-standard-help
+INTERFACE_CAPTURE 1280-standard-title
+INTERFACE_CAPTURE 1280-standard-briefing
+INTERFACE_CAPTURE 1280-standard-choice
+INTERFACE_CAPTURE 1280-standard-radio
+INTERFACE_CAPTURE 1280-standard-research
+INTERFACE_CAPTURE 1280-standard-expedition-log
+INTERFACE_CAPTURE 1280-standard-station
+INTERFACE_CAPTURE 1280-standard-technology
+INTERFACE_CAPTURE 1280-standard-debrief
+INTERFACE_CAPTURE 1280-standard-settings
+INTERFACE_CAPTURE 1280-standard-help
+INTERFACE_CAPTURE 800-large-title
+INTERFACE_CAPTURE 800-large-briefing
+INTERFACE_CAPTURE 800-large-choice
+INTERFACE_CAPTURE 800-large-radio
+INTERFACE_CAPTURE 800-large-research
+INTERFACE_CAPTURE 800-large-expedition-log
+INTERFACE_CAPTURE 800-large-station
+INTERFACE_CAPTURE 800-large-technology
+INTERFACE_CAPTURE 800-large-debrief
+INTERFACE_CAPTURE 800-large-settings
+INTERFACE_CAPTURE 800-large-help
+INTERFACE_CAPTURE 1920-standard-title
+INTERFACE_CAPTURE 1920-standard-briefing
+INTERFACE_CAPTURE 1920-standard-choice
+INTERFACE_CAPTURE 1920-standard-radio
+INTERFACE_CAPTURE 1920-standard-research
+INTERFACE_CAPTURE 1920-standard-expedition-log
+INTERFACE_CAPTURE 1920-standard-station
+INTERFACE_CAPTURE 1920-standard-technology
+INTERFACE_CAPTURE 1920-standard-debrief
+INTERFACE_CAPTURE 1920-standard-settings
+INTERFACE_CAPTURE 1920-standard-help
+INTERFACE_REVIEW_CAPTURE_PASS

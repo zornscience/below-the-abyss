@@ -99,4 +99,4 @@ func _draw() -> void:
 	draw_polyline(PackedVector2Array([Vector2(-11, -10), Vector2(-4, -21), Vector2(3, -10)]), ink, 3.0, true)
 	if threat.phase == PredatorState.Phase.ALERT or threat.phase == PredatorState.Phase.PURSUE:
 		draw_arc(Vector2.ZERO, 29, 0, TAU, 40, ink, 3.0, true)
-		draw_string(ThemeDB.fallback_font, Vector2(-3, -31), "!", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, ink)
+		draw_string(ThemeDB.fallback_font, Vector2(-3, -31), "!", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.base(&"hud"), ink)

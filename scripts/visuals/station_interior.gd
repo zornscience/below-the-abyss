@@ -29,7 +29,7 @@ func _draw() -> void:
 	for x: int in [200,550,900]:
 		draw_rect(Rect2(x-65,32,130,10),Color("f0d9a1"))
 		for index: int in range(5,0,-1): draw_rect(Rect2(x-75,25-index*3,150,20+index*7),Color(1,0.85,0.55,0.015))
-	draw_string(ThemeDB.fallback_font,Vector2(450,65),station_name+"  /  OPERATIONS",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("d3d5b7"))
+	draw_string(ThemeDB.fallback_font,Vector2(450,65),station_name+"  /  OPERATIONS",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.base(&"hud"),Color("d3d5b7"))
 func _panel(color: Color, rim: Color) -> StyleBoxFlat:
 	var box: StyleBoxFlat = StyleBoxFlat.new()
 	box.bg_color = color

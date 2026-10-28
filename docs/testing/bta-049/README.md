@@ -1,5 +1,9 @@
 # BTA-049 — The Halcyon Descent
 
+> Historical submission record at `02837fb`. The user-requested typography, dialog
+> and asset revision supersedes the implementation and measurements below. See the
+> [current revision and native before/after evidence](revision/README.md).
+
 Based on main `13e814a` after merged PR #31. This is a focused illustrated title,
 shared artwork and immediate Halcyon departure study. It adds no region, narrative
 fact, objective, gameplay rule or save field. [Changed files](changed-files.txt)

@@ -260,7 +260,7 @@ func test_log_controls_readable_at_reference_and_compact_sizes_with_scroll_actio
 		var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(size))
 		for control: Control in [scene.expedition_log.close_button, scene.expedition_log.begin_button, scene.expedition_log.debrief_button, scene.expedition_log.get_node("%StoryScroll"), scene.expedition_log.get_node("%StoryDown")]:
 			assert_true(bounds.encloses(control.get_global_rect()), control.name)
-		assert_gte(scene.expedition_log.detail.get_theme_font_size("font_size"), 18)
+		assert_eq(scene.expedition_log.detail.get_theme_font_size("font_size"), UiTypography.size_for(&"body"))
 		(scene.expedition_log.get_node("%StoryDown") as Button).pressed.emit()
 		if size.x == 800:
 			assert_gt((scene.expedition_log.get_node("%StoryScroll") as ScrollContainer).scroll_vertical, 0)

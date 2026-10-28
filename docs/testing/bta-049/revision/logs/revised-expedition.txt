@@ -1,0 +1,11 @@
+Running revised-expedition: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_revision_two.gd', '--quit-after', '90000']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_revision_two.gd', '--quit-after', '90000']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+REVISION_TWO_SCAN shelf-calibration-plate at=(754.1741, 480.0)
+REVISION_TWO_SCAN outer-hydrophone-record at=(6494.186, 699.9973)
+REVISION_TWO_SCAN outer-vent-study at=(12794.17, 1099.994)
+REVISION_TWO_SCAN lost-expedition-blackbox at=(21594.19, 1239.501)
+REVISION_TWO_FLIGHT_PASS simulation_seconds=472.699999999899 return_hull=100.0 return_battery=72.586958617765 dock_battery=100.0 research_points=4 ammo=10 excavations=0
+
+PASS: production controller expedition, docking, encrypted logs and finite research rewards

@@ -11,4 +11,4 @@ func _draw() -> void:
 	draw_line(Vector2(-21,4),Vector2(21,4),rim,3,true)
 	draw_line(Vector2(-14,17),Vector2(-32,62),Color("506d66"),2,true)
 	draw_line(Vector2(-32,62),Vector2(-40,78),Color("506d66"),2,true)
-	draw_string(ThemeDB.fallback_font,Vector2(-18,-3),"L-1",HORIZONTAL_ALIGNMENT_LEFT,-1,12,Color("dfe3c9"))
+	draw_string(ThemeDB.fallback_font,Vector2(-18,-3),"L-1",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.base(&"secondary"),Color("dfe3c9"))

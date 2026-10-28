@@ -32,14 +32,14 @@ size_flags_horizontal = 3
 
 [node name="Vessel" type="Label" parent="Top/Identity"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+metadata/typography_role = &"heading"
 text = "NERIS / 01"
 
 [node name="IdentityDetail" type="Label" parent="Top/Identity"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.66, 0.77, 0.8, 1)
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "SCIENTIFIC SUBMERSIBLE
 PROTOTYPE INSTRUMENTS"
 
@@ -47,7 +47,7 @@ PROTOTYPE INSTRUMENTS"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.66, 0.77, 0.8, 1)
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "SONAR / OFFLINE"
 autowrap_mode = 2
 
@@ -55,7 +55,7 @@ autowrap_mode = 2
 unique_name_in_owner = true
 autowrap_mode = 2
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "Esc / P / Start · Settings"
 
 [node name="PassiveContacts" parent="Top/Identity" instance=ExtResource("4_passive")]
@@ -78,19 +78,19 @@ layout_mode = 2
 [node name="Caption" type="Label" parent="Top/DepthPanel/Content/DepthHeader"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "DEPTH / METERS"
 
 [node name="DepthValue" type="Label" parent="Top/DepthPanel/Content/DepthHeader"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+metadata/typography_role = &"measurement"
 text = "0.0 m"
 
 [node name="SafeDepth" type="Label" parent="Top/DepthPanel/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "SAFE OPERATING DEPTH   300.0 m"
 autowrap_mode = 2
 
@@ -100,14 +100,14 @@ layout_mode = 2
 [node name="WarningState" type="Label" parent="Top/DepthPanel/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "SAFE / WITHIN OPERATING RANGE"
 autowrap_mode = 2
 
 [node name="PressureDetail" type="Label" parent="Top/DepthPanel/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "Pressure within hull rating"
 autowrap_mode = 2
 
@@ -145,7 +145,7 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.71, 0.62, 1)
 theme_override_colors/font_shadow_color = Color(0.01, 0.035, 0.05, 1)
 theme_override_constants/shadow_outline_size = 4
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 
 [node name="PressureFeedback" type="Label" parent="Bottom/Feedback"]
 unique_name_in_owner = true
@@ -154,7 +154,7 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.71, 0.62, 1)
 theme_override_colors/font_shadow_color = Color(0.01, 0.035, 0.05, 1)
 theme_override_constants/shadow_outline_size = 4
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 horizontal_alignment = 2
 
 [node name="InstrumentDeck" type="HBoxContainer" parent="Bottom"]

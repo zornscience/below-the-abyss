@@ -45,7 +45,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	var sign: Label = Label.new()
 	sign.position = Vector2(3480,742)
 	sign.text = "200 m SURVEY LIMIT\nTwilight Shelf · future expedition"
-	sign.add_theme_font_size_override("font_size",18)
+	UiTypography.style(sign,&"secondary")
 	boundary.add_child(sign)
 	_previous_scan_gate = scene.research.completion_gate
 	scene.research.completion_gate = _before_scan_completion

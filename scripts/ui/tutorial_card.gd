@@ -12,11 +12,11 @@ func _ready() -> void:
 	var content: VBoxContainer = VBoxContainer.new()
 	add_child(content)
 	title_label = Label.new()
-	title_label.add_theme_font_size_override("font_size",18)
+	UiTypography.style(title_label,&"hud")
 	title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(title_label)
 	body_label = Label.new()
-	body_label.add_theme_font_size_override("font_size",16)
+	UiTypography.style(body_label,&"body")
 	body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(body_label)
 	hide()

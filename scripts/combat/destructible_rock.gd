@@ -1,13 +1,15 @@
 class_name DestructibleRock
 extends StaticBody2D
 ## Exact polygon subtraction; split through the blast before clipping to avoid hole contours.
+const ROCK_PAINT: Texture2D = preload("res://assets/art/painted/basalt.png")
 var rock_id: String
 var original: PackedVector2Array
 var pieces: Array[PackedVector2Array] = []
 var fill: Color = Color("102c32")
 var _edges: Array[PackedVector2Array] = []
-var _strata: Array[PackedVector2Array] = []
 func configure(id: String, polygon: PackedVector2Array, tint: Color) -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	rock_id = id
 	original = polygon.duplicate()
 	fill = tint
@@ -67,20 +69,11 @@ func _rebuild() -> void:
 			var normal: Vector2 = (b-a).orthogonal().normalized() * 0.5
 			if _inside((a+b)*0.5+normal) != _inside((a+b)*0.5-normal):
 				_edges.append(PackedVector2Array([a,b]))
-	_strata.clear()
-	var bounds: Rect2 = Rect2(original[0],Vector2.ZERO)
-	for vertex: Vector2 in original: bounds = bounds.expand(vertex)
-	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	rng.seed = rock_id.hash()
-	for index: int in range(mini(500,int(bounds.get_area()/9000.0))):
-		var start: Vector2 = bounds.position+Vector2(rng.randf()*bounds.size.x,rng.randf()*bounds.size.y)
-		var end: Vector2 = start+Vector2(rng.randf_range(8,45),rng.randf_range(-6,6))
-		if _inside(start) and _inside(end) and _inside((start+end)*0.5): _strata.append(PackedVector2Array([start,end]))
 	queue_redraw()
 func _draw() -> void:
 	for part: PackedVector2Array in pieces:
-		draw_colored_polygon(part, fill)
-	for stratum: PackedVector2Array in _strata:
-		draw_line(stratum[0],stratum[1],fill.lightened(0.13),1.0,true)
+		var coordinates: PackedVector2Array = []
+		for point: Vector2 in part: coordinates.append(point/384.0)
+		draw_polygon(part,PackedColorArray([Color(0.62,0.72,0.76)]),coordinates,ROCK_PAINT)
 	for edge: PackedVector2Array in _edges:
 		draw_line(edge[0], edge[1], Color("487b7d"), 2.0, true)

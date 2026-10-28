@@ -40,7 +40,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	ui.setup(self)
 	scene.submarine.sonar_input_guard = ui.notifications.sonar_input_allowed
 	_ammo_label = Label.new()
-	_ammo_label.add_theme_font_size_override("font_size",18)
+	UiTypography.style(_ammo_label,&"hud")
 	_ammo_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	scene.hud.identity_container().add_child(_ammo_label)
 	scene.torpedoes.ammunition_changed.connect(func(_current: int,_maximum: int) -> void: _refresh_ammo())

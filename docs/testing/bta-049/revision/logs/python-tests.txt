@@ -1,0 +1,12 @@
+test_bloom_uses_existing_event_allowlist_without_exposing_hidden_story (test_playtest_analysis.AnalysisTests.test_bloom_uses_existing_event_allowlist_without_exposing_hidden_story) ... ok
+test_duplicate_people_and_reports_reject_instead_of_inflating_results (test_playtest_analysis.AnalysisTests.test_duplicate_people_and_reports_reject_instead_of_inflating_results) ... ok
+test_empty_results_do_not_fabricate_people_outcomes_or_interest (test_playtest_analysis.AnalysisTests.test_empty_results_do_not_fabricate_people_outcomes_or_interest) ... ok
+test_malformed_or_personal_telemetry_rejected (test_playtest_analysis.AnalysisTests.test_malformed_or_personal_telemetry_rejected) ... ok
+test_sessions_are_not_people_and_link_requires_permission (test_playtest_analysis.AnalysisTests.test_sessions_are_not_people_and_link_requires_permission) ... ok
+test_sunlit_progress_uses_bounded_identifiers_without_recording_dialogue (test_playtest_analysis.AnalysisTests.test_sunlit_progress_uses_bounded_identifiers_without_recording_dialogue) ... ok
+test_synthetic_incomplete_outcomes_and_medians_keep_denominators (test_playtest_analysis.AnalysisTests.test_synthetic_incomplete_outcomes_and_medians_keep_denominators) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+OK

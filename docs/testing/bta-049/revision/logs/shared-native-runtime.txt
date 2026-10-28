@@ -1,0 +1,19 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+HALCYON_SCREENSHOT title-800 viewport=(800, 600)
+HALCYON_PERF title-standard size=(800, 600) p50_ms=34.037 p95_ms=67.175 draw_calls=82.0 texture_MiB=49.396782875061
+HALCYON_SCREENSHOT title-1280 viewport=(1280, 800)
+HALCYON_PERF title-standard size=(1280, 800) p50_ms=70.352 p95_ms=102.553 draw_calls=82.0 texture_MiB=53.547173500061
+HALCYON_SCREENSHOT title-1920 viewport=(1920, 1080)
+HALCYON_PERF title-standard size=(1920, 1080) p50_ms=86.941 p95_ms=99.235 draw_calls=82.0 texture_MiB=62.2216520309448
+HALCYON_SCREENSHOT title-800-accessible viewport=(800, 600)
+HALCYON_PERF title-static-comfort size=(800, 600) p50_ms=25.246 p95_ms=35.843 draw_calls=40.0 texture_MiB=51.1884469985962
+HALCYON_SCREENSHOT options-800-accessible viewport=(800, 600)
+HALCYON_SCREENSHOT accessibility-800 viewport=(800, 600)
+HALCYON_SCREENSHOT halcyon-gameplay-800-accessible viewport=(800, 600)
+HALCYON_SCREENSHOT halcyon-gameplay-1280 viewport=(1280, 800)
+HALCYON_PERF departure-gameplay size=(1280, 800) p50_ms=70.886 p95_ms=108.49 draw_calls=566.0 texture_MiB=56.13050365448
+HALCYON_CAPTURE_PASS keyboard=options controller=begin/briefing muted=true

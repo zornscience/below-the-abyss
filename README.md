@@ -32,7 +32,8 @@ for a first-expedition debrief. The Twilight Shelf is a future chapter, not play
   click), accelerating wakes and comfort-aware blasts remain available. Combat is
   not required. Sonar pings cost substantially more battery than normal cruising.
 
-[Title artwork, shared gameplay comparison, accessibility, performance and reusable workflow](docs/testing/bta-049/README.md).
+[BTA-049 review revision: typography, bounded dialogs, painted art and native before/after evidence](docs/testing/bta-049/revision/README.md).
+[Original title implementation record](docs/testing/bta-049/README.md).
 
 [Compact layout, radio controls, comparisons and verification](docs/testing/bta-048/README.md).
 

@@ -18,7 +18,7 @@ func setup(owner_encounter: LightBloomEncounter) -> void:
 	page.add_theme_stylebox_override("panel",style)
 	add_child(page)
 	var margin: MarginContainer = MarginContainer.new()
-	for side: String in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,24)
+	for side: String in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,18)
 	page.add_child(margin)
 	var frame: VBoxContainer = VBoxContainer.new()
 	margin.add_child(frame)
@@ -29,7 +29,7 @@ func setup(owner_encounter: LightBloomEncounter) -> void:
 	frame.add_child(scroll)
 	body = VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_theme_constant_override("separation",14)
+	body.add_theme_constant_override("separation",10)
 	scroll.add_child(body)
 	var footer: HBoxContainer = HBoxContainer.new()
 	frame.add_child(footer)
@@ -41,6 +41,7 @@ func setup(owner_encounter: LightBloomEncounter) -> void:
 		footer.add_child(button)
 	page.set_meta("footer",footer)
 	page.hide()
+	UiDialogLayout.bind_panel(page,Vector2(760,500))
 func visible_page() -> bool:
 	return page.visible
 func hide_page() -> void:
@@ -53,32 +54,32 @@ func _clear() -> void:
 		add_child(child)
 		if child is CanvasItem: child.hide()
 		child.queue_free()
-func _label(text: String, size: int = 22) -> Label:
+func _label(text: String, role: StringName = &"body") -> Label:
 	var label: Label = Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size",size)
+	UiTypography.style(label,role)
 	body.add_child(label)
 	return label
 func _button(id: String, text: String, callback: Callable, disabled: bool = false) -> void:
 	var button: Button = Button.new()
 	button.name = id
 	button.text = text
-	button.custom_minimum_size.y = 50
+	UiTypography.style(button,&"dialog_button")
 	button.disabled = disabled
 	button.pressed.connect(callback)
 	body.add_child(button)
 	if not disabled: _buttons.append(button)
 func _portrait() -> void:
 	var space: Control = Control.new()
-	space.custom_minimum_size.y = 120
+	space.custom_minimum_size.y = 76
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.add_child(space)
 	var bloom: LightBloomVisual = LightBloomVisual.new()
 	space.add_child(bloom)
 	bloom.specimen_view = true
-	bloom.scale = Vector2.ONE*1.5
-	bloom.position = Vector2(105,65)
+	bloom.scale = Vector2.ONE
+	bloom.position = Vector2(90,40)
 	var prefs: Dictionary = encounter.scene.settings.snapshot().accessibility
 	bloom.reduced_effects = prefs.reduced_motion or prefs.reduced_flashing
 	bloom.set_outcome(encounter.scene.story.has_decision(LightBloomEncounter.COLLECT),encounter.scene.story.has_decision(LightBloomEncounter.OBSERVE),_response)
@@ -86,7 +87,7 @@ func show_choice() -> void:
 	_response = false
 	_clear()
 	page.show()
-	_label("LIGHT-BLOOM PLANKTON",30)
+	_label("LIGHT-BLOOM PLANKTON",&"heading")
 	_portrait()
 	_label("Bioluminescent plankton forms a precise spiral, then scatters. Dr. Okafor, the station biologist, asks for a scan. Director Crane asks for a bottled sample. Bottling kills the sampled bloom.")
 	if not encounter.identified(): _label("Identify the bloom with sonar before choosing how to study it.")
@@ -99,8 +100,8 @@ func show_response(text: String) -> void:
 	_response = true
 	_clear()
 	page.show()
-	_label("BLOOM LEFT UNHARMED" if encounter.scene.story.has_decision(LightBloomEncounter.OBSERVE) else "SPECIMEN BOTTLED · BLOOM EXTINGUISHED",28)
-	_label("Wick · onboard AI / Okafor and Crane · Halcyon radio",18)
+	_label("BLOOM LEFT UNHARMED" if encounter.scene.story.has_decision(LightBloomEncounter.OBSERVE) else "SPECIMEN BOTTLED · BLOOM EXTINGUISHED",&"heading")
+	_label("Wick · onboard AI / Okafor and Crane · Halcyon radio",&"body")
 	_portrait()
 	_label(text)
 	_button("ReturnFromBloom","Return to piloting",encounter.leave)

@@ -27,12 +27,12 @@ theme_override_constants/separation = 4
 [node name="PassiveHeader" type="Label" parent="Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "PASSIVE / OFFLINE"
 [node name="PassiveEmpty" type="Label" parent="Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "No recent contacts"
 
 [node name="Contact0" type="VBoxContainer" parent="Content"]
@@ -45,16 +45,16 @@ theme_override_constants/separation = 6
 [node name="Arrow" type="Label" parent="Content/Contact0/Header"]
 custom_minimum_size = Vector2(22, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "→"
 [node name="Caption" type="Label" parent="Content/Contact0/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "MECHANICAL  +000°"
 [node name="Expiry" type="Label" parent="Content/Contact0/Header"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "8.0s"
 [node name="Strength" type="HBoxContainer" parent="Content/Contact0"]
 layout_mode = 2
@@ -66,7 +66,7 @@ size_flags_vertical = 4
 show_percentage = false
 [node name="Value" type="Label" parent="Content/Contact0/Strength"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "~60%"
 
 [node name="Contact1" type="VBoxContainer" parent="Content"]
@@ -79,16 +79,16 @@ theme_override_constants/separation = 6
 [node name="Arrow" type="Label" parent="Content/Contact1/Header"]
 custom_minimum_size = Vector2(22, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "→"
 [node name="Caption" type="Label" parent="Content/Contact1/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "MECHANICAL  +000°"
 [node name="Expiry" type="Label" parent="Content/Contact1/Header"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "8.0s"
 [node name="Strength" type="HBoxContainer" parent="Content/Contact1"]
 layout_mode = 2
@@ -100,7 +100,7 @@ size_flags_vertical = 4
 show_percentage = false
 [node name="Value" type="Label" parent="Content/Contact1/Strength"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "~60%"
 
 [node name="Contact2" type="VBoxContainer" parent="Content"]
@@ -113,16 +113,16 @@ theme_override_constants/separation = 6
 [node name="Arrow" type="Label" parent="Content/Contact2/Header"]
 custom_minimum_size = Vector2(22, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "→"
 [node name="Caption" type="Label" parent="Content/Contact2/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "MECHANICAL  +000°"
 [node name="Expiry" type="Label" parent="Content/Contact2/Header"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "8.0s"
 [node name="Strength" type="HBoxContainer" parent="Content/Contact2"]
 layout_mode = 2
@@ -134,5 +134,5 @@ size_flags_vertical = 4
 show_percentage = false
 [node name="Value" type="Label" parent="Content/Contact2/Strength"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "~60%"

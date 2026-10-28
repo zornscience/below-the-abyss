@@ -13,7 +13,7 @@ func setup(scene: ShelfPrototype) -> void:
 	caption = Label.new()
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	caption.add_theme_font_size_override("font_size",18)
+	UiTypography.style(caption,&"hud")
 	content.add_child(caption)
 	progress = ProgressBar.new()
 	progress.show_percentage = false

@@ -28,11 +28,11 @@ theme_override_constants/separation = 10
 [node name="StationTitle" type="Label" parent="Margin/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+metadata/typography_role = &"heading"
 text = "SHELF BASE / DOCKED"
 [node name="Rules" type="Label" parent="Margin/Content"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 autowrap_mode = 2
 text = "FREE prototype services · Limits apply per activation · Simulation paused\nArrows / Tab / D-pad: navigate · Enter / A: select · Esc / B: back"
 [node name="CheckpointStatus" type="Label" parent="Margin/Content"]
@@ -40,7 +40,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 autowrap_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 [node name="ServicesPage" type="VBoxContainer" parent="Margin/Content"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -49,7 +49,7 @@ theme_override_constants/separation = 8
 [node name="ServicePreview" type="Label" parent="Margin/Content/ServicesPage"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 autowrap_mode = 2
 [node name="Actions" type="HFlowContainer" parent="Margin/Content/ServicesPage"]
 layout_mode = 2
@@ -78,7 +78,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 autowrap_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 [node name="ServicesFooter" type="HFlowContainer" parent="Margin/Content/ServicesPage"]
 layout_mode = 2
 [node name="Undock" type="Button" parent="Margin/Content/ServicesPage/ServicesFooter"]
@@ -104,7 +104,7 @@ layout_mode = 2
 size_flags_vertical = 3
 [node name="BoardTitle" type="Label" parent="Margin/Content/BoardPage"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+metadata/typography_role = &"body"
 text = "MISSION BOARD / NOTICES"
 [node name="OpenMissions" type="Button" parent="Margin/Content/BoardPage"]
 unique_name_in_owner = true
@@ -132,7 +132,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 autowrap_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 [node name="BackServices" type="Button" parent="Margin/Content/BoardPage"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -145,13 +145,13 @@ size_flags_vertical = 3
 theme_override_constants/separation = 10
 [node name="UpgradeTitle" type="Label" parent="Margin/Content/UpgradesPage"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+metadata/typography_role = &"body"
 text = "PROTOTYPE UPGRADES / FREE INSTALLATION"
 [node name="UpgradePreview" type="Label" parent="Margin/Content/UpgradesPage"]
 unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 [node name="InstallSonar" type="Button" parent="Margin/Content/UpgradesPage"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -164,13 +164,13 @@ text = "Pressure hull / install FREE"
 unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 [node name="UpgradeSaveStatus" type="Label" parent="Margin/Content/UpgradesPage"]
 unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 [node name="RecoverUpgrades" type="Button" parent="Margin/Content/UpgradesPage"]
 unique_name_in_owner = true
 layout_mode = 2

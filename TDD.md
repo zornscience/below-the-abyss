@@ -318,7 +318,7 @@ remain independent. [Contracts and evidence](docs/testing/bta-048/README.md).
 
 ## Halcyon Descent presentation — BTA-049
 
-Scene-owned HalcyonDescent draws four imported original SVGs with a local 30 Hz
+Scene-owned HalcyonDescent composes shared illustrated PNG assets with a local 30 Hz
 redraw budget, bounded deterministic motes and slow draw-only parallax. No gameplay
 RNG, physics/input handling, saved timer or new setting. Reduced Motion freezes the
 composition; particle/effects preferences remove drift density/illumination variation.
@@ -326,6 +326,28 @@ The covered WorldRoot is render-hidden while the title page is visible and its p
 visibility is restored on exit. Simulation and checkpoints remain owned by existing
 services. Title Godot controls retain the original focus loop and callbacks inside
 a responsive, focus-following left column. The playable sprite and title share one
-640x384 master at the unchanged 80x48 world footprint. HalcyonDeparture shares the
+1619x971 painted master, fitted to the unchanged 80x48 world footprint. HalcyonDeparture shares the
 station modules at the existing dock; it adds no bodies, shapes, targets or triggers.
 No schema, stable ID, terrain polygon, camera or navigation rule changes.
+
+### BTA-049 review revision: semantic typography and dialog bounds
+
+UiTypography owns role-based pixel sizes and Compact/Standard/Large multipliers.
+Controls declare `typography_role`; body/dialog buttons default to 16 px, menu buttons
+17, heading 20, section 18, secondary 14 and instruments 16 (depth measurement 18).
+The shared Theme bootstraps 16 px. UiAccessibility reapplies semantic sizes directly,
+never multiplying a previous override, and retains the existing contrast/focus policy.
+Custom-drawn map/talent labels read the same scale. Large remains 125%; Compact is
+90% with a 14 px floor. The title adapts to viewport width separately.
+
+UiDialogLayout constrains presentation rectangles with at least 24 px side/32 px
+vertical viewport clearance. Existing scroll/focus/callback owners retain their APIs,
+pause and recovery rules. Dynamic dialogs use a dimmed world backdrop; logs/settings
+retain their node references and accessible scroll controls. Resize ownership stays
+in the scene-owned accessibility coordinator, preventing callbacks to freed panels.
+
+Painted hardware, basalt and optics are imported assets with recorded provenance.
+Texture-local surface displacement uses explicit cosmetic phase, no engine TIME or
+screen reads, and freezes in comfort modes. Shared vessel footprint, terrain polygons,
+carving, camera, navigation, domain signals, checkpoints and schema are unchanged.
+[Native review matrix and reproducible commands](docs/testing/bta-049/revision/README.md).

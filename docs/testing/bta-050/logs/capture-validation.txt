@@ -1,0 +1,11 @@
+baseline-stills:
+PASS: 42 native baseline stills; exact dimensions; no errors.
+
+after-stills:
+PASS: 42 native stills; exact dimensions; no errors; matched geometry/poses/camera.
+
+after-wide:
+PASS: 42 native stills; exact dimensions; no errors; matched geometry/poses/camera.
+
+performance-report:
+PASS: wrote 18 unfiltered native frame/cost comparisons.

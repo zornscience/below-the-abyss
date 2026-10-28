@@ -15,7 +15,7 @@ See [implementation, acceptance mapping and manual route](https://github.com/zor
 - Exact Godot 4.6.3, import, **250 parser checks**, startup smoke and **7/7 Python tests**.
 - **22 headless input/recovery launches**, both choices/devices and legacy routes; complete normal-effects native controller route, muted, no combat, ten screenshots.
 - **84 native comparison stills** and **18 live before/after profiles**.
-- Linux packaging/standalone evidence is linked in the verification record. Hosted Actions status is unverified until the API permits PR submission.
+- **Clean Linux export and extracted standalone smoke PASS**, source `e30cbf3aa862`, engine 4.6.3, default telemetry off. Exact package/checksum and logs are linked in the verification record. Hosted Actions status is unverified until the API permits PR submission.
 
 ### Actual native comparison — 1280×800
 

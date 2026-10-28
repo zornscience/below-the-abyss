@@ -153,8 +153,9 @@ font, survival or physics setting is weakened to make an observation look faster
   one additional complete native controller route with ten screenshots.
 - **84** staged comparison stills with exact geometry/pose/camera matches and
   **18** live frame/draw/memory comparisons. No human/target-GPU acceptance claim.
-- Linux package and standalone result, exact commands and initial timeout history:
-  [verification record](verification.txt). Hosted Actions status remains unverified
+- Clean Linux release **e30cbf3aa862** exported and extracted standalone smoke
+  passed; default telemetry remains off. Exact commands, checksum and initial
+  timeout history: [verification record](verification.txt). Hosted Actions status remains unverified
   until a pull request can be submitted through the currently blocked GitHub API.
 
 ## Reproducible verification

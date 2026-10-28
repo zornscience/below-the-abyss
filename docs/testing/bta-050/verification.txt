@@ -112,7 +112,26 @@ python3 tools/run_tests.py (final unchanged bounded retry, alone)
   logs/bounded-final-gut.txt and bounded-final-summary.txt. Earlier failures retained.
   Hosted GitHub Actions results are not available through the blocked API.
 
-Linux export result follows in the final docs-only evidence commit.
+python3 tools/build_playtest.py
+  PASS clean committed source e30cbf3aa862f04b72c2289668686c8843a79d70.
+  Package: build/below-the-abyss-playtest-linux-e30cbf3aa862.zip
+  Engine/export templates 4.6.3; Linux x86_64; development_dirty=false.
+  Executable SHA256: 503b19584b1527d3ee649cdaa117978401a52aabffd8ec3fdddbf187a40ef6b7
+  logs/linux-build-result.json, linux-import.txt and linux-export.txt.
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-e30cbf3aa862.zip \
+  --log build/playtest/standalone-smoke.log
+  PASS extracted standalone release launch, exact engine, default telemetry OFF;
+  no source/editor dependency, clean exit and no errors.
+  logs/linux-standalone.txt and linux-standalone-result.txt.
+  Subsequent evidence commits modify docs only; runtime is exactly this exported
+  source commit. No source changes after validation or export.
+git diff --check
+  PASS. Full changed-file inventory in changed-files.txt.
+
+SUBMISSION LIMITATION
+Git fetch/push host is available, but api.github.com CONNECT receives HTTP 403 from
+the managed proxy. Hosted Actions results and automatic PR submission cannot be
+claimed. Prepared title/body in pull-request.md; branch targets main, never merged.
 
 LIMITATIONS / ACCEPTANCE
 Automated keyboard/controller InputEvents exercise real actions, focus, movement,

@@ -126,11 +126,17 @@ docs/testing/bta-050/logs/bounded-final-summary.txt
 docs/testing/bta-050/logs/bounded-gut-timeout.txt
 docs/testing/bta-050/logs/bounded-runner-result.txt
 docs/testing/bta-050/logs/canonical-input-routes.txt
+docs/testing/bta-050/logs/capture-validation.txt
 docs/testing/bta-050/logs/expanded-route.txt
 docs/testing/bta-050/logs/focused-presentation.txt
 docs/testing/bta-050/logs/full-gut.txt
 docs/testing/bta-050/logs/full-suite.xml
 docs/testing/bta-050/logs/legacy-revision-route.txt
+docs/testing/bta-050/logs/linux-build-result.json
+docs/testing/bta-050/logs/linux-export.txt
+docs/testing/bta-050/logs/linux-import.txt
+docs/testing/bta-050/logs/linux-standalone-result.txt
+docs/testing/bta-050/logs/linux-standalone.txt
 docs/testing/bta-050/logs/native-chapter-route.txt
 docs/testing/bta-050/logs/parser-inventory.txt
 docs/testing/bta-050/logs/python-tests.txt

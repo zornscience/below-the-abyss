@@ -29,6 +29,7 @@ func setup(scene: ShelfPrototype, path: String) -> Error:
 		_state = document.data
 		if scene.story.restore(_state.story)!=OK: return _report("Conflicting story checkpoint; live progress and files preserved.",ERR_BUSY)
 		_state.progress = ExpeditionSchema.merge_progress(_state.progress, progress_snapshot())
+		_state.prototype.campaign.science = ResearchExperienceData.reconcile(_state.prototype.campaign.science,_state.progress.research)
 		apply_progress(_state.progress)
 		_has_checkpoint = true
 	elif document.error == ERR_FILE_NOT_FOUND and not FileAccess.file_exists(path + ".bak"):

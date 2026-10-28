@@ -5,7 +5,7 @@ const MISSION: StringName = &"sunlit-shallows-expedition"
 const BUOY: StringName = &"sunlit-lantern1-buoy-record"
 const POI: StringName = &"sunlit-lantern1-buoy"
 const ECHO: StringName = &"sunlit-lantern1-buoy-echo"
-const BOUNDS: Rect2 = Rect2(120,220,3780,580)
+const BOUNDS: Rect2 = SunlitSurveyData.BOUNDS
 const MESSAGE: String = "It isn't empty down there. Tell Elias the Choir is a voice."
 static func missions() -> MissionCatalog:
 	var catalog: MissionCatalog = ShelfChapterData.missions()

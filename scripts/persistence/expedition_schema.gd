@@ -63,6 +63,7 @@ static func decode(value: Variant) -> Dictionary:
 		if data.size()!=10: return {"error": ERR_INVALID_DATA}
 		data.story = StoryState.fresh()
 	if version<=6 and data.get("prototype") is Dictionary and data.prototype.get("campaign") is Dictionary:
+		if not valid_progress(data.get("progress")): return {"error":ERR_INVALID_DATA}
 		var old_campaign: Dictionary = data.prototype.campaign
 		if version>=4 and (old_campaign.size()!=4 or old_campaign.has("science")): return {"error":ERR_INVALID_DATA}
 		old_campaign.science = ResearchExperienceData.reconcile(ResearchExperienceData.fresh(),data.get("progress",{}).get("research",[]))

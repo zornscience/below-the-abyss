@@ -9,13 +9,26 @@ var report_caption: String = "LAST CONTACT · BASE REPORT"
 var has_report: bool = false
 var reported_position: Vector2
 var selected_id: StringName
+var survey_enabled: bool = false
+var player_direction: Vector2 = Vector2.RIGHT
+var survey_polygons: Array[PackedVector2Array] = []
+var charted: Array[Rect2] = []
+var zoom: float = 1.0
+var center: Vector2
+
+func _view() -> Rect2:
+	if not survey_enabled or zoom<=1: return bounds
+	var extent: Vector2 = bounds.size/zoom
+	var focus: Vector2 = center.clamp(bounds.position+extent*0.5,bounds.end-extent*0.5)
+	return Rect2(focus-extent*0.5,extent)
 
 
 func _point(world: Vector2) -> Vector2:
+	var view: Rect2 = _view()
 	var available: Vector2 = size - Vector2(48, 64)
-	var scale_value: float = minf(available.x / bounds.size.x, available.y / bounds.size.y)
-	var origin: Vector2 = (size - bounds.size * scale_value) * 0.5
-	return origin + (world - bounds.position) * scale_value
+	var scale_value: float = minf(available.x / view.size.x, available.y / view.size.y)
+	var origin: Vector2 = (size - view.size * scale_value) * 0.5
+	return origin + (world - view.position) * scale_value
 
 
 func _draw() -> void:
@@ -33,6 +46,8 @@ func _draw() -> void:
 		draw_line(Vector2(start.x, y), Vector2(end.x, y), Color("23404b"))
 	draw_rect(Rect2(start, end - start), ink, false, 2.0)
 	var font: Font = ThemeDB.fallback_font
+	if survey_enabled:
+		_draw_survey()
 	draw_string(font, start - Vector2(0, 8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	for index: int in range(points.size()):
 		var point: PointOfInterest = points[index]
@@ -43,8 +58,38 @@ func _draw() -> void:
 		draw_string(font, at + Vector2(10, -8), str(index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	if has_report:
 		var report: Vector2 = _point(reported_position)
+		if survey_enabled:
+			var radius: float = maxf(13,_point(reported_position+Vector2(1300,0)).x-report.x)
+			for segment: int in range(12):
+				draw_arc(report,radius,segment*TAU/12.0,(segment+0.65)*TAU/12.0,8,Color("dfba7d"),2,true)
 		draw_arc(report,13,0,TAU,32,Color("dfba7d"),2,true)
 		draw_string(font,report+Vector2(18,26),report_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"hud"),Color("dfba7d"))
 	var player: Vector2 = _point(player_position)
-	draw_colored_polygon(PackedVector2Array([player + Vector2(0, -9), player + Vector2(9, 5), player + Vector2(-9, 5)]), Color("f4dc94"))
+	var direction: Vector2 = player_direction.normalized() if survey_enabled else Vector2.UP
+	var side: Vector2 = direction.orthogonal()
+	draw_colored_polygon(PackedVector2Array([player+direction*10,player-direction*6+side*6,player-direction*6-side*6]),Color("f4dc94"))
 	draw_string(font, player + Vector2(12, 18), "YOU", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), Color("f4dc94"))
+
+func _draw_survey() -> void:
+	# Only charted geometry is supplied by the chapter adapter. No hidden POI metadata.
+	for section: Rect2 in charted:
+		var area: Rect2 = Rect2(_point(section.position),_point(section.end)-_point(section.position))
+		draw_rect(area,Color("133e49"))
+	for polygon: PackedVector2Array in survey_polygons:
+		var shape: PackedVector2Array = []
+		for at: Vector2 in polygon: shape.append(_point(at))
+		if shape.size()>=3: draw_colored_polygon(shape,Color("63817d"))
+	var station: Vector2 = _point(Vector2(420,480))
+	draw_rect(Rect2(station-Vector2(5,5),Vector2(10,10)),Color("f4dc94"))
+	draw_string(ThemeDB.fallback_font,station+Vector2(10,-10),"HALCYON",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("f4dc94"))
+	# Hatching identifies unsurveyed space even with high contrast / no colour cues.
+	for x: int in range(5000,22000,1000):
+		var at: Vector2 = Vector2(x,500)
+		var known: bool = false
+		for section: Rect2 in charted:
+			if section.has_point(at): known = true
+		if not known:
+			var pixel: Vector2 = _point(at)
+			draw_line(pixel-Vector2(5,5),pixel+Vector2(5,5),Color("68858b"),2)
+	if charted.size()==1:
+		draw_string(ThemeDB.fallback_font,Vector2(24,size.y-14),"UNSURVEYED · sonar records extend the chart",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("b4c8c7"))

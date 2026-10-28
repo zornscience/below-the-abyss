@@ -7,10 +7,26 @@ signal close_requested
 var presentation_bounds: Rect2
 var registry: DiscoveryRegistry
 var store: DiscoveryStore
+var survey_controls: Array[Button] = []
+var survey_navigation: HFlowContainer
 @onready var canvas: ExplorationMapCanvas = %MapCanvas
 
 
 func _ready() -> void:
+	canvas.clip_contents = true
+	var tools: HFlowContainer = HFlowContainer.new()
+	tools.name = "SurveyNavigation"
+	survey_navigation = tools
+	get_node("Margin/Content").add_child(tools)
+	get_node("Margin/Content").move_child(tools,2)
+	for item: Array in [["Zoom +",1],["Zoom −",-1],["Pan west",-2],["Pan east",2],["Follow vessel",0]]:
+		var button: Button = Button.new()
+		button.text = item[0]
+		button.name = ["ZoomIn","ZoomOut","PanWest","PanEast","FollowVessel"][survey_controls.size()]
+		UiTypography.style(button,&"dialog_button")
+		button.pressed.connect(_navigate.bind(int(item[1])))
+		tools.add_child(button)
+		survey_controls.append(button)
 	(%OpenResearch as Button).pressed.connect(func() -> void: research_requested.emit())
 	(%CloseMap as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%RetrySave as Button).pressed.connect(func() -> void: store.retry_save(registry))
@@ -47,6 +63,8 @@ func refresh() -> void:
 		button.pressed.connect(_select.bind(point.stable_id))
 		list.add_child(button)
 	var controls: Array[Control] = [%CloseMap, %RetrySave, %RecoverBackup]
+	survey_navigation.visible = canvas.survey_enabled
+	if canvas.survey_enabled: controls.append_array(survey_controls)
 	for child: Node in list.get_children():
 		controls.append(child as Control)
 	controls.append(%OpenResearch as Control)
@@ -77,10 +95,17 @@ func _refresh_status() -> void:
 
 func present(position: Vector2, binding_hint: String) -> void:
 	canvas.player_position = position
+	canvas.center = position
 	(%MapHint as Label).text = "%s: map · Esc / B: close · arrows / D-pad / stick: select" % binding_hint
 	show()
 	canvas.queue_redraw()
 	(%CloseMap as Button).grab_focus()
+
+func _navigate(operation: int) -> void:
+	if operation in [-1,1]: canvas.zoom = clampf(canvas.zoom*(2.0 if operation==1 else 0.5),1,4)
+	elif operation==0: canvas.center = canvas.player_position
+	else: canvas.center.x += signi(operation)*canvas.bounds.size.x/canvas.zoom*0.4
+	canvas.queue_redraw()
 
 
 func _input(event: InputEvent) -> void:

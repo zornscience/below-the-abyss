@@ -16,7 +16,7 @@ func excavate(origin: Vector2, radius: float) -> int:
 	for key: String in keys:
 		if _cuts.size() >= ExcavationState.MAX_CUTS:
 			break
-		if _rocks[key].carve(origin, radius):
+		if _rocks[key].collision_layer!=0 and _rocks[key].carve(origin, radius):
 			_cuts.append({"rock": key, "at": [origin.x, origin.y], "radius": radius})
 			changed += 1
 	if changed>0: geometry_changed.emit()

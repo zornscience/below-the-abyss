@@ -4,11 +4,19 @@ extends Control
 
 signal close_requested
 var entry_text_provider: Callable
+var summary_provider: Callable
+var summary: Label
 var registry: ResearchRegistry
 var store: ResearchStore
 
 
 func _ready() -> void:
+	summary = Label.new()
+	UiTypography.style(summary,&"hud")
+	summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	get_node("Margin/Content").add_child(summary)
+	get_node("Margin/Content").move_child(summary,2)
+	summary.hide()
 	(%ScrollResearchUp as Button).pressed.connect(func() -> void: (%DetailScroll as ScrollContainer).scroll_vertical -= 100)
 	(%ScrollResearchDown as Button).pressed.connect(func() -> void: (%DetailScroll as ScrollContainer).scroll_vertical += 100)
 	(%CloseResearch as Button).pressed.connect(func() -> void: close_requested.emit())
@@ -25,6 +33,7 @@ func setup(value: ResearchRegistry, persistence: ResearchStore) -> void:
 
 
 func refresh() -> void:
+	refresh_summary()
 	var list: VBoxContainer = %ResearchEntries
 	for child: Node in list.get_children():
 		list.remove_child(child)
@@ -51,6 +60,11 @@ func refresh() -> void:
 		_select(entries[0].stable_id)
 	_status()
 
+func refresh_summary() -> void:
+	if summary==null: return
+	summary.visible = summary_provider.is_valid()
+	if summary_provider.is_valid(): summary.text = summary_provider.call()
+
 
 func _select(id: StringName) -> void:
 	if registry.is_completed(id):
@@ -63,6 +77,7 @@ func _status() -> void:
 
 
 func present() -> void:
+	refresh_summary()
 	show()
 	(%CloseResearch as Button).grab_focus()
 

@@ -10,6 +10,8 @@ extends Resource
 @export var position: Vector2
 @export var radius: float = 240.0
 @export var duration: float = 3.0
+@export var subject_texture: Texture2D
+@export var subject_region: Rect2
 
 
 func is_valid() -> bool:

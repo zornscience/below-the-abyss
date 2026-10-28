@@ -104,3 +104,20 @@ fractions before rounding. LOW/EMPTY/INVALID and pressure/threat words/symbols r
 legible independently of color. Existing dark materials, contrast preferences and
 focus treatments are reused. No environment, vessel, fauna or asset-pipeline art
 changes. [Measured native comparisons](testing/bta-048/README.md).
+
+## BTA-049 — The Halcyon Descent
+
+The approved title extends this palette with original layered SVG composition,
+not photographic imagery. The shared Lantern-2 master retains the existing blunt
+bow, offset dome, mast, keel and 80x48 local footprint; title scale uses the same
+640x384 texture as the playable sprite. Three connected Halcyon habitat/lab/dock
+modules and restrained brass windows match the immediate departure installation.
+Dark basalt planes, atmospheric depth and faint light wedges are reusable methods,
+not new collision or discovery information. Existing terrain rims remain authoritative.
+
+Title navigation uses actual Controls and the existing focus/contrast policy, with
+no delayed activation, input-blocking entrance animation or flashing selection.
+Slow waves, particulate drift and parallax have a static Reduced Motion alternative.
+No fullscreen postprocessing, 3D, realtime shadows or new rendering dependency.
+Sources/provenance remain in assets/art-provenance.csv; licensing is pending with
+the rest of the project. [Asset workflow, native comparison and measurements](testing/bta-049/README.md).

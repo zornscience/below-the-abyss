@@ -4,3 +4,9 @@ assets/shaders/shelf_water.gdshader,original shader source,repository-authored B
 assets/shaders/shelf_rock.gdshader,original shader source,repository-authored BTA-040 study,project license pending,arithmetic strata
 scripts/visuals,original vector drawing source,repository-authored BTA-040 study,project license pending,background motes lamp and landmark ink
 scripts/narrative/shelf_story_details.gd,Original programmatic instrument plate and empty strap,Repository-authored BTA-042 line geometry,Project license pending,No external source; non-colliding details on existing landmarks
+assets/art/identity/lantern_2.svg,adapted from assets/art/submarine/neris.svg,Codex-assisted repository-authored BTA-049 SVG,project license pending,shared title/playable master; original 80x48 footprint; no external image
+assets/art/identity/halcyon_modules.svg,original SVG source in repository,Codex-assisted repository-authored BTA-049 SVG,project license pending,shared scientific platform/departure modules; no external image
+assets/art/identity/descent_water.svg,original SVG source in repository,Codex-assisted repository-authored BTA-049 SVG,project license pending,palette gradients and illumination; no external image
+assets/art/identity/shelf_cliff.svg,original SVG source in repository,Codex-assisted repository-authored BTA-049 SVG,project license pending,layered decorative basalt relief; no external image
+scripts/visuals/halcyon_descent.gd,original drawing code in repository,Codex-assisted repository-authored BTA-049 presentation,project license pending,deterministic cosmetic particles and parallax; no external image
+scripts/visuals/halcyon_departure.gd,original drawing code in repository,Codex-assisted repository-authored BTA-049 presentation,project license pending,local dock dressing; no collision or physics

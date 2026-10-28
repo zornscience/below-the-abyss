@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<!-- Original layered value study. Quiet left field is reserved for actual Godot controls. -->
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#02050b"/><stop offset="1" stop-color="#18333c"/></linearGradient>
+ <linearGradient id="water" x1="0" x2=".15" y1="0" y2="1"><stop stop-color="#16404a"/><stop offset=".38" stop-color="#06202b"/><stop offset="1" stop-color="#02050b"/></linearGradient>
+ <linearGradient id="veil"><stop stop-color="#02050b" stop-opacity=".98"/><stop offset=".31" stop-color="#02050b" stop-opacity=".95"/><stop offset=".57" stop-color="#02050b" stop-opacity=".18"/><stop offset="1" stop-color="#02050b" stop-opacity="0"/></linearGradient>
+ <radialGradient id="haze"><stop stop-color="#638f98" stop-opacity=".16"/><stop offset="1" stop-color="#06202b" stop-opacity="0"/></radialGradient>
+</defs>
+<path d="M0 0H1920V303H0Z" fill="url(#sky)"/>
+<path d="M0 303H1920V1080H0Z" fill="url(#water)"/>
+<ellipse cx="1390" cy="288" rx="700" ry="190" fill="url(#haze)"/>
+<g fill="#638f98" opacity=".03"><path d="M1110 303H1180L1410 1080H1020ZM1440 303H1500L1810 1080H1590Z"/></g>
+<path d="M0 0H1920V1080H0Z" fill="url(#veil)"/>
+</svg>

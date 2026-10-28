@@ -222,8 +222,9 @@ func _ready() -> void:
 	accessibility_panel = AccessibilityPanel.new()
 	$SettingsLayer.add_child(accessibility_panel)
 	accessibility_panel.close_requested.connect(func() -> void:
+		var to_title: bool = revision!=null and revision.returning_to_title
 		open_route_menu()
-		(route_menu.get_node("%Accessibility") as Button).grab_focus())
+		if not to_title: (route_menu.get_node("%Accessibility") as Button).grab_focus())
 	route_menu.accessibility_requested.connect(open_accessibility)
 	accessibility_service = UiAccessibility.new()
 	add_child(accessibility_service)

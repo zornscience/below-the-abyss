@@ -16,7 +16,7 @@
 
 [ext_resource type="Script" path="res://scripts/player/scientific_scanner.gd" id="scanner"]
 
-[ext_resource type="Texture2D" path="res://assets/art/submarine/neris.svg" id="art"]
+[ext_resource type="Texture2D" path="res://assets/art/identity/lantern_2.svg" id="art"]
 [ext_resource type="Script" path="res://scripts/visuals/submarine_illustration.gd" id="illustration"]
 [sub_resource type="CapsuleShape2D" id="Capsule_hull"]
 radius = 16.0
@@ -38,6 +38,7 @@ shape = SubResource("Capsule_hull")
 [node name="Visual" type="Node2D" parent="."]
 script = ExtResource("illustration")
 [node name="NerisIllustration" type="Sprite2D" parent="Visual"]
+scale = Vector2(0.125, 0.125)
 texture = ExtResource("art")
 
 [node name="Hull" type="Polygon2D" parent="Visual"]

@@ -191,3 +191,16 @@ story, gameplay, dependencies, save fields or region. Verify native comparisons,
 all supported sizes/accessibility, complete actual-input routes, full regression
 suite and Linux release. [Decisions, commands, route and evidence](docs/testing/bta-048/README.md).
 Review in a separate PR; do not merge automatically.
+
+## BTA-049 — Cinematic title and visual identity
+
+User-authorized presentation milestone based on main after merged PR #31. Compose
+The Halcyon Descent using original shared Lantern-2/three-module Halcyon SVGs,
+layered cliffs, dark navigation space and restrained cosmetic motion. Preserve
+all existing title callbacks, Continue/recovery/prototype access and PR #31 HUD.
+Demonstrate the shared art only at the immediate canonical dock, preserving all
+terrain/camera/navigation/physics and save contracts. Respect comfort/text/contrast
+preferences and all input devices. Verify GUT, import/parser/startup, canonical
+input routes, native captures/performance observations and clean Linux export.
+No region, mission, mechanic or narrative expansion. Review in a separate PR; no merge.
+See [workflow and evidence](docs/testing/bta-049/README.md).

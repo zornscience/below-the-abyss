@@ -315,3 +315,17 @@ choosing unused descriptors without altering existing bindings. No dependencies 
 new gameplay systems. A scene-supplied optional sonar input guard suppresses only
 the physics step of a consumed radio control press; ordinary quick pings and movement
 remain independent. [Contracts and evidence](docs/testing/bta-048/README.md).
+
+## Halcyon Descent presentation — BTA-049
+
+Scene-owned HalcyonDescent draws four imported original SVGs with a local 30 Hz
+redraw budget, bounded deterministic motes and slow draw-only parallax. No gameplay
+RNG, physics/input handling, saved timer or new setting. Reduced Motion freezes the
+composition; particle/effects preferences remove drift density/illumination variation.
+The covered WorldRoot is render-hidden while the title page is visible and its prior
+visibility is restored on exit. Simulation and checkpoints remain owned by existing
+services. Title Godot controls retain the original focus loop and callbacks inside
+a responsive, focus-following left column. The playable sprite and title share one
+640x384 master at the unchanged 80x48 world footprint. HalcyonDeparture shares the
+station modules at the existing dock; it adds no bodies, shapes, targets or triggers.
+No schema, stable ID, terrain polygon, camera or navigation rule changes.

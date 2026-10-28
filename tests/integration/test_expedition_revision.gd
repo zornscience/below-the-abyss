@@ -84,6 +84,8 @@ func test_assign_refund_and_respec_use_finite_points_and_update_real_capabilitie
 	_dock()
 	assert_eq(scene.revision.assign("hull",1),OK)
 	assert_eq(scene.submarine.damage_system.get_maximum_depth_m(),400.0)
+	assert_eq(scene.revision.assign("sonar",1),ERR_UNAVAILABLE)
+	assert_eq(scene.revision.assign("hull",-1),OK)
 	assert_eq(scene.revision.assign("sonar",1),OK)
 	assert_eq(scene.submarine.sonar.maximum_radius(),1200.0)
 	assert_eq(scene.revision.assign("sonar",1),ERR_UNAVAILABLE)
@@ -212,7 +214,8 @@ func test_new_canonical_file_reloads_allocations_and_record_decoding_silently() 
 	restored.expedition_path = path+".expedition.json"
 	add_child_autofree(restored)
 	assert_true(restored.revision.campaign.decoded)
-	assert_eq(restored.revision.campaign.ranks,{"hull":1,"sonar":1})
+	assert_eq(restored.revision.campaign.ranks.hull,1)
+	assert_eq(restored.revision.campaign.ranks.sonar,0)
 	assert_eq(restored.submarine.damage_system.get_maximum_depth_m(),400.0)
 	assert_eq(CampaignData.earned(restored.revision.campaign),3)
 func test_corrupt_profile_blocks_research_and_recovery_preserves_awards() -> void:
@@ -238,12 +241,11 @@ func test_compact_large_station_has_reachable_fixed_text_scroll_controls() -> vo
 	scene.settings.set_accessibility(prefs)
 	scene.revision.ui.show_dock("logs")
 	await wait_process_frames(5)
-	var tools: Control = scene.revision.ui._tools[scene.revision.ui.dock_page] as Control
-	assert_true(tools.is_visible_in_tree())
-	assert_lte(tools.get_global_rect().end.y,600.0)
-	var footer: Button = tools.get_child(0) as Button
-	assert_eq(footer.text,"Text ↑")
-	assert_true(footer.get_node(footer.focus_next).is_visible_in_tree())
+	var reader: UiScrollReader = scene.revision.ui._scrolls[scene.revision.ui.dock_page] as UiScrollReader
+	assert_true(reader.is_visible_in_tree())
+	assert_lte(reader.get_global_rect().end.y,600.0)
+	assert_eq(reader.focus_mode,Control.FOCUS_ALL)
+	assert_null(scene.revision.ui.dock_page.find_child("TextDown",true,false))
 	assert_false(scene.expedition_log.begin_button.visible)
 func test_live_comfort_preferences_suppress_existing_wake_and_refraction() -> void:
 	_start()

@@ -687,3 +687,15 @@ established by automated steering or accelerated simulation.
 PR #35 review adds passages/dead ends, rough rock, a three-shot cave-in, eel/turtle/
 hammerhead, underwater impact/radio effects and New Game. [Review evidence, save
 compatibility and manual route](docs/testing/bta-051/revision/README.md).
+
+### Surface expedition polish (BTA-052)
+
+Halcyon now launches at 20 m beneath a wave surface, above an open-water shelf with
+optional excavation caves. Visible specimens scan directly; sonar locates the hidden
+buoy and shows cosmetic returning echoes. Ammo joins the resource HUD; radio types,
+scrolls and dismisses automatically. Focus text panes to scroll with D-pad/arrow keys
+instead of extra Text Up/Down buttons. Five icon-labelled research branches include
+engine and torpedo tuning, with higher finite prices and compatible legacy purchases.
+A quiet score uses the existing Music slider/mute.
+
+[Design, save schema 8 migration, commands, input route and review limitations](docs/testing/bta-052/README.md).

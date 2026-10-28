@@ -84,7 +84,7 @@ func _draw_survey() -> void:
 		var shape: PackedVector2Array = []
 		for at: Vector2 in polygon: shape.append(_point(at))
 		if shape.size()>=3: draw_colored_polygon(shape,Color("63817d"))
-	var station: Vector2 = _point(Vector2(420,480))
+	var station: Vector2 = _point(SunlitSurveyData.SPAWN)
 	draw_rect(Rect2(station-Vector2(5,5),Vector2(10,10)),Color("f4dc94"))
 	draw_string(ThemeDB.fallback_font,station+Vector2(5,-24),"HALCYON",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("f4dc94"))
 	# Hatching identifies unsurveyed space even with high contrast / no colour cues.

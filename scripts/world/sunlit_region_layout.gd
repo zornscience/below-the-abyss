@@ -2,6 +2,7 @@ class_name SunlitRegionLayout
 extends Node2D
 ## Canonical collision-bearing authored extension. Decorations are separate children.
 var bodies: Array[GrayboxRock] = []
+var tunnels: Array[DestructibleRock] = []
 var gate: DestructibleRock
 var _legacy: Array[Dictionary] = []
 var enabled: bool = false
@@ -22,22 +23,17 @@ func configure(region: ContinentalShelf,excavation: ExcavationSystem) -> void:
 	region.get_node("Terrain").add_child(gate)
 	gate.configure("sunlit-cavein",SunlitSurveyData.gate_contour(),Color("87948a"))
 	excavation.register(gate)
+	for definition: Dictionary in SunlitSurveyData.TUNNELS:
+		var mouth: DestructibleRock = DestructibleRock.new()
+		mouth.name = String(definition.id).to_pascal_case()
+		region.get_node("Terrain").add_child(mouth)
+		mouth.configure(definition.id,SunlitSurveyData.rough_contour(SunlitSurveyData._rect(definition.mouth),72+tunnels.size()),Color("87948a"))
+		excavation.register(mouth)
+		tunnels.append(mouth)
 	for child: Node in region.get_node("Terrain").get_children():
-		if child==gate: continue
-		var polygon: PackedVector2Array = child.original if child is DestructibleRock else (child.outline if child is GrayboxRock else PackedVector2Array())
-		var minimum: float = INF
-		var maximum: float = -INF
-		for point: Vector2 in polygon:
-			minimum = minf(minimum,point.x)
-			maximum = maxf(maximum,point.x)
-		if minimum>=3980.0 or maximum>10000:
+		if child==gate or (child is DestructibleRock and child in tunnels) or child.name==&"WestBoundary": continue
+		if child is CollisionObject2D:
 			_legacy.append({"body":weakref(child),"layer":child.collision_layer,"visible":child.visible})
-	for item: Dictionary in [{"at":Vector2(4220,350),"text":"RECENT ROCKFALL\nFRACTURED BASALT · EXCAVATION"},{"at":Vector2(13760,790),"text":"OPTIONAL VENT SHAFT\nCHECK FITTED DEPTH RATING · RETURN ↑"}]:
-		var sign: Label = Label.new()
-		sign.text = item.text
-		sign.position = item.at
-		UiTypography.style(sign,&"secondary")
-		add_child(sign)
 	set_enabled(false)
 
 func set_enabled(value: bool) -> void:
@@ -46,6 +42,9 @@ func set_enabled(value: bool) -> void:
 	for rock: GrayboxRock in bodies: rock.collision_layer = 1 if value else 0
 	gate.visible = value
 	gate.collision_layer = 1 if value else 0
+	for mouth: DestructibleRock in tunnels:
+		mouth.visible = value
+		mouth.collision_layer = 1 if value else 0
 	for record: Dictionary in _legacy:
 		var body: CollisionObject2D = record.body.get_ref() as CollisionObject2D
 		if is_instance_valid(body):

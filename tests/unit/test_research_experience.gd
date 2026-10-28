@@ -51,11 +51,13 @@ func test_version_six_migrates_records_without_xp_or_loss_of_prior_state() -> vo
 	var old: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
 	old.schema_version = 6
 	old.prototype.campaign.erase("science")
+	old.prototype.campaign.erase("legacy_ranks")
+	old.prototype.campaign.ranks = {"sonar":old.prototype.campaign.ranks.sonar,"hull":old.prototype.campaign.ranks.hull}
 	var previous: Dictionary = old.duplicate(true)
 	var migrated: Dictionary = ExpeditionSchema.decode(old)
 	assert_eq(migrated.error,OK)
 	assert_true(migrated.migrated)
-	assert_eq(migrated.data.schema_version,7)
+	assert_eq(migrated.data.schema_version,ExpeditionSchema.VERSION)
 	assert_eq(ResearchExperienceData.total(migrated.data.prototype.campaign.science),0)
 	assert_true("shelf-calibration-plate" in migrated.data.prototype.campaign.science.imported)
 	for key: String in ["progress","player","route","terrain","story"]: assert_eq(migrated.data[key],previous[key])

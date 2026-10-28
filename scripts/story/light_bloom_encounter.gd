@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 func in_range() -> bool:
 	return scene.submarine.global_position.distance_to(target.global_position)<=scene.research.definition(SCAN).radius
 func identified() -> bool:
-	return scene.discoveries.state_of(POI)==DiscoveryRegistry.State.DISCOVERED
+	return not scene.research.definition(SCAN).requires_sonar or scene.discoveries.state_of(POI)==DiscoveryRegistry.State.DISCOVERED
 func modal() -> bool:
 	return panel.visible_page()
 func can_choose() -> bool:
@@ -48,6 +48,8 @@ func interact() -> Error:
 		_pending_scan = false
 		return OK
 	feedback = ""
+	if in_range() and not scene.research.definition(SCAN).requires_sonar and scene.discoveries.state_of(POI)!=DiscoveryRegistry.State.DISCOVERED:
+		scene.discoveries.discover(POI,&"bloom/visual-acquisition")
 	if state.active_id!=&"":
 		feedback = "Finish or cancel the current scan before studying the bloom."
 		return ERR_BUSY

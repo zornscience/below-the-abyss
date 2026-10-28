@@ -107,13 +107,13 @@ func test_upper_dead_end_and_lower_loop_are_clear_but_blind_wall_is_solid() -> v
 	query.shape = collision.shape
 	query.collision_mask = 1
 	var space: PhysicsDirectSpaceState2D = game.submarine.get_world_2d().direct_space_state
-	var route: Array[Vector2] = [Vector2(6500,650),Vector2(7100,650),Vector2(7100,270),Vector2(6750,270),Vector2(7100,270),Vector2(7100,660)]
+	var route: Array[Vector2] = [Vector2(6100,260),Vector2(7100,260),Vector2(7100,430),Vector2(6750,430),Vector2(7100,430),Vector2(7100,260)]
 	for index: int in range(route.size()-1):
 		query.transform = Transform2D(0,route[index])*collision.transform
 		query.motion = route[index+1]-route[index]
 		assert_true(space.intersect_shape(query).is_empty())
 		assert_gte(space.cast_motion(query)[0],0.99999,"Full hull fits optional loop / blind alcove.")
-	query.transform = Transform2D(0,Vector2(6750,270))*collision.transform
+	query.transform = Transform2D(0,Vector2(6750,430))*collision.transform
 	query.motion = Vector2(-500,0)
 	assert_lt(space.cast_motion(query)[0],1.0,"Blind end cannot be crossed.")
 

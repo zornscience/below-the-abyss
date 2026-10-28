@@ -32,6 +32,6 @@ func restore(records: Array) -> Error:
 	for cut: Dictionary in records:
 		if _rocks.has(cut.rock):
 			_rocks[cut.rock].carve(Vector2(cut.at[0],cut.at[1]), cut.radius)
-			_cuts.append(cut.duplicate(true))
+		_cuts.append(cut.duplicate(true))
 	geometry_changed.emit()
 	return OK

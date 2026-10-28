@@ -1,5 +1,6 @@
 class_name TorpedoProjectile
 extends Node2D
+const ART: Texture2D = preload("res://assets/art/sunlit/torpedo.png")
 ## Swept center-line collision, independent of render rate. Launcher owns stepping.
 var direction: Vector2 = Vector2.RIGHT
 var speed: float = 800.0
@@ -9,6 +10,8 @@ var trail: TorpedoTrail
 var remaining: float = 3.0
 var event_id: StringName
 var exploded: bool = false
+var blast_radius: float = 150.0
+var blast_damage: float = 60.0
 var ignore: Array[RID] = []
 signal impact(projectile: TorpedoProjectile, at: Vector2)
 func advance(delta: float) -> void:
@@ -24,7 +27,7 @@ func advance(delta: float) -> void:
 	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(global_position, next, 1 | 8, ignore)
 	query.hit_from_inside = true
 	var hit: Dictionary = get_world_2d().direct_space_state.intersect_ray(query)
-	if trail != null: trail.sample(global_position,step)
+	if trail != null: trail.sample(global_position-direction*44,step)
 	remaining = maxf(0.0, remaining - step)
 	global_position = (hit.position + hit.normal * 0.1) if not hit.is_empty() else next
 	if not hit.is_empty() or remaining <= 0.0:
@@ -32,6 +35,9 @@ func advance(delta: float) -> void:
 		if trail != null: trail.active = false
 		impact.emit(self, global_position)
 		queue_free()
+func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 func _draw() -> void:
-	draw_line(-direction * 15.0, direction * 9.0, Color("d2d6c5"), 5.0, true)
-	draw_circle(-direction * 16.0, 3.0, Color("e9c46a"))
+	draw_set_transform(Vector2.ZERO,direction.angle())
+	draw_texture_rect(ART,Rect2(-46,-8,48,16),false)
+	draw_set_transform(Vector2.ZERO)

@@ -2,6 +2,7 @@ class_name ScanDefinition
 extends Resource
 ## Authored scientific placeholder; identity is independent of its sonar POI.
 
+@export var requires_sonar: bool = true
 @export var stable_id: StringName
 @export var required_poi_id: StringName
 @export_enum("geological", "biological", "artificial") var classification: String = "geological"

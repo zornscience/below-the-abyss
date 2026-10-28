@@ -42,13 +42,17 @@ func _target(id: StringName) -> ScientificScanTarget:
 
 func _known(id: StringName) -> bool:
 	var definition: ScanDefinition = _definitions.get(id) as ScanDefinition
-	return definition != null and _discoveries.state_of(definition.required_poi_id) == DiscoveryRegistry.State.DISCOVERED
+	return definition != null and (not definition.requires_sonar or _discoveries.state_of(definition.required_poi_id) == DiscoveryRegistry.State.DISCOVERED)
 
 
 func _in_range(id: StringName) -> bool:
 	var target: ScientificScanTarget = _target(id)
 	var definition: ScanDefinition = _definitions.get(id) as ScanDefinition
-	return target != null and definition != null and global_position.distance_to(target.global_position) <= definition.radius
+	if target==null or definition==null or global_position.distance_to(target.global_position)>definition.radius: return false
+	if definition.requires_sonar or not is_inside_tree(): return true
+	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(global_position,target.global_position,1)
+	var hit: Dictionary = get_world_2d().direct_space_state.intersect_ray(query)
+	return hit.is_empty() or (hit.position as Vector2).distance_to(target.global_position)<=12.0
 
 
 func candidate_id() -> StringName:
@@ -78,12 +82,16 @@ func request_scan(requested_id: StringName = &"") -> Error:
 	var candidate: StringName = candidate_id() if requested_id==&"" else (requested_id if eligible(requested_id) else &"")
 	if candidate == &"":
 		_feedback_seconds = 2.0
-		_feedback = "NO ELIGIBLE SUBJECT / Discover with sonar and approach within scan range"
+		_feedback = "NO SUBJECT IN RANGE / Approach visible specimens; sonar locates hidden subjects"
 		for id: StringName in _targets:
 			if _known(id) and _in_range(id) and _research.is_completed(id):
 				_feedback = "ALREADY RECORDED / " + _definitions[id].title
 		state_changed.emit()
 		return ERR_UNAVAILABLE
+	var definition: ScanDefinition = _definitions[candidate]
+	if not definition.requires_sonar and _discoveries.state_of(definition.required_poi_id)!=DiscoveryRegistry.State.DISCOVERED:
+		var found: Error = _discoveries.discover(definition.required_poi_id,&"scanner/visual-acquisition")
+		if found!=OK: return found
 	_active = candidate
 	_elapsed = 0.0
 	_feedback = "SCANNING"
@@ -156,7 +164,7 @@ func snapshot() -> Dictionary:
 
 
 func reset_session() -> void:
-	cancel_scan("SCANNER / Discover a subject with sonar, approach, then Interact to scan")
+	cancel_scan("SCANNER / Approach a visible subject and Interact to scan")
 
 func eligible(id: StringName) -> bool:
 	return _research!=null and _target(id)!=null and _known(id) and not _research.is_completed(id) and _in_range(id)

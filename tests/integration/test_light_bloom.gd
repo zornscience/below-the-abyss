@@ -151,6 +151,8 @@ func test_old_checkpoint_migrates_with_zero_story_and_preserved_prototype_progre
 	var old: Dictionary = scene.saves.snapshot()
 	old.schema_version = 4
 	old.prototype.campaign.erase("science")
+	old.prototype.campaign.erase("legacy_ranks")
+	old.prototype.campaign.ranks = {"sonar":old.prototype.campaign.ranks.sonar,"hull":old.prototype.campaign.ranks.hull}
 	old.erase("story")
 	old.prototype.ammunition = 7
 	var decoded: Dictionary = ExpeditionSchema.decode(old)
@@ -176,6 +178,8 @@ func test_all_previous_checkpoint_versions_migrate_with_zero_story_state() -> vo
 		var old: Dictionary = source.duplicate(true)
 		old.schema_version = version
 		old.prototype.campaign.erase("science")
+		old.prototype.campaign.erase("legacy_ranks")
+		old.prototype.campaign.ranks = {"sonar":old.prototype.campaign.ranks.sonar,"hull":old.prototype.campaign.ranks.hull}
 		old.erase("story")
 		if version<=3: old.erase("prototype")
 		if version<=2:
@@ -237,7 +241,7 @@ func test_small_large_text_choice_has_keyboard_controller_recovery_and_reading_c
 	_approach()
 	scene.bloom.interact()
 	await wait_process_frames(8)
-	var footer: Control = scene.bloom.panel.page.get_meta("footer") as Control
+	var footer: Control = scene.bloom.panel.scroll
 	assert_true(footer.is_visible_in_tree())
 	assert_lte(footer.get_global_rect().end.y,600.0)
 	var observe: Button = scene.bloom.panel.page.find_child("ObserveBloom",true,false) as Button

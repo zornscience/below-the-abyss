@@ -98,6 +98,7 @@ func has_checkpoint() -> bool:
 func position_clear(at: Vector2, orientation: float) -> bool:
 	if not at.is_finite() or not is_finite(orientation) or not Rect2(_scene.region.camera_bounds).has_point(at):
 		return false
+	if _scene.chapter!=null and _scene.chapter.active and at.y<16.0: return false
 	var vessel: SubmarineController = _scene.submarine
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = (vessel.get_node("CollisionShape2D") as CollisionShape2D).shape

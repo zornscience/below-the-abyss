@@ -7,6 +7,10 @@ var active: bool = false
 var buoy: EmergencyBuoyVisual
 var guide: SunlitFieldGuide
 var dressing: SunlitDressing
+var ocean: SunlitOcean
+var _old_spawn: Vector2
+var _old_base: Vector2
+var _old_station: Vector2
 var departure: HalcyonDeparture
 var _water_polygon: PackedVector2Array
 var _water_color: Color
@@ -27,6 +31,13 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	departure.name = "HalcyonDeparture"
 	scene.region.add_child(departure)
 	departure.hide()
+	_old_spawn = scene.region.spawn.position
+	_old_base = scene.region.base_zone.position
+	_old_station = scene.station.position
+	ocean = SunlitOcean.new()
+	scene.region.add_child(ocean)
+	ocean.configure(scene)
+	ocean.hide()
 	buoy = EmergencyBuoyVisual.new()
 	buoy.position = SunlitSurveyData.BUOY
 	buoy.hide()
@@ -35,23 +46,14 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	boundary.collision_layer = 0
 	boundary.collision_mask = 2
 	scene.region.add_child(boundary)
-	for rectangle: Rect2 in [Rect2(120,800,3780,1800)]:
-		var collision: CollisionShape2D = CollisionShape2D.new()
-		var shape: RectangleShape2D = RectangleShape2D.new()
-		shape.size = rectangle.size
-		collision.shape = shape
-		collision.position = rectangle.get_center()
-		boundary.add_child(collision)
-		var silhouette: Polygon2D = Polygon2D.new()
-		silhouette.polygon = PackedVector2Array([rectangle.position,Vector2(rectangle.end.x,rectangle.position.y),rectangle.end,Vector2(rectangle.position.x,rectangle.end.y)])
-		silhouette.color = Color("12313d")
-		boundary.add_child(silhouette)
+	boundary.name = "OceanSurfaceBoundary"
+	var collision: CollisionShape2D = CollisionShape2D.new()
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = Vector2(22000,1000)
+	collision.shape = shape
+	collision.position = Vector2(11000,-500)
+	boundary.add_child(collision)
 	boundary.hide()
-	var sign: Label = Label.new()
-	sign.position = Vector2(21400,742)
-	sign.text = "END OF SHALLOWS SURVEY\nNo access to the Twilight Shelf"
-	UiTypography.style(sign,&"secondary")
-	boundary.add_child(sign)
 	dressing.configure(scene.region,boundary,[scene.creature,scene.predator])
 	scene.submarine.simulation_enabled_changed.connect(dressing.set_simulating)
 	scene.excavation.geometry_changed.connect(dressing.refresh_surfaces)
@@ -67,6 +69,9 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	guide.setup(scene)
 	scene.discoveries.registry_changed.connect(_refresh)
 	scene.revision.ui.show_title()
+	var headlight: SubmarineHeadlight = SubmarineHeadlight.new()
+	add_child(headlight)
+	headlight.configure(scene)
 	_refresh()
 func state() -> String:
 	return String(scene.missions.snapshot()[String(SunlitShallowsData.MISSION)].state)
@@ -103,10 +108,10 @@ func cancel_briefing() -> void:
 	scene.revision.ui.show_title()
 func launch() -> void:
 	if not scene.revision.ui.radio_page.visible or not scene.revision.can_write(): return
+	_activate(true)
 	if scene.saves.new_expedition()!=OK:
 		scene.revision.ui.add_story_notice("Launch not saved. Recover the existing checkpoint before retrying.")
 		return
-	_activate(true)
 	if state()=="available" and scene.missions.accept(SunlitShallowsData.MISSION)!=OK:
 		scene.revision.ui.add_story_notice("Mission not accepted. Records retained; recover or retry the save.")
 		return
@@ -119,6 +124,10 @@ func start_prototype() -> void:
 	scene.revision.start()
 func _activate(value: bool) -> void:
 	active = value
+	scene.region.spawn.position = SunlitSurveyData.SPAWN if value else _old_spawn
+	scene.region.base_zone.position = SunlitSurveyData.SPAWN if value else _old_base
+	scene.station.position = SunlitSurveyData.SPAWN if value else _old_station
+	ocean.visible = value
 	guide.set_enabled(value)
 	for definition: ScanDefinition in scene.research._catalog.targets:
 		if definition.stable_id==&"shelf-calibration-plate":
@@ -194,7 +203,7 @@ func entries() -> Array[NarrativeEntry]:
 		var field: NarrativeEntry = NarrativeEntry.new()
 		field.stable_id = &"sunlit-field-course"
 		field.title = "Shallows field course"
-		field.text = "Use the map to follow charted passages toward the approximate buoy signal. Clear the fractured rockfall with a facing-fired excavation torpedo. Halcyon rearms the vessel. The volcanic shaft is an optional pressure hazard, not the next chapter. Sonar must reach the hidden buoy before it can be scanned. Unique scientific records earn research XP; revisit them through Map → Research."
+		field.text = "Use the map to follow charted passages toward the approximate buoy signal. Optional caves have fractured entrances that excavation torpedoes can open; the surface route stays clear. Halcyon rearms the vessel. The volcanic shaft is an optional pressure hazard, not the next chapter. Sonar must reach the hidden buoy before it can be scanned. Unique scientific records earn research XP; revisit them through Map → Research."
 		result.append(field)
 	if scene.story.resolved(LightBloomEncounter.ENCOUNTER):
 		var bloom_entry: NarrativeEntry = NarrativeEntry.new()
@@ -212,7 +221,7 @@ func log_text() -> String:
 func guidance() -> String:
 	if concluded(): return "CHAPTER COMPLETE · Mara's message is archived · Twilight Shelf awaits a future expedition"
 	if not scene.story.resolved(LightBloomEncounter.ENCOUNTER): return "Study the light bloom east of Halcyon · scan unharmed or bottle a specimen"
-	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Consult the map · clear the fractured passage · search the reported signal area with sonar"
+	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Consult the map · explore the open shelf · search the reported signal area with sonar"
 	return "Bring Mara's recording home · retrace the surveyed passages west and dock at Halcyon"
 func _scan_completed(id: StringName) -> void:
 	if active and id==SunlitShallowsData.BUOY:

@@ -170,7 +170,7 @@ func test_first_science_scan_commits_xp_and_record_atomically_and_repeat_only_re
 	var disk: Dictionary = game.saves.store.read_file(game.expedition_path).data
 	assert_eq(disk.prototype.campaign.science.credited,["sunlit-silver-shoal"])
 	assert_true("sunlit-silver-shoal" in disk.progress.research)
-	assert_eq(disk.schema_version,7)
+	assert_eq(disk.schema_version,ExpeditionSchema.VERSION)
 
 func test_failed_scan_write_has_no_record_xp_signal_or_popup() -> void:
 	_identify(&"sunlit-mineral-terrace")

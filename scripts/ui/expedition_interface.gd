@@ -18,7 +18,6 @@ var _buttons: Array[Button] = []
 var _story_back: Callable
 var _dock_tab: String = "home"
 var _scrolls: Dictionary = {}
-var _tools: Dictionary = {}
 func setup(owner_revision: ExpeditionRevision) -> void:
 	revision = owner_revision
 	layer = 80
@@ -28,7 +27,6 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	title_page.add_theme_stylebox_override("panel",StyleBoxEmpty.new())
 	_title_body = _content(title_page,true)
 	_title_margin = title_page.get_child(0) as MarginContainer
-	(_tools[title_page] as Control).hide()
 	title_page.visibility_changed.connect(_title_visibility)
 	get_viewport().size_changed.connect(_layout_title)
 	revision.scene.settings.settings_changed.connect(_layout_title)
@@ -66,11 +64,11 @@ func _screen() -> PanelContainer:
 	panel.add_theme_stylebox_override("panel",box)
 	add_child(panel)
 	return panel
-func _content(panel: PanelContainer, scroll_tools: bool = false) -> VBoxContainer:
+func _content(panel: PanelContainer, _scroll_tools: bool = false) -> VBoxContainer:
 	var margin: MarginContainer = MarginContainer.new()
 	for side: String in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,18)
 	panel.add_child(margin)
-	var scroll: ScrollContainer = ScrollContainer.new()
+	var scroll: ScrollContainer = UiScrollReader.new()
 	scroll.follow_focus = true
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	var frame: VBoxContainer = VBoxContainer.new()
@@ -82,16 +80,6 @@ func _content(panel: PanelContainer, scroll_tools: bool = false) -> VBoxContaine
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	column.add_theme_constant_override("separation",12)
 	scroll.add_child(column)
-	if scroll_tools:
-		var footer: HBoxContainer = HBoxContainer.new()
-		frame.add_child(footer)
-		_tools[panel] = footer
-		for direction: int in [-1,1]:
-			var button: Button = Button.new()
-			button.text = "Text ↑" if direction<0 else "Text ↓"
-			button.custom_minimum_size = Vector2(100,40)
-			button.pressed.connect(func() -> void: scroll.scroll_vertical += direction*140)
-			footer.add_child(button)
 	return column
 func _clear(column: VBoxContainer) -> void:
 	_buttons.clear()
@@ -118,16 +106,11 @@ func _button(column: Container, text: String, callback: Callable, disabled: bool
 	if not disabled: _buttons.append(button)
 	return button
 func _focus() -> void:
-	for tools: Control in _tools.values():
-		for child: Node in tools.get_children():
-			while child in _buttons: _buttons.erase(child)
 	var panel: Control = radio_page if radio_page.visible else (dock_page if dock_page.visible else title_page)
-	if _tools.has(panel) and (_tools[panel] as Control).visible:
-		for child: Node in (_tools[panel] as Control).get_children(): _buttons.append(child as Button)
-	for index: int in range(_buttons.size()):
-		var button: Button = _buttons[index]
-		for property: String in ["focus_next","focus_neighbor_bottom","focus_neighbor_right"]: button.set(property,button.get_path_to(_buttons[(index+1)%_buttons.size()]))
-		for property: String in ["focus_previous","focus_neighbor_top","focus_neighbor_left"]: button.set(property,button.get_path_to(_buttons[posmod(index-1,_buttons.size())]))
+	var controls: Array[Control] = []
+	controls.assign(_buttons)
+	controls.append(_scrolls[panel] as Control)
+	UiScrollReader.link(controls,_scrolls[panel])
 	if not _buttons.is_empty(): _buttons[0].grab_focus()
 func show_title() -> void:
 	_clear(_title_body)
@@ -205,7 +188,6 @@ func _layout_title() -> void:
 func show_dock(tab: String = "home") -> void:
 	_dock_tab = tab
 	var canonical: bool = revision.scene.chapter!=null and revision.scene.chapter.active
-	(_tools[dock_page] as Control).visible = tab!="home" or canonical
 	_clear(_dock_body)
 	dock_page.show()
 	_label(_dock_body,("HALCYON STATION  /  " if canonical else "SHELF BASE  /  ")+{"home":"OPERATIONS","technology":"RESEARCH TECHNOLOGY","logs":"EXPEDITION LOG" if canonical else "DECODED RECORDS","radio":"RADIO ARCHIVE"}[tab],&"heading")
@@ -229,26 +211,38 @@ func show_dock(tab: String = "home") -> void:
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
 		if canonical: _label(_dock_body,"RESEARCH XP %d · BONUS POINTS %d/%d" % [ResearchExperienceData.total(revision.campaign.science),ResearchExperienceData.points(revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points],&"body")
-		var xp_rules: ResearchExperienceRules = ResearchExperienceData.RULES
-		_label(_dock_body,("First species scans earn %d XP; new scientific studies earn %d XP. Each %d XP adds one research point, limited to %d extra points in this chapter. Existing scans never award XP again. Reassignment is free while docked." % [xp_rules.species_xp,xp_rules.study_xp,xp_rules.xp_per_point,xp_rules.maximum_extra_points]) if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
-		var branches: HBoxContainer = HBoxContainer.new()
+		_label(_dock_body,"First new rank: 2 RP · Additional ranks: 3 RP · Free reassignment. This chapter funds one or two new ranks.")
+		if CampaignData.legacy_count(revision.campaign)>0: _label(_dock_body,"Earlier fits keep their original cost. Refunds return the points actually paid.")
+		var branches: GridContainer = GridContainer.new()
+		branches.columns = 1 if get_viewport().get_visible_rect().size.x<1100 else 2
+		branches.add_theme_constant_override("h_separation",16)
+		branches.add_theme_constant_override("v_separation",16)
 		_dock_body.add_child(branches)
-		for branch: String in ["sonar","hull"]:
+		branches.resized.connect(func() -> void: branches.columns = 1 if branches.size.x<720 else 2)
+		for branch: String in CampaignData.BRANCHES:
+			var card: PanelContainer = PanelContainer.new()
+			card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			branches.add_child(card)
 			var column: VBoxContainer = VBoxContainer.new()
 			column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			branches.add_child(column)
-			_label(column,"ACOUSTIC ARRAY" if branch=="sonar" else "PRESSURE HULL",&"section")
-			var values: PackedFloat32Array = revision.tree.sonar_radii if branch=="sonar" else revision.tree.hull_ratings
+			card.add_child(column)
+			var header: HBoxContainer = HBoxContainer.new()
+			column.add_child(header)
+			var icon: TextureRect = TextureRect.new()
+			icon.texture = ResearchTree.ICONS[branch]
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon.custom_minimum_size = Vector2(34,34)
+			header.add_child(icon)
+			_label(header,ResearchTree.TITLES[branch],&"section").size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			var rank: int = int(revision.campaign.ranks[branch])
-			var diagram: ResearchTreeIllustration = ResearchTreeIllustration.new()
-			diagram.text_scale = float(UiAccessibility.SCALE[revision.scene.settings.snapshot().accessibility.ui_scale])
-			diagram.branch = branch
-			diagram.rank = rank
-			diagram.values = values
-			column.add_child(diagram)
-			_button(column,"Assign next rank",_assign.bind(branch,1),rank>=3 or CampaignData.available(revision.campaign)<=0).name = branch+"Assign"
-			_button(column,"Refund last rank",_assign.bind(branch,-1),rank<=0).name = branch+"Refund"
-		_button(_dock_body,"Reassign all points",_respec)
+			_label(column,"Rank %d / 3 · %s" % [rank,revision.tree.comparison(branch,rank)])
+			var actions: HFlowContainer = HFlowContainer.new()
+			column.add_child(actions)
+			var price: int = CampaignData.next_cost(revision.campaign)
+			_button(actions,"Install rank %d · %d RP" % [mini(3,rank+1),price],_assign.bind(branch,1),rank>=3 or CampaignData.available(revision.campaign)<price).name = branch+"Assign"
+			_button(actions,"Refund · %d RP" % CampaignData.refund_cost(revision.campaign,branch),_assign.bind(branch,-1),rank<=0).name = branch+"Refund"
+		_button(_dock_body,"Reassign all points",_respec).name = "ReassignAll"
 		_label(_dock_body,revision.feedback)
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	elif tab=="logs":
@@ -293,12 +287,12 @@ func show_story_page(title: String, text: String, action: String, callback: Call
 	_button(_radio_body,action,callback).name = id
 	_button(_radio_body,"Back",back).name = "StoryBack"
 	_focus()
-	((_tools[radio_page] as Control).get_child(0) as Control).grab_focus()
+	(_scrolls[radio_page] as Control).grab_focus()
 	_queue_story_read.call_deferred()
 func add_story_option(text: String, callback: Callable, id: StringName) -> void:
 	_button(_radio_body,text,callback).name = id
 	_focus()
-	((_tools[radio_page] as Control).get_child(0) as Control).grab_focus()
+	(_scrolls[radio_page] as Control).grab_focus()
 	_queue_story_read.call_deferred()
 func add_story_notice(text: String) -> void:
 	_label(_radio_body,text)
@@ -307,7 +301,7 @@ func _queue_story_read() -> void:
 	if not get_tree().process_frame.is_connected(_reset_story_read): get_tree().process_frame.connect(_reset_story_read,CONNECT_ONE_SHOT)
 func _reset_story_read() -> void:
 	var focus: Control = get_viewport().gui_get_focus_owner()
-	if radio_page.visible and _story_back.is_valid() and focus!=null and (_tools[radio_page] as Control).is_ancestor_of(focus):
+	if radio_page.visible and _story_back.is_valid() and focus!=null and focus==_scrolls[radio_page]:
 		(_scrolls[radio_page] as ScrollContainer).scroll_vertical = 0
 
 func show_new_game_confirmation() -> void:

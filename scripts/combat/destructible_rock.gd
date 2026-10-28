@@ -20,7 +20,7 @@ func reset_shape() -> void:
 	pieces = [original.duplicate()]
 	_rebuild()
 func carve(world_at: Vector2, radius: float) -> bool:
-	if not world_at.is_finite() or not is_finite(radius) or radius <= 0.0 or radius > 160.0:
+	if not world_at.is_finite() or not is_finite(radius) or radius <= 0.0 or radius > ExcavationState.MAX_RADIUS:
 		return false
 	var at: Vector2 = to_local(world_at)
 	var circle: PackedVector2Array = []

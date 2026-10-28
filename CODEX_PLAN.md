@@ -256,3 +256,13 @@ hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloo
 Title New Game explicitly confirms and archives all campaign stores; preferences
 remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
 compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).
+
+## BTA-052 — Surface expedition and instrument polish
+
+User-directed follow-up to PR #35: open-water shelf with optional excavation caves,
+above-water Halcyon/deeper departure, direct visible scanning, compact ammo/scroll UI,
+typed auto-dismissing radio, five priced/icon-labelled research branches, compatible
+schema-8 migration, bounded cosmetic sonar returns, illuminated terrain, animated
+existing fauna, red beacon, detailed torpedo artwork and original quiet score.
+Preserve canonical story, hidden buoy, old IDs/progress and development prototype.
+Acceptance/verification/evidence: docs/testing/bta-052/README.md. Review only; no merge.

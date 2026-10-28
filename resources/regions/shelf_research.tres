@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/scan_definition.gd" id="2"]
 [sub_resource type="Resource" id="Artificial"]
 script = ExtResource("2")
+requires_sonar = false
 stable_id = &"shelf-calibration-plate"
 required_poi_id = &"shelf-navigation-marker"
 classification = "artificial"
@@ -13,6 +14,7 @@ radius = 240.0
 duration = 3.0
 [sub_resource type="Resource" id="Geological"]
 script = ExtResource("2")
+requires_sonar = false
 stable_id = &"shelf-overlook-formation"
 required_poi_id = &"shelf-overlook"
 classification = "geological"

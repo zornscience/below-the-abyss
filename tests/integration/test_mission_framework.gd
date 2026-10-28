@@ -228,12 +228,15 @@ func test_mission_page_buttons_and_expedition_status_fit_reference_and_minimum_w
 		await get_tree().process_frame
 		var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(size))
 		var board: MissionBoard = scene.station_menu.get_node("%MissionsPage") as MissionBoard
-		for node: Control in [board, board.get_node("%BackMissions"), board.get_node("%SyncMissions"), board.get_node("%RecoverMissions"), board.get_node("%ScrollMissionDown"), board.get_node("%MissionDetailScroll")]:
+		for node: Control in [board, board.get_node("%BackMissions"), board.get_node("%SyncMissions"), board.get_node("%RecoverMissions"), board.get_node("%MissionDetailScroll")]:
 			assert_true(bounds.encloses(node.get_global_rect()), node.name)
 		var status: Label = scene.get_node("%MissionStatus") as Label
 		assert_true(bounds.encloses(status.get_global_rect()))
 		assert_true(status.text.contains("ACCEPTED"))
-		(board.get_node("%ScrollMissionDown") as Button).pressed.emit()
+		var reading_key: InputEventKey = InputEventKey.new()
+		reading_key.keycode = KEY_PAGEDOWN
+		reading_key.pressed = true
+		(board.get_node("%MissionDetailScroll") as UiScrollReader).handle_reading_input(reading_key)
 		if size.x == 800:
 			assert_gt((board.get_node("%MissionDetailScroll") as ScrollContainer).scroll_vertical, 0, "Details action exposes clipped text without a mouse.")
 		else:

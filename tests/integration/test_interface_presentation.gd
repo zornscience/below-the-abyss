@@ -34,11 +34,11 @@ func test_long_briefing_stays_bounded_and_controller_can_scroll_then_launch() ->
 		var bounds: Rect2 = Rect2(Vector2(24,32),Vector2(752,536))
 		assert_true(bounds.encloses(page.get_global_rect()))
 		assert_false(game.submarine.is_physics_processing())
-		var down: Button = (game.revision.ui._tools[page] as Control).get_child(1) as Button
+		var down: UiScrollReader = scroll as UiScrollReader
 		down.grab_focus()
 		await wait_process_frames(4)
 		var event: InputEventJoypadButton = InputEventJoypadButton.new()
-		event.button_index = JOY_BUTTON_A
+		event.button_index = JOY_BUTTON_DPAD_DOWN
 		event.pressed = true
 		viewport.push_input(event,true)
 		event.pressed = false
@@ -46,7 +46,7 @@ func test_long_briefing_stays_bounded_and_controller_can_scroll_then_launch() ->
 		await wait_process_frames(4)
 		assert_gt(scroll.scroll_vertical,0)
 		assert_true(page.get_global_rect().encloses(down.get_global_rect()))
-		assert_eq(down.get_theme_font_size("font_size"),UiTypography.size_for(&"dialog_button",scale_name))
+		assert_null(page.find_child("TextDown",true,false))
 	var launch: Button = game.revision.ui.find_child("LaunchSunlit",true,false) as Button
 	launch.grab_focus()
 	await wait_process_frames(6)
@@ -71,7 +71,7 @@ func test_logs_settings_and_story_choices_reflow_and_destroy_without_global_call
 		game.research_log.present()
 		await wait_process_frames(5)
 		assert_true(visible_bounds.encloses((game.research_log.get_node("DialogFrame") as Control).get_global_rect()))
-		assert_true(visible_bounds.encloses((game.research_log.get_node("%ScrollResearchDown") as Control).get_global_rect()))
+		assert_true(visible_bounds.encloses((game.research_log.get_node("%DetailScroll") as Control).get_global_rect()))
 		game.research_log.hide()
 	game.queue_free()
 	await wait_process_frames(5)

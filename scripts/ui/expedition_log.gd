@@ -18,8 +18,6 @@ func _ready() -> void:
 	close_button.pressed.connect(func() -> void: close_requested.emit())
 	begin_button.pressed.connect(_begin)
 	debrief_button.pressed.connect(_debrief)
-	(%StoryUp as Button).pressed.connect(func() -> void: (%StoryScroll as ScrollContainer).scroll_vertical -= 100)
-	(%StoryDown as Button).pressed.connect(func() -> void: (%StoryScroll as ScrollContainer).scroll_vertical += 100)
 
 
 func setup(service: NarrativeService) -> void:
@@ -68,16 +66,13 @@ func refresh() -> void:
 	debrief_button.text = "Chapter acknowledged / saved" if narrative.is_concluded() else (
 		"Submit expedition debrief" if station != null else ("Dock at Halcyon to debrief" if narrative.entries_provider.is_valid() else "Dock at Shelf Base to debrief"))
 	var controls: Array[Control] = [close_button]
-	for button: Button in [begin_button, debrief_button, %StoryUp, %StoryDown]:
+	for button: Button in [begin_button, debrief_button]:
 		if not button.disabled:
 			controls.append(button)
 	for child: Node in entry_list.get_children():
 		controls.append(child as Control)
-	for index: int in range(controls.size()):
-		for property: String in ["focus_next", "focus_neighbor_bottom", "focus_neighbor_right"]:
-			controls[index].set(property, controls[index].get_path_to(controls[(index + 1) % controls.size()]))
-		for property: String in ["focus_previous", "focus_neighbor_top", "focus_neighbor_left"]:
-			controls[index].set(property, controls[index].get_path_to(controls[posmod(index - 1, controls.size())]))
+	controls.append(%StoryScroll as Control)
+	UiScrollReader.link(controls,%StoryScroll)
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if visible and (focus == null or (focus is Button and (focus as Button).disabled)):
 		close_button.grab_focus()
@@ -110,6 +105,10 @@ func _debrief() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if visible and event is InputEventKey and event.pressed and event.keycode in [KEY_PAGEUP,KEY_PAGEDOWN]:
+		(%StoryScroll as UiScrollReader).handle_reading_input(event)
+		get_viewport().set_input_as_handled()
+		return
 	if visible and not event.is_echo() and (event.is_action_pressed("ui_cancel") or (event.is_action_pressed("pause") and not InputBindings.is_menu_navigation(event)) or (event.is_action_pressed("open_map") and not InputBindings.is_menu_navigation(event))):
 		get_viewport().set_input_as_handled()
 		close_requested.emit()

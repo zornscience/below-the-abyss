@@ -405,3 +405,19 @@ hammerhead ram, bounded underwater effects, radio/bubble sound and swimming bloo
 Title New Game explicitly confirms and archives all campaign stores; preferences
 remain. Existing schema-7 checkpoint/legacy IDs, chapter, services and research stay
 compatible. [Implementation, API/save rules, evidence and limitations](docs/testing/bta-051/revision/README.md).
+
+## BTA-052 surface and presentation adapters
+
+Canonical `SunlitSurveyData` owns near-surface spawn, open-water terrain and optional
+stable-ID cave plugs. `SunlitShallows` selects canonical geometry/dock before writing
+the departure checkpoint; the prototype scene is restored when switching mode.
+`ScientificScanner` separates visible acquisition with terrain line of sight from
+hidden sonar acquisition. The dispatcher/reveal authority is unchanged: bounded
+`SonarReflection` nodes are cosmetic returns, not additional acoustic events.
+
+`CampaignData` schema 8 reconstructs five authored capability branches, with paid
+legacy allocations preserved by migration. In-flight projectiles snapshot their
+blast parameters. `UiScrollReader` is the shared focusable reading pane;
+`RadioPlayback` supplies deterministic presentation timing. Cached nine-ray lighting,
+fauna UV animation, beacon, waves and Music-bus score are scene-owned presentation.
+Details and migration limits: docs/testing/bta-052/README.md.

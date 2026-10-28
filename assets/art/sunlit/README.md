@@ -130,3 +130,19 @@ python3 tools/synthesize_feedback_audio.py
 Radio uses UI volume/mute; muffled blast and occasional cosmetic bubble chirps use
 Effects volume/mute and the existing voice budgets. They generate no gameplay
 AcousticEvents. See [review evidence and limitations](../../../docs/testing/bta-051/revision/README.md).
+
+## BTA-052 presentation additions
+
+`torpedo.png` is the unchanged transparent 2172×724 original OpenAI image_gen
+output recorded in provenance.json. Painted ceramic, metal panels, nose, tail fins
+and a propeller replace the white rectangle. Godot imports a 512-pixel-wide runtime
+texture with mipmaps/lossless compression and linear mipmap filtering; rendered
+size is 48×16 world units. Collision remains a swept ray, not the silhouette.
+No new exclusive licensing or human painting claim is made.
+
+The ocean horizon reuses `painted/descent_water.png` and Halcyon's existing painted
+modules. It adds two low-amplitude wave lines over the artwork; the physical surface
+is fixed at world y=0. Terrain lighting uses nine cached terrain rays and bounded
+material illumination, not full-screen postprocessing or physically accurate optics.
+Fauna uses atlas-clamped UV deformation driven by an explicit simulation clock;
+Reduced Motion disables the deformation. All new visual clocks are scene-owned.

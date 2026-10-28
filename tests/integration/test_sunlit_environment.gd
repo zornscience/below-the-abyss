@@ -92,14 +92,23 @@ func test_clipped_painted_edges_stay_in_actual_stone_and_excavation_removes_old_
 	var old_unchanged: Array[Node] = []
 	for item: Dictionary in paint._surfaces:
 		var source: Node = item.source.get_ref()
-		if source is DestructibleRock and source.rock_id=="central-shelf": old_changed.append_array(item.trims)
-		elif source is DestructibleRock and source.rock_id=="ceiling": old_unchanged.append_array(item.trims)
-	assert_gt(game.excavation.excavate(Vector2(1490,650),70),0)
-	for old: Node in old_changed: assert_false(old.get_parent()==paint,"Changed trim is removed immediately.")
+		if source is DestructibleRock and source.rock_id=="sunlit-cavein": old_changed.append_array(item.trims)
+		elif source is GrayboxRock: old_unchanged.append_array(item.trims)
+	assert_gt(game.excavation.excavate(Vector2(4550,480),70),0)
+	for old: Node in old_changed: assert_false(is_instance_valid(old),"Changed trim is removed immediately.")
 	for old: Node in old_unchanged: assert_eq(old.get_parent(),paint,"Unchanged trim is reused rather than clipped again.")
 	await wait_process_frames(5)
-	assert_false(paint.contains_stone(Vector2(1490,650)))
-	assert_false(game.chapter.dressing._plants[5].visible,"Unsupported kelp vanishes when its actual support is excavated.")
+	assert_false(paint.contains_stone(Vector2(4550,480)))
+	var supported: Sprite2D
+	for plant: Sprite2D in game.chapter.dressing._plants:
+		var root: Vector2 = plant.get_meta("authored_root")
+		if root.x>4550 and root.x<4930 and root.y<300:
+			supported = plant
+			break
+	assert_not_null(supported)
+	assert_gt(game.excavation.excavate(supported.get_meta("authored_root"),70),0)
+	await wait_process_frames(5)
+	assert_false(supported.visible,"Unsupported kelp vanishes when its actual support is excavated.")
 	assert_gt(paint.get_child_count(),0)
 
 func _center(points: PackedVector2Array) -> Vector2:
@@ -186,4 +195,4 @@ func test_cosmetic_clock_is_equivalent_at_30_60_120_steps() -> void:
 		for unused: int in range(frequency): art._process(1.0/frequency)
 		assert_almost_eq(art.phase,1.0,0.00001)
 		assert_almost_eq(art._plants[0].skew,sin(0.35)*0.025,0.00001)
-		assert_eq(art._plants[0].position,SunlitDressing.ROOTS[0]-Vector2(0,2))
+		assert_eq(art._plants[0].position,(art._plants[0].get_meta("authored_root") as Vector2)-Vector2(0,2))

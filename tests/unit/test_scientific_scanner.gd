@@ -17,7 +17,9 @@ func before_each() -> void:
 	_target.position = Vector2(240, 0)
 	for node: Node in [_research, _discoveries, _scanner, _target]:
 		add_child_autofree(node)
-	assert_eq(_research.configure(CATALOG), OK)
+	var hidden_catalog: ResearchCatalog = CATALOG.duplicate(true) as ResearchCatalog
+	for definition: ScanDefinition in hidden_catalog.targets: definition.requires_sonar = true
+	assert_eq(_research.configure(hidden_catalog), OK)
 	assert_eq(_discoveries.configure(DISCOVERIES), OK)
 	assert_eq(_scanner.setup(_research, _discoveries, [_target]), OK)
 

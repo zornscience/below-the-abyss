@@ -1,0 +1,205 @@
+[
+  {
+    "file": "collect-halcyon-return-small.png",
+    "width": 800,
+    "height": 600,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-dead-end-alcove.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-sea-turtle.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-bloom-choice.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-bloom-outcome.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-chapter-complete.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-rock-arch-passages.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "collect-surface-departure-small.png",
+    "width": 800,
+    "height": 600,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-fish-school.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "collect-bloom-choice-small.png",
+    "width": 800,
+    "height": 600,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-sonar-buoy-arrival.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-research-xp-assigned.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "collect-maras-message-small.png",
+    "width": 800,
+    "height": 600,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-optional-cave-inside.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-halcyon-return.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "collect-debrief-small.png",
+    "width": 800,
+    "height": 600,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-technology-icons.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-surface-departure.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-maras-message.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-moray-eel.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "observe-optional-cave-before.png",
+    "width": 1280,
+    "height": 800,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "collect-technology-icons-small.png",
+    "width": 800,
+    "height": 600,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-underwater-detonation-2.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-torpedo-in-flight.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-technology-icons.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-surface-departure.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-title.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-sonar-buoy-arrival.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  },
+  {
+    "file": "1920/collect-debrief.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "native Godot 4.6.3 Compatibility; input-driven route; Mesa llvmpipe",
+    "capture_kind": "render forced during accelerated route; not an FPS measurement"
+  }
+]

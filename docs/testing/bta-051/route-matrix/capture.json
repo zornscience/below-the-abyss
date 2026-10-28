@@ -1,0 +1,467 @@
+{
+  "checks": 66,
+  "images": [
+    {
+      "file": "800-normal-expanded-map.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-rockfall-before.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-rockfall-after.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-fish-school.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-scan-sunlit-silver-shoal.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-vent-safe.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-vent-danger.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-sonar-travelling.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-sonar-buoy-arrival.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-research-xp.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-normal-debrief.png",
+      "width": 800,
+      "height": 600,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-expanded-map.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-rockfall-before.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-rockfall-after.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-fish-school.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-scan-sunlit-silver-shoal.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-vent-safe.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-vent-danger.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-sonar-travelling.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-sonar-buoy-arrival.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-research-xp.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "800-reduced-debrief.png",
+      "width": 800,
+      "height": 600,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-expanded-map.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-rockfall-before.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-rockfall-after.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-fish-school.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-scan-sunlit-silver-shoal.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-vent-safe.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-vent-danger.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-sonar-travelling.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-sonar-buoy-arrival.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-research-xp.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-normal-debrief.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-expanded-map.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-rockfall-before.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-rockfall-after.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-fish-school.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-scan-sunlit-silver-shoal.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-vent-safe.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-vent-danger.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-sonar-travelling.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-sonar-buoy-arrival.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-research-xp.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1280-reduced-debrief.png",
+      "width": 1280,
+      "height": 800,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-expanded-map.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-rockfall-before.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-rockfall-after.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-fish-school.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-scan-sunlit-silver-shoal.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-vent-safe.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-vent-danger.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-sonar-travelling.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-sonar-buoy-arrival.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-research-xp.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-normal-debrief.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "normal",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-expanded-map.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-rockfall-before.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-rockfall-after.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-fish-school.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-scan-sunlit-silver-shoal.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-vent-safe.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-vent-danger.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-sonar-travelling.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-sonar-buoy-arrival.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-research-xp.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    },
+    {
+      "file": "1920-reduced-debrief.png",
+      "width": 1920,
+      "height": 1080,
+      "mode": "reduced",
+      "source": "native Godot input route; sequential viewport/comfort redraws"
+    }
+  ]
+}

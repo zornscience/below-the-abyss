@@ -1,0 +1,30 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_expanded_sunlit.gd
+* test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_controls
+1/1 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 1
+Passing Tests         1
+Asserts              14
+Time              3.496s
+
+
+Ran Tests matching "test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_controls"
+---- All tests passed! ----

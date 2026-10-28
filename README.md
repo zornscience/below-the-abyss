@@ -2,7 +2,7 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **BTA-050 — Illustrated Sunlit Shallows environment**,
+Current build: **BTA-051 — Expanded Sunlit Shallows and research XP**,
 on **The Sunlit Shallows**, the canonical first expedition.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
 recover missing acoustician Mara Voss's emergency buoy. Bring the recording home
@@ -13,9 +13,8 @@ for a first-expedition debrief. The Twilight Shelf is a future chapter, not play
 - **Pilot:** WASD/arrows or left stick; F/X sonar, E/A interact/scan/dock,
   M/Back map/research, P/Start pause. Bindings are remappable. Optional Wick tutorial
   cards can be disabled under Pause → Help & tutorials.
-- **Investigate:** follow Halcyon's pylons east, study the bloom, then search near
-  Twin Spires. Sonar identifies subjects; deliberate scans recover records. Read
-  the recovered message in the expedition log. Return through the upper passage.
+- **Investigate:** follow Halcyon's pylons east, study the bloom, then consult the map, clear the fractured passage and search the reported area. Sonar identifies subjects; deliberate scans recover records. Read
+  the recovered message in the expedition log. Return through the cleared shallow route.
 - **Choose:** scan the bloom unharmed or bottle a specimen for Crane. Its visual
   outcome and Wick/Okafor/Crane dialogue persist without a numeric morality score.
   Neither branch blocks completion or can be repeated for rewards.
@@ -158,7 +157,7 @@ keeping all permanent progress. Cancel leaves the checkpoint alone. **Restart Te
 Route** remains a separate development action. Keyboard and controller navigation
 work in pause/confirmation/station menus.
 
-The normal game now uses `user://saves/expedition.json` (version 6; migrates versions 1–5) with a recoverable
+The normal game now uses `user://saves/expedition.json` (version 7; migrates versions 1–6) with a recoverable
 checkpoint backup. Existing narrow save files are validated/imported and preserved;
 their store APIs then delegate writes to the coordinator. Standalone component
 fixtures still use their original stores. Custom isolated settings scenes inject
@@ -658,3 +657,28 @@ issues that introduce those systems. Exports and platform certification remain o
 **License decision pending.** No project license has been selected or granted
 by this scaffold. Godot has its own MIT license; this does not determine the
 license of this repository.
+
+## BTA-051 — expanded Sunlit Shallows survey
+
+The canonical chapter now has an extended shallow course, one excavation-torpedo
+rockfall and an optional deep vent branch. Open the map after Okafor's radio call:
+solid charted terrain, hatched unknown sectors and a reported search circle are
+distinct. The report is not the emergency buoy's exact position. Face the fractured
+rock and use Space / right trigger to open a hull-sized passage; return to Halcyon
+for rearming if necessary. No wildlife combat is required. The buoy becomes visible
+only after an in-range active sonar wavefront reaches it.
+
+First-time scientific species/study records give 20/30 research XP. Each 100 XP
+adds one research point, capped at two additional points in this chapter. The
+technology page and research log show this separately from legacy finite rewards
+and hidden Resonance. Old scans retain their records without retroactive XP.
+Repeat Interact can review nearby completed subjects without an award. The existing
+atomic expedition checkpoint is now version 7, migrating versions 1–6; there is
+no separate XP save. If the vessel is depleted, use Pause → Continue for the last
+safe checkpoint, or Restart Test Route; permanent records and cleared terrain remain.
+
+[Route, acceptance mapping, native evidence, commands and limitations](docs/testing/bta-051/README.md)
+· [architecture and save migration](docs/decisions/bta-051-expanded-shallows.md)
+· [performance and Fedora/NVIDIA profiling](docs/testing/bta-051/performance.md).
+The 15–20 minute first-time chapter length is a human-playtest target, not a claim
+established by automated steering or accelerated simulation.

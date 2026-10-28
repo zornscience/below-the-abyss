@@ -1,0 +1,131 @@
+BTA-051 verification — 2026-10-28
+Base main ce64e08683bfdc5fe39e051426ec055492227145 (merged PR #34).
+Committed gameplay source 63bf6aacd842f62a9ddc4475bd9f7dcb9b439aea.
+Godot 4.6.3.stable.official.7d41c59c4; GUT 9.6.1.
+
+AUTOMATED RESULTS
+python3 tools/validate_godot.py
+  PASS engine pin, headless editor import, 267 authored script check-only parses,
+  startup smoke. logs/validation.txt and parser-inventory.txt.
+  Seven changed scripts rechecked after first visual fixes (final-parser.txt),
+  six after map compatibility (final-compatibility-parser.txt), final clamped-pan
+  script check-only parse also passes (final-pan-parser.txt).
+python3 tools/run_tests.py
+  PASS 624/624 tests, 38364 assertions, 497.941 seconds, 0 skipped/failures/errors.
+  logs/full-suite.xml, full-gut.txt and bounded-final-gut.txt.
+  Final localized map fixes subsequently PASS 33 affected integration tests,
+  468 assertions, 67.994 seconds; final pan test PASS 1 test / 14 assertions.
+  logs/final-map-compatibility-33.txt, final-pan-1.txt.
+  No test was disabled/removed. Existing position/bounds fixtures now assert the
+  expanded authored route and actual excavation; old mission/reward checks remain.
+python3 tools/verify_sunlit_shallows.py
+  PASS 12 separate launches: 4 fresh + 4 full Continue + 2 quit at buoy + 2 Continue
+  from buoy. Both outcomes and keyboard/controller. Extended observer-controller
+  includes ammo exhaustion/rearm, insufficient sonar energy/refill, eight studies,
+  damage/ascent, missed ping, return/debrief and XP-earned talent assignment.
+  Fresh terminals emit one choice/claim; Continue emits no repeated choice/reward.
+  Mid-expedition Continue claims once only on actual return. Terrain/XP preserved.
+  logs/canonical-input-routes.txt (10 chapter terminals + 2 checkpoint terminals).
+python3 tools/verify_expanded_expedition.py
+  PASS untouched legacy controller course: 320.717 active seconds, hull 100,
+  battery 73.662, oxygen 90.262, no excavation, three scans and debrief.
+  logs/legacy-expanded.txt.
+python3 tools/verify_revision_two.py
+  PASS legacy production course: 472.7 active seconds, return hull 100,
+  battery 72.587, docking battery 100, original four earned points, ammo 10.
+  logs/legacy-revision.txt.
+python3 tools/verify_story_choice.py
+  PASS 8 older fresh/Continue launches: both devices/outcomes, muted, no farming.
+  logs/bloom-input-routes.txt.
+python3 -m unittest discover -s tests/python -v
+  PASS 7/7; logs/python-tests.txt.
+
+NATIVE INPUT EVIDENCE (synthetic input through normal Godot controls/physics)
+DISPLAY=:98 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2
+Godot Compatibility / X11 / Mesa llvmpipe (LLVM 19.1.7, 256 bits).
+No human participant or physical controller session is claimed.
+
+Observer route:
+BTA_EVIDENCE_DIR=docs/testing/bta-051/route-1280 godot --path . \
+ --audio-driver Dummy --rendering-method gl_compatibility --disable-render-loop \
+ --fixed-fps 60 --script res://tests/fixtures/drive_sunlit_environment.gd \
+ --quit-after 90000 -- --profile=bta051-native-extended --input=controller \
+ --outcome=observe --survey-studies --vent-damage-demo --missed-ping-demo \
+ --empty-ammo-demo --low-energy-demo
+  PASS 803.75 active vessel seconds, 288.92724 host wall seconds, 260 XP,
+  11 valid shots including ammo test, one choice and claim, muted. 32 PNGs.
+  This first capture preceded cosmetic backdrop/legacy-visibility cleanup.
+
+Final collect matrix:
+BTA_EVIDENCE_DIR=docs/testing/bta-051/route-matrix godot --path . \
+ --audio-driver Dummy --rendering-method gl_compatibility --disable-render-loop \
+ --fixed-fps 60 --script res://tests/fixtures/drive_sunlit_survey_matrix.gd \
+ --quit-after 90000 -- --profile=bta051-matrix-final --input=controller \
+ --outcome=collect --small --high-contrast --comfort --survey-studies \
+ --vent-damage-demo --missed-ping-demo
+  PASS 608.05 active vessel seconds, 259.616981 wall seconds, 240 XP, two bonus
+  points, one shot, one choice/claim. Real station input spends beyond the original
+  commissioning budget, ending with hull rank 2 and one available point.
+  Route between captures uses 800x600 Large Text/High Contrast. At 11 milestones,
+  redraw the actual state at all three sizes in normal/reduced modes, then restore
+  route settings. 66 exact-dimension milestone PNGs, 85 total route PNGs.
+  route-matrix/capture.json inventories the 66. Audio muted throughout.
+  Final map annotation/pan PNGs recaptured through the same normal-input opening,
+  adding --stop-after-map and profile bta051-map-pan-final. SUNLIT_MAP_REVIEW_PASS.
+  logs/native-matrix-route.txt, native-final-map.txt.
+  Sparse rendering is screenshot evidence, NOT realtime performance measurement.
+
+PERFORMANCE / BEFORE-AFTER
+Baseline: isolated archive of ce64e08 captured BEFORE edits; original BTA050
+fixture, 42 PNGs / 18 live samples. before/{capture.json,profile.json}.
+python3 tools/capture_sunlit_survey.py --output docs/testing/bta-051/after \
+ --baseline docs/testing/bta-051/before
+  PASS 66 native PNGs, exact 800x600/1280x800/1920x1080 dimensions, normal/reduced,
+  36 live samples. Six shared views compare player/zoom/camera; terrain intentionally
+  differs. Shared old camera limits are fixture-only; expanded samples use real
+  new limits. No other Godot runs during either benchmark. No fixed FPS.
+python3 tools/report_sunlit_survey.py
+  Full tables in performance.md; after/capture.json includes 60 wall intervals
+  per sample, plus engine draw/texture/static/process/physics monitors.
+  Upper median and index floor(N*0.95) p95, same convention as baseline.
+  Median regresses in 16/18 shared views; texture allocation +8.54 MiB.
+  THIS DOES NOT ESTABLISH OVERALL RENDERING IMPROVEMENT OR 60 FPS.
+godot --headless --path . --script res://tests/fixtures/profile_scanner.gd -- --baseline-targets
+  Controlled eight targets, seven batches of 1000 snapshot calls, paused/known:
+  before 244.864 ms, after 47.065 ms median (80.8% lower elapsed time for CPU-side API calls).
+godot --headless --path . --script res://tests/fixtures/profile_scanner.gd
+  Expanded sixteen-target workload 91.144 ms. Different workload, not a like-for-like
+  percentage comparison. Raw before/scanner-benchmark.txt, after/scanner-*.txt.
+
+CLEAN LINUX EXPORT
+Fresh local clone (no ignored addons/GUT or .godot cache), clean commit 63bf6aacd842:
+python3 tools/build_playtest.py
+python3 tools/smoke_playtest.py \
+ build/below-the-abyss-playtest-linux-63bf6aacd842.zip \
+ --log build/playtest/standalone-smoke.log
+  PASS release export and extracted standalone launch, default telemetry OFF.
+  Build ID/source commit 63bf6aacd842f62a9ddc4475bd9f7dcb9b439aea; dirty=false.
+  Binary SHA256 5b2de4d6fbc08623fc51d5bec49e9f8efe364885ac2cd3defbcc8d27aa62d6cd.
+  logs/linux-build-result.json, clean-export-{import.log,export.log,manifest.json},
+  clean-export-standalone-smoke.log and linux-standalone-result.txt.
+  Tested ZIP copied to workspace build/ (ignored); no build artifact committed.
+  Later documentation/report-only changes do not alter the exported gameplay.
+
+EARLIER ATTEMPTS / LIMITS
+First full GUT hit its old 600-second bound with map path/obsolete-route assertions;
+second was intentionally interrupted to fix the remaining old fixture. Logs retained.
+Final 624-test run passed at 497.941 seconds with a 900-second bounded guard;
+CI job is 40 minutes for longer real-input routes plus import/parsers/tests.
+The later map-only fixes have focused/native checks as noted above.
+
+Human first-time 15-20 minute pacing, comprehension, artistic acceptance, physical
+controller usability and Fedora/NVIDIA 60 FPS are UNVERIFIED. Automated route times
+exclude paused reading/menus and do not establish human completion time. Software
+rendering shows real regressions; source caches/draw reductions are not GPU approval.
+Hull depletion uses existing last-safe Continue/Restart, not a new death system.
+Wide map overview needs zoom/pan for local geometry at small sizes. Schools use
+bounded clear static habitats and suspend when distant. AI-generated fish licensing
+remains pending; original PNG masters unchanged. No external dependency added.
+Hosted Actions status is separate from local checks and is not asserted here.
+
+Retained console text trims trailing whitespace only; messages/results are unchanged.

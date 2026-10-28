@@ -1,0 +1,970 @@
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--script', 'res://addons/gut/gut_cmdln.gd', '-gexit', '-gdisable_colors', '-gjunit_xml_file=/workspace/below-the-abyss/build/ci-logs/unit-tests.xml']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/unit/test_accessibility_settings.gd
+* test_preferences_roundtrip_preserves_audio_and_bindings
+* test_legacy_three_and_four_field_settings_gain_defaults_in_memory_only
+* test_invalid_preferences_reject_without_partial_application
+* test_explicit_invalid_settings_recovery_preserves_original_and_never_overwrites_backup
+* test_gameplay_remap_cannot_replace_fixed_menu_recovery
+* test_last_device_filters_prompts_and_ignores_drift
+6/6 passed.
+
+
+res://tests/unit/test_acoustic_acceptance.gd
+* test_acceptance_gate_runs_only_for_valid_new_events_and_preserves_history_semantics
+* test_acceptance_gate_is_locked_and_cannot_mutate_the_frozen_payload
+2/2 passed.
+
+
+res://tests/unit/test_acoustic_bus.gd
+* test_registration_is_idempotent_and_conflicting_stable_ids_are_rejected
+* test_invalid_outside_tree_and_cross_bus_registration_are_rejected
+* test_removal_is_explicit_and_removed_receivers_never_receive
+* test_range_and_receiver_radius_boundaries_are_inclusive_and_zero_is_coincident_only
+* test_types_classifications_sources_enablement_and_thresholds_filter_without_duplicates
+* test_attenuation_is_optional_and_minimum_strength_uses_the_attenuated_value
+* test_duplicate_ids_are_suppressed_and_conflicting_payloads_are_rejected
+* test_history_capacity_fails_closed_without_eviction_and_configure_preserves_history
+* test_invalid_events_or_unregistered_and_spoofed_sources_do_not_consume_history
+* test_delivery_is_sorted_by_stable_receiver_id_not_registration_order
+* test_callback_mutations_cannot_change_other_recipients_or_the_history_payload
+* test_reentrant_dispatch_is_busy_and_does_not_record_a_rejected_event
+* test_large_finite_world_coordinates_do_not_overflow_distance_calculation
+* test_emitter_validates_requests_and_notifies_only_for_accepted_events
+14/14 passed.
+
+
+res://tests/unit/test_acoustic_event.gd
+* test_valid_event_has_explicit_stable_identity_units_and_time
+* test_empty_oversized_or_unsupported_tokens_are_rejected_in_every_field
+* test_negative_nonfinite_and_nonfinite_position_values_are_rejected
+* test_snapshots_are_distinct_and_payload_comparison_uses_all_fields
+* test_profiles_validate_finite_bounds_tokens_and_modes
+* test_optional_attenuation_is_bounded_and_zero_range_has_no_division
+6/6 passed.
+
+
+res://tests/unit/test_active_sonar.gd
+* test_ping_charges_exactly_once_and_starts_cooldown_only_on_acceptance
+* test_insufficient_and_failed_final_cost_do_not_emit_or_start_cooldown
+* test_exact_energy_and_exact_cooldown_boundary_are_accepted
+* test_invalid_duplicate_conflicting_and_full_ledger_requests_never_charge
+* test_wavefront_and_exact_range_wait_for_arrival_and_outside_stays_hidden
+* test_duplicate_receipts_and_repeat_reveals_are_suppressed_per_ping
+* test_removed_unbound_rebound_and_freed_targets_cancel_pending_reveals
+* test_target_added_after_emission_receives_no_old_ping_or_late_reveal
+* test_restart_cancels_pulses_and_reveals_without_clearing_acoustic_history
+* test_large_steps_and_30_60_120_steps_preserve_arrival_expiry_cooldown_and_cost
+* test_invalid_config_preserves_rules_and_invalid_delta_preserves_clock
+* test_battery_signal_reentrancy_cannot_double_charge_or_emit
+* test_eligible_filters_are_owned_by_the_bus_and_direct_acoustics_do_not_spawn_waves
+* test_zero_cost_empty_battery_and_configurable_pulse_limit
+* test_pulse_radius_is_bounded_and_shared_profile_edits_do_not_change_active_rules
+* test_bus_teardown_cancels_pending_arrivals_and_reports_offline
+* test_overlapping_pings_refresh_visibility_from_arrival_times_without_duplicate_reveals
+* test_removing_the_sonar_owner_clears_its_temporary_reveals_and_visuals
+18/18 passed.
+
+
+res://tests/unit/test_ambient_acoustics.gd
+* test_global_schedule_order_ids_and_contacts_match_at_30_60_120_and_large_steps
+* test_restart_uses_new_epoch_ids_and_retains_acoustic_history
+* test_emission_budget_and_full_bus_stop_without_retry_floods
+* test_emitter_configuration_rejects_active_types_invalid_frequency_and_nonfinite_values
+* test_conflicting_source_registration_rolls_back_only_new_bindings
+5/5 passed.
+
+
+res://tests/unit/test_bounded_resource.gd
+* test_consumption_and_refill_saturate_and_return_actual_transfers
+* test_discrete_costs_are_all_or_nothing
+* test_depletion_is_an_edge_and_rearms_after_refill
+* test_zero_and_invalid_transfers_do_not_change_state_or_emit
+* test_explicit_values_clamp_but_nonfinite_values_are_rejected
+* test_small_capacities_and_fractional_endpoint_drift_are_supported
+* test_transfer_result_is_stable_when_an_observer_refills_on_depletion
+7/7 passed.
+
+
+res://tests/unit/test_campaign_data.gd
+* test_finite_budget_requires_real_authored_award_ids_and_cannot_overspend
+* test_duplicate_invalid_and_malformed_ledgers_are_rejected
+* test_reassignment_preserves_total_earned_and_permanent_awards
+* test_legacy_upgrade_ids_migrate_into_paid_ranks_without_double_stacking
+* test_v3_save_migrates_ammunition_and_allocations_in_memory
+* test_prototype_save_rejects_invalid_ammunition_and_unknown_fields
+* test_research_tree_resource_has_monotonic_capabilities_and_valid_bounds
+* test_launch_profile_rejects_invalid_acceleration_or_cruise_speed
+* test_recovery_merges_earned_progress_without_creating_additional_currency
+9/9 passed.
+
+
+res://tests/unit/test_creature_state.gd
+* test_patrol_waypoints_wrap_without_sound
+* test_sound_receipt_is_pending_until_simulation_advance_then_investigates_origin
+* test_total_priority_is_order_independent_for_overlapping_events
+* test_strength_then_timestamp_then_source_break_priority_ties
+* test_active_ping_outweighs_stronger_ambient_noise
+* test_duplicate_pending_or_current_event_cannot_extend_deadline
+* test_retargeting_does_not_restart_fixed_investigation_deadline
+* test_exact_timeout_and_recovery_are_simulation_time
+* test_arrival_returns_to_nearest_patrol_location
+* test_unreachable_goal_returns_and_blocked_patrol_skips_without_teleport_logic
+* test_range_strength_filters_bounds_and_unknown_types_fail_closed
+* test_stale_and_far_future_timestamps_are_rejected_and_near_future_waits
+* test_invalid_tuning_or_time_cannot_mutate_valid_runtime_rules
+* test_timeout_is_identical_at_30_60_120_steps
+14/14 passed.
+
+
+res://tests/unit/test_depth_mapping.gd
+* test_surface_reference_scale_and_above_water_clamping
+* test_region_transforms_are_applied_before_depth_conversion
+* test_invalid_mapping_coordinates_and_singular_transform_are_rejected
+3/3 passed.
+
+
+res://tests/unit/test_discovery_registry.gd
+* test_authored_ids_are_unique_stable_and_initially_hidden
+* test_duplicate_discovery_is_idempotent_and_signals_once
+* test_catalog_rejects_duplicate_ids_targets_and_invalid_definitions
+* test_restore_validates_entire_list_then_merges_without_erasing
+* test_authored_and_returned_resources_cannot_mutate_registry_metadata
+5/5 passed.
+
+
+res://tests/unit/test_discovery_store.gd
+* test_missing_file_roundtrip_atomic_replace_and_last_valid_backup
+* test_corrupt_unknown_ids_duplicates_and_wrong_types_never_partially_load_or_overwrite
+* test_incompatible_version_and_oversize_are_preserved
+* test_external_corruption_blocks_save_without_destroying_valid_backup
+* test_explicit_backup_recovery_preserves_rejected_file_and_unsaved_discoveries
+* test_invalid_or_missing_backup_and_failed_write_preserve_memory
+* test_retry_after_manual_file_repair_merges_and_saves_pending_discoveries
+7/7 passed.
+
+
+res://tests/unit/test_expedition_store.gd
+* test_version_one_migrates_in_memory_without_overwriting_original
+* test_missing_atomic_roundtrip_and_checkpoint_backup_preserve_latest_claims
+* test_wrong_versions_types_fields_regions_and_resource_bounds_are_rejected
+* test_invalid_position_structure_progress_and_route_never_partially_validate
+* test_corruption_explicit_recovery_keeps_rejected_claim_and_blocks_second_recovery
+* test_missing_primary_with_backup_is_not_silently_replaced
+* test_invalid_backup_size_limit_and_write_failure_preserve_originals
+* test_stale_writer_cannot_remove_persistent_claim_or_upgrade
+8/8 passed.
+
+
+res://tests/unit/test_feedback_foundation.gd
+* test_expanded_authored_catalogs_are_valid_and_do_not_replace_legacy_records
+* test_battery_travel_window_and_sonar_relative_cost_are_authored
+* test_legacy_bindings_migrate_without_overwriting_custom_controls
+* test_optional_tutorial_preferences_validate_and_scoped_defaults_preserve_choice
+* test_real_excavation_removes_solid_area_and_supports_an_internal_hole
+* test_terrain_record_bounds_and_unknown_authored_ids_reject
+* test_legacy_completed_checkpoint_migrates_without_erasing_the_ending
+* test_completed_legacy_checkpoint_migrates_without_requiring_outer_missions
+* test_malformed_terrain_and_conclusion_fields_are_rejected
+9/9 passed.
+
+
+res://tests/unit/test_fish_schools.gd
+* test_population_and_invalid_configuration_are_bounded
+* test_schooling_separation_and_smooth_turns_stay_in_habitat
+* test_only_eligible_loud_sounds_startle_once_with_bounded_history
+* test_fixed_step_school_motion_matches_at_30_60_120_and_reset
+4/4 passed.
+
+
+res://tests/unit/test_graybox_route.gd
+* test_base_alone_and_a_return_without_the_landmark_do_not_complete
+* test_landmark_then_return_completes_once_and_freezes_the_result
+* test_invalid_time_and_ambiguous_zone_samples_do_not_fake_completion
+* test_route_clock_is_consistent_at_30_60_and_120_steps
+* test_zone_uses_its_authored_collision_shape_and_transform
+5/5 passed.
+
+
+res://tests/unit/test_harness.gd
+* test_json_round_trip_preserves_sample_data
+* test_main_scene_contains_the_movement_prototype
+2/2 passed.
+
+
+res://tests/unit/test_input_bindings.gd
+* test_defaults_cover_keyboard_controller_and_menu_navigation
+* test_remap_replaces_one_device_group_and_preserves_the_other
+* test_conflicting_unknown_and_unsupported_remaps_leave_state_unchanged
+* test_controller_axis_remap_round_trip
+* test_analog_deadzone_and_diagonal_vector_are_applied_by_godot
+* test_reapplying_bindings_releases_held_actions_and_rejects_invalid_data
+6/6 passed.
+
+
+res://tests/unit/test_mission_service.gd
+* test_catalog_validation_stable_ids_target_validation_and_defensive_snapshots
+* test_accept_unknown_repeat_and_claim_before_completion_are_noops
+* test_domain_signal_progress_duplicates_and_route_order_are_idempotent
+* test_prior_permanent_discoveries_and_scans_and_current_complete_route_count_on_accept
+* test_scan_must_be_completed_and_unrelated_evidence_does_not_count
+* test_restart_and_reload_never_replay_completion_or_claim_and_keep_partial_route_evidence
+* test_reentrant_transitions_are_blocked_and_acknowledgement_is_saved_before_signal
+* test_save_failure_and_corruption_do_not_grant_completion_or_rewards
+* test_30_60_120_steps_produce_identical_persistent_state_and_one_completion
+* test_failed_route_progress_can_be_retried_after_test_restart_without_redetecting_route
+10/10 passed.
+
+
+res://tests/unit/test_mission_store.gd
+* test_missing_roundtrip_atomic_checkpoint_contains_latest_claim
+* test_invalid_states_ids_progress_and_reward_combinations_are_rejected
+* test_wrong_schema_catalog_format_extra_fields_malformed_and_size_limit
+* test_corruption_recovery_preserves_claim_and_rejected_and_blocks_second_recovery
+* test_missing_primary_with_backup_requires_explicit_recovery
+* test_monotonic_recovery_merge_and_stale_write_cannot_erase_claims
+* test_failed_write_and_missing_invalid_backup_preserve_files
+* test_deleted_or_stale_primary_cannot_overwrite_newer_claim_checkpoint
+8/8 passed.
+
+
+res://tests/unit/test_narrative_service.gd
+* test_catalog_has_valid_unique_stable_records_and_rejects_invalid_authored_text
+* test_opening_briefing_is_always_readable_while_all_future_evidence_is_hidden
+* test_intentional_acceptance_uses_existing_two_missions_and_is_repeat_safe
+* test_discovery_is_not_scan_and_primary_record_requires_deliberate_scientific_completion
+* test_out_of_order_prior_scan_discovery_and_completed_route_are_credited_on_acceptance
+* test_return_before_scan_and_scan_after_return_never_softlock
+* test_restart_telemetry_does_not_erase_permanent_return_objective_or_records
+* test_optional_geology_is_not_required_for_debrief
+* test_restore_is_silent_and_records_do_not_duplicate_when_loaded_or_reconciled
+* test_invalid_setup_and_failed_write_do_not_claim_or_hide_progress
+* test_same_story_progress_at_30_60_120_simulation_steps
+11/11 passed.
+
+
+res://tests/unit/test_passive_sonar.gd
+* test_receives_ambient_classification_and_approximate_strength_without_producing_events
+* test_range_strength_classification_and_active_event_filters_use_acoustic_receiver
+* test_relative_bearings_cover_cardinals_rotation_wrap_and_coincident_source
+* test_quantization_is_configurable_and_unknown_classification_is_preserved_in_api
+* test_duplicate_events_do_not_refresh_contacts_and_expiry_is_exact_simulation_time
+* test_new_events_refresh_one_contact_per_source_and_old_samples_cannot_replace_newer
+* test_bounded_contacts_keep_strongest_with_stable_id_ties_and_snapshot_isolation
+* test_source_unbind_free_and_identity_replacement_remove_contacts_without_clearing_history
+* test_suspend_resume_freezes_expiry_and_ignores_incoming_ambient_events
+* test_invalid_profiles_and_time_preserve_valid_rules_and_contacts
+* test_bus_teardown_detaches_listener_and_clears_contacts
+11/11 passed.
+
+
+res://tests/unit/test_playtest_recorder.gd
+* test_disabled_by_default_and_no_data_before_opt_in
+* test_random_sessions_build_identity_and_valid_lifecycle
+* test_counts_duplicate_ids_and_bounded_history_preserve_totals
+* test_exact_split_timing_completion_and_thirty_sixty_one_twenty_steps
+* test_privacy_allowlist_rejects_arbitrary_keys_text_and_invalid_numbers
+* test_store_roundtrip_text_interrupted_checkpoint_and_corruption_preservation
+* test_authored_creature_hearing_survives_binary_resource_roundtrip
+7/7 passed.
+
+
+res://tests/unit/test_predator_state.gd
+* test_only_eligible_player_sound_starts_warning_and_passive_listening_is_silent
+* test_warning_is_complete_before_pursuit_or_contact_damage_even_at_same_position
+* test_duplicate_and_repeated_pings_cannot_restart_warning_or_extend_episode
+* test_retreat_outside_habitat_immediately_disengages_and_stops_damage
+* test_pursuit_distance_boundary_and_missing_target_force_disengagement
+* test_damage_radius_obstruction_and_exact_cooldown_suppress_contact_jitter
+* test_unreachable_target_returns_using_base_fsm_and_recovery_ignores_sounds
+* test_invalid_profile_and_time_cannot_change_valid_state
+* test_restart_clears_aggression_and_requires_new_warning_before_damage
+* test_30_60_120_steps_have_identical_phase_deadlines_and_bounded_damage
+10/10 passed.
+
+
+res://tests/unit/test_research_experience.gd
+* test_authored_awards_thresholds_and_cap_are_derived_not_stacked
+* test_imported_and_prototype_records_never_gain_retroactive_xp
+* test_unknown_duplicate_malformed_or_orphan_awards_are_rejected
+* test_backup_merges_earned_once_and_keeps_allocations_intentional
+* test_version_six_migrates_records_without_xp_or_loss_of_prior_state
+* test_xp_configuration_rejects_invalid_or_duplicate_authored_rules
+* test_malformed_legacy_progress_is_rejected_before_migration_reads_nested_fields
+7/7 passed.
+
+
+res://tests/unit/test_research_store.gd
+* test_missing_file_roundtrip_atomic_replace_and_last_valid_backup
+* test_corrupt_unknown_ids_duplicates_and_wrong_types_never_partially_load_or_overwrite
+* test_incompatible_version_and_oversize_are_preserved
+* test_external_corruption_blocks_save_without_destroying_valid_backup
+* test_explicit_backup_recovery_preserves_rejected_file_and_unsaved_records
+* test_invalid_or_missing_backup_and_failed_write_preserve_memory
+* test_retry_after_manual_file_repair_merges_and_saves_pending_records
+7/7 passed.
+
+
+res://tests/unit/test_scientific_scanner.gd
+* test_hidden_targets_are_ineligible_and_never_show_scientific_metadata
+* test_inclusive_range_boundary_and_outside_rejection
+* test_completion_and_repeated_attempts_emit_exactly_once
+* test_intentional_second_activation_cancels_and_resets_progress
+* test_leaving_range_interrupts_without_banking_partial_progress
+* test_removed_target_interrupts_safely
+* test_pause_preserves_progress_rejects_activation_and_invalid_time_preserves_state
+* test_30_60_120_steps_complete_at_same_simulation_deadline
+* test_nearest_selection_and_lexical_id_tie_are_deterministic
+* test_invalid_catalogs_and_bindings_are_rejected_without_reconfiguring
+* test_restore_is_atomic_merges_and_never_replays_completion_events
+* test_restart_cancels_partial_scan_and_preserves_completed_records
+12/12 passed.
+
+
+res://tests/unit/test_settings_store.gd
+* test_save_reload_round_trip_and_overwrite
+* test_missing_and_corrupt_files_preserve_current_settings
+* test_invalid_documents_are_rejected_without_partial_application
+* test_oversized_file_and_write_failure_are_reported
+* test_invalid_deadzone_and_snapshot_mutation_do_not_change_state
+5/5 passed.
+
+
+res://tests/unit/test_soundscape.gd
+* test_buses_routes_and_original_loop_imports
+* test_settings_roundtrip_and_legacy_input_only_file
+* test_invalid_audio_is_rejected_without_partial_application
+* test_missing_sounds_and_invalid_cues_fail_safely
+* test_cue_and_global_concurrency_caps_and_expiry
+* test_mute_and_category_zero_stop_or_suppress_requests
+* test_settings_binding_updates_levels_live_without_changing_input
+* test_mix_fades_and_crossfades_consistently_at_30_60_120_steps
+* test_contact_classifications_do_not_add_directional_precision
+* test_corrupt_audio_file_preserves_input_and_current_mix_settings
+* test_echo_duck_is_restrained_and_recovers_smoothly
+* test_resource_and_predator_alarms_never_overlap_or_queue_stale_warnings
+12/12 passed.
+
+
+res://tests/unit/test_station_services.gd
+* test_docking_radius_is_inclusive_speed_limited_and_world_position_based
+* test_arrival_and_opening_interaction_never_restore_resources
+* test_explicit_free_service_restores_using_domain_apis_and_reports_before_after
+* test_individual_services_and_limits_clamp_without_changing_other_resources
+* test_ineligible_missing_session_unpaused_out_of_range_offline_and_unknown_service_fail_without_mutation
+* test_reentrant_resource_or_service_callbacks_cannot_duplicate_operation
+* test_invalid_profiles_and_duplicate_notices_preserve_valid_configuration
+* test_runtime_tuning_and_notice_snapshots_are_copied_and_board_has_no_progression_state
+* test_depleted_resources_can_be_restored_without_resetting_component_identity
+* test_departed_or_removed_vessel_cannot_use_stale_session
+10/10 passed.
+
+
+res://tests/unit/test_story_state.gd
+* test_fresh_state_is_zero_neutral_and_has_no_flags_or_decisions
+* test_all_provisional_tier_boundaries
+* test_authored_bloom_choices_are_valid_and_mutually_exclusive
+* test_negative_outcome_has_one_negative_effect
+* test_clamping_and_meaningful_tier_signals_with_distinct_choices
+* test_provisional_exceptional_weight_is_supported_without_future_zone_content
+* test_invalid_authored_ids_and_duplicate_catalog_entries_reject
+* test_failed_persistence_does_not_mutate_or_emit_rewards
+* test_port_receives_candidate_before_exposure_and_reentrancy_is_rejected
+* test_restore_is_validated_and_completely_silent
+* test_malformed_inconsistent_duplicate_or_conflicting_snapshots_reject
+* test_validated_extra_flag_api_does_not_change_resonance_or_repeat
+* test_history_merge_preserves_decisions_and_refuses_opposite_branches
+* test_live_restore_cannot_erase_an_applied_decision_to_replay_it
+14/14 passed.
+
+
+res://tests/unit/test_submarine_damage.gd
+* test_warning_threshold_boundaries_and_transition_notifications
+* test_pressure_grace_split_steps_and_return_to_safe_water
+* test_long_pressure_steps_are_bounded_and_only_charge_time_after_grace
+* test_zero_pressure_rate_retains_depth_warning_without_hull_loss
+* test_effective_maximum_depth_interface_updates_rules_without_an_upgrade_system
+* test_impact_threshold_damage_cap_and_hull_clamping
+* test_contact_episode_latch_prevents_continuous_or_corner_repeated_damage
+* test_cooldown_suppresses_a_new_episode_without_queuing_a_delayed_hit
+* test_pressure_and_cooldown_are_consistent_at_30_60_and_120_steps
+* test_invalid_inputs_and_profiles_preserve_active_state
+10/10 passed.
+
+
+res://tests/unit/test_submarine_hud.gd
+* test_initial_snapshot_includes_changes_before_the_hud_was_bound
+* test_domain_changes_update_numbers_and_bars_without_a_process_tick
+* test_non_default_capacity_is_normalized_and_keeps_numeric_units
+* test_warning_boundaries_and_rating_changes_update_immediately
+* test_pressure_grace_is_sampled_from_simulation_and_not_hud_time
+* test_disabled_pressure_profile_is_not_presented_as_active_damage
+* test_all_depletions_persist_and_positive_refill_clears_each_warning
+* test_damage_feedback_uses_actual_damage_and_independent_bounded_lifetimes
+* test_rebinding_disconnects_old_sources_and_never_duplicates_listeners
+* test_unbound_or_destroyed_sources_show_disconnected_not_stale_healthy_values
+10/10 passed.
+
+
+res://tests/unit/test_submarine_hull.gd
+* test_damage_repair_and_source_are_explicit_and_clamped
+* test_destroyed_emits_once_until_positive_repair
+* test_invalid_damage_repairs_and_profiles_leave_state_and_signals_intact
+* test_independent_hulls_and_reconfiguration_start_full
+4/4 passed.
+
+
+res://tests/unit/test_submarine_motion.gd
+* test_acceleration_and_reversal_do_not_instantly_change_velocity
+* test_neutral_damping_coasts_then_stops_without_reversing
+* test_speed_limit_includes_diagonal_and_oversized_input
+* test_partial_analog_input_sets_a_proportional_target_speed
+* test_acceleration_and_drag_match_at_30_60_and_120_steps_per_second
+* test_parameters_are_configurable_without_mutating_authored_data
+* test_zero_time_and_rest_are_stable
+7/7 passed.
+
+
+res://tests/unit/test_submarine_resources.gd
+* test_configurable_capacities_and_transfer_interfaces
+* test_idle_thrust_and_oxygen_drains_use_elapsed_seconds
+* test_change_signals_include_current_and_maximum_and_noops_are_silent
+* test_depletion_signals_once_per_emptying_and_refills_rearm
+* test_invalid_amounts_steps_and_profiles_preserve_valid_state
+* test_zero_rates_and_extreme_finite_duration_are_safe
+* test_drain_and_depletion_match_at_30_60_and_120_steps_per_second
+* test_vessels_share_authoring_data_but_not_current_values
+8/8 passed.
+
+
+res://tests/unit/test_ui_typography.gd
+* test_semantic_hierarchy_and_distinct_scales
+* test_scaling_does_not_accumulate_and_popup_matches_button
+* test_wrapped_footer_actions_retain_real_width
+* test_dialog_bounds_preserve_margins_at_each_resolution
+4/4 passed.
+
+
+res://tests/unit/test_upgrade_store.gd
+* test_catalog_has_precisely_two_unique_stable_absolute_upgrades
+* test_invalid_authored_definitions_and_baselines_rejected
+* test_missing_roundtrip_last_good_backup_and_no_runtime_values_saved
+* test_strict_invalid_documents_block_install_without_partial_state_or_overwrite
+* test_incompatible_schema_fractional_boolean_and_oversize_rejected
+* test_external_corruption_retains_backup_and_blocks_subsequent_write
+* test_explicit_recovery_preserves_rejected_and_never_overwrites_it
+* test_missing_bad_backup_and_failed_write_are_safe
+8/8 passed.
+
+
+res://tests/integration/test_accelerating_torpedoes.gd
+* test_accelerated_distance_and_cruise_cap_match_30_60_120_steps
+* test_launch_is_slow_before_it_reaches_cruise_speed
+* test_trail_remains_bounded_fades_and_survives_impact_until_expiry
+* test_distortion_is_local_and_comfort_mode_suppresses_lens_and_flash
+4/4 passed.
+
+
+res://tests/integration/test_accessibility.gd
+* test_accessibility_panel_controller_preview_save_cancel_and_scoped_defaults
+* test_remapped_pause_confirm_and_map_confirm_preserve_menu_accept_and_fixed_cancel
+* test_disconnect_pauses_piloting_releases_thrust_and_keeps_confirmation_modal
+* test_disconnect_cancels_remap_capture_and_keyboard_can_exit_embedded_settings
+* test_prompts_track_remaps_and_last_deliberate_device
+* test_reduced_effects_change_presentation_only_and_new_pulses_inherit_preferences
+* test_large_hud_and_all_menu_controls_fit_or_scroll_at_supported_resolutions
+* test_research_and_notice_text_have_controller_reachable_scroll_controls
+* test_muted_large_controller_debrief_and_checkpoint_reload_keep_accessibility_separate
+ERROR: Node not found: "Margin/Content/SurveyNavigation" (relative to "/root/GutRunner/@Node@825/GameRoot/MapLayer/ExplorationMap").
+   at: get_node (scene/main/node.cpp:1963)
+   GDScript backtrace (most recent call first):
+       [0] refresh (res://scripts/ui/exploration_map.gd:64)
+       [1] discover (res://scripts/world/discovery_registry.gd:52)
+       [2] <anonymous lambda> (res://scripts/world/discovery_registry.gd:78)
+       [3] reveal_for_ping (res://scripts/sonar/sonar_reveal_target.gd:53)
+       [4] advance (res://scripts/sonar/sonar_pulse.gd:82)
+       [5] advance (res://scripts/sonar/sonar_emitter.gd:177)
+       [6] test_muted_large_controller_debrief_and_checkpoint_reload_keep_accessibility_separate (res://tests/integration/test_accessibility.gd:278)
+       [7] _tap (res://tests/integration/test_accessibility.gd:72)
+SCRIPT ERROR: Invalid assignment of property or key 'visible' with value of type 'bool' on a base object of type 'null instance'.
+          at: ExplorationMap.refresh (res://scripts/ui/exploration_map.gd:64)
+          GDScript backtrace (most recent call first):
+              [0] refresh (res://scripts/ui/exploration_map.gd:64)
+              [1] discover (res://scripts/world/discovery_registry.gd:52)
+              [2] <anonymous lambda> (res://scripts/world/discovery_registry.gd:78)
+              [3] reveal_for_ping (res://scripts/sonar/sonar_reveal_target.gd:53)
+              [4] advance (res://scripts/sonar/sonar_pulse.gd:82)
+              [5] advance (res://scripts/sonar/sonar_emitter.gd:177)
+              [6] test_muted_large_controller_debrief_and_checkpoint_reload_keep_accessibility_separate (res://tests/integration/test_accessibility.gd:278)
+              [7] _tap (res://tests/integration/test_accessibility.gd:72)
+ERROR: Node not found: "Margin/Content/SurveyNavigation" (relative to "/root/GutRunner/@Node@825/GameRoot/MapLayer/ExplorationMap").
+   at: get_node (scene/main/node.cpp:1963)
+   GDScript backtrace (most recent call first):
+       [0] refresh (res://scripts/ui/exploration_map.gd:64)
+       [1] discover (res://scripts/world/discovery_registry.gd:52)
+       [2] <anonymous lambda> (res://scripts/world/discovery_registry.gd:78)
+       [3] reveal_for_ping (res://scripts/sonar/sonar_reveal_target.gd:53)
+       [4] advance (res://scripts/sonar/sonar_pulse.gd:82)
+       [5] advance (res://scripts/sonar/sonar_emitter.gd:177)
+       [6] test_muted_large_controller_debrief_and_checkpoint_reload_keep_accessibility_separate (res://tests/integration/test_accessibility.gd:285)
+       [7] _tap (res://tests/integration/test_accessibility.gd:72)
+SCRIPT ERROR: Invalid assignment of property or key 'visible' with value of type 'bool' on a base object of type 'null instance'.
+          at: ExplorationMap.refresh (res://scripts/ui/exploration_map.gd:64)
+          GDScript backtrace (most recent call first):
+              [0] refresh (res://scripts/ui/exploration_map.gd:64)
+              [1] discover (res://scripts/world/discovery_registry.gd:52)
+              [2] <anonymous lambda> (res://scripts/world/discovery_registry.gd:78)
+              [3] reveal_for_ping (res://scripts/sonar/sonar_reveal_target.gd:53)
+              [4] advance (res://scripts/sonar/sonar_pulse.gd:82)
+              [5] advance (res://scripts/sonar/sonar_emitter.gd:177)
+              [6] test_muted_large_controller_debrief_and_checkpoint_reload_keep_accessibility_separate (res://tests/integration/test_accessibility.gd:285)
+              [7] _tap (res://tests/integration/test_accessibility.gd:72)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid assignment of property or key 'visible' with value of type 'bool' on a base object of type 'null instance'.
+    [3] <engine-0>Method/function failed. Returning: nullptr
+    [4] <engine-2>Invalid assignment of property or key 'visible' with value of type 'bool' on a base object of type 'null instance'.
+      at line 306
+* test_compact_font_floor_and_high_contrast_focus_restore_without_accumulation
+9/10 passed.
+
+
+res://tests/integration/test_acoustic_creature.gd
+* test_player_ping_drives_existing_receiver_without_creature_emission_or_damage
+* test_passive_listening_produces_no_reaction_and_optional_ambient_event_can_investigate
+* test_dispatch_filters_duplicates_and_restart_retains_bounded_bus_history
+* test_all_existing_modal_and_debug_pauses_freeze_creature_and_ignore_sounds
+* test_navigation_routes_around_pillar_and_checks_every_edge_against_terrain
+* test_unreachable_solid_sound_destination_returns_without_wall_penetration
+* test_controller_motion_and_state_are_equivalent_at_30_60_120_steps
+* test_receiver_lifecycle_cleanup_does_not_change_history
+* test_actual_motion_routes_around_pillar_and_recovers_patrol_without_position_jumps
+* test_new_thin_obstacle_cannot_be_tunnelled_through_and_causes_safe_recovery
+10/10 passed.
+
+
+res://tests/integration/test_acoustic_lifecycle.gd
+* test_example_delivers_to_eligible_receivers_once_and_excludes_far_and_filtered
+ACOUSTIC_EXAMPLE deliveries=[&"boundary", &"near"] duplicate=Already exists eligible=2 far=0 filtered=0
+* test_freed_queued_and_exited_receivers_are_cleaned_without_stale_delivery
+* test_emitter_exit_clears_registration_and_requires_explicit_rebind
+* test_bus_exit_detaches_live_endpoints_and_keeps_session_history_until_destroyed
+* test_removal_and_reregistration_during_callback_cannot_deliver_a_stale_snapshot
+* test_queue_free_and_immediate_free_during_callbacks_cancel_later_deliveries
+* test_queued_bus_stops_remaining_deliveries_and_detaches_everyone
+* test_event_metadata_uses_emitter_world_position_and_caller_simulation_time
+8/8 passed.
+
+
+res://tests/integration/test_active_sonar_prototype.gd
+* test_initial_readiness_hidden_targets_and_keyboard_wavefront_reveal
+* test_gamepad_ping_uses_the_same_action_and_wave_origin_does_not_follow_vessel
+* test_route_settings_and_debug_pauses_freeze_wave_cooldown_and_reveal_clocks
+* test_route_restart_clears_sonar_state_preserves_history_and_can_ping_again
+* test_low_energy_hud_and_removed_targets_do_not_break_a_ping
+* test_actual_30_60_and_120_render_caps_keep_fixed_physics_sonar_consistent
+* test_sonar_hud_states_fit_the_minimum_window
+* test_saved_sonar_remapping_survives_route_restart
+8/8 passed.
+
+
+res://tests/integration/test_art_presentation.gd
+* test_presentation_preserves_vessel_collision_and_only_flips_visual_facing
+* test_shelf_layers_are_decorative_and_solid_silhouettes_still_match_boundaries
+2/2 passed.
+
+
+res://tests/integration/test_cinematic_title.gd
+* test_title_animation_is_isolated_from_gameplay_and_progress
+* test_reduced_motion_freezes_all_title_animation_and_hidden_title_stops_processing
+* test_title_and_playable_vessel_share_master_without_changing_footprint_or_collisions
+* test_keyboard_and_controller_reach_options_and_return_without_starting_or_changing_state
+* test_mouse_options_and_intentional_begin_keep_existing_briefing_contract
+* test_all_sizes_large_text_contrast_and_legacy_recovery_controls_remain_reachable
+* test_accessibility_cancel_from_title_keeps_focus_on_visible_title_controls
+7/7 passed.
+
+
+res://tests/integration/test_compact_interface.gd
+* test_percentages_use_authoritative_capacity_and_exact_thirds_before_rounding
+* test_invalid_readings_fail_closed_and_clamp_without_nan
+* test_radio_arrival_and_expansion_leave_movement_and_initial_focus_untouched
+* test_radio_queue_deferral_ack_duplicate_and_continue_preserve_authorities
+* test_unread_badge_remains_after_preview_without_acknowledging
+* test_tracker_follows_bloom_recording_return_and_claim
+    [Failed]
+      at line 125
+    [Failed]
+      at line 132
+    [Failed]
+      at line 135
+    [Failed]
+      at line 140
+* test_old_custom_bindings_gain_collision_free_radio_and_retain_existing_keys
+* test_production_layout_fits_and_separates_top_instruments_at_all_sizes
+* test_docking_upgrades_reload_and_non_default_capacity_update_the_compact_readings
+* test_observed_bloom_and_tracker_restore_without_replaying_choice_or_exposing_later_objectives
+    [Failed]
+      at line 222
+    [Failed]
+      at line 229
+* test_radio_failed_writes_leave_message_unread_and_do_not_accept_mission
+* test_keyboard_and_controller_can_open_defer_scroll_cycle_and_accept_while_simulation_runs
+* test_radio_and_danger_warning_never_overlap_at_minimum_large_text_size
+* test_legacy_tracker_never_exposes_available_missions_and_preserves_optional_records
+* test_radio_consumes_remapped_confirm_navigation_commands_without_losing_later_pings
+13/15 passed.
+
+
+res://tests/integration/test_continental_shelf.gd
+* test_default_scene_spawn_and_fixture_remain_valid
+* test_required_loop_and_optional_branches_have_continuous_hull_clearance
+* test_terrain_visuals_and_collision_layers_are_exact_and_zones_are_not_solid
+* test_outer_boundaries_and_spires_block_swept_motion_without_penetration
+* test_authored_depth_datum_thresholds_and_region_transform_are_consistent
+* test_real_input_flight_completes_the_outbound_and_lower_return_with_reserves
+    BTA014 route active_seconds=44.55 full_flight_seconds=42.73 battery=91.01 oxygen=98.56 hull=100.0
+    BTA034 real-input accept-scan-discover-return-claim: two acknowledgements saved
+    BTA032 depart-explore-return-service loop: full resources, route/history retained
+* test_camera_bounds_follow_the_region_and_smoothing_tracks_interior_movement
+* test_pressure_hazard_pause_and_restart_restore_a_clean_test_session
+* test_keyboard_and_controller_can_resume_restart_and_open_existing_settings
+* test_restart_preserves_saved_input_settings_and_camera_returns_to_base
+* test_camera_clamps_at_the_station_east_boundary_and_deep_trench
+* test_route_menu_fits_the_minimum_window_without_hiding_any_action
+12/12 passed.
+
+
+res://tests/integration/test_depth_damage_prototype.gd
+* test_authored_depth_warnings_and_exact_limit_keep_the_hull_safe
+* test_deep_shaft_can_be_reached_by_piloting_and_pressure_uses_hull_api
+* test_settings_and_resource_checks_freeze_pressure_grace_and_damage
+* test_grazing_and_insignificant_contacts_do_not_damage_hull
+* test_corner_contacts_are_aggregated_to_one_bounded_hit
+* test_pressure_matches_at_actual_30_60_and_120_render_caps
+6/6 passed.
+
+
+res://tests/integration/test_discovery_map.gd
+* test_only_wavefront_arrival_discovers_and_permanence_outlives_echo
+* test_passive_contacts_and_route_telemetry_do_not_discover
+* test_restart_and_reload_preserve_discoveries_without_revealing_temporary_targets
+* test_map_shows_only_discovered_points_and_player_without_passive_or_secret_geometry
+* test_keyboard_remapping_open_close_and_map_pause_restore_previous_mode
+* test_controller_can_open_navigate_select_and_close_without_mouse
+* test_discovery_consistent_at_30_60_120_steps_and_removed_target_cannot_discover
+* test_map_fits_reference_compact_and_large_windows
+* test_corrupt_file_is_visible_and_explicit_ui_recovery_preserves_pending_state
+9/9 passed.
+
+
+res://tests/integration/test_expanded_expedition.gd
+* test_production_region_is_expanded_and_legacy_route_instructions_are_hidden
+* test_starting_accepts_orders_and_tutorial_can_be_disabled_and_reloaded
+* test_station_opens_graphical_overview_and_services_do_not_apply_on_arrival
+* test_old_short_survey_no_longer_concludes_fresh_extended_chapter
+* test_blast_damage_is_radial_bounded_and_suppressed_for_duplicate_ids
+* test_fire_requires_energy_and_pause_freezes_projectiles
+* test_excavation_persists_through_save_continue_and_new_expedition
+* test_cooldown_cost_and_pause_are_consistent_at_30_60_120_steps
+* test_invalid_aim_does_not_charge_and_duplicate_impact_is_idempotent
+* test_killed_wildlife_cannot_be_scanned_and_passive_listening_has_no_blast
+* test_clearance_uses_excavated_shapes_and_rejects_protected_bedrock
+* test_station_keyboard_and_controller_focus_stays_on_the_current_page
+* test_legacy_conclusion_is_preserved_without_requiring_new_outer_objectives
+* test_tutorial_and_context_fit_without_covering_instruments
+* test_ui_confirm_held_during_resume_cannot_fire_until_released
+* test_blast_uses_existing_acoustic_bus_and_history_identity_contract
+* test_two_real_projectiles_open_a_collision_accurate_passage
+    --- Awaiting 90 physics frames  ---
+    --- Awaiting 90 physics frames  ---
+* test_pre_checkpoint_legacy_profile_retains_earned_chapter_ending
+18/18 passed.
+
+
+res://tests/integration/test_expanded_sunlit.gd
+* test_authored_main_route_is_shallow_and_whole_hull_clear_after_one_opening
+* test_small_cut_or_blocked_shot_cannot_claim_traversal_but_off_center_hull_opening_counts
+* test_real_projectile_opens_passage_without_harming_wildlife_or_protected_objects
+    --- Awaiting 90 physics frames  ---
+* test_empty_ammunition_preserves_a_clear_return_and_deliberate_station_rearms
+* test_hidden_buoy_has_no_sprite_prompt_map_marker_or_collision_until_wavefront
+* test_failed_sonar_energy_cost_never_reveals_or_starts_cooldown
+* test_first_science_scan_commits_xp_and_record_atomically_and_repeat_only_reviews
+* test_failed_scan_write_has_no_record_xp_signal_or_popup
+* test_clearance_xp_and_hidden_buoy_discovery_survive_restart_reload_and_no_signal_replay
+* test_real_depth_mapping_warns_then_damages_and_ascent_stops_damage_at_all_rates
+* test_school_habitats_avoid_solids_and_use_one_batch_per_population
+* test_popup_is_nonblocking_bounded_and_yields_to_pressure_radio_and_pause
+* test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_controls
+* test_small_large_text_ui_fits_and_muting_never_hides_field_information
+* test_pressure_radio_takes_priority_once_and_pause_does_not_advance_it
+* test_primary_write_failure_recovers_record_and_xp_together_without_completion_replay
+* test_depleted_hull_cannot_replace_safe_checkpoint_and_continue_preserves_science
+* test_passive_ambient_contacts_cannot_reveal_buoy_startle_schools_or_award_xp
+18/18 passed.
+
+
+res://tests/integration/test_expedition_resume.gd
+* test_save_restore_position_orientation_resources_cooldown_and_route_without_motion
+* test_reload_canonical_progress_preserves_claims_and_redirects_legacy_writes
+* test_legacy_import_preserves_files_and_all_records_then_uses_single_checkpoint
+* test_safe_position_recovery_preserves_supplies_and_resets_ephemeral_route
+* test_corruption_blocks_save_and_explicit_backup_recovery_retains_claims
+* test_manual_save_rejects_running_pressure_danger_and_threat_and_guards_reentry
+* test_new_expedition_requires_ui_confirmation_and_retains_permanent_records
+* test_repeated_save_continue_reset_transients_without_resetting_history_or_awards
+* test_legacy_corruption_blocks_migration_until_validated_backup_recovery
+* test_station_docking_autosaves_current_values_without_automatic_refill
+* test_invalid_saved_resources_block_start_without_partial_restore
+* test_pause_confirmation_and_save_controls_fit_supported_window_sizes
+* test_recovery_with_no_files_does_not_create_a_checkpoint_or_change_vessel
+13/13 passed.
+
+
+res://tests/integration/test_expedition_revision.gd
+* test_loading_opens_clean_title_with_paused_world_and_no_accepted_assignment
+* test_title_keyboard_controller_focus_and_options_return_without_piloting
+* test_submarine_accelerates_gradually_and_rates_remain_consistent
+* test_torpedo_follows_visible_horizontal_facing_even_with_vertical_aim
+* test_ammunition_is_limited_and_failure_pause_and_cooldown_do_not_spend
+* test_actual_docking_automatically_refills_and_passing_base_does_not
+* test_assign_refund_and_respec_use_finite_points_and_update_real_capabilities
+* test_accepted_radio_assignment_marks_report_without_discovering_secret
+* test_deferred_radio_does_not_accept_or_spend_and_can_be_reopened
+* test_wreck_scan_retrieves_encrypted_logs_and_docking_decodes_only_once
+* test_survey_completion_awards_one_point_and_repeated_events_do_not_duplicate
+* test_save_continue_preserves_ammo_ranks_and_decoded_records
+* test_failed_research_write_preserves_previous_allocation
+* test_scavenger_flees_on_approach_and_pause_restart_are_safe
+* test_exact_ten_rounds_cannot_be_bypassed_by_effect_reset_or_continue
+* test_paused_launch_never_spends_ammunition_or_energy
+* test_scavenger_flee_state_is_deterministic_at_30_60_120_steps
+* test_new_canonical_file_reloads_allocations_and_record_decoding_silently
+* test_corrupt_profile_blocks_research_and_recovery_preserves_awards
+* test_compact_large_station_has_reachable_fixed_text_scroll_controls
+* test_live_comfort_preferences_suppress_existing_wake_and_refraction
+21/21 passed.
+
+
+res://tests/integration/test_gameplay_audio.gd
+* test_ping_acceptance_and_wavefront_gate_audio_without_recursive_acoustics
+* test_failed_energy_does_not_play_ping_or_modify_acoustics
+* test_passive_contact_audio_is_gated_and_repeated_snapshots_do_not_replay
+* test_scan_activation_progress_and_completion_come_from_real_scanner
+* test_damage_cues_and_low_resources_have_visual_equivalents_and_no_alarm_stack
+* test_real_predator_warns_pursues_and_disengages_once_per_transition
+* test_station_audio_menu_pause_and_services_use_real_operations
+* test_restart_continue_and_mute_preserve_checkpoint_schema_and_progress
+* test_controller_audio_settings_save_and_cancel_without_mouse_or_simulation
+* test_keyboard_audio_preview_cancel_and_failed_save_preserve_preferences
+10/10 passed.
+
+
+res://tests/integration/test_hud_prototype.gd
+* test_responsive_layout_keeps_text_visible_and_center_clear
+* test_main_scene_initializes_hud_and_real_physics_updates_its_values
+* test_production_hud_has_no_debug_controls_or_focus_and_interact_keeps_piloting
+* test_debug_controls_update_the_hud_and_resume_without_modifying_production_scene
+* test_pressure_and_depth_hud_track_existing_simulation_pause_contract
+* test_development_panel_wraps_inside_the_minimum_window
+6/6 passed.
+
+
+res://tests/integration/test_input_menu.gd
+* test_keyboard_can_cycle_every_control_and_activate_without_mouse
+* test_controller_can_navigate_and_activate_without_mouse
+* test_controller_can_reach_all_controls_change_deadzone_and_save
+* test_controller_can_select_an_action_in_the_popup
+* test_analog_stick_can_navigate_with_drift_filtered_out
+* test_invalid_reload_is_visible_and_preserves_settings
+* test_keyboard_remap_save_and_reload_from_the_menu
+* test_controller_remap_and_cancel_capture
+* test_conflicting_keyboard_capture_is_rejected_and_can_be_cancelled
+* test_new_menu_loads_saved_settings
+* test_pause_action_reports_input_without_pausing_the_scene_tree
+11/11 passed.
+
+
+res://tests/integration/test_interface_presentation.gd
+* test_long_briefing_stays_bounded_and_controller_can_scroll_then_launch
+* test_logs_settings_and_story_choices_reflow_and_destroy_without_global_callbacks
+2/2 passed.
+
+
+res://tests/integration/test_light_bloom.gd
+* test_fresh_main_and_sonar_discovery_alone_have_no_story_effects
+* test_observation_uses_timed_scanner_and_commits_one_atomic_outcome
+* test_collection_removes_bloom_and_cannot_also_reward_a_scan
+* test_cancel_and_interrupted_scan_leave_both_choices_available
+* test_failed_scan_checkpoint_has_no_partial_research_or_story_rewards
+* test_failed_collection_retains_colony_and_existing_progress
+* test_reload_continue_and_repeated_interaction_cannot_farm
+* test_collection_survives_restart_without_reviving_bloom_or_resetting_technology
+* test_mute_and_comfort_modes_keep_explicit_text_and_static_feedback
+* test_old_checkpoint_migrates_with_zero_story_and_preserved_prototype_progress
+* test_schema_rejects_orphan_research_without_its_atomic_story_decision
+* test_existing_technology_ordnance_services_and_acoustic_identity_are_unchanged
+* test_all_previous_checkpoint_versions_migrate_with_zero_story_state
+* test_recovery_merges_a_live_choice_into_an_older_backup_without_replay
+* test_opposite_branch_backup_conflict_preserves_files_and_live_choice
+* test_stale_checkpoint_cannot_erase_a_durable_choice
+* test_small_large_text_choice_has_keyboard_controller_recovery_and_reading_controls
+* test_arrival_spirals_around_vessel_pauses_then_scatters_without_story_effects
+* test_reduced_effects_and_restored_outcomes_never_replay_arrival
+* test_bottled_plankton_is_extinguished_without_a_seabed_stump
+* test_bloom_text_uses_character_roles_and_keeps_the_anomaly_unexplained
+* test_response_reading_layout_is_safe_when_the_viewport_has_no_focus
+* test_pending_reading_reflow_is_disconnected_when_a_panel_is_destroyed
+23/23 passed.
+
+
+res://tests/integration/test_mission_framework.gd
+* test_keyboard_controller_accept_status_pause_claim_and_back_navigation
+* test_real_active_wavefront_and_scanner_signals_complete_optional_not_passive_contacts
+* test_services_upgrades_restart_reload_retain_claims_without_replaying_events
+* test_corruption_recovery_restores_claim_without_regrant_or_progress_loss
+* test_station_mission_actions_require_eligible_paused_session
+* test_board_reopening_and_prior_scan_acceptance_never_autoclaim_or_duplicate
+* test_mission_page_buttons_and_expedition_status_fit_reference_and_minimum_windows
+7/7 passed.
+
+
+res://tests/integration/test_narrative_slice.gd
+* test_start_page_briefing_and_log_are_skippable_paused_and_spoiler_free
+* test_actual_wavefront_and_scanner_unlock_evidence_without_passive_or_audio_discovery
+* test_full_domain_adapter_debrief_requires_docking_and_is_idempotent
+* test_checkpoint_reload_and_continue_reconstruct_same_log_without_story_events
+* test_restart_and_services_keep_records_and_do_not_repeat_debrief
+* test_prior_v1_checkpoint_records_unlock_without_migration_or_overwrite
+* test_corrupt_checkpoint_preserved_while_briefing_stays_readable_and_actions_block
+* test_keyboard_can_open_accept_scroll_and_close_without_a_mouse
+* test_controller_can_read_station_debrief_and_return_safely_to_piloting
+* test_log_controls_readable_at_reference_and_compact_sizes_with_scroll_actions
+* test_partial_debrief_write_failure_keeps_first_ack_and_retry_cannot_duplicate_it
+11/11 passed.
+
+
+res://tests/integration/test_passive_sonar_prototype.gd
+* test_example_demonstrates_receive_only_contact_and_expiry
+PASSIVE_EXAMPLE classification=mechanical bearing=0 signal=60% contacts=1 battery=100 active_pings=0
+PASSIVE_EXAMPLE expired_contacts=0
+* test_real_shelf_receives_ambient_without_ping_energy_or_active_pulses
+* test_route_settings_and_debug_pause_freeze_ambient_schedule_contacts_and_expiry
+* test_restart_clears_contacts_restarts_ambient_epoch_and_keeps_active_history
+* test_source_free_removes_contact_immediately_and_no_passive_world_reveal_occurs
+* test_three_contact_hud_fits_reference_and_minimum_window_without_focus
+6/6 passed.
+
+
+res://tests/integration/test_playtest_observer.gd
+* test_normal_mode_has_no_ui_recorder_or_files_and_opt_out_does_not_observe
+* test_opt_in_observes_actual_domain_events_and_idempotent_signals
+* test_continue_and_restart_do_not_replay_progress_damage_or_warnings
+* test_reporting_never_mutates_campaign_acoustic_history_or_supplies
+* test_route_samples_count_repeated_base_returns_without_extra_progression
+* test_resource_episodes_damage_failure_and_disable_are_distinct
+* test_controller_can_decline_opt_in_export_disable_and_leave_modal
+7/7 passed.
+
+
+res://tests/integration/test_predator_encounter.gd
+* test_actual_ping_warns_before_aggression_and_hud_provides_depth_retreat_cue
+* test_keyboard_retreat_during_warning_is_escapable_without_damage_or_combat
+* test_modest_hull_damage_is_warning_gated_and_cooldown_limited
+* test_player_can_retreat_after_pursuit_starts_and_damage_stops_outside_zone
+* test_passive_listening_and_main_route_pings_do_not_engage_predator
+* test_all_pauses_freeze_warning_motion_damage_clock_and_receiver
+* test_restart_preserves_permanent_records_and_acoustic_duplicate_identity
+* test_obstacle_navigation_blocks_contact_and_never_tunnels_or_traps_player
+* test_motion_and_damage_are_consistent_at_30_60_120_steps
+* test_threat_indicator_is_legible_and_keeps_central_view_clear_at_all_window_sizes
+* test_contact_uses_existing_hull_clamping_without_duplicate_depletion_events
+11/11 passed.
+
+
+res://tests/integration/test_resource_prototype.gd
+* test_movement_advances_resources_without_altering_hull_or_motor
+* test_settings_stop_drains_and_depletion_does_not_disable_movement
+* test_severe_wall_contact_damages_once_without_changing_resource_interfaces
+* test_keyboard_can_deplete_refill_and_resume_using_test_controls
+* test_controller_can_navigate_test_controls_and_trigger_domain_requests
+5/5 passed.
+
+
+res://tests/integration/test_scientific_scanning.gd
+* test_keyboard_scan_progress_completes_once_and_persists_without_extra_energy_cost
+* test_controller_activation_cancellation_and_remapped_interact
+* test_map_settings_and_route_pause_freeze_scanning_and_resume
+* test_research_page_hides_uncompleted_metadata_and_controller_can_read_completed_entry
+* test_restart_reload_and_partial_scan_do_not_duplicate_completion_events
+* test_movement_sonar_and_passive_listening_remain_independent_of_scanner
+* test_geological_target_and_research_log_fit_reference_and_compact_windows
+7/7 passed.
+
+
+res://tests/integration/test_station_interaction.gd
+* test_keyboard_docking_requires_explicit_service_and_displays_before_after
+* test_controller_can_read_board_and_leave_without_mission_or_service_side_effects
+* test_remapped_interact_prioritizes_station_over_scan_inside_radius_and_scan_outside
+* test_fast_docking_attempt_is_consumed_without_scanning_or_restoration
+* test_station_pause_freezes_all_gameplay_and_services_do_not_reset_clocks_or_records
+* test_restart_is_distinct_from_services_and_closes_station_session
+* test_unavailable_service_states_keep_safe_return_available
+* test_station_and_board_fit_reference_minimum_and_large_windows
+8/8 passed.
+
+
+res://tests/integration/test_submarine_controller.gd
+* test_swept_collision_stops_at_a_wall_and_emits_contact
+* test_diagonal_thrust_slides_along_a_wall_without_penetration
+* test_thin_wall_is_not_tunnelled_at_high_speed_and_30_physics_ticks
+* test_corner_blocks_both_axes
+* test_fixed_physics_movement_matches_across_render_frame_caps
+* test_authored_cave_spawn_and_boundary_are_collision_safe
+* test_camera_smoothly_follows_in_the_interior
+* test_saved_bindings_load_and_embedded_settings_stop_the_motor
+8/8 passed.
+
+
+res://tests/integration/test_submarine_upgrades.gd
+* test_baseline_install_duplicates_invalid_ids_and_copied_catalog
+* test_sonar_range_inclusive_boundaries_wavefront_cost_and_cooldown_remain_real
+* test_in_flight_baseline_pulse_does_not_gain_range_when_installing
+* test_depth_warning_boundaries_and_damage_follow_upgraded_maximum_api
+* test_restart_services_reopen_and_reload_keep_installed_ids_and_records
+* test_corruption_blocks_install_recovery_restores_absolute_ids_and_failed_write_does_not_install
+* test_keyboard_and_controller_upgrade_navigation_pause_and_no_automatic_install
+* test_upgraded_wavefront_and_pressure_damage_match_30_60_120_steps
+* test_station_install_revalidates_range_pause_speed_and_availability
+* test_reentrant_install_is_rejected_and_duplicate_does_not_extend_pressure_grace
+* test_upgrade_page_and_capability_hud_fit_supported_windows
+11/11 passed.
+
+
+res://tests/integration/test_sunlit_environment.gd
+* test_art_contains_no_bodies_targets_or_progress_and_clock_cannot_move_player
+* test_comfort_preferences_freeze_parallax_plants_and_particles_without_changing_state
+* test_clipped_painted_edges_stay_in_actual_stone_and_excavation_removes_old_trim
+* test_hidden_trim_defers_clipping_until_visible_and_reuses_built_pieces
+* test_prototype_switch_restores_legacy_materials_and_hides_all_new_dressing
+* test_pause_and_restart_preserve_authored_placements_progress_and_particle_bound
+* test_each_comfort_flag_is_independent_and_fish_motion_remains_presentation_only
+* test_cosmetic_clock_is_equivalent_at_30_60_120_steps
+8/8 passed.
+
+
+res://tests/integration/test_sunlit_shallows.gd
+* test_fresh_title_introduces_canon_without_accepting_or_scoring
+* test_peaceful_chapter_uses_existing_mission_research_route_and_station_apis
+* test_aggressive_choice_also_completes_without_combat_or_extra_rewards
+* test_buoy_is_hidden_until_wavefront_and_intentional_scan_then_persists
+* test_old_return_does_not_count_until_message_is_recovered_and_brought_home
+VALIDATION FAILURE: exceeded 600 seconds

@@ -15,7 +15,8 @@ def main():
              'Separate runs on the same cloud VM, no concurrent Godot workloads. No fixed FPS.',
              'Each live sample has 20 warm-up frames and 60 wall-frame intervals, while normal',
              'MAIN simulation runs. Frames include catch-up physics and shared-host variation.',
-             'Process/physics and memory columns are final monitor snapshots, not GPU timers.', '',
+             'Process/physics and memory columns are final monitor snapshots, not GPU timers.',
+             'Median uses the upper middle sample; p95 uses index floor(N*0.95), matching baseline.', '',
              '| Shared view / mode / width | Before median/p95 ms | After median/p95 ms | Draw calls before/after | Texture MiB before/after | CPU process/physics after ms |',
              '| --- | ---: | ---: | ---: | ---: | ---: |']
     expanded = []
@@ -41,13 +42,30 @@ def main():
     for key, b in expanded:
         lines.append(f'| {key} | {b["median_ms"]:.2f} / {b["p95_ms"]:.2f} | {b["draw_calls"]:.0f} | '
                      f'{b["texture_mib"]:.2f} / {b["static_mib"]:.2f} | {b["process_ms"]:.2f} / {b["physics_ms"]:.2f} |')
-    lines += ['', '## Interpretation', '',
+    shared = [(before[key]['performance'], entry['performance']) for key, entry in after.items()
+              if key in before and 'performance' in entry]
+    regressions = sum(b['median_ms'] > a['median_ms'] for a, b in shared)
+    lines += ['', '## Controlled scanner workload', '',
+              'Seven batches of 1000 paused scanner.snapshot() calls, all subjects known.',
+              'The controlled comparison uses the same eight legacy subjects: baseline',
+              '**244.864 ms**, after **47.065 ms** per 1000 calls (**80.8% lower**).',
+              'The expanded sixteen-target workload measures **91.144 ms**; it is a',
+              'different workload and is not used to claim that percentage improvement.',
+              '[Before raw](before/scanner-benchmark.txt) · [Eight-target after](after/scanner-control.txt)',
+              '· [Sixteen-target after](after/scanner-expanded.txt). This measures API CPU work,',
+              'not rendering FPS. Reproduce with the fixture and --baseline-targets.', '',
+              '## Interpretation', '',
+              f'**Median wall-frame time regressed in {regressions} of {len(shared)} shared-view samples.**',
+              'Texture allocation increased by about 8.54 MiB with the new species atlas and',
+              'subject thumbnails. Lower scanner CPU work and some lower draw counts do not',
+              'establish an overall rendering improvement. Rendering performance remains open',
+              'for review and target-hardware profiling; these results are not acceptance.', '',
               'This software renderer cannot establish 60 FPS on modest desktop GPU hardware.',
               'Values above 16.67 ms miss that target on this host. Draw counts and texture bytes',
               'are engine monitor observations, not per-pass GPU costs or a rendering-quality approval.',
               'The larger region adds visible art/terrain and schools; controlled hot-path reductions',
               'do not guarantee a lower whole-frame time at every view. Original PNG masters and',
-              'texture resolution are unchanged. No expensive full-screen pass was added.', '',
+              'texture resolution are unchanged. No screen-reading postprocessing pass was added.', '',
               'Confirmed interventions: scanner immutable-definition cache (separate controlled',
               'benchmark), lazy decoration construction, bounded geometry cache/invalidation,',
               'inactive prototype geometry exclusion, suspended legacy wildlife and ambient field,',

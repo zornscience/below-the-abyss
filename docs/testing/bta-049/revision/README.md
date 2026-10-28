@@ -252,7 +252,7 @@ release SHA256 and raw result links](verification.txt).
 
 The complete suite passed in 464.798 seconds with no competing Godot process. A
 previous contended rerun reached its existing 600-second bound; no timeout, workflow
-check or test was disabled. Three historical font assertions now check the requested
+check or test was disabled. Historical font assertions now check the requested
 semantic sizes instead of requiring the superseded oversized defaults. Six additional
 unit/integration tests cover roles/scales, popup parity, wrapped action widths, bounded
 long prose, actual controller scrolling, focus recovery, resize and cleanup.

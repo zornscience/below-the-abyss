@@ -220,7 +220,7 @@ func test_large_hud_and_all_menu_controls_fit_or_scroll_at_supported_resolutions
 		assert_lte(threat.get_global_rect().end.y, feedback.get_global_rect().position.y, "Threat must clear damage notices at %s: threat=%s depth=%s feedback=%s" % [size, threat.get_global_rect(), (scene.hud.get_node("%DepthPanel") as Control).get_global_rect(), feedback.get_global_rect()])
 		assert_lte(feedback.get_global_rect().end.y, guide.get_global_rect().position.y)
 		threat.hide()
-		assert_gte((scene.hud.hull_gauge.get_node("%Value") as Label).get_theme_font_size("font_size"), 35)
+		assert_gte((scene.hud.hull_gauge.get_node("%Value") as Label).get_theme_font_size("font_size"), UiTypography.size_for(&"measurement","large"))
 		scene.open_story()
 		await _frames()
 		assert_true(scene.expedition_log.close_button.is_visible_in_tree())
@@ -234,7 +234,7 @@ func test_large_hud_and_all_menu_controls_fit_or_scroll_at_supported_resolutions
 	prefs.ui_scale = "standard"
 	scene.settings.set_accessibility(prefs)
 	await _frames()
-	assert_eq((scene.hud.hull_gauge.get_node("%Value") as Label).get_theme_font_size("font_size"), 28)
+	assert_eq((scene.hud.hull_gauge.get_node("%Value") as Label).get_theme_font_size("font_size"), UiTypography.size_for(&"measurement","standard"))
 
 
 func test_research_and_notice_text_have_controller_reachable_scroll_controls() -> void:
@@ -316,11 +316,11 @@ func test_compact_font_floor_and_high_contrast_focus_restore_without_accumulatio
 	prefs.high_contrast = true
 	_scene.settings.set_accessibility(prefs)
 	await _frames()
-	assert_eq(label.get_theme_font_size("font_size"), maxi(16, roundi(original_size * 0.9)))
+	assert_eq(label.get_theme_font_size("font_size"), UiTypography.size_for(UiTypography.role_for(label),"compact"))
 	var focus: StyleBoxFlat = button.get_theme_stylebox("focus") as StyleBoxFlat
 	assert_eq(focus.border_width_top, 4, "Focus differs by border thickness as well as color")
 	_scene.accessibility_service.apply()
-	assert_eq(label.get_theme_font_size("font_size"), maxi(16, roundi(original_size * 0.9)))
+	assert_eq(label.get_theme_font_size("font_size"), UiTypography.size_for(UiTypography.role_for(label),"compact"))
 	_scene.settings.set_accessibility(SettingsStore.default_accessibility())
 	await _frames()
 	assert_eq(label.get_theme_font_size("font_size"), original_size)

@@ -56,7 +56,7 @@ func _tap_button(code: JoyButton) -> void:
 
 
 func test_keyboard_can_cycle_every_control_and_activate_without_mouse() -> void:
-	assert_gte((_menu.get_node("%Activate") as Button).get_theme_font_size("font_size"), 20)
+	assert_eq((_menu.get_node("%Activate") as Button).get_theme_font_size("font_size"), UiTypography.base(&"dialog_button"))
 	for name: String in ["Activate", "ActionPicker", "Rebind", "Deadzone", "Save", "Reload", "Reset", "Quit"]:
 		assert_eq(_menu.get_viewport().gui_get_focus_owner(), _menu.get_node("%" + name))
 		await _tap_key(KEY_TAB)

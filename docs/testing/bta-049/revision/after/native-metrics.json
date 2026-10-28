@@ -1,0 +1,474 @@
+{
+  "1280-standard-briefing": {
+    "focus": "@Button@747",
+    "height": 800,
+    "visible_font_counts": {
+      "16": 20,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-choice": {
+    "focus": "ObserveBloom",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 25,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-debrief": {
+    "focus": "@Button@747",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 21,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-expedition-log": {
+    "focus": "CloseStory",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 28,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-help": {
+    "focus": "@Button@686",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 27,
+      "18": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-radio": {
+    "focus": "AcceptTransmission",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 28,
+      "18": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-research": {
+    "focus": "CloseResearch",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 25,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-settings": {
+    "focus": "@OptionButton@649",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 27,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-station": {
+    "focus": "Technology",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 24,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1280
+  },
+  "1280-standard-technology": {
+    "focus": "sonarAssign",
+    "height": 800,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 26,
+      "18": 3,
+      "20": 2
+    },
+    "width": 1280
+  },
+  "1280-standard-title": {
+    "focus": "Begin",
+    "height": 800,
+    "visible_font_counts": {
+      "16": 17,
+      "17": 3,
+      "18": 1,
+      "56": 1
+    },
+    "width": 1280
+  },
+  "1920-standard-briefing": {
+    "focus": "@Button@1797",
+    "height": 1080,
+    "visible_font_counts": {
+      "16": 20,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-choice": {
+    "focus": "ObserveBloom",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 25,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-debrief": {
+    "focus": "@Button@1797",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 21,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-expedition-log": {
+    "focus": "CloseStory",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 28,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-help": {
+    "focus": "@Button@1736",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 27,
+      "18": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-radio": {
+    "focus": "AcceptTransmission",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 28,
+      "18": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-research": {
+    "focus": "CloseResearch",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 25,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-settings": {
+    "focus": "@OptionButton@1699",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 27,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-station": {
+    "focus": "Technology",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 24,
+      "18": 1,
+      "20": 1
+    },
+    "width": 1920
+  },
+  "1920-standard-technology": {
+    "focus": "sonarAssign",
+    "height": 1080,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 26,
+      "18": 3,
+      "20": 2
+    },
+    "width": 1920
+  },
+  "1920-standard-title": {
+    "focus": "Begin",
+    "height": 1080,
+    "visible_font_counts": {
+      "16": 17,
+      "17": 3,
+      "18": 1,
+      "64": 1
+    },
+    "width": 1920
+  },
+  "800-large-briefing": {
+    "focus": "@Button@1271",
+    "height": 600,
+    "visible_font_counts": {
+      "20": 20,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-choice": {
+    "focus": "ObserveBloom",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 25,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-debrief": {
+    "focus": "@Button@1271",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 21,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-expedition-log": {
+    "focus": "CloseStory",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 28,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-help": {
+    "focus": "@Button@1210",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 27,
+      "23": 1
+    },
+    "width": 800
+  },
+  "800-large-radio": {
+    "focus": "AcceptTransmission",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 28,
+      "23": 1
+    },
+    "width": 800
+  },
+  "800-large-research": {
+    "focus": "CloseResearch",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 25,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-settings": {
+    "focus": "@OptionButton@1173",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 27,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-station": {
+    "focus": "Technology",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 24,
+      "23": 1,
+      "25": 1
+    },
+    "width": 800
+  },
+  "800-large-technology": {
+    "focus": "sonarAssign",
+    "height": 600,
+    "visible_font_counts": {
+      "18": 1,
+      "20": 26,
+      "23": 3,
+      "25": 2
+    },
+    "width": 800
+  },
+  "800-large-title": {
+    "focus": "Begin",
+    "height": 600,
+    "visible_font_counts": {
+      "20": 17,
+      "21": 3,
+      "23": 1,
+      "50": 1
+    },
+    "width": 800
+  },
+  "800-standard-briefing": {
+    "focus": "@Button@223",
+    "height": 600,
+    "visible_font_counts": {
+      "16": 20,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-choice": {
+    "focus": "ObserveBloom",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 25,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-debrief": {
+    "focus": "@Button@223",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 21,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-expedition-log": {
+    "focus": "CloseStory",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 28,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-help": {
+    "focus": "@Button@162",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 27,
+      "18": 1
+    },
+    "width": 800
+  },
+  "800-standard-radio": {
+    "focus": "AcceptTransmission",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 28,
+      "18": 1
+    },
+    "width": 800
+  },
+  "800-standard-research": {
+    "focus": "CloseResearch",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 25,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-settings": {
+    "focus": "@OptionButton@125",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 27,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-station": {
+    "focus": "Technology",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 24,
+      "18": 1,
+      "20": 1
+    },
+    "width": 800
+  },
+  "800-standard-technology": {
+    "focus": "sonarAssign",
+    "height": 600,
+    "visible_font_counts": {
+      "14": 1,
+      "16": 26,
+      "18": 3,
+      "20": 2
+    },
+    "width": 800
+  },
+  "800-standard-title": {
+    "focus": "Begin",
+    "height": 600,
+    "visible_font_counts": {
+      "16": 17,
+      "17": 3,
+      "18": 1,
+      "40": 1
+    },
+    "width": 800
+  }
+}

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/input_test_menu.gd" id="1_menu"]
 
 [sub_resource type="Theme" id="Theme_menu"]
-default_font_size = 22
+default_font_size = 16
 
 [node name="InputTestMenu" type="Control"]
 layout_mode = 3
@@ -39,6 +39,7 @@ theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Margin/Scroll/Content"]
 layout_mode = 2
+metadata/typography_role = &"heading"
 text = "Below the Abyss — Input & settings test"
 
 [node name="Instructions" type="Label" parent="Margin/Scroll/Content"]

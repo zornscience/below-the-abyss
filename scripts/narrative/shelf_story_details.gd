@@ -21,7 +21,7 @@ func _draw() -> void:
 	draw_polyline(PackedVector2Array([Vector2(3538, 676), Vector2(3538, 684), Vector2(3582, 684), Vector2(3582, 676)]), brass, 2.0)
 	draw_line(Vector2(3548, 677), Vector2(3553, 669), brass, 1.5)
 	if _story != null and _story.research.is_completed(NarrativeService.PLATE):
-		draw_string(ThemeDB.fallback_font, Vector2(720, 530), "FIELD RECORD / RECOVERED", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, brass)
+		draw_string(ThemeDB.fallback_font, Vector2(720, 530), "FIELD RECORD / RECOVERED", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.base(&"secondary"), brass)
 
 
 func _plate_style() -> StyleBoxFlat:

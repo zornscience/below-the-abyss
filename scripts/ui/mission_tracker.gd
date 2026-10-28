@@ -15,7 +15,7 @@ func setup(value: ShelfPrototype) -> void:
 	title = Label.new()
 	detail = Label.new()
 	for label: Label in [title,detail]:
-		label.add_theme_font_size_override("font_size",16)
+		UiTypography.style(label,&"hud")
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		label.max_lines_visible = 3

@@ -204,3 +204,17 @@ preferences and all input devices. Verify GUT, import/parser/startup, canonical
 input routes, native captures/performance observations and clean Linux export.
 No region, mission, mechanic or narrative expansion. Review in a separate PR; no merge.
 See [workflow and evidence](docs/testing/bta-049/README.md).
+
+
+### BTA-049 requested review revision (same branch)
+
+Audit all UI text roles and replace scattered oversized values with UiTypography;
+constrain narrative, station, log and settings dialogs without changing their input,
+pause, save or recovery rules. Replace the initial geometric title masters with
+recorded AI-generated illustrated hardware, water, cliff, basalt and optics assets,
+shared with gameplay; retain collision geometry and stable IDs. Capture native
+before/after UI at 800x600 and 1280x800 plus 1920x1080 and Large/High Contrast.
+Preserve all prior tests/routes/export. Do not create another PR or merge. PR #32
+was already merged externally before this request, so follow-up commits on its
+existing branch cannot become part of that closed review diff. See the revision
+record for exact validation results and remaining external review limits.

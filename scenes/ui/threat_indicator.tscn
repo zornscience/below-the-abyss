@@ -34,12 +34,12 @@ theme_override_constants/separation = 3
 [node name="Title" type="Label" parent="Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "! WARNING"
 autowrap_mode = 2
 [node name="Hint" type="Label" parent="Content"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "RETREAT ↓ PAST 115 m"
 autowrap_mode = 2

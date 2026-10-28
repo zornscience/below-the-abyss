@@ -269,8 +269,8 @@ func set_quiet_layout(value: bool) -> void:
 	depth_style.content_margin_bottom = 8
 	(%DepthPanel as Control).add_theme_stylebox_override("panel",depth_style)
 	(%DepthPanel as Control).set_meta("a11y_style",[true,depth_style])
-	(%DepthValue as Label).set_meta("a11y_font",22)
-	(%DepthValue as Label).add_theme_font_size_override("font_size",22)
+	(%DepthValue as Label).set_meta("typography_role",&"measurement")
+	UiTypography.style(%DepthValue,&"measurement")
 	_refresh_sonar()
 	_ignore_input(self)
 	compact_reflow()

@@ -24,7 +24,7 @@ func _draw() -> void:
 	for index: int in range(4):
 		draw_circle(Vector2(-126+index*48,-22),12,Color("0c242c"))
 		draw_arc(Vector2(-126+index*48,-22),14,0,TAU,24,Color("7c9a93"),2.0)
-	draw_string(ThemeDB.fallback_font,Vector2(-90,31),"SURVEY  /  07",HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("9aab9b"))
+	draw_string(ThemeDB.fallback_font,Vector2(-90,31),"SURVEY  /  07",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.base(&"hud"),Color("9aab9b"))
 	for index: int in range(18):
 		var at: Vector2 = Vector2(-330+index*39,72+sin(index*2.8)*16)
 		draw_line(at,at+Vector2(18,-7),Color("648074"),4.0)

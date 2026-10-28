@@ -12,11 +12,13 @@ func _ready() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	var margin: MarginContainer = MarginContainer.new()
+	margin.name = "Margin"
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side: String in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,24)
 	add_child(margin)
 	var scroll: ScrollContainer = ScrollContainer.new()
 	scroll.follow_focus = true
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	margin.add_child(scroll)
 	var content: VBoxContainer = VBoxContainer.new()
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL

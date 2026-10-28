@@ -38,6 +38,8 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	_radio_body = _content(radio_page,true)
 	dock_page.hide()
 	radio_page.hide()
+	UiDialogLayout.bind_panel(dock_page,Vector2(960,580))
+	UiDialogLayout.bind_panel(radio_page,Vector2(760,480))
 	show_title()
 	_title_visibility()
 	notifications = RadioNotifications.new()
@@ -59,13 +61,13 @@ func _screen() -> PanelContainer:
 	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.theme = preload("res://resources/balance/instrument_theme.tres")
 	var box: StyleBoxFlat = StyleBoxFlat.new()
-	box.bg_color = Color("06121e")
+	box.bg_color = Color("081923")
 	panel.add_theme_stylebox_override("panel",box)
 	add_child(panel)
 	return panel
 func _content(panel: PanelContainer, scroll_tools: bool = false) -> VBoxContainer:
 	var margin: MarginContainer = MarginContainer.new()
-	for side: String in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,24)
+	for side: String in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,18)
 	panel.add_child(margin)
 	var scroll: ScrollContainer = ScrollContainer.new()
 	scroll.follow_focus = true
@@ -97,17 +99,17 @@ func _clear(column: VBoxContainer) -> void:
 		add_child(child)
 		if child is CanvasItem: child.hide()
 		child.queue_free()
-func _label(column: Container, text: String, font: int = 18) -> Label:
+func _label(column: Container, text: String, role: StringName = &"body") -> Label:
 	var label: Label = Label.new()
 	label.text = text
-	label.add_theme_font_size_override("font_size",font)
+	UiTypography.style(label,role)
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(label)
 	return label
 func _button(column: Container, text: String, callback: Callable, disabled: bool = false) -> Button:
 	var button: Button = Button.new()
 	button.text = text
-	button.custom_minimum_size.y = 48
+	UiTypography.style(button,&"dialog_button")
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.disabled = disabled
 	button.pressed.connect(callback)
@@ -129,10 +131,10 @@ func _focus() -> void:
 func show_title() -> void:
 	_clear(_title_body)
 	title_page.show()
-	_label(_title_body,"B E L O W   T H E",18)
-	_wordmark = _label(_title_body,"ABYSS",66)
+	_label(_title_body,"B E L O W   T H E",&"body")
+	_wordmark = _label(_title_body,"ABYSS",&"title")
 	_wordmark.add_theme_color_override("font_color",Color("d2d6c5"))
-	_label(_title_body,"A scientific voyage into the unknown",18)
+	_label(_title_body,"A scientific voyage into the unknown",&"body")
 	var divider: HSeparator = HSeparator.new()
 	_title_body.add_child(divider)
 	var controls: VBoxContainer = VBoxContainer.new()
@@ -143,7 +145,7 @@ func show_title() -> void:
 	_button(controls,"Quit",func() -> void: get_tree().quit()).name = "TitleQuit"
 	if revision.scene.chapter!=null and revision.scene.chapter.can_offer_prototype():
 		_button(_title_body,"Prototype expedition / legacy checkpoint",revision.scene.chapter.start_prototype,not revision.can_write()).name = "PrototypeExpedition"
-	_label(_title_body,"HALCYON / MERIDIAN DEEP INSTITUTE",16)
+	_label(_title_body,"HALCYON / MERIDIAN DEEP INSTITUTE",&"body")
 	if not revision.can_write():
 		_label(_title_body,"Existing save needs recovery. Your files have been preserved.")
 		_button(_title_body,"Recover checkpoint",func() -> void:
@@ -154,7 +156,7 @@ func show_title() -> void:
 func show_options() -> void:
 	_clear(_title_body)
 	_wordmark = null
-	_label(_title_body,"OPTIONS",32)
+	_label(_title_body,"OPTIONS",&"heading")
 	_button(_title_body,"Input controls",func() -> void: revision.open_option("input"))
 	_button(_title_body,"Audio",func() -> void: revision.open_option("audio"))
 	_button(_title_body,"Accessibility",func() -> void: revision.open_option("accessibility")).name = "TitleAccessibility"
@@ -174,11 +176,11 @@ func _layout_title() -> void:
 	var preferences: Dictionary = revision.scene.settings.snapshot().accessibility
 	title_art.apply_preferences(preferences)
 	if is_instance_valid(_wordmark):
-		var base: int = 46 if viewport.x<1100 else 66
-		_wordmark.set_meta("a11y_font",base)
-		_wordmark.add_theme_font_size_override("font_size",roundi(base*float(UiAccessibility.SCALE[preferences.ui_scale])))
-	for button: Button in _buttons:
-		if not _title_body.is_ancestor_of(button): continue
+		UiTypography.apply(_wordmark,String(preferences.ui_scale))
+	for child: Node in _title_body.find_children("*","Button",true,false):
+		var button: Button = child as Button
+		UiTypography.style(button,&"menu_button")
+		UiTypography.apply(button,String(preferences.ui_scale))
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var normal: StyleBoxFlat = StyleBoxFlat.new()
@@ -204,11 +206,15 @@ func show_dock(tab: String = "home") -> void:
 	(_tools[dock_page] as Control).visible = tab!="home" or canonical
 	_clear(_dock_body)
 	dock_page.show()
-	_label(_dock_body,("HALCYON STATION  /  " if canonical else "SHELF BASE  /  ")+{"home":"OPERATIONS","technology":"RESEARCH TECHNOLOGY","logs":"EXPEDITION LOG" if canonical else "DECODED RECORDS","radio":"RADIO ARCHIVE"}[tab],28)
+	_label(_dock_body,("HALCYON STATION  /  " if canonical else "SHELF BASE  /  ")+{"home":"OPERATIONS","technology":"RESEARCH TECHNOLOGY","logs":"EXPEDITION LOG" if canonical else "DECODED RECORDS","radio":"RADIO ARCHIVE"}[tab],&"heading")
 	if tab=="home":
-		var art: StationInterior = StationInterior.new()
-		art.station_name = "HALCYON STATION" if canonical else "SHELF BASE"
-		art.custom_minimum_size.y = (120 if get_viewport().get_visible_rect().size.y<700 else 220) if canonical else clampf(get_viewport().get_visible_rect().size.y*0.46,220,380)
+		var art: TextureRect = TextureRect.new()
+		art.texture = HalcyonDescent.STATION
+		art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		art.custom_minimum_size.y = (100 if get_viewport().get_visible_rect().size.y<700 else 160) if canonical else clampf(get_viewport().get_visible_rect().size.y*0.46,220,380)
 		_dock_body.add_child(art)
 		_label(_dock_body,revision.docking_report)
 		var row: HBoxContainer = HBoxContainer.new()
@@ -219,7 +225,7 @@ func show_dock(tab: String = "home") -> void:
 		_button(row,"Radio archive",func() -> void: show_dock("radio"))
 		_button(_dock_body,"Depart station",revision.undock).name = "Depart"
 	elif tab=="technology":
-		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],24)
+		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
 		_label(_dock_body,"Assign the points currently available; each rank costs one. Reassignment is free while docked. This expedition grants an acknowledgement, not additional research points." if canonical else "A finite four-point research budget. Assign across two branches; reassign freely while docked. Each rank costs one point.")
 		var branches: HBoxContainer = HBoxContainer.new()
 		_dock_body.add_child(branches)
@@ -227,7 +233,7 @@ func show_dock(tab: String = "home") -> void:
 			var column: VBoxContainer = VBoxContainer.new()
 			column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			branches.add_child(column)
-			_label(column,"ACOUSTIC ARRAY" if branch=="sonar" else "PRESSURE HULL",22)
+			_label(column,"ACOUSTIC ARRAY" if branch=="sonar" else "PRESSURE HULL",&"section")
 			var values: PackedFloat32Array = revision.tree.sonar_radii if branch=="sonar" else revision.tree.hull_ratings
 			var rank: int = int(revision.campaign.ranks[branch])
 			var diagram: ResearchTreeIllustration = ResearchTreeIllustration.new()
@@ -242,10 +248,10 @@ func show_dock(tab: String = "home") -> void:
 		_label(_dock_body,revision.feedback)
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	elif tab=="logs":
-		_label(_dock_body,revision.scene.chapter.log_text() if canonical else (revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research."),20)
+		_label(_dock_body,revision.scene.chapter.log_text() if canonical else (revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research."),&"body")
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	else:
-		_label(_dock_body,revision.scene.chapter.log_text() if canonical else revision.archive_text(),20)
+		_label(_dock_body,revision.scene.chapter.log_text() if canonical else revision.archive_text(),&"body")
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	_focus()
 func _assign(branch: String, difference: int) -> void:
@@ -278,8 +284,8 @@ func show_story_page(title: String, text: String, action: String, callback: Call
 	_story_back = back
 	_clear(_radio_body)
 	radio_page.show()
-	_label(_radio_body,title,28)
-	_label(_radio_body,text,22)
+	_label(_radio_body,title,&"heading")
+	_label(_radio_body,text,&"body")
 	_button(_radio_body,action,callback).name = id
 	_button(_radio_body,"Back",back).name = "StoryBack"
 	_focus()

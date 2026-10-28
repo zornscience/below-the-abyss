@@ -1,0 +1,80 @@
+[
+  {
+    "asset": "assets/art/painted/lantern_2.png",
+    "generation_file": "exec-e2035a81-6dd9-4679-aece-37d37e14322f.png",
+    "sha256": "127ef60053259c8e2dedffc0f9d32ac518748dca5f49f64615d3409b75080d0c",
+    "dimensions": [
+      1619,
+      971
+    ],
+    "bytes": 1469687,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-28",
+    "license_status": "Project license pending; no new rights claim"
+  },
+  {
+    "asset": "assets/art/painted/halcyon_modules.png",
+    "generation_file": "exec-44a50c8d-3771-48da-9796-208502ddde43.png",
+    "sha256": "9bc14ea1e9db198923a4868a915ea39c8ff3632ef0c0d0f565378faade4f4868",
+    "dimensions": [
+      2048,
+      768
+    ],
+    "bytes": 2221739,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-28",
+    "license_status": "Project license pending; no new rights claim"
+  },
+  {
+    "asset": "assets/art/painted/shelf_cliff.png",
+    "generation_file": "exec-57a8139c-d5c5-498c-92a8-6cd0d1931565.png",
+    "sha256": "d9ba74804d3c290076b734b64e454e3370af53f934698602bbecd05ec0a86840",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "bytes": 2467544,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-28",
+    "license_status": "Project license pending; no new rights claim"
+  },
+  {
+    "asset": "assets/art/painted/descent_water.png",
+    "generation_file": "exec-3be520e5-c35d-49e2-8dc1-8a3647f6d453.png",
+    "sha256": "57058a9689d16a5883c14eb8a0ac32ccb41882cf5aaab708deca7d761dfaf32f",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "bytes": 1642546,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-28",
+    "license_status": "Project license pending; no new rights claim"
+  },
+  {
+    "asset": "assets/art/painted/basalt.png",
+    "generation_file": "exec-459a7773-d127-44b9-9683-c8cfa8d9b749.png",
+    "sha256": "6ec5f583e5de0168e65148e8aa292b90ed62de04ff1c354f4cf7a7197fd14c45",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "bytes": 3131172,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-28",
+    "license_status": "Project license pending; no new rights claim"
+  },
+  {
+    "asset": "assets/art/painted/searchlight.png",
+    "generation_file": "exec-0b82aee3-a2bc-4ce9-84b4-a4781d1fd7dd.png",
+    "sha256": "6ab2b9922422084538ae0ed7521ce788279a036912138a2203f68e923d871961",
+    "dimensions": [
+      2172,
+      724
+    ],
+    "bytes": 1596946,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-28",
+    "license_status": "Project license pending; no new rights claim"
+  }
+]

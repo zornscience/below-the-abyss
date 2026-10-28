@@ -33,18 +33,18 @@ func _draw() -> void:
 		draw_line(Vector2(start.x, y), Vector2(end.x, y), Color("23404b"))
 	draw_rect(Rect2(start, end - start), ink, false, 2.0)
 	var font: Font = ThemeDB.fallback_font
-	draw_string(font, start - Vector2(0, 8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, ink)
+	draw_string(font, start - Vector2(0, 8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	for index: int in range(points.size()):
 		var point: PointOfInterest = points[index]
 		var at: Vector2 = _point(point.map_position)
 		draw_rect(Rect2(at - Vector2(6, 6), Vector2(12, 12)), ink, false, 2.0)
 		if selected_id == point.stable_id:
 			draw_arc(at, 12, 0, TAU, 32, Color("f4dc94"), 2.0, true)
-		draw_string(font, at + Vector2(10, -8), str(index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 18, ink)
+		draw_string(font, at + Vector2(10, -8), str(index + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	if has_report:
 		var report: Vector2 = _point(reported_position)
 		draw_arc(report,13,0,TAU,32,Color("dfba7d"),2,true)
-		draw_string(font,report+Vector2(18,26),report_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color("dfba7d"))
+		draw_string(font,report+Vector2(18,26),report_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"hud"),Color("dfba7d"))
 	var player: Vector2 = _point(player_position)
 	draw_colored_polygon(PackedVector2Array([player + Vector2(0, -9), player + Vector2(9, 5), player + Vector2(-9, 5)]), Color("f4dc94"))
-	draw_string(font, player + Vector2(12, 18), "YOU", HORIZONTAL_ALIGNMENT_LEFT, -1, 18, Color("f4dc94"))
+	draw_string(font, player + Vector2(12, 18), "YOU", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), Color("f4dc94"))

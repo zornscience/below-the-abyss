@@ -24,7 +24,7 @@ size = Vector2(440, 280)
 [sub_resource type="RectangleShape2D" id="Landmark"]
 size = Vector2(320, 220)
 [sub_resource type="Theme" id="Signs"]
-default_font_size = 20
+default_font_size = 16
 Label/colors/font_color = Color(0.89, 0.95, 0.97, 1)
 Label/colors/font_shadow_color = Color(0.02, 0.05, 0.07, 1)
 Label/constants/shadow_outline_size = 5
@@ -104,14 +104,14 @@ default_color = Color(0.92, 0.8, 0.49, 1)
 offset_left = 240.0
 offset_top = 320.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 22
+metadata/typography_role = &"body"
 text = "01 / SHELF BASE\nINTERACT / SERVICES · FREE"
 
 [node name="OutboundSign" type="Label" parent="Landmarks"]
 offset_left = 760.0
 offset_top = 360.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 20
+metadata/typography_role = &"body"
 text = "CAVE →\nFOLLOW UPPER PASSAGE"
 
 [node name="CaveGate" type="Line2D" parent="Landmarks"]
@@ -123,14 +123,14 @@ default_color = Color(0.44, 0.76, 0.8, 1)
 offset_left = 2180.0
 offset_top = 545.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 22
+metadata/typography_role = &"body"
 text = "02 / CAVE →\nTWIN SPIRES AHEAD"
 
 [node name="OverlookSign" type="Label" parent="Landmarks"]
 offset_left = 1460.0
 offset_top = 190.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "OPTIONAL OVERLOOK\n↓ REJOIN UPPER PASSAGE"
 
 [node name="SpireBracket" type="Line2D" parent="Landmarks"]
@@ -142,28 +142,28 @@ default_color = Color(0.7, 0.8, 0.87, 1)
 offset_left = 3310.0
 offset_top = 480.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 22
+metadata/typography_role = &"body"
 text = "03 / TWIN SPIRES\nPASS ABOVE THE TWO PILLARS\n← BASE VIA LOWER PASSAGE"
 
 [node name="ReturnEast" type="Label" parent="Landmarks"]
 offset_left = 1950.0
 offset_top = 910.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 20
+metadata/typography_role = &"body"
 text = "← BASE / LOWER RETURN\nSAFE ROUTE: STAY ABOVE 260 m"
 
 [node name="ReturnWest" type="Label" parent="Landmarks"]
 offset_left = 820.0
 offset_top = 850.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 20
+metadata/typography_role = &"body"
 text = "↑ BASE\nCLIMB HERE, THEN LEFT"
 
 [node name="TrenchSign" type="Label" parent="Landmarks"]
 offset_left = 2890.0
 offset_top = 1045.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "OPTIONAL PRESSURE TRENCH\nBASELINE HULL: 300 m LIMIT\nCHECK HUD RATING / ↑ RETURN"
 theme_override_colors/font_color = Color(1, 0.8, 0.48, 1)
 
@@ -181,7 +181,7 @@ default_color = Color(1, 0.53, 0.43, 1)
 offset_left = 2910.0
 offset_top = 1220.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "300 m / BASELINE HULL LIMIT\nCHECK HUD FOR CURRENT RATING\n↑ ASCEND TO RETURN"
 theme_override_colors/font_color = Color(1, 0.69, 0.6, 1)
 
@@ -189,7 +189,7 @@ theme_override_colors/font_color = Color(1, 0.69, 0.6, 1)
 offset_left = 2910.0
 offset_top = 1530.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "TEST LIMIT / TURN BACK ↑"
 
 [node name="RouteMarkers" type="Node2D" parent="."]
@@ -249,7 +249,7 @@ position = Vector2(3080, 1500)
 offset_left = 2960.0
 offset_top = 710.0
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 18
+metadata/typography_role = &"body"
 text = "↓ LOWER RETURN / STOP AT 240 m\n← BASE · TRENCH BELOW IS OPTIONAL"
 
 [node name="SonarTargets" type="Node2D" parent="."]
@@ -281,7 +281,7 @@ position = Vector2(1510, 420)
 [node name="ObserverAreaSign" type="Label" parent="Landmarks"]
 position = Vector2(1080, 470)
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "OPTIONAL ↑→ / HARMLESS OBSERVER\nF / X nearby · VESSEL CAN PASS THROUGH"
 
 [node name="ShelfPredator" parent="." instance=ExtResource("8_predator")]
@@ -289,7 +289,7 @@ position = Vector2(3200, 350)
 [node name="PredatorWarning" type="Label" parent="Landmarks"]
 position = Vector2(2840, 365)
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "! OPTIONAL PREDATOR ↑→\nPING ALERTS · 2.5s WARNING\nRETREAT ↓ PAST 115 m"
 [node name="PredatorGate" type="Line2D" parent="Landmarks"]
 points = PackedVector2Array(3000, 430, 3330, 430)
@@ -298,7 +298,7 @@ default_color = Color(0.95, 0.72, 0.44, 1)
 [node name="PredatorRetreat" type="Label" parent="Landmarks"]
 position = Vector2(3010, 510)
 theme = SubResource("Signs")
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "SAFE RETREAT / STAY ON MAIN PASSAGE →\nSAFE AT 115–130 m DEPTH"
 
 [node name="ServiceStation" parent="." instance=ExtResource("9_station")]

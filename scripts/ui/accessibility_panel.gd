@@ -33,10 +33,10 @@ func _ready() -> void:
 	var content: VBoxContainer = VBoxContainer.new()
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(content)
-	_label(content, "ACCESSIBILITY / Controls and visual comfort", 24)
-	_label(content, "↑↓ / Tab / D-pad: choose · Enter / A: select · Esc / B: discard unsaved edits", 16)
+	_label(content, "ACCESSIBILITY / Controls and visual comfort",&"heading")
+	_label(content, "↑↓ / Tab / D-pad: choose · Enter / A: select · Esc / B: discard unsaved edits",&"body")
 	scale_picker = OptionButton.new()
-	for item: String in ["Compact / 90% (minimum 16 px)", "Standard / 100%", "Large / 125%"]:
+	for item: String in ["Compact / 90% (minimum 14 px)", "Standard / 100%", "Large / 125%"]:
 		scale_picker.add_item(item)
 	content.add_child(scale_picker)
 	scale_picker.item_selected.connect(func(index: int) -> void:
@@ -54,7 +54,7 @@ func _ready() -> void:
 			var next: Dictionary = settings.snapshot().accessibility
 			next[key] = value
 			settings.set_accessibility(next))
-	_label(content, "No camera shake or flashing alarm sequence is authored. Sonar timing, warnings and movement stay active with comfort options enabled. Menu recovery controls remain fixed after gameplay remapping.", 18)
+	_label(content, "No camera shake or flashing alarm sequence is authored. Sonar timing, warnings and movement stay active with comfort options enabled. Menu recovery controls remain fixed after gameplay remapping.",&"body")
 	save_button = Button.new()
 	save_button.text = "Save accessibility preferences"
 	content.add_child(save_button)
@@ -69,7 +69,7 @@ func _ready() -> void:
 	close_button.text = "Return / discard unsaved edits"
 	content.add_child(close_button)
 	close_button.pressed.connect(cancel)
-	status = _label(content, "Preview changes here; Save keeps them across restarts.", 16)
+	status = _label(content, "Preview changes here; Save keeps them across restarts.",&"body")
 	var controls: Array[Control] = [scale_picker]
 	for toggle: CheckButton in toggles.values():
 		controls.append(toggle)
@@ -82,11 +82,11 @@ func _ready() -> void:
 	hide()
 
 
-func _label(parent: Node, text: String, font_size: int) -> Label:
+func _label(parent: Node, text: String, role: StringName = &"body") -> Label:
 	var label: Label = Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", font_size)
+	UiTypography.style(label,role)
 	parent.add_child(label)
 	return label
 

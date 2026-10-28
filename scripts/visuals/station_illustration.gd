@@ -26,7 +26,7 @@ func _draw() -> void:
 	draw_line(Vector2(470,95),Vector2(470,30),Color("829c98"),6)
 	draw_arc(Vector2(470,30),25,PI,TAU,24,Color("829c98"),3,true)
 	draw_circle(Vector2(470,30),4,Color("d9e0a6"))
-	draw_string(ThemeDB.fallback_font,Vector2(135,115),station_name,HORIZONTAL_ALIGNMENT_LEFT,-1,18,Color("dce4ca"))
+	draw_string(ThemeDB.fallback_font,Vector2(135,115),station_name,HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.base(&"hud"),Color("dce4ca"))
 	for x: int in range(150,800,45):
 		draw_line(Vector2(x,275),Vector2(x+16,275),Color("d9c687"),3)
 func _draw_module(rect: Rect2,label: String,ink: Color) -> void:
@@ -35,7 +35,7 @@ func _draw_module(rect: Rect2,label: String,ink: Color) -> void:
 		var window: Rect2 = Rect2(rect.position+Vector2(22+index*53,30),Vector2(32,32))
 		draw_rect(window,Color("203b43"))
 		draw_rect(window.grow(-5),Color("bea76f"))
-	draw_string(ThemeDB.fallback_font,rect.position+Vector2(18,rect.size.y-18),label,HORIZONTAL_ALIGNMENT_LEFT,-1,15,Color("142c34"))
+	draw_string(ThemeDB.fallback_font,rect.position+Vector2(18,rect.size.y-18),label,HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.base(&"secondary"),Color("142c34"))
 func _style(ink: Color) -> StyleBoxFlat:
 	var style: StyleBoxFlat = StyleBoxFlat.new()
 	style.bg_color = ink

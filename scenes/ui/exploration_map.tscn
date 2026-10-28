@@ -30,7 +30,7 @@ layout_mode = 2
 theme_override_constants/separation = 12
 [node name="Title" type="Label" parent="Margin/Content"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+metadata/typography_role = &"heading"
 text = "EXPLORATION / CONTINENTAL SHELF"
 [node name="MapHint" type="Label" parent="Margin/Content"]
 unique_name_in_owner = true
@@ -54,12 +54,12 @@ custom_minimum_size = Vector2(260, 0)
 [node name="Legend" type="Label" parent="Margin/Content/Body/Side"]
 layout_mode = 2
 text = "▲ YOU / vessel position\n□ DISCOVERED landmark\n— PUBLIC survey boundary"
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 [node name="EmptyMap" type="Label" parent="Margin/Content/Body/Side"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "No discovered landmarks.\nUse active sonar while exploring."
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 [node name="Scroll" type="ScrollContainer" parent="Margin/Content/Body/Side"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -73,12 +73,12 @@ unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2
 text = "Only discovered landmarks are shown. Uncharted interior is omitted."
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 [node name="DiscoverySaveStatus" type="Label" parent="Margin/Content"]
 unique_name_in_owner = true
 layout_mode = 2
 autowrap_mode = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 [node name="Buttons" type="HFlowContainer" parent="Margin/Content"]
 layout_mode = 2
 theme_override_constants/separation = 16

@@ -24,4 +24,4 @@ func _draw() -> void:
 		draw_polyline(PackedVector2Array([Vector2(-12, 8), Vector2(-3, -12), Vector2(12, 8), Vector2(-12, 8)]), ink, 2.0, true)
 	else:
 		draw_rect(Rect2(-10, -8, 20, 16), ink, false, 2.0)
-	draw_string(ThemeDB.fallback_font, Vector2(16, 25), "RECORDED" if _completed else "SCAN SUBJECT", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, ink)
+	draw_string(ThemeDB.fallback_font, Vector2(16, 25), "RECORDED" if _completed else "SCAN SUBJECT", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.base(&"hud"), ink)

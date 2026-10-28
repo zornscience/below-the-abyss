@@ -34,13 +34,3 @@ func _draw() -> void:
 	var closed: PackedVector2Array = outline.duplicate()
 	closed.append(outline[0])
 	draw_polyline(closed, Color(0.23, 0.44, 0.47, 0.8), 2.0, true)
-	# Restrained mineral dots stay strictly inside the authored solid polygon.
-	var minimum: Vector2 = outline[0]
-	var maximum: Vector2 = outline[0]
-	for point: Vector2 in outline:
-		minimum = minimum.min(point)
-		maximum = maximum.max(point)
-	for index: int in range(60):
-		var at: Vector2 = minimum + (maximum - minimum) * Vector2(fposmod(index * 0.618, 1.0), fposmod(index * 0.381, 1.0))
-		if Geometry2D.is_point_in_polygon(at, outline):
-			draw_line(at, at + Vector2(7, -2), Color(0.29, 0.53, 0.54, 0.25), 1.0, true)

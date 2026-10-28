@@ -26,7 +26,7 @@ func _draw() -> void:
 	for index: int in range(13): draw_circle(Vector2(215+index*35,237),2,Color("9da991"))
 	draw_style_box(_panel(Color("213a45")),Rect2(110,155,52,76))
 	draw_line(Vector2(108,130),Vector2(108,255),Color("759e9d"),8)
-	draw_string(ThemeDB.fallback_font,Vector2(480,225),vessel_name,HORIZONTAL_ALIGNMENT_LEFT,-1,19,Color("d6d7b9"))
+	draw_string(ThemeDB.fallback_font,Vector2(480,225),vessel_name,HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.base(&"hud"),Color("d6d7b9"))
 	draw_colored_polygon(PackedVector2Array([Vector2(750,160),Vector2(782,191),Vector2(750,218),Vector2(719,207),Vector2(719,170)]),Color("88cbd6"))
 func _panel(color: Color) -> StyleBoxFlat:
 	var style: StyleBoxFlat = StyleBoxFlat.new()

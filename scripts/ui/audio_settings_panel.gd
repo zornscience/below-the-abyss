@@ -25,6 +25,7 @@ func _ready() -> void:
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(backdrop)
 	var margin: MarginContainer = MarginContainer.new()
+	margin.name = "Margin"
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side: String in ["left", "right", "top", "bottom"]:
 		margin.add_theme_constant_override("margin_" + side, 28)
@@ -37,10 +38,10 @@ func _ready() -> void:
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content.add_theme_constant_override("separation", 8)
 	scroll.add_child(content)
-	_label(content, "AUDIO / Underwater soundscape", 24)
-	_label(content, "↑↓ / Tab / D-pad: choose · ←→: volume · Enter / A: select · Escape / B: discard", 16)
+	_label(content, "AUDIO / Underwater soundscape",&"heading")
+	_label(content, "↑↓ / Tab / D-pad: choose · ←→: volume · Enter / A: select · Escape / B: discard",&"body")
 	for bus: String in SoundscapeMixer.BUSES:
-		var label: Label = _label(content, bus + " / 0%", 18)
+		var label: Label = _label(content, bus + " / 0%",&"body")
 		var slider: HSlider = HSlider.new()
 		slider.name = bus
 		slider.max_value = 1.0
@@ -73,7 +74,7 @@ func _ready() -> void:
 	content.add_child(cancel_button)
 	_controls.append(cancel_button)
 	cancel_button.pressed.connect(cancel)
-	status = _label(content, "Preview changes here. Music is intentionally silent in this region.", 16)
+	status = _label(content, "Preview changes here. Music is intentionally silent in this region.",&"body")
 	for index: int in range(_controls.size()):
 		for property: String in ["focus_next", "focus_neighbor_bottom"]:
 			_controls[index].set(property, _controls[index].get_path_to(_controls[(index + 1) % _controls.size()]))
@@ -88,11 +89,11 @@ func _refresh_volume_label(bus: String) -> void:
 	volume_labels[bus].modulate = Color("d9e0a6") if focused else Color.WHITE
 
 
-func _label(parent: Node, text: String, size_px: int) -> Label:
+func _label(parent: Node, text: String, role: StringName = &"body") -> Label:
 	var label: Label = Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", size_px)
+	UiTypography.style(label,role)
 	parent.add_child(label)
 	return label
 

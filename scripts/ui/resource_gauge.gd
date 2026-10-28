@@ -69,8 +69,8 @@ func make_compact() -> void:
 	for node: Control in [%Glyph,%Caption,%Value,%State]:
 		node.reparent(row)
 		if node is Label:
-			node.set_meta("a11y_font",16)
-			node.add_theme_font_size_override("font_size",16)
+			node.set_meta("typography_role",&"hud")
+			UiTypography.style(node,&"hud")
 	(%Caption as Control).size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	($Content as Control).hide()
 	var style: StyleBoxEmpty = StyleBoxEmpty.new()

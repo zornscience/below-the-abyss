@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/station_menu.tscn" id="station"]
 
 [sub_resource type="Theme" id="Theme_diagnostics"]
-default_font_size = 18
+default_font_size = 16
 
 [node name="GameRoot" type="Node"]
 script = ExtResource("1_prototype")
@@ -101,7 +101,7 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 text = "GRAYBOX TEST / 01 Base → 02 Cave → 03 Twin Spires → Base"
 autowrap_mode = 2
 [node name="RouteLayer" type="CanvasLayer" parent="."]
@@ -122,7 +122,7 @@ layer = 40
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 autowrap_mode = 2
 text = "SCANNER / Initializing"
 
@@ -134,6 +134,6 @@ layer = 45
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-theme_override_font_sizes/font_size = 16
+metadata/typography_role = &"body"
 autowrap_mode = 2
 text = "MISSIONS / Accept objectives at Shelf Base"

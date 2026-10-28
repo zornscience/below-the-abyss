@@ -15,7 +15,6 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	for index: int in range(4):
-		var reach: float = 110.0 + index * 28.0
-		draw_colored_polygon(PackedVector2Array([Vector2(29, 0), Vector2(reach, -reach * 0.19), Vector2(reach, reach * 0.19)]), Color(0.58, 0.82, 0.72, 0.018))
+	draw_texture_rect(HalcyonDescent.SEARCHLIGHT,Rect2(19,-24,220,48),false,Color(0.67,0.83,0.76,0.28))
+
 	draw_line(Vector2(-34, -8 * cos(_phase)), Vector2(-34, 8 * cos(_phase)), Color("a6c3c5"), 2.0, true)

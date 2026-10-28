@@ -1,0 +1,12 @@
+{
+  "package": "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-e50dfd1df356.zip",
+  "manifest": {
+    "game_version": "0.1.0-playtest",
+    "build_id": "e50dfd1df356695ad656accb74488c17c205df3c",
+    "source_commit": "e50dfd1df356695ad656accb74488c17c205df3c",
+    "development_dirty": false,
+    "engine": "4.6.3.stable.official.7d41c59c4",
+    "platform": "Linux x86_64",
+    "sha256": "aa2fa28074ce9ec43a9bddf61534a681ada5fe77966f65ca6472813f410fb378"
+  }
+}

@@ -1,6 +1,7 @@
 # BTA-052 visual and exploration review revision
 
-This updates `bta-052-surface-expedition-polish` for the latest feedback. No new
+This updates [PR #36](https://github.com/zornscience/below-the-abyss/pull/36),
+`bta-052-surface-expedition-polish`, for the latest feedback. No new
 region, campaign branch, reward or save schema is introduced. The preceding
 [BTA-052 report](../README.md) is historical; this revision supersedes its returning
 sonar effect and the original background/hammerhead presentation.
@@ -26,7 +27,9 @@ existing region, not a claim that the entire shelf has become a maze.
 
 ## Saves and contracts
 
-Schema remains **8**. No new independent file, flag, ledger or stable-ID rename.
+Schema remains **8**. No new independent file, flag, ledger or stable-ID rename. The engraved calibration
+reference instrument remains a legitimate optional scan subject at its existing
+location; it is not a route arrow or a new Lantern-1 artifact.
 Existing discovered buoys remain known; new shelter eligibility applies to fresh
 acquisition. Discovery and scan completion still commit through their existing
 atomic checkpoint gates. Repeated pings/reload cannot repeat the chapter reward.
@@ -150,9 +153,17 @@ use `--wide --stop-after-map` with another profile.
 | Native 800×600 controller | **PASS**, Collect, Large Text/High Contrast/reduced settings/muted, full chapter with **zero shots**, 607.283 simulation seconds. [Log](logs/native-800.txt) |
 | Native 1920×1080 spot check | **PASS**, title, briefing/departure, station technology and map navigation. This is **not** a third full chapter. [Log](logs/native-1920.txt) |
 | Python tooling | **7/7 PASS**. [Log](logs/python.txt) |
+| Legacy controller routes and bloom matrix | **PASS**: expanded expedition, revised radio/research expedition, eight bloom fresh/Continue keyboard/controller processes. [Log](logs/legacy-routes.txt) |
+| Linux release export | **PASS**, clean source `268dd0d310a9f4286e17cf239fd63d6a7bc3210f`, dirty=false. [Output](logs/linux-export.txt), [manifest](logs/linux-manifest.json) |
+| Extracted standalone smoke | **PASS**, exact exported build, default telemetry OFF. [Runner](logs/standalone-smoke.txt), [console](logs/standalone-console.txt) |
+| Canonical chapter/recovery matrix | **12/12 input processes PASS**, both outcomes/devices, completed Continue and quit-at-buoy/Continue. Includes optional studies/pressure, missed ping, empty ammunition and low-power service recovery, hammerhead escape, plus no-excavation fresh/Continue. [Log](logs/chapter-matrix.txt) |
 
-Remaining route/export results are appended after those processes complete.
-No failed diagnostic log is presented as successful evidence. The retained PNG
+All required local workflow entry points completed successfully. Hosted GitHub
+Actions status remains unverified here.
+The exported ZIP is `build/below-the-abyss-playtest-linux-268dd0d310a9.zip` (ignored
+local build output); the later evidence-only commit does not change runtime source.
+No failed diagnostic log is presented as successful evidence.
+The changed-file inventory is [changed-files.txt](changed-files.txt). The retained PNG
 inventory with exact sizes is [screenshots.json](screenshots.json).
 
 ## Manual review route
@@ -210,6 +221,7 @@ inventory with exact sizes is [screenshots.json](screenshots.json).
   mandatory encounter. Legacy already-known buoys are deliberately not re-hidden.
 - Portrait appearances are provisional, replacing an atlas later is safe. Licensing
   remains the project's existing pending status; provenance makes no new rights claim.
-- GitHub Actions status/PR metadata cannot be asserted from this host while its
-  configured network excludes api.github.com. Local workflow-equivalent checks and
-  Git push are reported separately; no automatic merge is performed.
+- GitHub Actions status and PR-description editing are unavailable here because
+  configured network access excludes api.github.com. PR #36 was identified through
+  its Git head ref matching this branch; pushing updates its source normally. Local
+  workflow-equivalent results are separate from hosted CI; no automatic merge.

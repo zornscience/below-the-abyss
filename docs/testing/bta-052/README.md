@@ -1,3 +1,5 @@
+> **Latest review revision:** [PR #36 visual/search/portrait update and current evidence](revision/README.md). The report below describes the earlier BTA-052 build, including its now-removed sonar returns.
+
 # BTA-052: Surface expedition and instrument polish
 
 Review branch: `bta-052-surface-expedition-polish`, based on merged PR #35.

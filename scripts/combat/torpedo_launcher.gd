@@ -54,6 +54,8 @@ func request_fire() -> Error:
 	_sequence += 1
 	var projectile: TorpedoProjectile = TorpedoProjectile.new()
 	projectile.direction = aim.normalized()
+	projectile.blast_radius = _rules.radius
+	projectile.blast_damage = _rules.damage
 	projectile.speed = _rules.speed
 	projectile.remaining = _rules.lifetime
 	if revised:
@@ -107,11 +109,11 @@ func _impact(projectile: TorpedoProjectile, at: Vector2) -> void:
 	_receivers.sort_custom(func(a: BlastReceiver,b: BlastReceiver) -> bool: return String(a.stable_id)<String(b.stable_id))
 	for receiver: BlastReceiver in _receivers:
 		if is_instance_valid(receiver):
-			receiver.apply_blast(projectile.event_id, at, _rules.radius, _rules.damage)
+			receiver.apply_blast(projectile.event_id, at, projectile.blast_radius, projectile.blast_damage)
 	if _scene.excavation != null:
-		_scene.excavation.excavate(at, _rules.radius)
+		_scene.excavation.excavate(at, projectile.blast_radius)
 	var effect: BlastEffect = BlastEffect.new()
-	effect.radius = _rules.radius
+	effect.radius = projectile.blast_radius
 	var comfort: Dictionary = _scene.settings.snapshot().accessibility
 	effect.reduced_effects = comfort.reduced_flashing or comfort.reduced_particles or comfort.reduced_motion
 	effect.refractive = revised
@@ -142,3 +144,11 @@ func refill() -> void:
 func restore_ammunition(value: int) -> void:
 	ammunition = clampi(value,0,CAPACITY)
 	ammunition_changed.emit(ammunition,CAPACITY)
+
+func configure_capabilities(propulsion: float,blast_radius: float) -> Error:
+	var profile: BlastProfile = configuration.duplicate(true) as BlastProfile
+	profile.propulsion_acceleration = propulsion
+	profile.radius = blast_radius
+	if not profile.is_valid(): return ERR_INVALID_PARAMETER
+	_rules = profile
+	return OK

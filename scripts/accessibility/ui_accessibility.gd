@@ -104,7 +104,7 @@ func _apply_node(node: Node) -> void:
 		node.set_meta("typography_scale",String(_preferences.ui_scale))
 		node.set_meta("typography_high_contrast",bool(_preferences.high_contrast))
 		_apply_control(node as Control)
-		if node is ExplorationMapCanvas or node is ResearchTreeIllustration:
+		if node is ExplorationMapCanvas or node is ResearchTreeIllustration or node is UiScrollReader:
 			node.queue_redraw()
 		if node.has_meta("dialog_size"): UiDialogLayout.fit_panel(node as Control)
 		if node is AccessibilityPanel or node is AudioSettingsPanel or node is MechanicsHelp or node is PlaytestPanel or node is InputTestMenu:
@@ -122,6 +122,7 @@ func _apply_node(node: Node) -> void:
 		node.set_process(not bool(_preferences.reduced_motion) and not bool(_preferences.reduced_particles))
 	if script != null and script.resource_path.ends_with("/submarine_illustration.gd"):
 		node.set("reduced_motion", bool(_preferences.reduced_motion))
+		node.set("reduced_flashing", bool(_preferences.reduced_flashing))
 	if node is SunlitDressing: node.apply_preferences(_preferences)
 	if node is CreaturePaint: node.reduced_motion = bool(_preferences.reduced_motion)
 	if node is TorpedoTrail: node.reduced = bool(_preferences.reduced_particles) or bool(_preferences.reduced_motion)

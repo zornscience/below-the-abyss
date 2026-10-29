@@ -154,5 +154,33 @@
     "license_status": "Project license pending; no new rights claim",
     "import": "lossless RGBA; mipmaps; three equal 724x724 cells; linear mipmap filtering",
     "brief": "Original side-view illustrated moray eel, sea turtle and identifiable hammerhead; cool teal/olive, material detail, transparent background. Existing Sunlit Shallows visual language. Not a scientific taxonomy or human-painted source."
+  },
+  {
+    "asset": "assets/art/sunlit/torpedo.png",
+    "generation_file": "exec-61733784-a8eb-42dc-b149-91eeabda254a.png",
+    "sha256": "e3f6c23b0426f947cfeb24013a8c0e3471154fc3e1b75aa465cac15a14aa1e4e",
+    "dimensions": [
+      2172,
+      724
+    ],
+    "bytes": 1455346,
+    "tool": "OpenAI image_gen",
+    "date_local": "2026-10-28 America/Chicago",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "unchanged transparent master; lossless; size limit 512; mipmaps; linear mipmap filtering"
+  },
+  {
+    "asset": "assets/art/sunlit/water_column.png",
+    "generation_file": "exec-105ab446-9997-4888-aa0b-b987a5b593d4.png",
+    "sha256": "3b13064aa13a619808bebdf1f57256b320d8b165443dff28626a60470bfdca45",
+    "dimensions": [
+      1930,
+      815
+    ],
+    "bytes": 1828454,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-29",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless; mipmaps; size_limit=1536; linear mipmap filtering"
   }
 ]

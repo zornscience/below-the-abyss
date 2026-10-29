@@ -149,12 +149,9 @@ func perform(service: StringName) -> Dictionary:
 
 
 func _draw() -> void:
-	if _rules == null:
-		return
-	var ink: Color = Color("b7ddd6")
-	draw_arc(Vector2.ZERO, _rules.docking_radius, 0.0, TAU, 64, Color(0.45, 0.75, 0.75, 0.45), 2.0, true)
-	draw_polyline(PackedVector2Array([Vector2(-100, -45), Vector2(-100, -80), Vector2(100, -80), Vector2(100, -45)]), ink, 5.0, true)
-	draw_string(ThemeDB.fallback_font, Vector2(-110, 130), "SERVICES / INTERACT TO DOCK", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.base(&"hud"), ink)
+	# Painted station infrastructure and the context HUD identify docking.
+	# Interaction radii are domain data, not floating instructions or world circles.
+	pass
 
 
 func install_upgrade(id: StringName) -> Error:

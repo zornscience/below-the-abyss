@@ -10,8 +10,12 @@ var sunlit_art: bool = false:
 		queue_redraw()
 var _redraw_time: float = 0.0
 var _frames: Array[AtlasTexture] = []
+var _swim: ShaderMaterial
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_swim = ShaderMaterial.new()
+	_swim.shader = preload("res://assets/shaders/fauna_swim.gdshader")
+	_swim.set_shader_parameter("cell",Vector4(0.5 if hostile else 0.0,0,0.5,1))
 	for index: int in range(2):
 		var atlas: AtlasTexture = AtlasTexture.new()
 		atlas.atlas = FISH
@@ -22,6 +26,9 @@ func _process(delta: float) -> void:
 	var previous: float = scale.x
 	if not creature._suspended and not reduced_motion: phase += delta*4.0
 	if absf(creature.velocity.x)>2: scale.x = signf(creature.velocity.x)
+	material = _swim if sunlit_art else null
+	_swim.set_shader_parameter("phase",phase)
+	_swim.set_shader_parameter("amount",0.0 if reduced_motion else 1.0)
 	_redraw_time += delta
 	if not sunlit_art or previous!=scale.x or (_redraw_time>=1.0/15.0 and not reduced_motion and not creature._suspended):
 		_redraw_time = 0.0

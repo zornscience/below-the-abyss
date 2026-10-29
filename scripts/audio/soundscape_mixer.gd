@@ -5,7 +5,7 @@ extends Node
 signal cue_played(cue_id: StringName, bus: String)
 const BUSES: Array[String] = ["Master", "Music", "Ambience", "Effects", "UI"]
 const ALARMS: Array[StringName] = [&"hull", &"oxygen", &"battery", &"predator_alert", &"predator_pursue"]
-const LOOP_NAMES: Array[String] = ["ocean", "current", "engine", "tension", "scan"]
+const LOOP_NAMES: Array[String] = ["ocean", "current", "engine", "tension", "scan", "sunlit_music"]
 @export var configuration: SoundscapeProfile = preload("res://resources/audio/shelf_soundscape.tres")
 var _rules: SoundscapeProfile
 var _cues: Dictionary[StringName, AudioCue] = {}
@@ -44,7 +44,7 @@ func _ready() -> void:
 			player.free()
 			continue
 		player.stream = load(path) as AudioStream
-		player.bus = "Ambience" if id in ["ocean", "current", "tension"] else "Effects"
+		player.bus = "Music" if id=="sunlit_music" else ("Ambience" if id in ["ocean", "current", "tension"] else "Effects")
 		player.volume_linear = 0.0
 		add_child(player)
 		_loops[id] = player
@@ -154,6 +154,7 @@ func advance(delta: float) -> void:
 		"engine": (0.18 + _thrust * 0.45) if _running else 0.0,
 		"tension": (_threat * 0.5 + (0.12 if _pressure else 0.0)) * menu * duck,
 		"scan": 0.3 if _running and _scanning else 0.0,
+		"sunlit_music": 0.18 * menu * duck,
 	}
 	var weight: float = 1.0 - exp(-delta / _rules.fade_seconds)
 	for id: String in _loops:

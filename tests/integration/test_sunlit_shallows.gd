@@ -137,6 +137,8 @@ func test_version_five_adds_unaccepted_chapter_without_rewriting_legacy_claims()
 	var document: Dictionary = game.saves.snapshot()
 	document.schema_version = 5
 	document.prototype.campaign.erase("science")
+	document.prototype.campaign.erase("legacy_ranks")
+	document.prototype.campaign.ranks = {"sonar":document.prototype.campaign.ranks.sonar,"hull":document.prototype.campaign.ranks.hull}
 	document.progress.missions.erase(String(SunlitShallowsData.MISSION))
 	var old: Dictionary = document.progress.duplicate(true)
 	var loaded: Dictionary = ExpeditionSchema.decode(document)
@@ -162,7 +164,7 @@ func test_briefing_focus_visits_every_action_and_never_duplicates_footer_control
 	var ask: Control = ui.find_child("AskOkafor",true,false) as Control
 	var visited: Array[Control] = []
 	var current: Control = ui._buttons[0]
-	for index: int in range(ui._buttons.size()):
+	for index: int in range(ui._buttons.size()+1):
 		assert_false(current in visited)
 		visited.append(current)
 		current = current.get_node(current.focus_next) as Control
@@ -264,7 +266,7 @@ func test_large_small_window_briefing_keeps_reading_controls_and_all_actions_rea
 	game.chapter.start()
 	await wait_process_frames(8)
 	var ui: ExpeditionInterface = game.revision.ui
-	var tools: Control = ui._tools[ui.radio_page] as Control
+	var tools: UiScrollReader = ui._scrolls[ui.radio_page] as UiScrollReader
 	assert_true(tools.is_visible_in_tree())
 	assert_lte(tools.get_global_rect().end.y,600.0)
 	var launch: Button = ui.find_child("LaunchSunlit",true,false) as Button

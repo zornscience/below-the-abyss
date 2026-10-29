@@ -17,8 +17,6 @@ func _ready() -> void:
 	get_node("Margin/Content").add_child(summary)
 	get_node("Margin/Content").move_child(summary,2)
 	summary.hide()
-	(%ScrollResearchUp as Button).pressed.connect(func() -> void: (%DetailScroll as ScrollContainer).scroll_vertical -= 100)
-	(%ScrollResearchDown as Button).pressed.connect(func() -> void: (%DetailScroll as ScrollContainer).scroll_vertical += 100)
 	(%CloseResearch as Button).pressed.connect(func() -> void: close_requested.emit())
 	(%RetryResearch as Button).pressed.connect(func() -> void: store.retry_save(registry))
 	(%RecoverResearch as Button).pressed.connect(func() -> void: store.recover_backup(registry))
@@ -50,12 +48,8 @@ func refresh() -> void:
 		button.focus_entered.connect(_select.bind(entry.stable_id))
 		list.add_child(button)
 		controls.append(button)
-	controls.append_array([%ScrollResearchUp, %ScrollResearchDown])
-	for index: int in range(controls.size()):
-		for property: String in ["focus_previous", "focus_neighbor_top", "focus_neighbor_left"]:
-			controls[index].set(property, controls[index].get_path_to(controls[posmod(index - 1, controls.size())]))
-		for property: String in ["focus_next", "focus_neighbor_bottom", "focus_neighbor_right"]:
-			controls[index].set(property, controls[index].get_path_to(controls[(index + 1) % controls.size()]))
+	controls.append(%DetailScroll as Control)
+	UiScrollReader.link(controls,%DetailScroll)
 	if not entries.is_empty():
 		_select(entries[0].stable_id)
 	_status()
@@ -83,6 +77,10 @@ func present() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if visible and event is InputEventKey and event.pressed and event.keycode in [KEY_PAGEUP,KEY_PAGEDOWN]:
+		(%DetailScroll as UiScrollReader).handle_reading_input(event)
+		get_viewport().set_input_as_handled()
+		return
 	if visible and not event.is_echo() and ((event.is_action_pressed("open_map") and not InputBindings.is_menu_navigation(event)) \
 		or InputBindings.is_menu_back(event)):
 		get_viewport().set_input_as_handled()

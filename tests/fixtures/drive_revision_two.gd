@@ -129,7 +129,7 @@ func _initialize() -> void:
 	assert(_scene.revision.ui.dock_page.visible)
 	await _activate(_control("Technology"))
 	await _activate(_control("hullAssign"))
-	await _activate(_control("sonarAssign"))
+	assert((_control("sonarAssign") as Button).disabled)
 	assert(_scene.revision.campaign.ranks.hull==1)
 	await _activate(_control("BackOperations"))
 	await _activate(_control("Depart"))

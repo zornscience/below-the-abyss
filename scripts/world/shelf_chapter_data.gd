@@ -33,6 +33,7 @@ static func terrain_ids() -> Array[String]:
 	for rock: Dictionary in ROCKS:
 		ids.append(rock.id)
 	ids.append("sunlit-cavein")
+	for tunnel: Dictionary in SunlitSurveyData.TUNNELS: ids.append(tunnel.id)
 	return ids
 static func discoveries(include_story: bool = false) -> DiscoveryCatalog:
 	var catalog: DiscoveryCatalog = load("res://resources/regions/shelf_discoveries.tres").duplicate(true) as DiscoveryCatalog
@@ -63,6 +64,9 @@ static func research(encrypted: bool = false) -> ResearchCatalog:
 	var catalog: ResearchCatalog = load("res://resources/regions/shelf_research.tres").duplicate(true) as ResearchCatalog
 	for item: Dictionary in SCIENCE:
 		var target: ScanDefinition = ScanDefinition.new()
+		target.requires_sonar = false
+		# The recorder anchor is embedded in the wreck; inspecting its hull is visible.
+		if item.id=="lost-expedition-blackbox": target.visibility_surface_radius = 96.0
 		target.stable_id = StringName(item.id)
 		target.required_poi_id = StringName(item.poi)
 		target.classification = item.type

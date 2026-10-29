@@ -26,12 +26,14 @@ var scavenger: WreckScavenger
 func setup(owner_scene: ShelfPrototype) -> void:
 	scene = owner_scene
 	tree = TREE.duplicate(true) as ResearchTree
-	assert(tree.is_valid())
+	if not tree.is_valid():
+		push_error("Invalid research capability definitions.")
+		return
 	if scene.saves!=null: campaign = CampaignData.normalized(scene.saves._state.prototype.campaign)
 	scene.upgrades.installation_guard = func() -> bool: return false
 	scene.upgrades.capability_override = capabilities
 	scene.upgrades.reapply()
-	scene.submarine.motion = preload("res://resources/balance/expedition_motion.tres").duplicate(true) as SubmarineMotion
+	_apply_drive_capabilities()
 	scene.narrative.radio_assignments = true
 	scene.narrative.debrief_guard = func() -> bool: return bool(campaign.decoded)
 	scene.research_log.entry_text_provider = research_text
@@ -42,7 +44,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	_ammo_label = Label.new()
 	UiTypography.style(_ammo_label,&"hud")
 	_ammo_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	scene.hud.identity_container().add_child(_ammo_label)
+	scene.hud.get_node("%InstrumentDeck").add_child(_ammo_label)
 	scene.torpedoes.ammunition_changed.connect(func(_current: int,_maximum: int) -> void: _refresh_ammo())
 	if scene.saves!=null: scene.torpedoes.restore_ammunition(int(scene.saves._state.prototype.ammunition))
 	scene.missions.missions_changed.connect(_reward_survey_deferred)
@@ -61,13 +63,14 @@ func setup(owner_scene: ShelfPrototype) -> void:
 func can_write() -> bool:
 	return scene.saves!=null and scene.saves.can_write()
 func capabilities() -> Dictionary:
-	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)],"hull":tree.hull_ratings[int(campaign.ranks.hull)]}
+	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)],"hull":tree.hull_ratings[int(campaign.ranks.hull)],"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
 func snapshot() -> Dictionary:
 	return {"ammunition":scene.torpedoes.ammunition,"campaign":campaign.duplicate(true)}
 func restore(value: Dictionary) -> void:
 	campaign = CampaignData.normalized(value.campaign)
 	scene.torpedoes.restore_ammunition(int(value.ammunition))
 	scene.upgrades.reapply()
+	_apply_drive_capabilities()
 	_refresh_map_marker()
 	for id: String in campaign.messages:
 		if ui!=null: ui.notifications.remove_message(id)
@@ -78,19 +81,22 @@ func _commit(value: Dictionary) -> Error:
 	if result==OK:
 		campaign = scene.saves._state.prototype.campaign.duplicate(true)
 		scene.upgrades.reapply()
+		_apply_drive_capabilities()
 		research_changed.emit()
 	feedback = "Research allocation saved. Reassignment is free at base." if result==OK else "Change not saved; previous allocation preserved. Recover the checkpoint before retrying."
 	return result
 func assign(branch: String, difference: int) -> Error:
 	if not ui.dock_page.visible or not scene.station.is_in_range(scene.submarine.global_position) or scene.submarine.is_physics_processing(): return ERR_UNAVAILABLE
-	if branch not in ["sonar","hull"] or difference not in [-1,1]: return ERR_INVALID_PARAMETER
+	if branch not in CampaignData.BRANCHES or difference not in [-1,1]: return ERR_INVALID_PARAMETER
 	var next: Dictionary = campaign.duplicate(true)
+	if difference<0 and branch in ["sonar","hull"] and next.ranks[branch]==next.legacy_ranks[branch]: next.legacy_ranks[branch] = maxi(0,int(next.legacy_ranks[branch])-1)
 	next.ranks[branch] += difference
 	return _commit(next) if CampaignData.valid(next) else ERR_UNAVAILABLE
 func respec() -> Error:
 	if not ui.dock_page.visible or not scene.station.is_in_range(scene.submarine.global_position) or scene.submarine.is_physics_processing(): return ERR_UNAVAILABLE
 	var next: Dictionary = campaign.duplicate(true)
-	next.ranks = {"sonar":0,"hull":0}
+	for branch: String in CampaignData.BRANCHES: next.ranks[branch] = 0
+	next.legacy_ranks = {"sonar":0,"hull":0}
 	return _commit(next)
 func start_from_title() -> void:
 	if scene.chapter!=null: scene.chapter.start()
@@ -248,3 +254,11 @@ func _paint_creature(animal: AcousticCreature) -> void:
 	animal.add_child(paint)
 	(animal.get_node("StateCaption") as Label).hide()
 	animal.queue_redraw()
+
+func _apply_drive_capabilities() -> void:
+	var fitted: Dictionary = capabilities()
+	var motion: SubmarineMotion = preload("res://resources/balance/expedition_motion.tres").duplicate(true) as SubmarineMotion
+	motion.acceleration = fitted.engine
+	scene.submarine.motion = motion
+	if scene.torpedoes.configure_capabilities(fitted.torpedo_acceleration,fitted.torpedo_area)!=OK:
+		push_error("Invalid torpedo capability projection.")

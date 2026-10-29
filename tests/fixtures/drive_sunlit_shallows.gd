@@ -176,15 +176,20 @@ func _fire() -> void:
 	Input.flush_buffered_events()
 	await _frames(90)
 
+func _round_fired(_id: StringName) -> void:
+	_shots += 1
+	if not _captures.is_empty() and _shots==1:
+		await _frames(24)
+		await _capture("torpedo-in-flight")
+
 func _study(id: StringName) -> void:
-	await _tap(JOY_BUTTON_X)
-	await _frames(110)
 	assert(_scene.submarine.scanner.candidate_id()==id,"Expected subject %s, got %s at %s" % [id,_scene.submarine.scanner.candidate_id(),_scene.submarine.global_position])
 	await _interact()
 	await _frames(420)
 	assert(_scene.research.is_completed(id))
 	assert(String(id) in _scene.revision.campaign.science.credited)
 	await _capture("scan-"+String(id))
+	print("SUNLIT_ROUTE_SCAN ",id," shots=",_shots)
 
 func _supply_edge_cases() -> void:
 	if OS.get_cmdline_user_args().has("--low-energy-demo"):
@@ -202,7 +207,7 @@ func _supply_edge_cases() -> void:
 		await _activate(_control("Depart"))
 	if OS.get_cmdline_user_args().has("--empty-ammo-demo"):
 		# Intentional normal-input launches into the protected station support west.
-		await _move(Vector2(340,480))
+		await _move(Vector2(340,80))
 		for unused: int in range(10): await _fire()
 		assert(_scene.torpedoes.ammunition==0 and _shots==10)
 		assert(not _scene.chapter.guide.layout.passage_clear())
@@ -222,47 +227,65 @@ func _map_lesson() -> void:
 	assert(_scene.submarine.is_physics_processing())
 
 func _expanded_course() -> void:
-	for at: Vector2 in [Vector2(2350,480),Vector2(3500,480),Vector2(4300,480)]: await _move(at)
-	assert(not _scene.chapter.guide.layout.passage_clear())
-	await _capture("rockfall-before")
-	if OS.get_cmdline_user_args().has("--empty-ammo-demo"):
-		await _fire()
-		assert(_scene.torpedoes.ammunition==0 and not _scene.chapter.guide.layout.passage_clear())
-		for at: Vector2 in [Vector2(3500,480),Vector2(1280,480),Vector2(420,480)]: await _move(at)
-		await _interact()
-		assert(_scene.torpedoes.ammunition==10)
-		await _capture("ammunition-service-recovery")
-		await _activate(_control("Depart"))
-		for at: Vector2 in [Vector2(1280,480),Vector2(3500,480),Vector2(4300,480)]: await _move(at)
-	for shot: int in range(3):
-		await _fire()
-		assert(_scene.chapter.guide.layout.passage_clear()==(shot==2))
-	await _capture("underwater-blast-aftermath")
-	assert(_scene.chapter.guide.layout.passage_clear())
-	assert(_scene.discoveries.state_of(SunlitSurveyData.CLEARED)==DiscoveryRegistry.State.DISCOVERED)
-	await _capture("rockfall-after")
-	for at: Vector2 in [Vector2(4900,480),Vector2(5400,600),Vector2(6000,600)]: await _move(at)
+	var no_excavation: bool = OS.get_cmdline_user_args().has("--no-excavation")
+	if no_excavation:
+		for at: Vector2 in [Vector2(2350,480),Vector2(3500,480),Vector2(4300,180),Vector2(5100,180)]: await _move(at)
+		assert(not _scene.chapter.guide.layout.passage_clear())
+		await _capture("open-water-bypass")
+	else:
+		for at: Vector2 in [Vector2(2350,480),Vector2(3500,480),Vector2(4300,480)]: await _move(at)
+		assert(not _scene.chapter.guide.layout.passage_clear())
+		await _capture("rockfall-before")
+		if OS.get_cmdline_user_args().has("--empty-ammo-demo"):
+			await _fire()
+			assert(_scene.torpedoes.ammunition==0 and not _scene.chapter.guide.layout.passage_clear())
+			for at: Vector2 in [Vector2(3500,480),Vector2(1280,480),SunlitSurveyData.SPAWN]: await _move(at)
+			await _interact()
+			assert(_scene.torpedoes.ammunition==10)
+			await _capture("ammunition-service-recovery")
+			await _activate(_control("Depart"))
+			for at: Vector2 in [Vector2(1280,480),Vector2(3500,480),Vector2(4300,480)]: await _move(at)
+		for shot: int in range(3):
+			await _fire()
+			assert(_scene.chapter.guide.layout.passage_clear()==(shot==2))
+		await _capture("underwater-blast-aftermath")
+		assert(_scene.chapter.guide.layout.passage_clear())
+		assert(_scene.discoveries.state_of(SunlitSurveyData.CLEARED)==DiscoveryRegistry.State.DISCOVERED)
+		await _capture("rockfall-after")
+	for at: Vector2 in ([Vector2(5400,600),Vector2(6000,600)] if no_excavation else [Vector2(4900,480),Vector2(5400,600),Vector2(6000,600)]): await _move(at)
 	await _study(&"sunlit-silver-shoal")
 	await _capture("fish-school")
+	if OS.get_cmdline_user_args().has("--survey-studies"):
+		for at: Vector2 in [Vector2(6200,600),Vector2(6200,1000),Vector2(6260,1000)]: await _move(at)
+		await _capture("optional-cave-before")
+		await _fire()
+		await _move(Vector2(6750,1000))
+		await _capture("optional-cave-inside")
+		for at: Vector2 in [Vector2(6200,1000),Vector2(6200,260)]: await _move(at)
 	if OS.get_cmdline_user_args().has("--fauna-demo"):
-		for at: Vector2 in [Vector2(6500,650),Vector2(7100,650),Vector2(7100,270),Vector2(6750,270)]: await _move(at)
+		for at: Vector2 in [Vector2(6100,260),Vector2(7100,260),Vector2(7100,430),Vector2(6750,430)]: await _move(at)
 		await _capture("dead-end-alcove")
-		for at: Vector2 in [Vector2(7100,270),Vector2(7100,660)]: await _move(at)
+		for at: Vector2 in [Vector2(7100,430),Vector2(7100,260)]: await _move(at)
 	var all_studies: bool = OS.get_cmdline_user_args().has("--survey-studies")
-	for at: Vector2 in [Vector2(6850,660),Vector2(7150,660),Vector2(7150,360),Vector2(7650,370)]: await _move(at)
+	for at: Vector2 in [Vector2(6100,260),Vector2(7100,260),Vector2(7150,360),Vector2(7650,370)]: await _move(at)
 	await _study(&"sunlit-mineral-terrace")
 	await _capture("sea-turtle")
 	await _move(Vector2(8500,360))
 	if OS.get_cmdline_user_args().has("--fauna-demo"):
 		await _move(Vector2(8500,650))
 		await _capture("moray-eel")
-	for at: Vector2 in [Vector2(8750,620),Vector2(9100,620)]: await _move(at)
+	for at: Vector2 in [Vector2(8650,200),Vector2(9800,200),Vector2(9800,620),Vector2(9100,620)]: await _move(at)
 	if all_studies: await _study(&"sunlit-amber-darter")
 	await _move(Vector2(9750,620))
-	for at: Vector2 in [Vector2(9800,710),Vector2(10600,710)]: await _move(at)
-	if all_studies: await _study(&"sunlit-basalt-arch")
+	if all_studies:
+		await _move(Vector2(9800,650))
+		await _fire()
+		await _move(Vector2(10600,650))
+		await _study(&"sunlit-basalt-arch")
+		await _move(Vector2(9800,650))
+	await _move(Vector2(9800,200))
 	await _capture("rock-arch-passages")
-	for at: Vector2 in [Vector2(11780,710),Vector2(11780,350),Vector2(11900,400),Vector2(13000,400),Vector2(14000,480)]: await _move(at)
+	for at: Vector2 in [Vector2(11780,200),Vector2(12300,200),Vector2(13000,400),Vector2(14000,480)]: await _move(at)
 	if all_studies:
 		await _move(Vector2(14000,1020))
 		await _study(&"sunlit-vent-survey")
@@ -275,7 +298,7 @@ func _expanded_course() -> void:
 			await _capture("vent-danger")
 		await _move(Vector2(14000,480))
 		assert(_scene.submarine.damage_system.warning_state==SubmarineDamageSystem.WarningState.SAFE)
-	for at: Vector2 in [Vector2(14700,650),Vector2(15500,650)]: await _move(at)
+	for at: Vector2 in [Vector2(14700,260),Vector2(16400,260),Vector2(16400,650),Vector2(15500,650)]: await _move(at)
 	if all_studies: await _study(&"sunlit-blue-grazer")
 	await _move(Vector2(16600,650))
 	if all_studies:
@@ -305,14 +328,20 @@ func _expanded_course() -> void:
 		else: await _frames(240)
 		assert(_scene.submarine.hull_system.hull<hull)
 		await _capture("hammerhead-ram")
-		await _move(Vector2(19000,650))
+		await _move(Vector2(19000,400))
 		assert(_scene.chapter.guide.hammerhead.threat.phase!=PredatorState.Phase.PURSUE)
 		await _capture("hammerhead-safe-retreat")
-	await _move(Vector2(20000,480))
+	for at: Vector2 in [Vector2(19650,320),Vector2(19750,320),Vector2(19750,600)]: await _move(at)
+	assert(not _scene.chapter.buoy.visible)
+	await _tap(JOY_BUTTON_X)
+	await _frames(110)
+	assert(not _scene.chapter.buoy.visible,"A sweep at the shelter entrance cannot skip the baffles.")
+	await _capture("shelter-entrance")
+	for at: Vector2 in [Vector2(19900,710),Vector2(20300,710),Vector2(20300,560),Vector2(20600,560)]: await _move(at)
 	assert(not _scene.chapter.buoy.visible)
 	await _capture("buoy-before-sonar")
 	await _tap(JOY_BUTTON_X)
-	await _frames(15)
+	await _frames(2)
 	assert(not _scene.chapter.buoy.visible)
 	await _capture("sonar-travelling")
 	await _frames(95)
@@ -361,7 +390,7 @@ func _initialize() -> void:
 	_clock.player = _scene.submarine
 	root.add_child(_clock)
 	_scene.submarine.sonar.pulse_emitted.connect(func(_event: AcousticEvent) -> void: _pings+=1)
-	_scene.torpedoes.fired.connect(func(_id: StringName) -> void: _shots+=1)
+	_scene.torpedoes.fired.connect(_round_fired)
 	_scene.torpedoes.detonated.connect(func(_id: StringName,at: Vector2) -> void:
 		if not _captures.is_empty() and at.x>4500 and at.x<5050: _capture("underwater-detonation-"+str(_shots)))
 	if not _captures.is_empty():
@@ -385,9 +414,13 @@ func _initialize() -> void:
 		await _activate(_control("BackBriefing"))
 		await _activate(_control("LaunchSunlit"))
 		assert(_scene.chapter.active and _scene.chapter.state()=="accepted")
+		await _frames(6)
+		assert(_scene.pilot_context.size.y<140.0)
+		await _capture("surface-departure")
 		# Research technology remains accessible before this mission; no new currency.
 		await _interact()
 		await _activate(_control("Technology"))
+		await _capture("technology-icons")
 		await _activate(_control("sonarAssign"))
 		assert(int(_scene.revision.campaign.ranks.sonar)==1)
 		await _activate(_control("BackOperations"))
@@ -402,8 +435,6 @@ func _initialize() -> void:
 			quit()
 			return
 		await _move(Vector2(1280,480))
-		await _tap(JOY_BUTTON_X)
-		await _frames(100)
 		await _interact()
 		assert(_scene.bloom.modal())
 		await _capture("bloom-choice")
@@ -412,6 +443,13 @@ func _initialize() -> void:
 		assert(_scene.bloom.modal())
 		await _capture("bloom-outcome")
 		await _activate(_scene.bloom.panel.page.find_child("ReturnFromBloom",true,false) as Control)
+		await _tap(JOY_BUTTON_LEFT_SHOULDER)
+		for unused: int in range(12):
+			if _scene.revision.ui.notifications.selected=="sunlit-bloom-response": break
+			await _activate(_control("NextRadio"))
+		assert(_scene.revision.ui.notifications.selected=="sunlit-bloom-response")
+		await _capture("bloom-radio-portrait")
+		await _activate(_control("CloseRadio"))
 		await _expanded_course()
 		await _capture("buoy-environment")
 		await _interact()
@@ -424,7 +462,10 @@ func _initialize() -> void:
 			if _scene.revision.ui.notifications.selected=="sunlit-buoy-recovered": break
 			await _activate(_control("NextRadio"))
 		assert(_scene.revision.ui.notifications.selected=="sunlit-buoy-recovered")
-		await _activate(_control("RadioDown"))
+		for unused: int in range(80):
+			if root.gui_get_focus_owner()==_scene.revision.ui.notifications.scroll: break
+			await _tap(JOY_BUTTON_RIGHT_SHOULDER)
+		await _tap(JOY_BUTTON_DPAD_DOWN)
 		assert(_scene.revision.ui.notifications.scroll.scroll_vertical>0)
 		assert(_scene.submarine.is_physics_processing())
 		await _capture("maras-message")
@@ -449,7 +490,7 @@ func _initialize() -> void:
 		var home: Array[Vector2] = SunlitSurveyData.MAIN_ROUTE.duplicate()
 		home.reverse()
 		for at: Vector2 in home: await _move(at)
-		await _move(Vector2(420,480))
+		await _move(SunlitSurveyData.SPAWN)
 		assert(_scene.chapter.state()=="completed")
 	await _frames(90) # Coast below the station's validated docking-speed limit.
 	await _interact()
@@ -465,9 +506,13 @@ func _initialize() -> void:
 	assert(_ack_events==(0 if _resume and _argument("--checkpoint","complete")=="complete" else 1))
 	assert(_scene.submarine.hull_system.hull==100.0)
 	assert(_scene.torpedoes.ammunition==10)
-	assert(_shots==(0 if _resume else (13 if OS.get_cmdline_user_args().has("--empty-ammo-demo") else 3)))
-	assert(_scene.chapter.guide.layout.passage_clear())
-	assert(_scene.excavation.snapshot().any(func(cut: Dictionary) -> bool: return cut.rock=="sunlit-cavein"))
+	assert(_shots==(0 if _resume or OS.get_cmdline_user_args().has("--no-excavation") else ((10 if OS.get_cmdline_user_args().has("--empty-ammo-demo") else 0)+3+(2 if OS.get_cmdline_user_args().has("--survey-studies") else 0))))
+	if OS.get_cmdline_user_args().has("--no-excavation"):
+		assert(not _scene.chapter.guide.layout.passage_clear())
+		assert(_scene.excavation.snapshot().is_empty())
+	else:
+		assert(_scene.chapter.guide.layout.passage_clear())
+		assert(_scene.excavation.snapshot().any(func(cut: Dictionary) -> bool: return cut.rock=="sunlit-cavein"))
 	assert(_scene.revision.campaign.awards==["commission"])
 	assert(_scene.research.is_completed(SunlitShallowsData.BUOY))
 	await _activate(_control("Technology"))
@@ -475,10 +520,12 @@ func _initialize() -> void:
 	if OS.get_cmdline_user_args().has("--survey-studies"):
 		assert(ResearchExperienceData.points(_scene.revision.campaign.science)==2)
 		# Spend beyond the two-point commissioning budget through real station UI.
-		await _activate(_control("hullAssign"))
-		await _activate(_control("hullAssign"))
-		assert(int(_scene.revision.campaign.ranks.hull)==2)
-		assert(CampaignData.available(_scene.revision.campaign)==1)
+		assert(CampaignData.available(_scene.revision.campaign)==2)
+		assert((_control("hullAssign") as Button).disabled)
+		await _activate(_control("ReassignAll"))
+		await _activate(_control("engineAssign"))
+		assert(int(_scene.revision.campaign.ranks.engine)==1)
+		assert(_scene.submarine.motion.acceleration==180.0)
 		await _capture("research-xp-assigned")
 	print("SUNLIT_CHAPTER_WALK_PASS outcome=",_outcome," input=",("keyboard" if _keyboard else "controller")," resumed=",_resume," choices=",_choice_events," claims=",_ack_events," simulation_seconds=",_clock.seconds," wall_seconds=",(Time.get_ticks_usec()-_wall_started)/1000000.0," research_xp=",ResearchExperienceData.total(_scene.revision.campaign.science)," shots=",_shots," muted=true")
 	_clock.queue_free()

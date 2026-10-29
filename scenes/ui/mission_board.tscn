@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 [ext_resource type="Script" path="res://scripts/ui/mission_board.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/ui_scroll_reader.gd" id="reader"]
 [node name="MissionBoard" type="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -21,6 +22,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 [node name="MissionDetailScroll" type="ScrollContainer" parent="Body"]
+script = ExtResource("reader")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -59,14 +61,6 @@ text = "Sync / retry progress"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Recover backup"
-[node name="ScrollMissionUp" type="Button" parent="Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Details ↑"
-[node name="ScrollMissionDown" type="Button" parent="Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Details ↓"
 [node name="BackMissions" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2

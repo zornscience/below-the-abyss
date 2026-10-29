@@ -258,10 +258,13 @@ func test_log_controls_readable_at_reference_and_compact_sizes_with_scroll_actio
 		await get_tree().process_frame
 		await get_tree().process_frame
 		var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(size))
-		for control: Control in [scene.expedition_log.close_button, scene.expedition_log.begin_button, scene.expedition_log.debrief_button, scene.expedition_log.get_node("%StoryScroll"), scene.expedition_log.get_node("%StoryDown")]:
+		for control: Control in [scene.expedition_log.close_button, scene.expedition_log.begin_button, scene.expedition_log.debrief_button, scene.expedition_log.get_node("%StoryScroll")]:
 			assert_true(bounds.encloses(control.get_global_rect()), control.name)
 		assert_eq(scene.expedition_log.detail.get_theme_font_size("font_size"), UiTypography.size_for(&"body"))
-		(scene.expedition_log.get_node("%StoryDown") as Button).pressed.emit()
+		var event: InputEventKey = InputEventKey.new()
+		event.keycode = KEY_PAGEDOWN
+		event.pressed = true
+		(scene.expedition_log.get_node("%StoryScroll") as UiScrollReader).handle_reading_input(event)
 		if size.x == 800:
 			assert_gt((scene.expedition_log.get_node("%StoryScroll") as ScrollContainer).scroll_vertical, 0)
 		scene.close_story()

@@ -10,8 +10,8 @@ const ROOTS: Array[Vector2] = [Vector2(740,800),Vector2(820,800),Vector2(940,800
 	Vector2(2825,735),Vector2(2950,800),Vector2(3080,800),Vector2(3200,800),Vector2(3340,800),
 	Vector2(3510,800),Vector2(3590,800),Vector2(3710,740),Vector2(3800,800)]
 var rocks: SunlitRockDressing
-const BUBBLE_SOURCES: Array[Vector2] = [Vector2(850,782),Vector2(5400,780),Vector2(6800,780),Vector2(8400,782),Vector2(10600,780),Vector2(11780,780),Vector2(13100,780),Vector2(14000,2470),Vector2(15000,780),Vector2(16900,780),Vector2(19100,1000),Vector2(20600,780)]
-const BUBBLE_RISE: Array[float] = [420,420,140,420,300,420,420,420,280,420,420,420]
+const BUBBLE_SOURCES: Array[Vector2] = [Vector2(850,782),Vector2(5400,780),Vector2(6800,482),Vector2(8400,782),Vector2(10600,780),Vector2(11780,780),Vector2(13100,780),Vector2(14000,2470),Vector2(15000,780),Vector2(16900,780),Vector2(19100,1000),Vector2(20600,780)]
+const BUBBLE_RISE: Array[float] = [420,420,70,420,220,420,420,420,260,420,420,420]
 var phase: float = 0.0
 var reduced_motion: bool = false
 var reduced_effects: bool = false
@@ -54,6 +54,7 @@ func configure(region: Node2D,boundary: Node2D,animals: Array[AcousticCreature])
 	_visibility()
 
 func _compose() -> void:
+	if _composed or not is_inside_tree() or not is_visible_in_tree(): return
 	_composed = true
 	_backgrounds()
 	var roots: Array[Vector2] = ROOTS.duplicate()
@@ -71,17 +72,24 @@ func _compose() -> void:
 		var anchor_x: float = 0.55 if species==0 else (0.62 if species==1 else 0.5)
 		if index%3==1: anchor_x = 1.0-anchor_x
 		plant.offset = -Vector2(atlas.get_width()*anchor_x,atlas.get_height()*(0.96 if upper else 0.94))
-		plant.position = roots[index]-Vector2(0,2)
+		var root: Vector2 = roots[index]
+		# Resolve the authored planting column once; excavation never moves plants.
+		for y: int in range(180,810,4):
+			var probe: Vector2 = Vector2(root.x,y)
+			if rocks.contains_stone(probe+Vector2(0,5)) and not rocks.contains_stone(probe-Vector2(0,8)):
+				root = probe
+				break
+		plant.position = root-Vector2(0,2)
 		var height: float = 60.0+float((index*23)%80)
 		if index in [4,5,6,7,8,18,19,20]: height *= 0.65
 		plant.scale = Vector2.ONE*height/atlas.get_height()
 		plant.flip_h = index%3==1
 		plant.modulate = Color(0.59,0.79,0.73,0.92)
 		plant.z_index = 1
-		plant.set_meta("authored_root",roots[index])
+		plant.set_meta("authored_root",root)
 		add_child(plant)
 		_plants.append(plant)
-	var cradle: Sprite2D = _sprite(CRADLE,Rect2(180,414,480,320),Color(0.85,0.93,0.90))
+	var cradle: Sprite2D = _sprite(CRADLE,Rect2(180,0,480,300),Color(0.85,0.93,0.90))
 	cradle.name = "HalcyonServiceCradle"
 	cradle.z_index = 3
 	_make_snow(36,false)
@@ -113,13 +121,13 @@ func _sprite(texture: Texture2D,rectangle: Rect2,tint: Color,parent: Node = null
 
 func _backgrounds() -> void:
 	var far: Parallax2D = _layer(Vector2(0.16,0.10),-6)
-	var panorama: Sprite2D = _sprite(PANORAMA,Rect2(-1400,-750,7000,1500),Color(0.24,0.40,0.44,0.35),far)
+	var panorama: Sprite2D = _sprite(PANORAMA,Rect2(-1400,180,7000,1300),Color(0.24,0.40,0.44,0.35),far)
 	var fade: ShaderMaterial = ShaderMaterial.new()
 	fade.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
 	panorama.material = fade
 	var middle: Parallax2D = _layer(Vector2(0.42,0.25),-4)
 	for index: int in range(10):
-		var relief: Sprite2D = _sprite(HalcyonDescent.CLIFF,Rect2(-600+index*1100,-120,650,1150),Color(0.38,0.65,0.66,0.13),middle)
+		var relief: Sprite2D = _sprite(HalcyonDescent.CLIFF,Rect2(-600+index*1100,160,650,1150),Color(0.38,0.65,0.66,0.13),middle)
 		var edge: ShaderMaterial = ShaderMaterial.new()
 		edge.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
 		relief.material = edge
@@ -188,7 +196,7 @@ func set_simulating(value: bool) -> void:
 func _visibility() -> void:
 	var active: bool = is_visible_in_tree()
 	if rocks!=null: rocks.set_active(active)
-	if active and _configured and not _composed: _compose()
+	if active and _configured and not _composed: _compose.call_deferred()
 	if active and rocks!=null: _refresh_plants.call_deferred()
 	if is_instance_valid(_legacy_atmosphere): _legacy_atmosphere.visible = false if active else _legacy_visible
 	for item: Dictionary in _legacy_relief:

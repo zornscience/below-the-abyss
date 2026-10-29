@@ -29,7 +29,7 @@ func test_buses_routes_and_original_loop_imports() -> void:
 		assert_eq(stream.mix_rate, 22050)
 		assert_eq(stream.loop_mode, AudioStreamWAV.LOOP_FORWARD)
 		assert_gt(stream.get_length(), 1.0)
-		assert_eq(_mixer._loops[id].bus, &"Ambience" if id in ["ocean", "current", "tension"] else &"Effects")
+		assert_eq(_mixer._loops[id].bus, &"Music" if id=="sunlit_music" else (&"Ambience" if id in ["ocean", "current", "tension"] else &"Effects"))
 	watch_signals(_mixer)
 	assert_true(_mixer.request(&"ping"))
 	assert_signal_emitted_with_parameters(_mixer, "cue_played", [&"ping", "Effects"])

@@ -2,6 +2,7 @@
 [ext_resource type="Script" path="res://scripts/world/scan_definition.gd" id="1"]
 [resource]
 script = ExtResource("1")
+requires_sonar = false
 stable_id = &"zone1-light-bloom-scan"
 required_poi_id = &"zone1-light-bloom-habitat"
 classification = "biological"

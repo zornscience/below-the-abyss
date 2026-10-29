@@ -3,20 +3,19 @@ func test_finite_budget_requires_real_authored_award_ids_and_cannot_overspend() 
 	var data: Dictionary = CampaignData.fresh()
 	assert_true(CampaignData.valid(data))
 	assert_eq(CampaignData.earned(data),2)
-	data.ranks = {"sonar":1,"hull":1}
+	data.ranks.sonar = 1
 	assert_eq(CampaignData.available(data),0)
 	assert_true(CampaignData.valid(data))
-	data.ranks.sonar = 2
+	data.ranks.hull = 1
 	assert_false(CampaignData.valid(data))
 	data.awards.append("outer-survey")
-	assert_true(CampaignData.valid(data))
+	assert_false(CampaignData.valid(data))
 	data.awards.append("wreck-decoded")
 	data.decoded = true
 	assert_eq(CampaignData.earned(data),4)
-	data.ranks = {"sonar":3,"hull":1}
+	assert_false(CampaignData.valid(data),"Two new ranks cost five points.")
+	data.ranks.hull = 0
 	assert_true(CampaignData.valid(data))
-	data.ranks.hull = 2
-	assert_false(CampaignData.valid(data))
 func test_duplicate_invalid_and_malformed_ledgers_are_rejected() -> void:
 	for modification: Dictionary in [{"awards":["commission","commission"]},{"awards":["infinite-money"]},{"decoded":true},{"messages":["unknown"]},{"ranks":{"sonar":true,"hull":0}},{"ranks":{"sonar":-1,"hull":0}},{"ranks":{"sonar":0,"hull":0,"extra":0}}]:
 		var data: Dictionary = CampaignData.fresh()
@@ -24,9 +23,10 @@ func test_duplicate_invalid_and_malformed_ledgers_are_rejected() -> void:
 		assert_false(CampaignData.valid(data))
 func test_reassignment_preserves_total_earned_and_permanent_awards() -> void:
 	var previous: Dictionary = CampaignData.fresh()
-	previous.ranks = {"sonar":1,"hull":1}
+	previous.ranks.sonar = 1
 	var next: Dictionary = previous.duplicate(true)
-	next.ranks = {"sonar":2,"hull":0}
+	next.ranks.sonar = 0
+	next.ranks.hull = 1
 	assert_true(CampaignData.contains_earned(next,previous))
 	assert_eq(CampaignData.available(next),0)
 	next.awards = []
@@ -35,7 +35,9 @@ func test_legacy_upgrade_ids_migrate_into_paid_ranks_without_double_stacking() -
 	var progress: Dictionary = {"upgrades":["sonar-range-1200","pressure-hull-400"],"research":[],"missions":{}}
 	var migrated: Dictionary = CampaignData.migrate(progress)
 	assert_true(CampaignData.valid(migrated))
-	assert_eq(migrated.ranks,{"sonar":1,"hull":1})
+	assert_eq(migrated.ranks.sonar,1)
+	assert_eq(migrated.ranks.hull,1)
+	assert_eq(migrated.legacy_ranks,{"sonar":1,"hull":1})
 	assert_eq(CampaignData.available(migrated),0)
 func test_v3_save_migrates_ammunition_and_allocations_in_memory() -> void:
 	var old: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data

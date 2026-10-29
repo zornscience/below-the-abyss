@@ -1,0 +1,14 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=3
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=4
+SUNLIT_ROUTE_SCAN sunlit-amber-darter shots=4
+SUNLIT_ROUTE_SCAN sunlit-basalt-arch shots=5
+SUNLIT_ROUTE_SCAN sunlit-vent-survey shots=5
+SUNLIT_ROUTE_SCAN sunlit-blue-grazer shots=5
+SUNLIT_ROUTE_SCAN sunlit-pillow-basalt shots=5
+SUNLIT_ROUTE_SCAN sunlit-sediment-fan shots=5
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=keyboard resumed=false choices=1 claims=1 simulation_seconds=602.983333333114 wall_seconds=211.522827 research_xp=260 shots=5 muted=true

@@ -92,7 +92,7 @@ func test_unread_badge_remains_after_preview_without_acknowledging() -> void:
 	game.revision.start()
 	var radio: RadioNotifications = game.revision.ui.notifications
 	game.revision.show_transmission("dispatch",true)
-	radio._process(20)
+	radio._process(120)
 	assert_true(radio.badge.visible)
 	assert_false(radio.panel.visible)
 	assert_true(radio.contains_message("dispatch"))
@@ -122,7 +122,7 @@ func test_tracker_follows_bloom_recording_return_and_claim() -> void:
 	game.bloom.interact()
 	assert_eq(game.bloom.choose_collect(),OK)
 	game.bloom.leave()
-	assert_true(game.mission_tracker.detail.text.contains("fractured passage"))
+	assert_true(game.mission_tracker.detail.text.contains("open shelf"))
 	for x: float in [4550.0,4690.0,4830.0]: game.excavation.excavate(Vector2(x,480),150)
 	assert_true(game.chapter.guide.layout.passage_clear())
 	assert_true(game.mission_tracker.detail.text.contains("sonar search"))
@@ -222,14 +222,14 @@ func test_observed_bloom_and_tracker_restore_without_replaying_choice_or_exposin
 	game.bloom.choose_observe()
 	game.submarine.scanner.advance(3)
 	game.bloom.leave()
-	assert_true(game.mission_tracker.detail.text.contains("fractured passage"))
+	assert_true(game.mission_tracker.detail.text.contains("open shelf"))
 	assert_false(game.mission_tracker.detail.text.contains("Twilight"))
 	game.submarine.set_simulation_enabled(false)
 	assert_eq(game.saves.save_current(),OK)
 	watch_signals(game.story)
 	game.mission_tracker.detail.text = "stale"
 	assert_eq(game.saves.continue_expedition(),OK)
-	assert_true(game.mission_tracker.detail.text.contains("fractured passage"))
+	assert_true(game.mission_tracker.detail.text.contains("open shelf"))
 	assert_signal_not_emitted(game.story,"choice_applied")
 func test_radio_failed_writes_leave_message_unread_and_do_not_accept_mission() -> void:
 	game.revision.start()
@@ -283,6 +283,7 @@ func test_radio_and_danger_warning_never_overlap_at_minimum_large_text_size() ->
 	preferences.high_contrast = true
 	preferences.reduced_motion = true
 	game.settings.set_accessibility(preferences)
+	game.submarine.global_position = Vector2(420,480)
 	game.submarine.damage_system.set_maximum_depth_m(100)
 	game.revision.show_transmission("dispatch",true)
 	var radio: RadioNotifications = game.revision.ui.notifications

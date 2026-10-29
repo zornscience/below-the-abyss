@@ -10,6 +10,8 @@ var _batch: MultiMeshInstance2D
 var _redraw_clock: float = 0.0
 var _habitat_clear: bool = false
 var _checked: bool = false
+var _swim: ShaderMaterial
+var _swim_phase: float = 0.0
 
 func setup(game: ShelfPrototype) -> Error:
 	_game = game
@@ -18,11 +20,18 @@ func setup(game: ShelfPrototype) -> Error:
 	_batch = MultiMeshInstance2D.new()
 	_batch.multimesh = MultiMesh.new()
 	_batch.multimesh.transform_format = MultiMesh.TRANSFORM_2D
+	_batch.multimesh.use_custom_data = true
 	var quad: QuadMesh = QuadMesh.new()
 	quad.size = Vector2(48,48)
 	_batch.multimesh.mesh = quad
 	_batch.multimesh.instance_count = configuration.population
-	_batch.texture = configuration.texture()
+	_batch.texture = configuration.sprite_sheet
+	_swim = ShaderMaterial.new()
+	_swim.shader = preload("res://assets/shaders/fauna_swim.gdshader")
+	_swim.set_shader_parameter("atlas_input",false)
+	_swim.set_shader_parameter("cell",Vector4(configuration.species/3.0,0,1.0/3.0,1))
+	_batch.material = _swim
+	for index: int in range(configuration.population): _batch.multimesh.set_instance_custom_data(index,Color(fmod(index*0.381966,1.0),0,0,0))
 	_batch.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	add_child(_batch)
 	receiver = AcousticReceiver.new()
@@ -69,6 +78,7 @@ func _physics_process(delta: float) -> void:
 	if not _habitat_clear or global_position.distance_to(_game.submarine.global_position)>1800: return
 	model.react_to_vessel(to_local(_game.submarine.global_position))
 	model.advance(delta)
+	_swim_phase = fmod(_swim_phase+delta*4.0,TAU*100)
 	_redraw_clock += delta
 	if _redraw_clock>=0.05:
 		_redraw_clock = fmod(_redraw_clock,0.05)
@@ -77,6 +87,8 @@ func _physics_process(delta: float) -> void:
 func _update_batch() -> void:
 	if _batch==null: return
 	var reduced: bool = _game.settings.snapshot().accessibility.reduced_motion
+	_swim.set_shader_parameter("phase",_swim_phase)
+	_swim.set_shader_parameter("amount",0.0 if reduced else 1.0)
 	for index: int in range(model.positions.size()):
 		var facing: float = -1.0 if cos(model.headings[index])<0 else 1.0
 		var angle: float = model.headings[index]-(PI if facing<0 else 0.0)

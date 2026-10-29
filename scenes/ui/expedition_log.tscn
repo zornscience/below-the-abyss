@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 [ext_resource type="Script" path="res://scripts/ui/expedition_log.gd" id="script"]
 [ext_resource type="Theme" path="res://resources/balance/instrument_theme.tres" id="theme"]
+[ext_resource type="Script" path="res://scripts/ui/ui_scroll_reader.gd" id="reader"]
+
 [node name="ExpeditionLog" type="Control"]
 visible = false
 anchors_preset = 15
@@ -30,7 +32,7 @@ text = "EXPEDITION LOG / The Quiet Run"
 metadata/typography_role = &"heading"
 [node name="Help" type="Label" parent="Margin/Content"]
 layout_mode = 2
-text = "Arrows / Tab / D-pad: select · Enter / A: activate · Esc / B: back · Text ↑↓: scroll"
+text = "Arrows / Tab / D-pad: select · Enter / A: activate · Esc / B: back · Page Up/Down or focus the scrollbar to scroll"
 autowrap_mode = 2
 metadata/typography_role = &"body"
 [node name="StoryObjective" type="Label" parent="Margin/Content"]
@@ -53,6 +55,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 [node name="StoryScroll" type="ScrollContainer" parent="Margin/Content/Body"]
+script = ExtResource("reader")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -85,14 +88,4 @@ custom_minimum_size = Vector2(0, 40)
 unique_name_in_owner = true
 layout_mode = 2
 text = "Submit expedition debrief"
-custom_minimum_size = Vector2(0, 40)
-[node name="StoryUp" type="Button" parent="Margin/Content/Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Text ↑"
-custom_minimum_size = Vector2(0, 40)
-[node name="StoryDown" type="Button" parent="Margin/Content/Actions"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Text ↓"
 custom_minimum_size = Vector2(0, 40)

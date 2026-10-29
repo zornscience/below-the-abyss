@@ -48,7 +48,7 @@ func _draw() -> void:
 	var font: Font = ThemeDB.fallback_font
 	if survey_enabled:
 		_draw_survey()
-	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
+	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), "HALCYON / SURVEY CHART" if survey_enabled else "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	for index: int in range(points.size()):
 		var point: PointOfInterest = points[index]
 		var at: Vector2 = _point(point.map_position)
@@ -84,7 +84,7 @@ func _draw_survey() -> void:
 		var shape: PackedVector2Array = []
 		for at: Vector2 in polygon: shape.append(_point(at))
 		if shape.size()>=3: draw_colored_polygon(shape,Color("63817d"))
-	var station: Vector2 = _point(Vector2(420,480))
+	var station: Vector2 = _point(SunlitSurveyData.SPAWN)
 	draw_rect(Rect2(station-Vector2(5,5),Vector2(10,10)),Color("f4dc94"))
 	draw_string(ThemeDB.fallback_font,station+Vector2(5,-24),"HALCYON",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),Color("f4dc94"))
 	# Hatching identifies unsurveyed space even with high contrast / no colour cues.

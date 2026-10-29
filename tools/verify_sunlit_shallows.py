@@ -17,7 +17,7 @@ def launch(profile, outcome, device, suffix, extra=()):
 
 def main():
     LOGS.mkdir(parents=True, exist_ok=True)
-    prefix = f"bta051-{time.time_ns()}"
+    prefix = f"bta052-{time.time_ns()}"
     try:
         for outcome in ("observe", "collect"):
             for device in ("keyboard", "controller"):
@@ -26,8 +26,9 @@ def main():
                 # real pressure exposure, missed ping and supply/rearm recovery.
                 extended = ["--survey-studies", "--vent-damage-demo", "--missed-ping-demo",
                             "--empty-ammo-demo", "--low-energy-demo", "--fauna-demo"] if (outcome, device)==("observe", "controller") else []
+                if (outcome,device)==("collect","keyboard"): extended = ["--no-excavation"]
                 launch(profile, outcome, device, "full", extended)
-                launch(profile, outcome, device, "continue", ["--resume"])
+                launch(profile, outcome, device, "continue", ["--resume"]+(["--no-excavation"] if "--no-excavation" in extended else []))
         for outcome, device in [("observe", "keyboard"), ("collect", "controller")]:
             profile = f"{prefix}-mid-{outcome}"
             launch(profile, outcome, device, "quit-at-buoy", ["--stop-at-buoy"])

@@ -54,6 +54,7 @@ func refresh() -> void:
 		list.remove_child(child)
 		child.free()
 	(%EmptyMap as Label).visible = canvas.points.is_empty()
+	(%EmptyMap as Label).text = "No charted observations." if canvas.survey_enabled else "No discovered landmarks."
 	for index: int in range(canvas.points.size()):
 		var point: PointOfInterest = canvas.points[index]
 		var button: Button = Button.new()
@@ -93,6 +94,7 @@ func _select(id: StringName) -> void:
 
 func _refresh_status() -> void:
 	(%DiscoverySaveStatus as Label).text = store.status
+	(%DiscoverySaveStatus as Label).visible = not (canvas.survey_enabled and store.status.begins_with("Progress managed by expedition checkpoint"))
 
 
 func present(position: Vector2, binding_hint: String) -> void:

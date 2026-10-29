@@ -141,7 +141,7 @@ func _initialize() -> void:
 	root.size = Vector2i(800, 600)
 	await _frames(3)
 	await _capture("compact-log")
-	(_scene.expedition_log.get_node("%StoryDown") as Button).grab_focus()
+	(_scene.expedition_log.get_node("%StoryScroll") as Control).grab_focus()
 	for _index: int in range(5):
 		await _tap_button(JOY_BUTTON_A)
 	await _capture("compact-hook")

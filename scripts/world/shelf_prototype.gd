@@ -80,7 +80,7 @@ func _ready() -> void:
 	if extension != null:
 		for grazer: AcousticCreature in extension.wildlife:
 			if grazer.bind_bus(bus) != OK: push_error("Outer wildlife receiver registration failed")
-			submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: grazer.set_suspended(not enabled or (chapter!=null and chapter.active)))
+			submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: grazer.set_suspended(not enabled))
 		for animal: AcousticCreature in [creature,predator]+extension.wildlife:
 			(animal.get_node("StateCaption") as Label).hide()
 	if creature.bind_bus(bus) != OK:

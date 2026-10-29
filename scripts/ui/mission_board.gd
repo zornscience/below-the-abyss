@@ -12,8 +12,6 @@ func _ready() -> void:
 	(%BackMissions as Button).pressed.connect(func() -> void: back_requested.emit())
 	(%AcceptMission as Button).pressed.connect(_act.bind(&"accept"))
 	(%ClaimMission as Button).pressed.connect(_act.bind(&"claim"))
-	(%ScrollMissionUp as Button).pressed.connect(func() -> void: (%MissionDetailScroll as ScrollContainer).scroll_vertical -= 96)
-	(%ScrollMissionDown as Button).pressed.connect(func() -> void: (%MissionDetailScroll as ScrollContainer).scroll_vertical += 96)
 	(%SyncMissions as Button).pressed.connect(_act.bind(&"sync"))
 	(%RecoverMissions as Button).pressed.connect(_act.bind(&"recover"))
 
@@ -84,14 +82,11 @@ func refresh() -> void:
 	var controls: Array[Control] = [%BackMissions]
 	for child: Node in (%MissionList as VBoxContainer).get_children():
 		controls.append(child as Control)
-	for button: Button in [%AcceptMission, %ClaimMission, %SyncMissions, %RecoverMissions, %ScrollMissionUp, %ScrollMissionDown]:
+	for button: Button in [%AcceptMission, %ClaimMission, %SyncMissions, %RecoverMissions]:
 		if not button.disabled:
 			controls.append(button)
-	for index: int in range(controls.size()):
-		for property: String in ["focus_previous", "focus_neighbor_top", "focus_neighbor_left"]:
-			controls[index].set(property, controls[index].get_path_to(controls[posmod(index - 1, controls.size())]))
-		for property: String in ["focus_next", "focus_neighbor_bottom", "focus_neighbor_right"]:
-			controls[index].set(property, controls[index].get_path_to(controls[(index + 1) % controls.size()]))
+	controls.append(%MissionDetailScroll)
+	UiScrollReader.link(controls,%MissionDetailScroll)
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if focus == null or (focus is Button and (focus as Button).disabled):
 		(%BackMissions as Button).grab_focus()

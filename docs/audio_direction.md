@@ -154,3 +154,15 @@ tests, the mix example and limitations. Future reviewed sound replacements shoul
 keep semantic IDs, tested event gating, visual equivalents, headroom, loop seams,
 licenses and authored source recipes. Avoid mixing sound playback into AcousticBus,
 sonar detection, AI state rules or checkpoint serialization.
+
+## BTA-052 quiet exploration score
+
+`assets/audio/sunlit_music.wav` is an original, reproducible 32-second stereo
+22050 Hz PCM score made with `python3 tools/synthesize_sunlit_music.py`. Slow,
+periodic five-note additive pads supply a restrained underwater bed. No recordings,
+external samples or dependencies. Frequencies and envelopes share the loop period.
+The sixth bounded loop routes to **Music**, independently adjustable/mutable using
+the existing audio settings; radio ducking and the quiet paused/menu mix apply.
+It creates no gameplay AcousticEvents. Exact peak/RMS/hash are in
+`assets/audio-provenance.csv`. Godot audio routing/import/mute are tested; human listening and
+headphone mastering remain review work.

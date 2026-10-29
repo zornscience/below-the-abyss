@@ -1,6 +1,6 @@
 class_name BloomChoicePanel
 extends CanvasLayer
-## Nonnumeric, mute-safe story presentation with persistent footer/recovery controls.
+## Nonnumeric, mute-safe story presentation with focusable reading and fixed keyboard/controller recovery.
 var encounter: LightBloomEncounter
 var page: PanelContainer
 var body: VBoxContainer
@@ -22,7 +22,7 @@ func setup(owner_encounter: LightBloomEncounter) -> void:
 	page.add_child(margin)
 	var frame: VBoxContainer = VBoxContainer.new()
 	margin.add_child(frame)
-	scroll = ScrollContainer.new()
+	scroll = UiScrollReader.new()
 	scroll.follow_focus = true
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -31,15 +31,6 @@ func setup(owner_encounter: LightBloomEncounter) -> void:
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation",10)
 	scroll.add_child(body)
-	var footer: HBoxContainer = HBoxContainer.new()
-	frame.add_child(footer)
-	for direction: int in [-1,1]:
-		var button: Button = Button.new()
-		button.text = "Text ↑" if direction<0 else "Text ↓"
-		button.custom_minimum_size = Vector2(100,42)
-		button.pressed.connect(func() -> void: scroll.scroll_vertical += direction*140)
-		footer.add_child(button)
-	page.set_meta("footer",footer)
 	page.hide()
 	UiDialogLayout.bind_panel(page,Vector2(760,500))
 func visible_page() -> bool:
@@ -114,12 +105,10 @@ func _collect() -> void:
 	if result!=OK:
 		_label("Decision not saved. Existing progress is preserved; recover or retry the checkpoint.")
 func _focus() -> void:
-	for node: Node in (page.get_meta("footer") as Control).get_children(): _buttons.append(node as Button)
-	for index: int in range(_buttons.size()):
-		for property: String in ["focus_next","focus_neighbor_bottom","focus_neighbor_right"]: _buttons[index].set(property,_buttons[index].get_path_to(_buttons[(index+1)%_buttons.size()]))
-		for property: String in ["focus_previous","focus_neighbor_top","focus_neighbor_left"]: _buttons[index].set(property,_buttons[index].get_path_to(_buttons[posmod(index-1,_buttons.size())]))
-	if not _buttons.is_empty():
-		(_buttons[-2] if _response else _buttons[0]).grab_focus()
+	var controls: Array[Control] = [scroll]
+	controls.append_array(_buttons)
+	UiScrollReader.link(controls,scroll)
+	scroll.grab_focus()
 	scroll.set_deferred("scroll_vertical",0)
 	if _response: _queue_read_scroll.call_deferred()
 func _queue_read_scroll() -> void:
@@ -128,9 +117,8 @@ func _queue_read_scroll() -> void:
 		get_tree().process_frame.connect(_reset_read_scroll,CONNECT_ONE_SHOT)
 func _reset_read_scroll() -> void:
 	# Accessibility font reflow and focus-follow finish after the initial layout.
-	var footer: Control = page.get_meta("footer") as Control
 	var focus: Control = get_viewport().gui_get_focus_owner()
-	if page.visible and _response and focus!=null and footer.is_ancestor_of(focus):
+	if page.visible and _response and focus!=null and focus==scroll:
 		scroll.scroll_vertical = 0
 func refresh_comfort() -> void:
 	if body==null: return

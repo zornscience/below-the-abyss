@@ -9,6 +9,7 @@ const MAX_MESH_CACHE: int = 64
 static var _mesh_cache: Dictionary[String,Array] = {}
 var _surfaces: Array[Dictionary] = []
 var _paint: ShaderMaterial
+var _edge: ShaderMaterial
 var _fractured: ShaderMaterial
 var _active: bool = false
 var _queued: bool = false
@@ -20,8 +21,10 @@ func configure(region: Node2D,boundary: Node2D) -> void:
 	_paint = ShaderMaterial.new()
 	_paint.shader = PAINT
 	_paint.set_shader_parameter("painted_rock",preload("res://assets/art/sunlit/basalt_strata.png"))
+	_edge = ShaderMaterial.new()
+	_edge.shader = preload("res://assets/shaders/sunlit_edge.gdshader")
 	_fractured = _paint.duplicate(false) as ShaderMaterial
-	_fractured.set_shader_parameter("mineral_tint",Color(1.4,1.15,0.75))
+	_fractured.set_shader_parameter("friable",1.0)
 	for node: Node in region.get_node("Terrain").get_children():
 		if node is GrayboxRock: _remember(node,node.get_node("Silhouette") as CanvasItem,not String(node.name).begins_with("Station"))
 		elif node is DestructibleRock: _remember(node,node,true)
@@ -42,7 +45,9 @@ func set_active(value: bool) -> void:
 		var target: CanvasItem = item.target.get_ref() as CanvasItem
 		if is_instance_valid(target) and item.painted:
 			var source: Node = item.source.get_ref()
-			target.material = (_fractured if source is DestructibleRock and source.rock_id=="sunlit-cavein" else _paint) if value else item.original
+			target.material = (_fractured if source is DestructibleRock else _paint) if value else item.original
+			if source is GrayboxRock and source.name==&"WestBoundary": source.draw_outline = not value
+			if source is Node2D: source.queue_redraw()
 
 func contains_stone(point: Vector2) -> bool:
 	for piece: PackedVector2Array in _pieces:
@@ -73,8 +78,7 @@ func refresh() -> void:
 		if _geometry(item)==item.geometry: continue
 		# Only changed trim is removed immediately. Unchanged geometry stays cached.
 		for node: Polygon2D in item.trims:
-			remove_child(node)
-			node.queue_free()
+			node.free()
 		item.trims.clear()
 		item.geometry = []
 	_rebuild.call_deferred()
@@ -106,7 +110,8 @@ func _rebuild() -> void:
 			trim.polygon = spec.vertices
 			trim.uv = spec.uv
 			trim.texture = EDGE
-			trim.color = Color(0.65,0.78,0.73,0.8)
+			trim.material = _edge
+			trim.color = Color(0.92,0.65,0.38,0.9) if item.source.get_ref() is DestructibleRock else Color(0.65,0.78,0.73,0.8)
 			add_child(trim)
 			item.trims.append(trim)
 	set_active(_active)
@@ -141,3 +146,11 @@ func _build_specs(geometry: Array) -> Array:
 							uv.append(Vector2(u,(point-a).dot(inward)/72.0)*EDGE.get_size())
 						specs.append({"origin":a,"vertices":vertices,"uv":uv})
 	return specs
+
+func set_headlight(origin: Vector2,direction: Vector2,distances: PackedFloat32Array,intensity: float) -> void:
+	if distances.size()!=9: return
+	for paint: ShaderMaterial in [_paint,_fractured,_edge]:
+		paint.set_shader_parameter("lamp_origin",origin)
+		paint.set_shader_parameter("lamp_direction",direction)
+		paint.set_shader_parameter("lamp_stops",distances)
+		paint.set_shader_parameter("lamp_intensity",intensity)

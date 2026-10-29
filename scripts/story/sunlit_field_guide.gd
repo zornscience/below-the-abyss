@@ -1,7 +1,7 @@
 class_name SunlitFieldGuide
 extends Node
 ## Domain adapters, not another mission ledger. Hints/particles are temporary.
-const RADIO_IDS: Array[String] = ["sunlit-map-guidance","sunlit-cavein-guidance","sunlit-search-guidance","sunlit-pressure-guidance","sunlit-recovery-guidance"]
+const RADIO_IDS: Array[String] = ["sunlit-map-guidance","sunlit-cavein-guidance","sunlit-search-guidance","sunlit-pressure-guidance","sunlit-recovery-guidance","sunlit-bloom-response"]
 var scene: ShelfPrototype
 var layout: SunlitRegionLayout
 var schools: Array[AmbientFishSchool] = []
@@ -28,7 +28,7 @@ func setup(game: ShelfPrototype) -> void:
 	ambient = AmbientAcousticField.new()
 	ambient.name = "SunlitAmbientField"
 	scene.region.add_child(ambient)
-	for item: Dictionary in [{"id":"halcyon-field-generator","at":Vector2(420,500),"kind":&"mechanical","range":1400.0},{"id":"sunlit-vent-noise","at":Vector2(14000,1180),"kind":&"geological","range":1800.0}]:
+	for item: Dictionary in [{"id":"halcyon-field-generator","at":Vector2(420,80),"kind":&"mechanical","range":1400.0},{"id":"sunlit-vent-noise","at":Vector2(14000,1180),"kind":&"geological","range":1800.0}]:
 		var source: AmbientSoundEmitter = AmbientSoundEmitter.new()
 		source.source_id = StringName(item.id)
 		source.session_id = &"sunlit-ambient"
@@ -49,10 +49,11 @@ func setup(game: ShelfPrototype) -> void:
 		if item.kind!="biological": continue
 		_add_school(item.id,item.at,int(item.school),8+int(item.school)*2)
 	for index: int in range(3):
-		_add_school("sunlit-ambient-%d" % index,[Vector2(5200,620),Vector2(12500,400),Vector2(20500,480)][index],index,5+index)
+		_add_school("sunlit-ambient-%d" % index,[Vector2(5200,620),Vector2(12500,400),Vector2(20700,240)][index],index,5+index)
 	for child: Node in scene.region.get_children():
-		if child is OuterShelfInk or child is ExpeditionWreck :
+		if child is OuterShelfInk or child is ExpeditionWreck:
 			_foreign.append({"node":weakref(child),"visible":child.visible})
+	_foreign.append({"node":weakref(scene.predator),"visible":scene.predator.visible})
 	_make_fauna()
 	scene.excavation.geometry_changed.connect(_geometry_changed)
 	scene.torpedoes.detonated.connect(_blast)
@@ -90,7 +91,7 @@ func set_enabled(value: bool) -> void:
 		animal.visible = not value and not animal._destroyed
 		animal.set_suspended(value or not scene.submarine.is_physics_processing())
 	for echo: Node in scene.region.get_node("SonarTargets").get_children():
-		var legacy: bool = false
+		var legacy: bool = echo.target_id in [&"overlook-marker",&"cave-marker"]
 		for point: Dictionary in ShelfChapterData.POINTS:
 			if echo.target_id==StringName(point.echo): legacy = true
 		if legacy:
@@ -117,6 +118,8 @@ func set_enabled(value: bool) -> void:
 	_refresh()
 
 func _simulation(enabled: bool) -> void:
+	scene.predator.set_suspended(_enabled or not enabled)
+	scene.predator.visible = not _enabled and not scene.predator._destroyed
 	if _enabled:
 		for animal: AcousticCreature in scene.extension.wildlife:
 			animal.set_suspended(true)
@@ -133,7 +136,7 @@ func _simulation(enabled: bool) -> void:
 func _announce(id: String,body: String,voice: String) -> void:
 	if id in _announced: return
 	_announced.append(id)
-	scene.revision.ui.notifications.enqueue(id,body,voice,id in ["sunlit-pressure-guidance","sunlit-recovery-guidance"])
+	scene.revision.ui.notifications.enqueue(id,body,voice,id in ["sunlit-pressure-guidance","sunlit-recovery-guidance","sunlit-bloom-response"])
 
 func _physics_process(delta: float) -> void:
 	if not _enabled or not scene.submarine.is_physics_processing(): return
@@ -145,10 +148,10 @@ func _physics_process(delta: float) -> void:
 	if at.x>780:
 		_announce("sunlit-map-guidance","Lantern-2, we've marked the last known location of Lantern-1's emergency buoy signal on your map. The coordinates aren't exact. Open your map ("+scene.input_context.describe(&"open_map")+") and explore toward the marked search area. Charted rock is solid; hatched sectors are not yet surveyed. Select Zoom and Pan with the same menu controls.","Okafor")
 	if at.x>4000 and at.x<4800 and not layout.passage_clear():
-		_announce("sunlit-cavein-guidance","A recent cave-in has blocked the passage. Lantern-2 carries excavation torpedoes. This is a thick fractured plug: several well-placed blasts are needed. Face the rock and fire ("+scene.input_context.describe(&"fire_torpedo")+") to clear an opening. It must be wide enough for the entire hull. Halcyon can rearm you; the return passage stays open.","Wick")
+		_announce("sunlit-cavein-guidance","A fractured rockfall blocks this optional lower passage. The open-water route above it remains clear. Lantern-2 carries excavation torpedoes. This is a thick fractured plug: several well-placed blasts are needed. Face the rock and fire ("+scene.input_context.describe(&"fire_torpedo")+") to clear an opening. It must be wide enough for the entire hull. Halcyon can rearm you; the return passage stays open.","Wick")
 		scene.tutorial.show_hint("torpedo")
 	if SunlitSurveyData.SEARCH.has_point(at) and scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.HIDDEN:
-		_announce("sunlit-search-guidance","We've reached the last reported coordinates, but I don't have a visual contact. Try an active sonar ping ("+scene.input_context.describe(&"sonar_ping")+"). The buoy's acoustic reflector may still respond. The circle is approximate: move within it if the first pulse misses.","Wick")
+		_announce("sunlit-search-guidance","We've reached the last reported coordinates, but the damaged reflector is sheltered by rock. Explore beneath the overhang and change your depth; a sweep above the ridge cannot reach it. From inside a clear channel, try an active sonar ping ("+scene.input_context.describe(&"sonar_ping")+"). The buoy's acoustic reflector may still respond. The circle is approximate: move within it if the first pulse misses.","Wick")
 	if SunlitSurveyData.VENT.has_point(at) and scene.submarine.damage_system.warning_state!=SubmarineDamageSystem.WarningState.SAFE:
 		_announce("sunlit-pressure-guidance","Caution. We're approaching Lantern-2's current rated operating depth. Check the rating beside your depth readout. I recommend ascending. This shaft is optional; follow the same open passage upward. Pressure damage begins only below the fitted rating, after the existing grace period.","Wick")
 	if scene.submarine.hull_system.hull<=0:
@@ -196,12 +199,12 @@ func _refresh() -> void:
 	canvas.survey_polygons.clear()
 	canvas.charted.clear()
 	if not _enabled: return
-	canvas.charted.append(Rect2(120,220,4880,580))
+	canvas.charted.append(Rect2(120,0,4880,1140))
 	var regions: Array[Dictionary] = [
-		{"bounds":Rect2(5000,220,3500,580),"ids":[SunlitSurveyData.CLEARED,&"sunlit-silver-shoal-poi",&"sunlit-mineral-terrace-poi"]},
-		{"bounds":Rect2(8500,220,3500,580),"ids":[&"sunlit-amber-darter-poi",&"sunlit-basalt-arch-poi"]},
-		{"bounds":Rect2(12000,220,5000,580),"ids":[&"sunlit-blue-grazer-poi",&"sunlit-vent-survey-poi"]},
-		{"bounds":Rect2(17000,220,4920,580),"ids":[&"sunlit-sediment-fan-poi",SunlitShallowsData.POI]}]
+		{"bounds":Rect2(5000,0,3500,1140),"ids":[SunlitSurveyData.CLEARED,&"sunlit-silver-shoal-poi",&"sunlit-mineral-terrace-poi"]},
+		{"bounds":Rect2(8500,0,3500,1140),"ids":[&"sunlit-amber-darter-poi",&"sunlit-basalt-arch-poi"]},
+		{"bounds":Rect2(12000,0,5000,1140),"ids":[&"sunlit-blue-grazer-poi",&"sunlit-vent-survey-poi"]},
+		{"bounds":Rect2(17000,0,4920,1140),"ids":[&"sunlit-sediment-fan-poi",SunlitShallowsData.POI]}]
 	for section: Dictionary in regions:
 		for id: StringName in section.ids:
 			if scene.discoveries.state_of(id)==DiscoveryRegistry.State.DISCOVERED:
@@ -210,7 +213,7 @@ func _refresh() -> void:
 	if scene.discoveries.state_of(&"sunlit-vent-survey-poi")==DiscoveryRegistry.State.DISCOVERED: canvas.charted.append(SunlitSurveyData.VENT)
 	var polygons: Array[PackedVector2Array] = SunlitSurveyData.terrain()
 	polygons.append_array(layout.gate.pieces)
-	polygons.append(SunlitSurveyData._rect(Rect2(120,800,3780,1800)))
+	for mouth: DestructibleRock in layout.tunnels: polygons.append_array(mouth.pieces)
 	for polygon: PackedVector2Array in polygons:
 		for section: Rect2 in canvas.charted:
 			canvas.survey_polygons.append_array(Geometry2D.intersect_polygons(polygon,SunlitSurveyData._rect(section)))

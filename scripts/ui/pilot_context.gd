@@ -13,6 +13,7 @@ func setup(scene: ShelfPrototype) -> void:
 	caption = Label.new()
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	caption.max_lines_visible = 3
 	UiTypography.style(caption,&"hud")
 	content.add_child(caption)
 	progress = ProgressBar.new()
@@ -39,16 +40,16 @@ func _process(_delta: float) -> void:
 	elif _scene.submarine.scanner._feedback_seconds > 0.0 and not state.text.begins_with("SCANNER"):
 		text = state.text.get_slice(" · ",0)
 	if _scene.chapter!=null and _scene.chapter.active: text = text.replace("Shelf Base","Halcyon Station").replace("NERIS","Lantern-2")
-	if _scene.chapter!=null and _scene.chapter.active and (_scene.submarine.global_position.x>21600.0):
-		text = "Wick / Shallows survey limit · Twilight Shelf is a future expedition"
+
 	caption.text = text
 	visible = not text.is_empty() and _scene.submarine.is_physics_processing()
 	var viewport_size: Vector2 = get_viewport_rect().size
-	size = Vector2(minf(480.0,viewport_size.x-48.0),get_combined_minimum_size().y)
-	position = Vector2((viewport_size.x-size.x)*0.5,(_scene.hud.get_node("%InstrumentDeck") as Control).get_global_rect().position.y-get_combined_minimum_size().y-42.0)
-
+	var width: float = minf(340,viewport_size.x*0.34)-16 if _scene.hud.quiet else minf(480.0,viewport_size.x-48.0)
+	# Set one width per frame. Alternating wide/quiet sizes invalidates wrapping
+	# before containers can sort and can leave a one-line prompt hundreds of pixels tall.
+	size = Vector2(width,0)
 	if _scene.hud.quiet:
-		var width: float = minf(340,get_viewport_rect().size.x*0.34)-16
-		size = Vector2(width,0)
 		var tracker: Control = _scene.mission_tracker
-		position = Vector2(get_viewport_rect().size.x-width-16,tracker.get_global_rect().end.y+8 if tracker!=null else 180.0)
+		position = Vector2(viewport_size.x-width-16,tracker.get_global_rect().end.y+8 if tracker!=null else 180.0)
+	else:
+		position = Vector2((viewport_size.x-width)*0.5,(_scene.hud.get_node("%InstrumentDeck") as Control).get_global_rect().position.y-size.y-42.0)

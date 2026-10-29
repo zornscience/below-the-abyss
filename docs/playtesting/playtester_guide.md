@@ -31,7 +31,6 @@ install untrusted system software on someone else's computer.
 | Interact / dock / scan or cancel scan | E | A |
 | Active sonar | F | X |
 | Torpedo (horizontal facing; optional) | Space | Right trigger / right-stick click |
-| Lights | L | Y |
 | Map / research | M | Back / Select |
 | Open / close radio | R | Left shoulder |
 | Pause | Escape / P | Start |
@@ -40,13 +39,15 @@ install untrusted system software on someone else's computer.
 
 Radio previews do not pause your submarine. Open a transcript intentionally with
 R/left shoulder; Tab/right shoulder cycles its actions, Enter/A selects, and B/Escape
-closes. Text ↑/↓ scrolls and Next message visits the queue. Left stick/WASD keep
+closes. Focus the reading pane with Tab/shoulder, then scroll with Up/Down or D-pad.
+Next message visits the queue. Incoming previews type, follow the tail and dismiss
+automatically; Reduced Motion shows them immediately. Left stick/WASD keep
 piloting while reading. Use Pause/Start explicitly if you want to stop. Resources
 are percentages at upper left; accepted objectives stay upper right.
 
 Passive listening is automatic. Controls can be remapped in Input settings; Save
 keeps edits, Return discards unsaved edits. Fixed menu controls remain available
-for recovery. Read long records using Text ↑/↓ buttons. Unplugging the active
+for recovery. Read long records using the focused reading pane, Page keys, wheel or scrollbar. Unplugging the active
 controller should pause movement; keyboard recovery remains available.
 
 ## Comfort, saves and leaving
@@ -60,12 +61,16 @@ to keep preferences. All essential information is also visible with sound muted.
 You can change these settings before starting and at any point later.
 
 Deliberate docking automatically restores hull, battery, oxygen and ten torpedoes.
-The title begins The Sunlit Shallows. Accept Halcyon's short first-dive briefing;
+Halcyon sits above a fixed ocean surface; depart at 20 m and descend toward the
+200 m shelf floor. Optional excavation caves reach roughly 285 m; the deep vent
+is a separate optional pressure hazard. Visible specimens scan without a ping;
+the hidden emergency buoy still needs sonar. The title begins The Sunlit Shallows. Accept Halcyon's short first-dive briefing;
 asking Okafor about the anomalies is optional. Read the compact objective and use
 the expedition log if you want to revisit orders or recovered evidence. Return to
 Halcyon for the first-expedition debrief when your investigation is complete.
 Research technology spends existing points and allows free reassignment while
-docked. This chapter does not grant additional points. The prototype/legacy title
+docked. The first new rank costs 2 RP; later ranks cost 3 RP. Unique field science
+can earn up to two bonus points; repeat scans never award again. The prototype/legacy title
 option, if present, is a separate earlier test expedition, not the canonical story.
 
 Pause and choose Save expedition in safe terrain, then wait for the success message.

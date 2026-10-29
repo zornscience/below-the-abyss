@@ -1,0 +1,34 @@
+scripts/onboarding/tutorial_director.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/player/scientific_scanner.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/world/scan_definition.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/world/shelf_chapter_data.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/ui/pilot_context.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/story/sunlit_dressing.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/visuals/sunlit_rock_dressing.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/visuals/submarine_illustration.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+scripts/world/sunlit_survey_data.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+tests/fixtures/drive_sunlit_shallows.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+tests/integration/test_surface_polish.gd
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: 11 changed-script parser rechecks

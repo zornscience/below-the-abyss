@@ -1,0 +1,17 @@
+[
+  {
+    "asset": "assets/art/portraits/radio_crew.png",
+    "generation_file": "exec-dd596b95-4c7c-494e-82c4-901053197b52.png",
+    "sha256": "9c9d15314683cfea216d1e1ac986762a357b9cca37fcf3dc4eb1f529bf28b659",
+    "dimensions": [
+      2172,
+      724
+    ],
+    "bytes": 2541013,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-29",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless; mipmaps; size_limit=1024; linear mipmap filtering",
+    "cells": "Four equal columns: Okafor, Crane, Mara, Wick optical instrument"
+  }
+]

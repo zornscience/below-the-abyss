@@ -34,8 +34,7 @@ func refresh() -> void:
 		if chapter.concluded(): text = "✓ Complete · Twilight Shelf is not yet playable"
 		elif chapter.can_debrief(): text = "◇ Dock and submit expedition debrief"
 		elif not scene.story.resolved(LightBloomEncounter.ENCOUNTER): text = "◇ Consult map · study the light bloom"
-		elif not chapter.guide.layout.passage_clear(): text = "◇ Consult map · clear fractured passage"
-		elif scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.HIDDEN: text = "◇ Consult map · sonar search area"
+		elif scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.HIDDEN: text = "◇ Explore open shelf · sonar search area"
 		elif not scene.research.is_completed(SunlitShallowsData.BUOY): text = "◇ Scan the identified emergency buoy"
 		else: text = "◇ Return to Halcyon with the recording"
 		detail.text = text

@@ -121,13 +121,13 @@ func _sprite(texture: Texture2D,rectangle: Rect2,tint: Color,parent: Node = null
 
 func _backgrounds() -> void:
 	var far: Parallax2D = _layer(Vector2(0.16,0.10),-6)
-	var panorama: Sprite2D = _sprite(PANORAMA,Rect2(-1400,-750,7000,1500),Color(0.24,0.40,0.44,0.35),far)
+	var panorama: Sprite2D = _sprite(PANORAMA,Rect2(-1400,180,7000,1300),Color(0.24,0.40,0.44,0.35),far)
 	var fade: ShaderMaterial = ShaderMaterial.new()
 	fade.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
 	panorama.material = fade
 	var middle: Parallax2D = _layer(Vector2(0.42,0.25),-4)
 	for index: int in range(10):
-		var relief: Sprite2D = _sprite(HalcyonDescent.CLIFF,Rect2(-600+index*1100,-120,650,1150),Color(0.38,0.65,0.66,0.13),middle)
+		var relief: Sprite2D = _sprite(HalcyonDescent.CLIFF,Rect2(-600+index*1100,160,650,1150),Color(0.38,0.65,0.66,0.13),middle)
 		var edge: ShaderMaterial = ShaderMaterial.new()
 		edge.shader = preload("res://assets/shaders/sunlit_relief.gdshader")
 		relief.material = edge

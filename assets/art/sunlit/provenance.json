@@ -168,5 +168,19 @@
     "date_local": "2026-10-28 America/Chicago",
     "license_status": "Project license pending; no new rights claim",
     "import": "unchanged transparent master; lossless; size limit 512; mipmaps; linear mipmap filtering"
+  },
+  {
+    "asset": "assets/art/sunlit/water_column.png",
+    "generation_file": "exec-105ab446-9997-4888-aa0b-b987a5b593d4.png",
+    "sha256": "3b13064aa13a619808bebdf1f57256b320d8b165443dff28626a60470bfdca45",
+    "dimensions": [
+      1930,
+      815
+    ],
+    "bytes": 1828454,
+    "tool": "OpenAI image_gen",
+    "date_utc": "2026-10-29",
+    "license_status": "Project license pending; no new rights claim",
+    "import": "lossless; mipmaps; size_limit=1536; linear mipmap filtering"
   }
 ]

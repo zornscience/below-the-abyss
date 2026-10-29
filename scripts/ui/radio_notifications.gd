@@ -16,6 +16,8 @@ var _reduced_motion: bool = false
 var _previewed: Array[String] = []
 var badge: Button
 var panel: PanelContainer
+var portrait: TextureRect
+var _portrait_source: String = ""
 var speaker: Label
 var preview: Label
 var transcript: Label
@@ -43,13 +45,24 @@ func setup(value: ExpeditionRevision) -> void:
 	add_child(panel)
 	var content: VBoxContainer = VBoxContainer.new()
 	panel.add_child(content)
+	var header: HBoxContainer = HBoxContainer.new()
+	header.add_theme_constant_override("separation",12)
+	content.add_child(header)
+	portrait = TextureRect.new()
+	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	portrait.custom_minimum_size = Vector2(56,72)
+	portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	header.add_child(portrait)
 	speaker = Label.new()
+	speaker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	speaker.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	preview = Label.new()
 	for label: Label in [speaker,preview]:
 		UiTypography.style(label,&"body")
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		if label==speaker: content.add_child(label)
+		if label==speaker: header.add_child(label)
 	scroll = UiScrollReader.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.custom_minimum_size.y = 120
@@ -149,6 +162,10 @@ func refresh() -> void:
 	badge.visible = not pending.is_empty()
 	panel.visible = not selected.is_empty() and (expanded or _remaining>0)
 	if not texts.has(selected): return
+	if _portrait_source!=sources[selected]:
+		_portrait_source = sources[selected]
+		portrait.texture = RadioPortraits.portrait(_portrait_source)
+		portrait.tooltip_text = "Onboard AI" if RadioPortraits.identity(_portrait_source)==&"wick" else String(RadioPortraits.identity(_portrait_source)).capitalize()
 	speaker.text = sources[selected]+" / RADIO"+(" · "+notice if not notice.is_empty() else "")
 	if _playing!=selected:
 		_playing = selected
@@ -242,7 +259,9 @@ func _process(delta: float) -> void:
 	badge.position = Vector2(16,bottom-36)
 	badge.size = Vector2(width,32)
 	var depth: Control = revision.scene.hud.get_node("%DepthPanel") as Control
-	var target_height: float = minf(360,bottom-44-depth.get_global_rect().end.y-8)
+	var deck: Control = revision.scene.hud.get_node("%InstrumentDeck") as Control
+	var ceiling: float = maxf(depth.get_global_rect().end.y,deck.get_global_rect().end.y)+8
+	var target_height: float = minf(360,bottom-44-ceiling)
 	panel.size = Vector2(width,0)
 	scroll.custom_minimum_size.y = 0
 	var overhead: float = panel.get_combined_minimum_size().y

@@ -3,6 +3,7 @@ extends Resource
 ## Authored scientific placeholder; identity is independent of its sonar POI.
 
 @export var requires_sonar: bool = true
+@export var requires_clear_path: bool = false
 ## Allows the visible subject's own surface around an embedded authored anchor.
 @export var visibility_surface_radius: float = 12.0
 @export var stable_id: StringName

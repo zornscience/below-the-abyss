@@ -262,7 +262,13 @@ compatible. [Implementation, API/save rules, evidence and limitations](docs/test
 User-directed follow-up to PR #35: open-water shelf with optional excavation caves,
 above-water Halcyon/deeper departure, direct visible scanning, compact ammo/scroll UI,
 typed auto-dismissing radio, five priced/icon-labelled research branches, compatible
-schema-8 migration, bounded cosmetic sonar returns, illuminated terrain, animated
+schema-8 migration, original outward sonar (returns removed on review), illuminated terrain, animated
 existing fauna, red beacon, detailed torpedo artwork and original quiet score.
 Preserve canonical story, hidden buoy, old IDs/progress and development prototype.
 Acceptance/verification/evidence: docs/testing/bta-052/README.md. Review only; no merge.
+
+Visual-review follow-up stays on the BTA-052 branch: submerged-only background,
+rounded matching terrain/collision/map, warm destructible geology, opt-in sheltered
+buoy reception, propulsion-driven animal animation, bounded stronger hammerhead,
+original radio portrait atlas, and removal of obsolete canonical prototype markings.
+No new milestone or save schema. Evidence: docs/testing/bta-052/revision/README.md.

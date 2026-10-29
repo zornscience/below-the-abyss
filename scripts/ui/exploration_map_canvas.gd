@@ -48,7 +48,7 @@ func _draw() -> void:
 	var font: Font = ThemeDB.fallback_font
 	if survey_enabled:
 		_draw_survey()
-	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
+	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), "HALCYON / SURVEY CHART" if survey_enabled else "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	for index: int in range(points.size()):
 		var point: PointOfInterest = points[index]
 		var at: Vector2 = _point(point.map_position)

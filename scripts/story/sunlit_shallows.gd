@@ -129,6 +129,10 @@ func _activate(value: bool) -> void:
 	scene.station.position = SunlitSurveyData.SPAWN if value else _old_station
 	ocean.visible = value
 	guide.set_enabled(value)
+	for echo: SonarRevealTarget in scene.region.get_node("SonarTargets").get_children():
+		if echo.target_id==SunlitShallowsData.ECHO:
+			echo.requires_clear_path = value
+			echo.receiver.profile.maximum_range_units = SunlitSurveyData.BUOY_ECHO_RANGE if value else 1000000.0
 	for definition: ScanDefinition in scene.research._catalog.targets:
 		if definition.stable_id==&"shelf-calibration-plate":
 			if _plate_description.is_empty(): _plate_description = definition.description
@@ -148,6 +152,7 @@ func _activate(value: bool) -> void:
 	scene.narrative.debrief_provider = debrief if value else Callable()
 	scene.exploration_map.presentation_bounds = SunlitShallowsData.BOUNDS if value else Rect2()
 	scene.exploration_map.presentation_excluded_ids.clear()
+	if value: scene.exploration_map.presentation_excluded_ids.append(&"shelf-overlook")
 	if value:
 		for point: Dictionary in ShelfChapterData.POINTS:
 			if point.at.x>=3900: scene.exploration_map.presentation_excluded_ids.append(StringName(point.id))
@@ -230,6 +235,9 @@ func _scan_completed(id: StringName) -> void:
 func _choice_applied(id: StringName,_encounter: StringName) -> void:
 	if active:
 		scene.narrative._evidence_event(id)
+		var collected: bool = id==LightBloomEncounter.COLLECT
+		var response: String = "The specimen is secured. We will examine what it can tell us at Halcyon." if collected else "Thank you for leaving the colony intact. We can learn from how it lives, not just from what we take."
+		scene.revision.ui.notifications.enqueue("sunlit-bloom-response",response,"Crane" if collected else "Okafor")
 	_refresh()
 func _refresh() -> void:
 	if buoy==null: return

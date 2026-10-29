@@ -75,5 +75,6 @@ func _draw() -> void:
 		var coordinates: PackedVector2Array = []
 		for point: Vector2 in part: coordinates.append(point/384.0)
 		draw_polygon(part,PackedColorArray([Color(0.62,0.72,0.76)]),coordinates,ROCK_PAINT)
+	if material!=null: return # Painted geology has no prototype wire outline.
 	for edge: PackedVector2Array in _edges:
 		draw_line(edge[0], edge[1], Color("487b7d"), 2.0, true)

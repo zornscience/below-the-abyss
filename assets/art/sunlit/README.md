@@ -104,8 +104,8 @@ three equal 724×724 cells for a moray eel, sea turtle and hammerhead. The hamme
 silhouette was revised with the same tool; the committed master is the unchanged
 edited output, not a human-painted layered source. Exact source identities/hash are
 in provenance.json. Lossless import, mipmaps and linear mipmap filtering match the
-existing schools. Painted widths are 120/88/140 world units, with gentle body roll
-and eel skew; Reduced Motion removes these decorative transforms. Actual movement
+existing schools. Painted widths are 120/88/140 world units, with posterior swimming/flipper deformation and smoothed velocity heading;
+Reduced Motion removes these decorative transforms. Actual movement
 uses the existing acoustic creature navigation. Human anatomy/atlas-edge review and
 production licensing remain outstanding; no new exclusive rights are claimed.
 
@@ -140,9 +140,19 @@ texture with mipmaps/lossless compression and linear mipmap filtering; rendered
 size is 48×16 world units. Collision remains a swept ray, not the silhouette.
 No new exclusive licensing or human painting claim is made.
 
-The ocean horizon reuses `painted/descent_water.png` and Halcyon's existing painted
-modules. It adds two low-amplitude wave lines over the artwork; the physical surface
-is fixed at world y=0. Terrain lighting uses nine cached terrain rays and bounded
+The ocean uses Halcyon's existing painted modules and a horizon-free submerged
+water master (`water_column.png`, original 1930×815, lossless, mipmaps, size limit
+1536). Two low-amplitude lines mark the only surface at fixed world y=0. The title
+master contains baked waves and is deliberately excluded from gameplay water. Terrain lighting uses nine cached terrain rays and bounded
 material illumination, not full-screen postprocessing or physically accurate optics.
 Fauna uses atlas-clamped UV deformation driven by an explicit simulation clock;
 Reduced Motion disables the deformation. All new visual clocks are scene-owned.
+
+The visual-review revision clips relief layers in world coordinates below the surface,
+lowers their authored placements and replaces sharp corners with quadratic contour
+samples. The same rounded points feed collision, map and paint. Thin shapes reduce
+edge erosion to prevent self-intersection. Warm layered clay/ochre marks every
+excavatable plug; cool basalt stays protected. This is a material shader over existing
+painted rock masters, not a newly claimed human-painted source. The new water master
+is an unchanged original OpenAI image_gen output; exact source/hash and import flags
+are in provenance.json. No new licensing or exclusive rights claim is made.

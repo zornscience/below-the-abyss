@@ -6,15 +6,13 @@ func _after_step(delta: float) -> void:
 	if player==null or velocity.length()<20 or velocity.normalized().dot((player.global_position-global_position).normalized())<0.45:
 		_hit_feedback = maxf(0,_hit_feedback-delta)
 		return
-	var before: float = player.hull_system.hull
 	super._after_step(delta)
-	if player.hull_system.hull<before: threat._disengage(position,"HEAD RAM / RETURN")
 
 func hud_snapshot() -> Dictionary:
 	var value: Dictionary = super.hud_snapshot()
 	value.title = String(value.title).replace("PREDATOR","HAMMERHEAD")
-	if threat.phase==PredatorState.Phase.QUIET: value.hint = "OPTIONAL LAGOON · ASCEND TO LEAVE"
-	elif threat.phase==PredatorState.Phase.DISENGAGE: value.hint = "ASCEND TO SHALLOW PASSAGE"
+	if threat.phase==PredatorState.Phase.QUIET: value.hint = "TERRITORIAL LAGOON · SHALLOW WATER IS SAFE"
+	elif threat.phase==PredatorState.Phase.DISENGAGE: value.hint = "ASCEND ABOVE 110 m"
 	return value
 
 func _draw() -> void:

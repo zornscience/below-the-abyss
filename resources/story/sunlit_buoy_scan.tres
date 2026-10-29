@@ -2,6 +2,7 @@
 [ext_resource type="Script" path="res://scripts/world/scan_definition.gd" id="1"]
 [resource]
 script = ExtResource("1")
+requires_clear_path = true
 stable_id = &"sunlit-lantern1-buoy-record"
 required_poi_id = &"sunlit-lantern1-buoy"
 classification = "artificial"

@@ -7,6 +7,7 @@ signal revealed_for_ping(event_id: StringName)
 signal reveal_state_changed(revealed: bool)
 @export var target_id: StringName = &""
 @export var caption: String = "PLACEHOLDER ECHO"
+var requires_clear_path: bool = false
 var reduced_flashing: bool = false
 var registration_generation: int = 0
 var _clock: float = 0.0
@@ -33,6 +34,9 @@ func bind_bus(bus: AcousticBus) -> Error:
 
 func _received(event: AcousticEvent, _strength: float, distance: float) -> void:
 	if event.event_type == &"active_sonar":
+		if requires_clear_path:
+			var hit: Dictionary = get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(event.origin,global_position,1))
+			if not hit.is_empty(): return
 		echo_received.emit(self, event, distance)
 
 

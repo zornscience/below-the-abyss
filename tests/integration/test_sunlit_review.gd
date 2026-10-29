@@ -135,7 +135,7 @@ func test_hammerhead_sight_warning_pursuit_head_ram_and_safe_exit() -> void:
 	var shark: HammerheadCreature = game.chapter.guide.hammerhead
 	game.submarine.global_position = Vector2(18880,910)
 	game.submarine.set_simulation_enabled(true)
-	await wait_physics_frames(120)
+	await wait_physics_frames(90)
 	assert_eq(game.submarine.hull_system.hull,100.0,"Warning cannot damage.")
 	assert_eq(shark.threat.phase,PredatorState.Phase.ALERT)
 	await wait_physics_frames(160)
@@ -144,7 +144,7 @@ func test_hammerhead_sight_warning_pursuit_head_ram_and_safe_exit() -> void:
 	assert_gte(game.submarine.hull_system.hull,88.0)
 	assert_true(game.submarine.hull_system.last_damage_source.contains("sunlit-hammerhead"))
 	var hull: float = game.submarine.hull_system.hull
-	game.submarine.global_position = Vector2(18880,650)
+	game.submarine.global_position = Vector2(18880,400)
 	game.submarine.set_simulation_enabled(true)
 	await wait_physics_frames(180)
 	game.submarine.set_simulation_enabled(false)

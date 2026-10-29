@@ -49,7 +49,7 @@ func _in_range(id: StringName) -> bool:
 	var target: ScientificScanTarget = _target(id)
 	var definition: ScanDefinition = _definitions.get(id) as ScanDefinition
 	if target==null or definition==null or global_position.distance_to(target.global_position)>definition.radius: return false
-	if definition.requires_sonar or not is_inside_tree(): return true
+	if (definition.requires_sonar and not definition.requires_clear_path) or not is_inside_tree(): return true
 	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(global_position,target.global_position,1)
 	var hit: Dictionary = get_world_2d().direct_space_state.intersect_ray(query)
 	return hit.is_empty() or (hit.position as Vector2).distance_to(target.global_position)<=definition.visibility_surface_radius

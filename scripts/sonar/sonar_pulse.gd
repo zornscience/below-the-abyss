@@ -3,7 +3,6 @@ extends Node2D
 ## Fixed-origin visual and arrival schedule, fed only by AcousticReceiver receipts.
 
 signal target_revealed(event_id: StringName, target_id: StringName)
-signal reflection_started(at: Vector2,age: float)
 const EPSILON: float = 0.000000001
 var reduced_flashing: bool = false
 var _event: AcousticEvent
@@ -15,8 +14,6 @@ var _scheduled: Dictionary[StringName, bool] = {}
 var _dirty: bool = false
 var _advancing: bool = false
 var _finished: bool = false
-var _surfaces: Array[Dictionary] = []
-var _reflected: Dictionary[Vector2i,bool] = {}
 
 
 func configure(event: AcousticEvent, profile: ActiveSonarProfile, bus: AcousticBus) -> Error:
@@ -45,19 +42,9 @@ func schedule_reveal(target: SonarRevealTarget, distance: float) -> Error:
 		return ERR_ALREADY_EXISTS
 	_scheduled[target.target_id] = true
 	_pending.append({"target": weakref(target), "id": target.target_id,
-		"generation": target.registration_generation, "distance": distance, "done": false,"at":target.global_position})
+		"generation": target.registration_generation, "distance": distance, "done": false})
 	_dirty = true
 	return OK
-
-func schedule_surface(at: Vector2,distance: float,collider: CollisionObject2D,inside: Vector2) -> void:
-	if _event==null or _surfaces.size()>=16 or distance<=0 or distance>_event.range_units: return
-	_surfaces.append({"at":at,"distance":distance,"body":weakref(collider),"inside":inside,"done":false})
-
-func _reflect(at: Vector2,distance: float) -> void:
-	var cell: Vector2i = Vector2i((at/64.0).floor())
-	if _reflected.has(cell) or _reflected.size()>=24: return
-	_reflected[cell] = true
-	reflection_started.emit(at,maxf(0,_elapsed-distance/_rules.travel_speed))
 
 
 func get_radius() -> float:
@@ -95,14 +82,6 @@ func advance(delta: float) -> Error:
 		if target.reveal_for_ping(_event.event_id, _rules.reveal_seconds,
 			_event.simulation_time + float(delivery.distance) / _rules.travel_speed) == OK:
 			target_revealed.emit(_event.event_id, target.target_id)
-			_reflect(delivery.at,delivery.distance)
-	for surface: Dictionary in _surfaces:
-		if surface.done or _elapsed+EPSILON<surface.distance/_rules.travel_speed: continue
-		surface.done = true
-		var body: CollisionObject2D = surface.body.get_ref() as CollisionObject2D
-		if not is_instance_valid(body) or body.is_queued_for_deletion() or body.collision_layer==0: continue
-		if body is DestructibleRock and not body._inside(body.to_local(surface.inside)): continue
-		_reflect(surface.at,surface.distance)
 	queue_redraw()
 	if _elapsed + EPSILON >= lifetime:
 		_finished = true

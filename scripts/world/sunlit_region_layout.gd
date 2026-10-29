@@ -15,6 +15,7 @@ func configure(region: ContinentalShelf,excavation: ExcavationSystem) -> void:
 	for polygon: PackedVector2Array in SunlitSurveyData.terrain():
 		var rock: GrayboxRock = preload("res://scenes/props/graybox_rock.tscn").instantiate() as GrayboxRock
 		rock.outline = polygon
+		rock.draw_outline = false
 		rock.name = "SunlitBasalt%d" % bodies.size()
 		add_child(rock)
 		bodies.append(rock)
@@ -27,7 +28,7 @@ func configure(region: ContinentalShelf,excavation: ExcavationSystem) -> void:
 		var mouth: DestructibleRock = DestructibleRock.new()
 		mouth.name = String(definition.id).to_pascal_case()
 		region.get_node("Terrain").add_child(mouth)
-		mouth.configure(definition.id,SunlitSurveyData.rough_contour(SunlitSurveyData._rect(definition.mouth),72+tunnels.size()),Color("87948a"))
+		mouth.configure(definition.id,SunlitSurveyData.plug_contour(definition.mouth,72+tunnels.size()),Color("87948a"))
 		excavation.register(mouth)
 		tunnels.append(mouth)
 	for child: Node in region.get_node("Terrain").get_children():

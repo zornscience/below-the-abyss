@@ -243,3 +243,13 @@ Visible subjects can be studied directly, while hidden buoy search still needs s
 Engine/torpedo upgrades join existing research branches; first new rank costs 2 RP,
 later ranks 3 RP, within the existing finite budget. Legacy paid ranks retain their
 original cost. No new economy or chapter rewards. See docs/testing/bta-052/README.md.
+
+### BTA-052 visual-review refinement
+
+User-requested refinement: coherent submerged background, rounded natural rock,
+contrasting natural ochre destructible sediment, outward-only sonar, animated fauna,
+a larger but escapable hammerhead territory, speaker portraits and prototype-mark
+cleanup. The buoy remains at its established location but is sheltered by protected
+rock and depth-changing passages. A clear-angle sweep inside the shelter identifies
+it; prior discovered buoys remain known. No combat or excavation is required.
+The quiet-science story, all permanent IDs and chapter rewards remain unchanged.

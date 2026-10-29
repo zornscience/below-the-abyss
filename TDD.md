@@ -412,8 +412,8 @@ Canonical `SunlitSurveyData` owns near-surface spawn, open-water terrain and opt
 stable-ID cave plugs. `SunlitShallows` selects canonical geometry/dock before writing
 the departure checkpoint; the prototype scene is restored when switching mode.
 `ScientificScanner` separates visible acquisition with terrain line of sight from
-hidden sonar acquisition. The dispatcher/reveal authority is unchanged: bounded
-`SonarReflection` nodes are cosmetic returns, not additional acoustic events.
+hidden sonar acquisition. The dispatcher/reveal authority is unchanged. The visual-review revision removes
+`SonarReflection` and restores the original outward-only sweep.
 
 `CampaignData` schema 8 reconstructs five authored capability branches, with paid
 legacy allocations preserved by migration. In-flight projectiles snapshot their
@@ -421,3 +421,23 @@ blast parameters. `UiScrollReader` is the shared focusable reading pane;
 `RadioPlayback` supplies deterministic presentation timing. Cached nine-ray lighting,
 fauna UV animation, beacon, waves and Music-bus score are scene-owned presentation.
 Details and migration limits: docs/testing/bta-052/README.md.
+
+### BTA-052 visual-review revision
+
+Canonical terrain uses rounded deterministic contours for collision, illustration and
+map. A protected buoy shelter adds alternating baffles; its existing stable target
+has a 650-unit receiver range and an opt-in terrain-ray eligibility check before
+scheduling the existing wavefront reveal. Only that target enables acoustic occlusion;
+other receivers, event identities, dispatch order and history semantics are unchanged.
+The buoy's ScanDefinition requires a clear path as well as prior discovery. This is
+an authored search rule, not general acoustic diffraction or an acoustic simulation.
+
+Water-column art has no baked surface/horizon. World-coordinate alpha clipping keeps
+parallax geology below the physical surface; decorative waves never move its collider.
+Destructible material alone uses warm layered clay/ochre. RadioPortraits maps existing
+speaker labels to a four-cell original atlas; text remains the identity authority.
+Its panel bounds account for the full instrument deck, including ammunition.
+
+Existing SaveCoordinator safe-pose fallback handles new shelter obstruction; an old
+blocked pose relocates to validated base while preserving reserves and evidence.
+No schema change or new save file. Details: docs/testing/bta-052/revision/README.md.

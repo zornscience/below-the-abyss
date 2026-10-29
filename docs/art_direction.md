@@ -192,3 +192,18 @@ Reduced Motion freezes it. A tiny slow red beacon has a steady reduced-flashing
 alternative. Icon-labelled research cards and resource-deck ammunition follow the
 existing semantic typography. Original torpedo master provenance and limitations
 are recorded in assets/art/sunlit/README.md; verification in testing/bta-052/README.md.
+
+### BTA-052 visual-review correction
+
+Keep a single authored physical ocean surface. The title's baked wave texture must
+not be reused as a water column. Use the new horizon-free submerged-water master;
+clip parallax cliffs below world y=24 with a gentle fade into depth. Rounded textured
+basalt has no technical cyan contour in the canonical region. Destructible rock is
+warm ochre/clay with sediment banding and an irregular rounded plug silhouette;
+protected geology remains cool basalt. Silhouette/material cues supplement colour.
+
+Radio uses small original illustrated role portraits, not invented late-story lore.
+Okafor/Crane/Mara appearances are provisional visual proposals because the supplied
+Story Bible does not fix their physical features. Wick remains an optical instrument,
+not a human. Source dimensions/import/provenance: assets/art/portraits/README.md and
+assets/art/sunlit/README.md. Human character-art approval remains outstanding.

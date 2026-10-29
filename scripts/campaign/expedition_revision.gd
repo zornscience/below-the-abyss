@@ -41,7 +41,6 @@ func setup(owner_scene: ShelfPrototype) -> void:
 	add_child(ui)
 	ui.setup(self)
 	scene.submarine.sonar_input_guard = ui.notifications.sonar_input_allowed
-	scene.submarine.sonar.reflection_preferences = func() -> Dictionary: return scene.settings.snapshot().accessibility
 	_ammo_label = Label.new()
 	UiTypography.style(_ammo_label,&"hud")
 	_ammo_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

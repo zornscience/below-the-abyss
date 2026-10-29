@@ -5,7 +5,9 @@ const BOUNDS: Rect2 = Rect2(120,16,21800,2584)
 const CAMERA: Rect2i = Rect2i(0,-320,22000,2920)
 const BUOY: Vector2 = Vector2(20800,620)
 const SEARCH: Rect2 = Rect2(18600,260,3300,490)
-const REPORT: Vector2 = Vector2(20000,500)
+const REPORT: Vector2 = Vector2(20100,600)
+const BUOY_ECHO_RANGE: float = 650.0
+const BUOY_APPROACH: Array[Vector2] = [Vector2(19750,600),Vector2(19900,710),Vector2(20300,710),Vector2(20300,560),Vector2(20600,560),Vector2(20800,620)]
 const GATE: Rect2 = Rect2(4550,220,380,580)
 const CLEARED: StringName = &"sunlit-cleared-passage"
 const VENT: Rect2 = Rect2(13200,800,1600,1700)
@@ -15,7 +17,9 @@ const MAIN_ROUTE: Array[Vector2] = [Vector2(1280,480),Vector2(2350,480),Vector2(
  Vector2(6100,260),Vector2(7100,260),Vector2(7650,370),Vector2(8500,360),
  Vector2(8650,200),Vector2(9800,200),Vector2(10600,200),Vector2(12300,200),
  Vector2(13000,400),Vector2(14000,480),Vector2(14700,260),Vector2(16400,260),
- Vector2(16600,650),Vector2(16900,320),Vector2(19000,320),Vector2(19500,480),Vector2(20800,620)]
+ Vector2(16600,650),Vector2(16900,320),Vector2(19000,320),
+ Vector2(19650,320),Vector2(19750,320),Vector2(19750,600),Vector2(19900,710),Vector2(20300,710),
+ Vector2(20300,560),Vector2(20600,560),Vector2(20800,620)]
 const TUNNELS: Array[Dictionary] = [
  {"id":"sunlit-sediment-tunnel","mouth":Rect2(6350,880,120,260)},
  {"id":"sunlit-basalt-tunnel","mouth":Rect2(11500,880,120,260)},
@@ -52,7 +56,11 @@ static func terrain() -> Array[PackedVector2Array]:
 		# horizontal plugs can be excavated by the submarine's facing-fired torpedoes.
 		_rect(Rect2(6350,800,700,80)),_rect(Rect2(6950,800,100,340)),
 		_rect(Rect2(11500,800,700,80)),_rect(Rect2(12100,800,100,340)),
-		PackedVector2Array([Vector2(17300,800),Vector2(17400,470),Vector2(17900,440),Vector2(18500,490),Vector2(18600,800)])]
+		PackedVector2Array([Vector2(17300,800),Vector2(17400,470),Vector2(17900,440),Vector2(18500,490),Vector2(18600,800)]),
+		# Buoy shelter: open west entrance, alternating baffles and a blind lower spur.
+		_rect(Rect2(19800,400,1700,100)),_rect(Rect2(21380,400,120,400)),
+		_rect(Rect2(20100,490,140,150)),_rect(Rect2(20400,640,150,160)),
+		_rect(Rect2(20950,590,430,80))]
 	var result: Array[PackedVector2Array] = []
 	for index: int in range(authored.size()): result.append(rough_contour(authored[index],index))
 	return result
@@ -60,6 +68,9 @@ static func terrain() -> Array[PackedVector2Array]:
 static func rough_contour(polygon: PackedVector2Array,seed_value: int = 0) -> PackedVector2Array:
 	# Authored reproducible contour detail, shared by paint, map and actual collision.
 	# Endpoints remain fixed so attached structures keep their original joins.
+	var extent: Rect2 = Rect2(polygon[0],Vector2.ZERO)
+	for point: Vector2 in polygon: extent = extent.expand(point)
+	var detail: float = minf(1.0,minf(extent.size.x,extent.size.y)/240.0)
 	var result: PackedVector2Array = []
 	for index: int in range(polygon.size()):
 		var a: Vector2 = polygon[index]
@@ -69,13 +80,41 @@ static func rough_contour(polygon: PackedVector2Array,seed_value: int = 0) -> Pa
 		for step: int in range(steps):
 			var t: float = float(step)/steps
 			var erosion: float = 0.0 if step==0 else sin(step*2.19+index*1.73+seed_value)*12.0+sin(step*0.83+seed_value)*6.0
+			erosion *= detail
 			# Outer west seam is welded to the protected boundary; keep clipping exact.
 			if is_equal_approx(a.x,120.0) and is_equal_approx(b.x,120.0): erosion = 0.0
 			result.append(a.lerp(b,t)+normal*erosion)
-	return result
+	return rounded_contour(result)
+
+static func rounded_contour(points: PackedVector2Array) -> PackedVector2Array:
+	var smooth: PackedVector2Array = []
+	for index: int in range(points.size()):
+		var p: Vector2 = points[index]
+		var before: Vector2 = points[posmod(index-1,points.size())]
+		var after: Vector2 = points[(index+1)%points.size()]
+		if (p-before).normalized().dot((after-p).normalized())>0.95:
+			smooth.append(p)
+			continue
+		var radius: float = minf(40.0,minf(p.distance_to(before),p.distance_to(after))*0.22)
+		var a: Vector2 = p.move_toward(before,radius)
+		var b: Vector2 = p.move_toward(after,radius)
+		# Keep outer world seams exactly welded to the protected boundary.
+		if p.x<=120 or p.x>=21920 or p.y>=2600:
+			smooth.append(p)
+			continue
+		for step: int in range(7):
+			var t: float = step/6.0
+			smooth.append(a.lerp(p,t).lerp(p.lerp(b,t),t))
+	return smooth
 
 static func gate_contour() -> PackedVector2Array:
-	return rough_contour(_rect(GATE),39)
+	return plug_contour(GATE,39)
+
+static func plug_contour(rectangle: Rect2,seed_value: int) -> PackedVector2Array:
+	var contour: PackedVector2Array = []
+	for point: Vector2 in PackedVector2Array([Vector2(0.04,0.08),Vector2(0.28,0),Vector2(0.74,0.02),Vector2(0.96,0.13),Vector2(1,0.40),Vector2(0.95,0.66),Vector2(1,0.89),Vector2(0.72,1),Vector2(0.18,0.99),Vector2(0,0.78),Vector2(0.02,0.46),Vector2(0,0.24)]):
+		contour.append(rectangle.position+point*rectangle.size)
+	return rough_contour(contour,seed_value)
 
 static func _rect(rectangle: Rect2) -> PackedVector2Array:
 	return PackedVector2Array([rectangle.position,Vector2(rectangle.end.x,rectangle.position.y),rectangle.end,Vector2(rectangle.position.x,rectangle.end.y)])

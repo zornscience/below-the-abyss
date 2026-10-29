@@ -3,6 +3,8 @@ class_name GrayboxRock
 extends StaticBody2D
 ## One authored outline supplies both the visible silhouette and solid boundary.
 
+var draw_outline: bool = true
+
 @export var outline: PackedVector2Array = PackedVector2Array():
 	set(value):
 		outline = value
@@ -29,7 +31,7 @@ func _apply_outline() -> void:
 
 
 func _draw() -> void:
-	if outline.size() < 3:
+	if not draw_outline or outline.size() < 3:
 		return
 	var closed: PackedVector2Array = outline.duplicate()
 	closed.append(outline[0])

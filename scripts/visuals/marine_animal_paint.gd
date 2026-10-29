@@ -38,9 +38,10 @@ func _process(delta: float) -> void:
 	var reduced: bool = _reduced
 	if absf(body.velocity.x)>1: _facing = signf(body.velocity.x)
 	sprite.flip_h = _facing<0
-	phase = 0.0 if reduced else fmod(phase+delta,TAU*10)
-	sprite.rotation = 0.0 if reduced else sin(phase*(2.0 if species==0 else 0.9))*0.045
-	sprite.skew = 0.0 if reduced or species!=0 else sin(phase*2.0)*0.08
+	phase = 0.0 if reduced else fmod(phase+delta*(0.7+body.velocity.length()/90.0),TAU*10)
+	var heading: float = atan2(body.velocity.y,maxf(15,absf(body.velocity.x)))*_facing
+	sprite.rotation = 0.0 if reduced else lerp_angle(sprite.rotation,clampf(heading,-0.65,0.65),1.0-exp(-delta*5.0))
+	sprite.skew = 0.0
 	_swim.set_shader_parameter("phase",phase*3.0)
 
 func _preferences() -> void:

@@ -21,8 +21,6 @@ var _requesting: bool = false
 var _advancing: bool = false
 var _last_ping: StringName = &""
 var _echo_count: int = 0
-var reflection_preferences: Callable
-var _returns: Array[SonarReflection] = []
 @onready var acoustic_emitter: AcousticEmitter = $AcousticEmitter
 
 
@@ -128,8 +126,6 @@ func request_ping(id: StringName = &"") -> Error:
 	_effects.add_child(pulse)
 	pulse.global_position = event.origin
 	pulse.target_revealed.connect(_target_revealed)
-	pulse.reflection_started.connect(_reflection_started.bind(_rules.travel_speed))
-	_schedule_surfaces(pulse,event)
 	_cooldown = _rules.cooldown_seconds
 	_last_ping = event.event_id
 	_echo_count = 0
@@ -137,26 +133,6 @@ func request_ping(id: StringName = &"") -> Error:
 	state_changed.emit()
 	pulse_emitted.emit(event.snapshot())
 	return OK
-
-func _schedule_surfaces(pulse: SonarPulse,event: AcousticEvent) -> void:
-	# Physical scenery reflections are presentation queries, never AcousticEvents.
-	var space: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
-	for index: int in range(16):
-		var end: Vector2 = event.origin+Vector2.from_angle(index*TAU/16.0)*event.range_units
-		var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(event.origin,end,1)
-		var hit: Dictionary = space.intersect_ray(query)
-		if not hit.is_empty(): pulse.schedule_surface(hit.position,event.origin.distance_to(hit.position),hit.collider,hit.position-hit.normal*2)
-
-func _reflection_started(at: Vector2,age: float,travel_speed: float) -> void:
-	_returns.assign(_returns.filter(func(echo: Variant) -> bool: return is_instance_valid(echo) and not echo.is_queued_for_deletion()))
-	if _returns.size()>=32: return
-	var prefs: Dictionary = reflection_preferences.call() if reflection_preferences.is_valid() else SettingsStore.default_accessibility()
-	if prefs.reduced_particles: return
-	var echo: SonarReflection = SonarReflection.new()
-	_effects.add_child(echo)
-	echo.configure(at,self,travel_speed,prefs.reduced_motion or prefs.reduced_flashing)
-	_returns.append(echo)
-	echo.advance(age)
 
 
 func _echo_received(target: SonarRevealTarget, event: AcousticEvent, distance: float) -> void:
@@ -183,8 +159,6 @@ func advance(delta: float) -> Error:
 	if _advancing or _requesting:
 		return ERR_BUSY
 	_advancing = true
-	for echo: SonarReflection in _returns:
-		if is_instance_valid(echo) and not echo.is_queued_for_deletion(): echo.advance(delta)
 	_time += delta
 	_cooldown = maxf(0.0, _cooldown - delta)
 	if _cooldown < SonarPulse.EPSILON:
@@ -257,9 +231,6 @@ func reset_session() -> Error:
 
 
 func _clear_pulses() -> void:
-	for echo: SonarReflection in _returns:
-		if is_instance_valid(echo) and not echo.is_queued_for_deletion(): echo.queue_free()
-	_returns.clear()
 	for reference: WeakRef in _pulses.values():
 		var pulse: SonarPulse = reference.get_ref() as SonarPulse
 		if is_instance_valid(pulse) and not pulse.is_queued_for_deletion():

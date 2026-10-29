@@ -1,0 +1,72 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/unit/test_thermal_vent.gd
+* test_profile_rejects_invalid_damage_durations_and_unsafe_plumes
+* test_exact_phase_boundaries_and_no_pre_warning_damage
+* test_frame_rate_consistency_and_damage_bound_per_cycle
+* test_crossing_eruption_edge_only_charges_overlapping_time
+* test_outside_jet_never_damages_and_reset_provides_quiet_arrival
+* test_invalid_advance_does_not_change_clock_or_charge_damage
+6/6 passed.
+
+
+res://tests/integration/test_twilight_habitat.gd
+* test_habitat_is_scoped_to_deep_region_and_preserves_existing_records
+* test_hot_plume_applies_bounded_hull_damage_with_clear_feedback_and_pause
+* test_proximity_alone_never_damages_and_safe_corridor_stays_clear
+* test_warning_range_boundaries_and_blocked_thermal_checkpoint
+* test_wildlife_uses_acoustic_bus_once_and_passive_listening_is_silent
+* test_continue_preserves_damage_and_records_but_resets_transient_eruption
+* test_comfort_modes_keep_warning_legible_without_motion_or_particles
+* test_refit_and_restart_cleanup_do_not_erase_permanent_progress
+    [WARNING]:  Warn:  Float/Int comparison.  Got FLOAT but expected INT
+* test_jet_boundaries_and_terrain_occlusion_are_conservative
+* test_thermal_depletion_clamps_and_destruction_emits_once
+* test_historical_deep_pose_inside_new_chimney_uses_existing_safe_fallback
+* test_both_canonical_regions_hide_prototype_ridges_and_prototype_restores_them
+12/12 passed.
+
+
+res://tests/integration/test_compact_interface.gd
+* test_percentages_use_authoritative_capacity_and_exact_thirds_before_rounding
+* test_invalid_readings_fail_closed_and_clamp_without_nan
+* test_radio_arrival_and_expansion_leave_movement_and_initial_focus_untouched
+* test_radio_queue_deferral_ack_duplicate_and_continue_preserve_authorities
+* test_unread_badge_remains_after_preview_without_acknowledging
+* test_tracker_follows_bloom_recording_return_and_claim
+* test_old_custom_bindings_gain_collision_free_radio_and_retain_existing_keys
+* test_production_layout_fits_and_separates_top_instruments_at_all_sizes
+* test_docking_upgrades_reload_and_non_default_capacity_update_the_compact_readings
+* test_observed_bloom_and_tracker_restore_without_replaying_choice_or_exposing_later_objectives
+* test_radio_failed_writes_leave_message_unread_and_do_not_accept_mission
+* test_keyboard_and_controller_can_open_defer_scroll_cycle_and_accept_while_simulation_runs
+* test_radio_and_danger_warning_never_overlap_at_minimum_large_text_size
+* test_legacy_tracker_never_exposes_available_missions_and_preserves_optional_records
+* test_radio_consumes_remapped_confirm_navigation_commands_without_losing_later_pings
+15/15 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Warnings              1
+
+Scripts               3
+Tests                33
+Passing Tests        33
+Asserts             428
+Time              37.707s
+
+
+---- All tests passed! ----

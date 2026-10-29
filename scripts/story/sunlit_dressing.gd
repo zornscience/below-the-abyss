@@ -198,10 +198,7 @@ func _visibility() -> void:
 	if rocks!=null: rocks.set_active(active)
 	if active and _configured and not _composed: _compose.call_deferred()
 	if active and rocks!=null: _refresh_plants.call_deferred()
-	if is_instance_valid(_legacy_atmosphere): _legacy_atmosphere.visible = false if active else _legacy_visible
-	for item: Dictionary in _legacy_relief:
-		var canvas: CanvasItem = item.node.get_ref() as CanvasItem
-		if is_instance_valid(canvas): canvas.visible = false if active else item.visible
+	set_legacy_hidden(active)
 	for fish: CreaturePaint in _fish:
 		if is_instance_valid(fish): fish.sunlit_art = active
 	_update_process()
@@ -242,3 +239,11 @@ func _process(delta: float) -> void:
 		_redraw_time = fmod(_redraw_time,1.0/15.0)
 		_pose_plants()
 		_position_snow()
+
+func set_legacy_hidden(value: bool) -> void:
+	# Region presentations share the same legacy backing; neither canonical region
+	# should resurrect the procedural prototype layers when the other activates.
+	if is_instance_valid(_legacy_atmosphere): _legacy_atmosphere.visible = false if value else _legacy_visible
+	for item: Dictionary in _legacy_relief:
+		var canvas: CanvasItem = item.node.get_ref() as CanvasItem
+		if is_instance_valid(canvas): canvas.visible = false if value else item.visible

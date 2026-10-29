@@ -1,0 +1,37 @@
+{
+  "milestone": "BTA-054",
+  "assets": [
+    {
+      "file": "environment_atlas.png",
+      "source_file": "/workspace/generated_images/exec-93e93430-6b32-4577-bfa0-bef05643998b.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sha256": "f01bdd0db4917dfd363b0a2b710d0660039157c92dda372a150363dd6f1b911d",
+      "provenance": "Original OpenAI image_gen output; unchanged PNG bytes. Project licensing remains pending; no new license or exclusive-rights claim."
+    },
+    {
+      "file": "fauna_atlas.png",
+      "source_file": "/workspace/generated_images/exec-375c09e7-20b0-4b8f-9b53-43098b38aa20.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "sha256": "1b38085bf7ca30dbf1f67a647083fe19863fc06cb2444559cc6ba5f8ed69de2d",
+      "provenance": "Original OpenAI image_gen output; unchanged PNG bytes. Project licensing remains pending; no new license or exclusive-rights claim."
+    },
+    {
+      "file": "deep_water.png",
+      "source_file": "/workspace/generated_images/exec-3b7e66c8-0f2b-4953-98f7-7cb92bf61bdd.png",
+      "dimensions": [
+        1942,
+        809
+      ],
+      "sha256": "474c6d9bb1eaeb033bc3ab420706727a6b3693d255765a4a26752cff4854099b",
+      "provenance": "Original unchanged OpenAI image_gen PNG. Project licensing pending; no new license or exclusive-rights claim."
+    }
+  ],
+  "fauna_edit_reference": "exec-572b26e1-d05e-4bb6-991a-1ee2e3b864a9.png",
+  "notes": "Fauna master revised with image_gen to improve cell padding. No raster postprocessing. Generation is stochastic; reproducible builds use these committed masters."
+}

@@ -715,3 +715,12 @@ western/eastern loops and a central ascent tether for Halcyon refit/resume. Cont
 preserves actual reserves. The planned wreck/sentinel story is not yet implemented.
 
 [Controls, schema-9 migration, exact commands and evidence](docs/testing/bta-053/README.md).
+
+### Twilight environment, wildlife and thermal vents (BTA-054)
+
+The deep exploration build now includes illustrated historic-wreck and mineral-
+garden scenery, animated eel/squid/jelly wildlife and periodic hydrothermal jets.
+Watch for the pressure-building warning, wait for a quiet window or use the upper
+bypass. Hot jets damage hull through the existing resource system; passive listening
+stays silent. Full investigation/sentinel story remains a later step.
+[Controls, tuning, manual route and native evidence](docs/testing/bta-054/README.md).

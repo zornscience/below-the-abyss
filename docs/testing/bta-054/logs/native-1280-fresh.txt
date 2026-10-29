@@ -1,0 +1,45 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+TWILIGHT_RENDER_SAMPLE title draw_calls=84.0 texture_bytes=156082677.0
+TWILIGHT_RENDER_SAMPLE briefing draw_calls=2062.0 texture_bytes=156344821.0
+TWILIGHT_RENDER_SAMPLE surface-departure draw_calls=60.0 texture_bytes=156492273.0
+TWILIGHT_RENDER_SAMPLE technology-icons draw_calls=110.0 texture_bytes=156623345.0
+TWILIGHT_RENDER_SAMPLE expanded-map draw_calls=344.0 texture_bytes=156972869.0
+TWILIGHT_RENDER_SAMPLE expanded-map-zoom draw_calls=304.0 texture_bytes=156972869.0
+TWILIGHT_RENDER_SAMPLE arrival-observe draw_calls=274.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE bloom-choice draw_calls=461.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE bloom-outcome draw_calls=462.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE bloom-radio-portrait draw_calls=282.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE open-water-bypass draw_calls=66.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE scan-sunlit-silver-shoal draw_calls=111.0 texture_bytes=157103941.0
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+TWILIGHT_RENDER_SAMPLE fish-school draw_calls=111.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE scan-sunlit-mineral-terrace draw_calls=72.0 texture_bytes=157103941.0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_RENDER_SAMPLE sea-turtle draw_calls=72.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE rock-arch-passages draw_calls=76.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE shelter-entrance draw_calls=89.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE buoy-before-sonar draw_calls=93.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE sonar-travelling draw_calls=100.0 texture_bytes=157103941.0
+TWILIGHT_RENDER_SAMPLE sonar-buoy-arrival draw_calls=126.0 texture_bytes=157235013.0
+TWILIGHT_RENDER_SAMPLE buoy-environment draw_calls=127.0 texture_bytes=157235013.0
+TWILIGHT_RENDER_SAMPLE maras-message draw_calls=123.0 texture_bytes=157235013.0
+TWILIGHT_RENDER_SAMPLE finish-chapter-choice draw_calls=106.0 texture_bytes=157235013.0
+TWILIGHT_RENDER_SAMPLE first-chapter-debrief draw_calls=69.0 texture_bytes=157235013.0
+TWILIGHT_RENDER_SAMPLE deep-commissioning draw_calls=61.0 texture_bytes=157235013.0
+TWILIGHT_RENDER_SAMPLE deep-start-350m draw_calls=50.0 texture_bytes=157236377.0
+TWILIGHT_RENDER_SAMPLE deep-eel-gallery draw_calls=44.0 texture_bytes=157236377.0
+TWILIGHT_RENDER_SAMPLE historic-whaler draw_calls=50.0 texture_bytes=157236377.0
+TWILIGHT_RENDER_SAMPLE vent-warning draw_calls=50.0 texture_bytes=157236377.0
+TWILIGHT_RENDER_SAMPLE vent-eruption-safe-bypass draw_calls=52.0 texture_bytes=157236377.0
+TWILIGHT_RENDER_SAMPLE vent-clear-the-jet draw_calls=56.0 texture_bytes=157367449.0
+TWILIGHT_RENDER_SAMPLE thermal-hull-damage draw_calls=56.0 texture_bytes=157367449.0
+TWILIGHT_RENDER_SAMPLE squid-patrol draw_calls=49.0 texture_bytes=157367449.0
+TWILIGHT_SONAR_REACTION states=[1] accepted=shelf-playtest/neris-01/sonar/4/1 at=(33813.83, 2753.03)
+TWILIGHT_RENDER_SAMPLE squid-investigates-sonar draw_calls=56.0 texture_bytes=157367449.0
+TWILIGHT_RENDER_SAMPLE mineral-garden-and-east-vent draw_calls=45.0 texture_bytes=157367449.0
+TWILIGHT_RENDER_SAMPLE jelly-drift draw_calls=48.0 texture_bytes=157367449.0
+TWILIGHT_HABITAT_WALK_PASS input=keyboard hull=86.133333333336 records_unchanged=true shots=0

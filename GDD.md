@@ -264,3 +264,13 @@ tether provides deliberate Halcyon service/refit/resume. Continue retains actual
 supplies; the full wreck/sentinel narrative is future work.
 
 [Implementation, verification and manual route](docs/testing/bta-053/README.md).
+
+## BTA-054 — Approved Twilight environmental hazards and fauna
+
+The user requested level detail, NPCs and erupting volcanic vents after the deep
+foundation. The exploration build gains historic wreck scenery, mineral gardens,
+animated natural eel/squid/jelly fauna and avoidable cyclic hydrothermal jets.
+Four-second visual/text warnings precede modest time-bounded hull damage through
+the existing hull API. Both approaches, quiet windows and a clear upper bypass
+remain. No new mission, sentinel decision, reward or economy is implied.
+[Scope, balancing and verification](docs/testing/bta-054/README.md).

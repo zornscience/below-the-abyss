@@ -551,6 +551,7 @@ func open_settings() -> void:
 
 
 func restart_route() -> void:
+	if journey!=null: journey.habitat.reset_session()
 	if chapter!=null:
 		for school: AmbientFishSchool in chapter.guide.schools: school.reset_session()
 		for animal: AcousticCreature in chapter.guide.fauna: animal.reset_session()

@@ -1,0 +1,57 @@
+[
+  {
+    "shot": "deep-start-350m",
+    "draw_calls": 50.0,
+    "texture_bytes": 157236377.0
+  },
+  {
+    "shot": "deep-eel-gallery",
+    "draw_calls": 44.0,
+    "texture_bytes": 157236377.0
+  },
+  {
+    "shot": "historic-whaler",
+    "draw_calls": 50.0,
+    "texture_bytes": 157236377.0
+  },
+  {
+    "shot": "vent-warning",
+    "draw_calls": 50.0,
+    "texture_bytes": 157236377.0
+  },
+  {
+    "shot": "vent-eruption-safe-bypass",
+    "draw_calls": 52.0,
+    "texture_bytes": 157236377.0
+  },
+  {
+    "shot": "vent-clear-the-jet",
+    "draw_calls": 56.0,
+    "texture_bytes": 157367449.0
+  },
+  {
+    "shot": "thermal-hull-damage",
+    "draw_calls": 56.0,
+    "texture_bytes": 157367449.0
+  },
+  {
+    "shot": "squid-patrol",
+    "draw_calls": 49.0,
+    "texture_bytes": 157367449.0
+  },
+  {
+    "shot": "squid-investigates-sonar",
+    "draw_calls": 56.0,
+    "texture_bytes": 157367449.0
+  },
+  {
+    "shot": "mineral-garden-and-east-vent",
+    "draw_calls": 45.0,
+    "texture_bytes": 157367449.0
+  },
+  {
+    "shot": "jelly-drift",
+    "draw_calls": 48.0,
+    "texture_bytes": 157367449.0
+  }
+]

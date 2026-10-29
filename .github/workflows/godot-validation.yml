@@ -13,7 +13,7 @@ jobs:
   validate:
     name: Godot 4.6.3 import, parser and smoke
     runs-on: ubuntu-24.04
-    timeout-minutes: 50
+    timeout-minutes: 60
     env:
       CI_LOG_DIR: ${{ github.workspace }}/build/ci-logs
     steps:
@@ -69,6 +69,9 @@ jobs:
 
       - name: Verify buoy handoff, deep deployment, both exploration loops and refit recovery
         run: python3 tools/verify_chapter_handoff.py
+
+      - name: Verify Twilight wildlife, thermal hazards and refit with actual input
+        run: python3 tools/verify_twilight_habitat.py
 
       - name: Test playtest analysis tooling
         run: python3 -m unittest discover -s tests/python -v

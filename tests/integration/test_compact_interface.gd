@@ -140,7 +140,7 @@ func test_tracker_follows_bloom_recording_return_and_claim() -> void:
 	game.submarine.velocity = Vector2.ZERO
 	game.open_station()
 	game.chapter.debrief(game.station)
-	assert_true(game.mission_tracker.detail.text.contains("not yet playable"))
+	assert_true(game.mission_tracker.detail.text.contains("exploration available"))
 func test_old_custom_bindings_gain_collision_free_radio_and_retain_existing_keys() -> void:
 	var old: Dictionary = InputBindings.defaults()
 	old.erase("open_radio")

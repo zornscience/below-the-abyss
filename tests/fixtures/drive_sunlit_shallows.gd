@@ -58,6 +58,10 @@ func _tap(button: JoyButton) -> void:
 
 
 func _activate(control: Control) -> void:
+	if control==null:
+		push_error("Expected an available, visible input control.")
+		quit(1)
+		return
 	# Follow the actual fixed focus-next binding; no mouse or programmatic grab_focus.
 	for _index: int in range(80):
 		if root.gui_get_focus_owner() == control:
@@ -477,6 +481,7 @@ func _initialize() -> void:
 			quit()
 			return
 		await _activate(_control("CloseRadio"))
+		if await _after_buoy_recovery(): return
 	else:
 		assert(_choice_events==0 and _scan_events==0 and _ack_events==0)
 		assert(_scene.chapter.active)
@@ -532,3 +537,6 @@ func _initialize() -> void:
 	_scene.queue_free()
 	await _frames(4)
 	quit()
+
+func _after_buoy_recovery() -> bool:
+	return false

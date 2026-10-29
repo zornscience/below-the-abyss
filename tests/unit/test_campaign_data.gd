@@ -42,6 +42,7 @@ func test_legacy_upgrade_ids_migrate_into_paid_ranks_without_double_stacking() -
 func test_v3_save_migrates_ammunition_and_allocations_in_memory() -> void:
 	var old: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
 	old.schema_version = 3
+	old.erase("journey")
 	old.erase("prototype")
 	old.erase("story")
 	var loaded: Dictionary = ExpeditionSchema.decode(old)

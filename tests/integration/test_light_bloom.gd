@@ -150,6 +150,7 @@ func test_mute_and_comfort_modes_keep_explicit_text_and_static_feedback() -> voi
 func test_old_checkpoint_migrates_with_zero_story_and_preserved_prototype_progress() -> void:
 	var old: Dictionary = scene.saves.snapshot()
 	old.schema_version = 4
+	old.erase("journey")
 	old.prototype.campaign.erase("science")
 	old.prototype.campaign.erase("legacy_ranks")
 	old.prototype.campaign.ranks = {"sonar":old.prototype.campaign.ranks.sonar,"hull":old.prototype.campaign.ranks.hull}
@@ -177,6 +178,7 @@ func test_all_previous_checkpoint_versions_migrate_with_zero_story_state() -> vo
 	for version: int in [1,2,3,4]:
 		var old: Dictionary = source.duplicate(true)
 		old.schema_version = version
+		old.erase("journey")
 		old.prototype.campaign.erase("science")
 		old.prototype.campaign.erase("legacy_ranks")
 		old.prototype.campaign.ranks = {"sonar":old.prototype.campaign.ranks.sonar,"hull":old.prototype.campaign.ranks.hull}

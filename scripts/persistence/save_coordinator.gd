@@ -80,7 +80,7 @@ func _names(ids: Array) -> Array[StringName]:
 
 func snapshot() -> Dictionary:
 	var vessel: SubmarineController = _scene.submarine
-	return {"format": "bta-expedition", "schema_version": ExpeditionSchema.VERSION, "region_id": ExpeditionSchema.REGION, "legacy_imported": true,
+	return {"format": "bta-expedition", "schema_version": ExpeditionSchema.VERSION, "region_id": ExpeditionJourneyState.region(journey_snapshot()), "journey":journey_snapshot(), "legacy_imported": true,
 		"legacy_conclusion": bool(_state.get("legacy_conclusion",false)),
 		"story": _scene.story.snapshot(),
 		"prototype": prototype_snapshot(),
@@ -140,6 +140,7 @@ func _write(candidate: Dictionary, message: String, scientific_awards: Array[Str
 		_busy = false
 		return _report("Conflicting story decisions; existing checkpoint preserved.",reconciled.error)
 	candidate.story = reconciled.data
+	candidate.journey.commissioned = candidate.journey.commissioned or _state.journey.commissioned
 	candidate.progress = ExpeditionSchema.merge_progress(candidate.progress, _state.progress)
 	candidate.prototype.campaign = CampaignData.merge_earned(candidate.prototype.campaign,_state.prototype.campaign)
 	candidate.prototype.campaign.science = ResearchExperienceData.reconcile(candidate.prototype.campaign.science,candidate.progress.research,scientific_awards)
@@ -210,6 +211,8 @@ func continue_expedition() -> Error:
 		layout.preserve_archived_opening(_scene.excavation,saved.progress.discoveries)
 		saved.terrain = _scene.excavation.snapshot()
 		_state.terrain = saved.terrain.duplicate(true)
+	var previous_journey: Dictionary = journey_snapshot()
+	if _scene.journey!=null: _scene.journey.prepare(saved.journey)
 	var at: Vector2 = Vector2(saved.player.position[0], saved.player.position[1])
 	var angle: float = saved.player.rotation
 	var relocated: bool = not position_clear(at, angle)
@@ -217,6 +220,7 @@ func continue_expedition() -> Error:
 		at = _scene.region.spawn.global_position
 		angle = 0.0
 		if not position_clear(at, angle):
+			if _scene.journey!=null: _scene.journey.prepare(previous_journey)
 			return _report("No clear station fallback; load cancelled without changing the vessel.", ERR_UNAVAILABLE)
 	_busy = true
 	# This coordinator never issues gameplay discovery, scan, claim or ping commands.
@@ -274,7 +278,7 @@ func recover_backup() -> Error:
 	if _busy:
 		return ERR_BUSY
 	_busy = true
-	var restored: Dictionary = store.recover_checkpoint(progress_snapshot(),prototype_snapshot(),_scene.story.snapshot())
+	var restored: Dictionary = store.recover_checkpoint(progress_snapshot(),prototype_snapshot(),_scene.story.snapshot(),journey_snapshot())
 	if restored.error == OK:
 		_state = restored.data
 		_has_checkpoint = true
@@ -283,6 +287,11 @@ func recover_backup() -> Error:
 		_scene.story.restore(_state.story)
 		apply_progress(_state.progress)
 		if _scene.bloom!=null: _scene.bloom.refresh_state()
+		if _scene.journey!=null:
+			# Recover metadata now; apply geometry/pose only through the explicit Continue.
+			_scene.journey.state = _state.journey.duplicate(true)
+			_scene._expedition_started = false
+			_scene.submarine.set_simulation_enabled(false)
 	_report("Backup recovered; rejected file preserved. Continue to resume." if restored.error == OK else "Backup not recovered (%s); files/vessel preserved." % error_string(restored.error), restored.error)
 	_busy = false
 	return restored.error
@@ -395,12 +404,15 @@ func begin_new_campaign(replacement: ExpeditionStore = null) -> Error:
 	if _busy or _scene.submarine.is_physics_processing(): return ERR_BUSY
 	var candidate: Dictionary = snapshot()
 	candidate.story = StoryState.fresh()
+	candidate.journey = ExpeditionJourneyState.fresh()
+	candidate.region_id = ExpeditionSchema.REGION
 	candidate.legacy_conclusion = false
 	candidate.progress = {"discoveries":[],"research":[],"upgrades":[],"missions":_scene.missions._catalog.initial_records()}
 	candidate.prototype = {"ammunition":10,"campaign":CampaignData.fresh()}
 	candidate.terrain = []
 	candidate.route = {"stage":0,"elapsed_seconds":0.0}
 	candidate.player = {"position":[_scene.region.spawn.global_position.x,_scene.region.spawn.global_position.y],"rotation":0.0,"hull":100.0,"battery":100.0,"oxygen":100.0,"sonar_cooldown":0.0}
+	if _scene.chapter!=null: candidate.player.position = [SunlitSurveyData.SPAWN.x,SunlitSurveyData.SPAWN.y]
 	if ExpeditionSchema.decode(candidate).error!=OK: return ERR_INVALID_DATA
 	var paths: Array[String] = [store.path]
 	for legacy: Variant in [_scene.discovery_store,_scene.research_store,_scene.upgrades.store,_scene.missions.store]:
@@ -444,3 +456,61 @@ func begin_new_campaign(replacement: ExpeditionStore = null) -> Error:
 		return _report("New Game cancelled; previous campaign restored. Settings unchanged.",error)
 	_busy = false
 	return _report("New campaign created. Previous campaign archived at "+archive,OK)
+
+func journey_snapshot() -> Dictionary:
+	return _scene.journey.snapshot() if _scene.journey!=null else _state.get("journey",ExpeditionJourneyState.fresh()).duplicate(true)
+
+func _transfer_player(candidate: Dictionary,at: Vector2,restock: bool) -> void:
+	candidate.player.position = [at.x,at.y]
+	candidate.player.rotation = 0.0
+	candidate.player.sonar_cooldown = 0.0
+	candidate.route = {"stage":0,"elapsed_seconds":0.0}
+	if restock:
+		candidate.player.hull = _scene.submarine.hull_system.max_hull
+		candidate.player.battery = _scene.submarine.resource_system.max_battery
+		candidate.player.oxygen = _scene.submarine.resource_system.max_oxygen
+		candidate.prototype.ammunition = 10
+
+func finish_sunlit_return() -> Error:
+	if _scene.journey==null or not _scene.journey.can_finish() or not safe_to_save(): return ERR_UNAVAILABLE
+	var service: Dictionary = _scene.station.quote_arrival_service(_scene.submarine)
+	if not service.has("after"): return service.error
+	var plan: Dictionary = _scene.missions.plan_scripted_return(SunlitShallowsData.MISSION)
+	if plan.error!=OK: return plan.error
+	var candidate: Dictionary = snapshot()
+	candidate.progress.missions = plan.records
+	_transfer_player(candidate,SunlitSurveyData.SPAWN,true)
+	for kind: String in ["hull","battery","oxygen"]: candidate.player[kind] = service.after[kind]
+	var result: Error = _write(candidate,"Expedition acknowledged; off-screen voyage and service saved.")
+	if result!=OK: return result
+	result = continue_expedition()
+	if result==OK:
+		if plan.completed: _scene.missions.mission_completed.emit(SunlitShallowsData.MISSION)
+		_scene.missions.acknowledgement_claimed.emit(SunlitShallowsData.MISSION,plan.acknowledgement)
+	return result
+
+func transfer_chapter(phase: String,restock: bool) -> Error:
+	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing() or phase not in ["twilight","refit"]: return ERR_UNAVAILABLE
+	var old: Dictionary = journey_snapshot()
+	if phase=="refit" and (not _scene.journey.near_tether() or not restock): return ERR_UNAVAILABLE
+	if phase=="twilight" and (old.phase not in ["sunlit","refit"] or restock==old.commissioned): return ERR_UNAVAILABLE
+	if not _scene.chapter.concluded(): return ERR_UNAVAILABLE
+	var service: Dictionary = _scene.station.quote_arrival_service(_scene.submarine) if phase=="refit" else {}
+	if phase=="refit" and not service.has("after"): return service.error
+	var candidate: Dictionary = snapshot()
+	candidate.journey = {"phase":phase,"commissioned":true}
+	candidate.region_id = ExpeditionJourneyState.region(candidate.journey)
+	_transfer_player(candidate,TwilightShelfLayout.SPAWN if phase=="twilight" else SunlitSurveyData.SPAWN,restock)
+	if phase=="refit":
+		for kind: String in ["hull","battery","oxygen"]: candidate.player[kind] = service.after[kind]
+	var result: Error = _write(candidate,"Chapter transfer committed; expedition progress preserved.")
+	return continue_expedition() if result==OK else result
+
+func transfer_prototype() -> Error:
+	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing(): return ERR_UNAVAILABLE
+	var candidate: Dictionary = snapshot()
+	candidate.journey.phase = "prototype"
+	candidate.region_id = ExpeditionSchema.REGION
+	_transfer_player(candidate,_scene.chapter._old_spawn,false)
+	var result: Error = _write(candidate,"Prototype expedition selected; canonical records preserved.")
+	return continue_expedition() if result==OK else result

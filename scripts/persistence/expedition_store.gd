@@ -76,6 +76,7 @@ func write_checkpoint(data: Dictionary) -> Error:
 			if document.error != OK:
 				_writable = false
 				return document.error
+			if document.data.journey.commissioned and not data.journey.commissioned: return ERR_BUSY
 			if not StoryState.extends_history(data.story,document.data.story): return ERR_BUSY
 			if not CampaignData.contains_earned(data.prototype.campaign,document.data.prototype.campaign): return ERR_BUSY
 			if ExpeditionSchema.merge_progress(data.progress, document.data.progress) != data.progress:
@@ -86,11 +87,12 @@ func write_checkpoint(data: Dictionary) -> Error:
 	return _atomic_write(path, text) if result == OK else result
 
 
-func recover_checkpoint(current_progress: Dictionary, current_prototype: Dictionary = {}, current_story: Dictionary = {}) -> Dictionary:
+func recover_checkpoint(current_progress: Dictionary, current_prototype: Dictionary = {}, current_story: Dictionary = {}, current_journey: Dictionary = {}) -> Dictionary:
 	var backup: Dictionary = read_file(path + ".bak")
 	if backup.error != OK:
 		return backup
 	var restored: Dictionary = backup.data
+	if current_journey.get("commissioned",false): restored.journey.commissioned = true
 	if not current_story.is_empty():
 		var merged_story: Dictionary = StoryState.merge_snapshots(restored.story,current_story)
 		if merged_story.error!=OK: return merged_story

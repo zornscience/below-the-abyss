@@ -216,3 +216,24 @@ func _base_returned() -> void:
 			if objective.kind==MissionObjective.Kind.RETURN_AFTER_SCAN and _research.is_completed(objective.target_id):
 				_route_returns[String(definition.stable_id)+"/"+String(objective.stable_id)] = true
 	reconcile()
+
+func plan_scripted_return(id: StringName) -> Dictionary:
+	# Pure proposal for a trusted, explicit narrative voyage. Caller commits atomically.
+	var definition: MissionDefinition = _catalog.definition(id) if _catalog!=null else null
+	if _busy or definition==null: return {"error":ERR_UNAVAILABLE}
+	var prior: String = _records[String(id)].state
+	if prior=="claimed": return {"error":ERR_ALREADY_EXISTS}
+	if prior not in ["accepted","completed"]: return {"error":ERR_UNAVAILABLE}
+	var candidate: Dictionary = snapshot()
+	var has_return: bool = false
+	for objective: MissionObjective in definition.objectives:
+		if objective.kind==MissionObjective.Kind.RETURN_AFTER_SCAN:
+			if not _research.is_completed(objective.target_id): return {"error":ERR_UNAVAILABLE}
+			has_return = true
+		elif not _satisfied(objective) and String(objective.stable_id) not in candidate[String(id)].objectives:
+			return {"error":ERR_UNAVAILABLE}
+		if String(objective.stable_id) not in candidate[String(id)].objectives: candidate[String(id)].objectives.append(String(objective.stable_id))
+	if not has_return: return {"error":ERR_INVALID_PARAMETER}
+	candidate[String(id)].objectives.sort()
+	candidate[String(id)].state = "claimed"
+	return {"error":OK,"records":candidate,"acknowledgement":definition.acknowledgement_id,"completed":prior=="accepted"}

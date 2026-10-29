@@ -704,3 +704,14 @@ The visual-review revision fixes submerged background placement, rounds collisio
 rock contours, distinguishes warm ochre destructible rock, adds radio portraits and
 a sheltered buoy search, and improves animal motion and hammerhead pursuit.
 [Revision details, native captures, verification and manual route](docs/testing/bta-052/revision/README.md).
+
+### Chapter handoff and deep exploration foundation (BTA-053)
+
+After recovering the buoy recording and resolving the bloom decision, Interact at
+the buoy or use the expedition log to finish the chapter without the long return
+swim. Keep exploring and manual return remain available. The completed chapter
+unlocks a Twilight Shelf exploration preview: full supplies at 350 m, branching
+western/eastern loops and a central ascent tether for Halcyon refit/resume. Continue
+preserves actual reserves. The planned wreck/sentinel story is not yet implemented.
+
+[Controls, schema-9 migration, exact commands and evidence](docs/testing/bta-053/README.md).

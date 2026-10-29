@@ -111,6 +111,17 @@ func quote(service: StringName) -> Dictionary:
 	var check: Dictionary = _dock_check(player, true)
 	if check.error != OK:
 		return check
+	return _quote_values(service,player)
+
+
+func quote_arrival_service(player: SubmarineController) -> Dictionary:
+	# Pure quote for an authorised off-screen voyage; never moves or refills a vessel.
+	if _busy or not _enabled or _rules==null or not is_instance_valid(player) or not player.is_inside_tree():
+		return {"error":ERR_UNAVAILABLE,"reason":"Station services offline"}
+	return _quote_values(&"all",player)
+
+
+func _quote_values(service: StringName,player: SubmarineController) -> Dictionary:
 	var before: Dictionary = _values(player)
 	var after: Dictionary = before.duplicate()
 	var transfer: Dictionary = {"hull": 0.0, "battery": 0.0, "oxygen": 0.0}

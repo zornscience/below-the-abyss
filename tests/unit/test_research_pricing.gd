@@ -63,6 +63,7 @@ func test_version_seven_migrates_all_existing_progress_and_paid_allocations_with
 	var latest: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
 	var old: Dictionary = latest.duplicate(true)
 	old.schema_version = 7
+	old.erase("journey")
 	old.prototype.campaign.erase("legacy_ranks")
 	old.prototype.campaign.ranks = {"sonar":1,"hull":1}
 	var before: Dictionary = old.duplicate(true)

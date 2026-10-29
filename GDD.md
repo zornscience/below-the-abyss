@@ -253,3 +253,14 @@ cleanup. The buoy remains at its established location but is sheltered by protec
 rock and depth-changing passages. A clear-angle sweep inside the shelter identifies
 it; prior discovered buoys remain known. No combat or excavation is required.
 The quiet-science story, all permanent IDs and chapter rewards remain unchanged.
+
+## BTA-053 — Approved chapter handoff and deep start
+
+After buoy recovery and the bloom decision, players may finish the first chapter
+with an explicit off-screen return/debrief, or keep exploring. Manual return remains.
+The Twilight Shelf foundation begins fully supplied at 350 m, out of sight of
+Halcyon/surface water, with meaningful left/right graybox loops. A starting ascent
+tether provides deliberate Halcyon service/refit/resume. Continue retains actual
+supplies; the full wreck/sentinel narrative is future work.
+
+[Implementation, verification and manual route](docs/testing/bta-053/README.md).

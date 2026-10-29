@@ -136,6 +136,7 @@ func test_boundaries_camera_and_map_stay_in_zone1_and_prototype_can_be_restored(
 func test_version_five_adds_unaccepted_chapter_without_rewriting_legacy_claims() -> void:
 	var document: Dictionary = game.saves.snapshot()
 	document.schema_version = 5
+	document.erase("journey")
 	document.prototype.campaign.erase("science")
 	document.prototype.campaign.erase("legacy_ranks")
 	document.prototype.campaign.ranks = {"sonar":document.prototype.campaign.ranks.sonar,"hull":document.prototype.campaign.ranks.hull}

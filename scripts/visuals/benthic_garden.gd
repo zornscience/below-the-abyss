@@ -3,16 +3,21 @@ extends Node2D
 ## Decorative rooted growth samples actual collision surfaces; no collision of its own.
 var _roots: Array[Vector2] = []
 var _queued: bool = false
+var _settle_frames: int = 0
 func _ready() -> void:
 	z_index = 2
 	refresh()
 func refresh() -> void:
 	if _queued: return
 	_queued = true
-	_rebuild.call_deferred()
+	_settle_frames = 2
+	set_physics_process(true)
+func _physics_process(_delta: float) -> void:
+	_settle_frames -= 1
+	if _settle_frames>0: return
+	set_physics_process(false)
+	_rebuild()
 func _rebuild() -> void:
-	await get_tree().physics_frame
-	await get_tree().physics_frame
 	if not is_inside_tree(): return
 	_roots.clear()
 	for index: int in range(180):

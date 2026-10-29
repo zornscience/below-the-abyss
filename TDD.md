@@ -441,3 +441,14 @@ Its panel bounds account for the full instrument deck, including ammunition.
 Existing SaveCoordinator safe-pose fallback handles new shelter obstruction; an old
 blocked pose relocates to validated base while preserving reserves and evidence.
 No schema change or new save file. Details: docs/testing/bta-052/revision/README.md.
+
+## BTA-053 — Journey state and atomic chapter transfer
+
+Schema 9 stores validated journey phase/commissioning in the same expedition file;
+versions 1–8 migrate to uncommissioned Sunlit state. MissionService plans a scripted
+return without mutation; SaveCoordinator commits evidence/claim/destination/service
+before live events. ChapterJourney selects scene-owned regional geometry, pressure
+commissioning and station access while retaining the existing bus/domain services.
+Continue never commissions/refills. Explicit prototype phase preserves legacy access.
+
+[Implementation, verification and manual route](docs/testing/bta-053/README.md).

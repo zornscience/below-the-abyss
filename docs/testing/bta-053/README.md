@@ -189,9 +189,10 @@ Automated local results (Godot 4.6.3, GUT 9.6.1, 2026-10-29):
 | Native 1280×800 keyboard/Observe | Fresh chapter → deep west loop → saved depleted expedition; separate-process Continue → refit → resume, no replayed choices/claims; [fresh](logs/native-1280-fresh.txt), [Continue](logs/native-1280-continue.txt) |
 | Native 800×600 controller/Collect | Same flow through the east loop, Large Text/High Contrast/reduced presentation/muted audio; [fresh](logs/native-800-fresh.txt), [Continue](logs/native-800-continue.txt) |
 
-Final import/parser/startup, exact headless handoff matrix and clean Linux package
-results are recorded in `release-results.md` after they complete. Hosted Actions
-status is separate from these local workflow-equivalent checks.
+Final import/parser/startup (**286 scripts**), the **4/4-process** exact headless
+handoff matrix, clean Linux export and extracted-package smoke **passed**.
+[Release results, manifest and commands](release-results.md) retain their evidence.
+Hosted Actions status is separate from these local workflow-equivalent checks.
 
 Native evidence is actual Compatibility-renderer Godot output under Xorg :98,
 Mesa llvmpipe (software rendering). Screenshots are unedited and captured only on
@@ -241,6 +242,7 @@ Tests exercise both fixes and preserve the existing sampling behavior.
   target-hardware performance, physical-controller or audible-mix approval is claimed.
 - The shared campaign catalogue is retained intentionally. A later story milestone
   must add actual Twilight records through validated catalogue/schema extensions.
-- Hosted GitHub API access is currently unavailable; local workflow-equivalent
-  results, Git push and any PR creation/status limitations are reported separately.
-  Do not merge automatically.
+- Branch pushed successfully. PR creation is blocked by the current managed network
+  policy: `Post "https://api.github.com/graphql": Forbidden`. Use the prepared
+  [review link](https://github.com/zornscience/below-the-abyss/compare/main...bta-053-chapter-handoff?expand=1)
+  and [PR description](PR.md). Hosted CI has not been observed. Do not merge automatically.

@@ -1,0 +1,1765 @@
+Running version: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--version']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--version']
+4.6.3.stable.official.7d41c59c4
+
+Running import: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--editor', '--import']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--editor', '--import']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+[   0% ] update_scripts_classes | Started Registering global classes... (13 steps)
+[   0% ] update_scripts_classes | SaveCoordinator
+[   7% ] update_scripts_classes | ChapterJourney
+[  14% ] update_scripts_classes | SunlitShallows
+[  21% ] update_scripts_classes | ExpeditionInterface
+[  28% ] update_scripts_classes | ExpeditionLog
+[  35% ] update_scripts_classes | ExplorationMap
+[  42% ] update_scripts_classes | MissionTracker
+[  50% ] update_scripts_classes | BenthicGarden
+[  57% ] update_scripts_classes | ShelfPrototype
+[  64% ] update_scripts_classes | TwilightShelfLayout
+[  71% ] update_scripts_classes |
+[  78% ] update_scripts_classes |
+[  85% ] update_scripts_classes |
+[ DONE ] update_scripts_classes
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[ DONE ] loading_editor_layout
+
+
+Running parser-0001: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/accessibility/input_context.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/accessibility/input_context.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0002: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/accessibility/ui_accessibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/accessibility/ui_accessibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0003: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/acoustic_creature.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/acoustic_creature.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0004: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/ambient_fish_school.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/ambient_fish_school.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0005: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/creature_navigation.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/creature_navigation.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0006: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/creature_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/creature_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0007: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/creature_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/creature_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0008: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/fish_school_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/fish_school_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0009: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/fish_school_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/fish_school_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0010: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/hammerhead_creature.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/hammerhead_creature.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0011: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/predator_creature.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/predator_creature.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0012: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/predator_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/predator_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0013: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/predator_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/predator_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0014: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/wreck_scavenger.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ai/wreck_scavenger.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0015: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/audio_cue.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/audio_cue.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0016: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/gameplay_audio.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/gameplay_audio.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0017: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/soundscape_mixer.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/soundscape_mixer.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0018: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/soundscape_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/audio/soundscape_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0019: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/campaign_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/campaign_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0020: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/expedition_revision.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/expedition_revision.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0021: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/research_experience_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/research_experience_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0022: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/research_experience_rules.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/research_experience_rules.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0023: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/research_tree.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/campaign/research_tree.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0024: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/blast_effect.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/blast_effect.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0025: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/blast_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/blast_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0026: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/blast_receiver.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/blast_receiver.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0027: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/destructible_rock.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/destructible_rock.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0028: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/excavation_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/excavation_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0029: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/excavation_system.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/excavation_system.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0030: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/torpedo_launcher.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/torpedo_launcher.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0031: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/torpedo_projectile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/torpedo_projectile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0032: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/torpedo_trail.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/combat/torpedo_trail.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0033: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/core/input_bindings.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/core/input_bindings.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0034: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/core/settings_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/core/settings_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0035: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/equipment/submarine_upgrades.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/equipment/submarine_upgrades.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0036: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/equipment/upgrade_catalog.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/equipment/upgrade_catalog.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0037: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/equipment/upgrade_definition.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/equipment/upgrade_definition.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0038: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_catalog.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_catalog.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0039: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_definition.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_definition.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0040: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_objective.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_objective.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0041: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_service.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/missions/mission_service.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0042: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/narrative_catalog.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/narrative_catalog.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0043: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/narrative_entry.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/narrative_entry.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0044: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/narrative_service.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/narrative_service.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0045: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/shelf_story_details.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/narrative/shelf_story_details.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0046: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/onboarding/tutorial_director.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/onboarding/tutorial_director.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0047: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/discovery_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/discovery_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0048: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/expedition_schema.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/expedition_schema.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0049: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/expedition_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/expedition_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0050: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/mission_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/mission_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0051: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/research_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/research_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0052: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/save_coordinator.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/save_coordinator.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0053: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/upgrade_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/persistence/upgrade_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0054: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/bounded_resource.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/bounded_resource.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0055: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/scientific_scanner.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/scientific_scanner.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0056: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_controller.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_controller.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0057: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_damage_config.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_damage_config.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0058: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_damage_system.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_damage_system.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0059: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_hull_system.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_hull_system.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0060: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_motion.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_motion.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0061: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_resource_config.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_resource_config.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0062: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_resource_system.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/player/submarine_resource_system.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0063: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_observer.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_observer.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0064: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_recorder.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_recorder.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0065: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_report.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_report.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0066: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/playtest_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0067: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_bus.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_bus.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0068: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_contract_example.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_contract_example.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0069: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_dispatch_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_dispatch_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0070: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_emission_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_emission_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0071: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_emitter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_emitter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0072: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_event.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_event.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0073: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_receiver.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_receiver.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0074: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_receiver_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/acoustic_receiver_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0075: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/active_sonar_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/active_sonar_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0076: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/ambient_acoustic_field.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/ambient_acoustic_field.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0077: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/ambient_emission_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/ambient_emission_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0078: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/ambient_sound_emitter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/ambient_sound_emitter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0079: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/passive_receiver.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/passive_receiver.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0080: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/passive_sonar_example.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/passive_sonar_example.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0081: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/passive_sonar_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/passive_sonar_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0082: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_emitter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_emitter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0083: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_pulse.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_pulse.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0084: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_reveal_target.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_reveal_target.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0085: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/stations/service_station.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/stations/service_station.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0086: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/stations/station_notice.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/stations/station_notice.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0087: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/stations/station_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/stations/station_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0088: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/chapter_journey.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/chapter_journey.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0089: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/choice_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/choice_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0090: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/emergency_buoy_visual.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/emergency_buoy_visual.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0091: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/expedition_journey_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/expedition_journey_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0092: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/expedition_pressure_fit.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/expedition_pressure_fit.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0093: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/light_bloom_encounter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/light_bloom_encounter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0094: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/light_bloom_visual.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/light_bloom_visual.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0095: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/story_choice_catalog.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/story_choice_catalog.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0096: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/story_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/story_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0097: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_dressing.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_dressing.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0098: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_field_guide.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_field_guide.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0099: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0100: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/story/sunlit_shallows_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0101: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/accessibility_panel.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/accessibility_panel.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0102: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/audio_settings_panel.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/audio_settings_panel.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0103: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/bloom_choice_panel.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/bloom_choice_panel.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0104: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/expedition_interface.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/expedition_interface.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0105: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/expedition_log.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/expedition_log.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0106: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0107: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map_canvas.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/exploration_map_canvas.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0108: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/graybox_route_menu.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/graybox_route_menu.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0109: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/input_test_menu.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/input_test_menu.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0110: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/instrument_glyph.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/instrument_glyph.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0111: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/mechanics_help.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/mechanics_help.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0112: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/mission_board.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/mission_board.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0113: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/mission_tracker.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/mission_tracker.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0114: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/passive_contacts_panel.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/passive_contacts_panel.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0115: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/pilot_context.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/pilot_context.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0116: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/playtest_panel.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/playtest_panel.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0117: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/prototype_resource_panel.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/prototype_resource_panel.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0118: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/radio_notifications.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/radio_notifications.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0119: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/radio_playback.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/radio_playback.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0120: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/radio_portraits.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/radio_portraits.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0121: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/research_log.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/research_log.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0122: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/resource_gauge.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/resource_gauge.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0123: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/scientific_discovery_popup.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/scientific_discovery_popup.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0124: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/station_menu.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/station_menu.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0125: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/submarine_hud.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/submarine_hud.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0126: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/threat_indicator.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/threat_indicator.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0127: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/tutorial_card.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/tutorial_card.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0128: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/ui_dialog_layout.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/ui_dialog_layout.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0129: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/ui_scroll_reader.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/ui_scroll_reader.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0130: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/ui_typography.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/ui/ui_typography.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0131: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/benthic_garden.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/benthic_garden.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0132: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/creature_paint.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/creature_paint.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0133: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/excavation_sediment.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/excavation_sediment.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0134: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/expedition_wreck.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/expedition_wreck.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0135: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/halcyon_departure.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/halcyon_departure.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0136: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/halcyon_descent.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/halcyon_descent.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0137: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/marine_animal_paint.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/marine_animal_paint.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0138: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/outer_shelf_ink.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/outer_shelf_ink.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0139: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/research_tree_illustration.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/research_tree_illustration.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0140: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/seascape_relief.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/seascape_relief.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0141: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/shelf_atmosphere.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/shelf_atmosphere.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0142: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/shelf_landmark_ink.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/shelf_landmark_ink.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0143: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/shelf_motes.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/shelf_motes.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0144: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/station_illustration.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/station_illustration.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0145: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/station_interior.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/station_interior.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0146: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/submarine_headlight.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/submarine_headlight.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0147: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/submarine_illustration.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/submarine_illustration.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0148: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/submarine_portrait.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/submarine_portrait.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0149: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/sunlit_ocean.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/sunlit_ocean.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0150: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/sunlit_rock_dressing.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/sunlit_rock_dressing.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0151: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/continental_shelf.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/continental_shelf.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0152: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/depth_mapping.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/depth_mapping.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0153: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/depth_region.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/depth_region.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0154: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/discovery_catalog.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/discovery_catalog.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0155: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/discovery_registry.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/discovery_registry.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0156: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/graybox_rock.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/graybox_rock.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0157: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/graybox_route_check.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/graybox_route_check.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0158: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/graybox_route_zone.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/graybox_route_zone.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0159: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/movement_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/movement_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0160: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/point_of_interest.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/point_of_interest.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0161: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/research_catalog.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/research_catalog.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0162: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/research_registry.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/research_registry.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0163: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/scan_definition.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/scan_definition.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0164: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/scientific_scan_target.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/scientific_scan_target.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0165: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/shelf_chapter_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/shelf_chapter_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0166: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/shelf_expansion.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/shelf_expansion.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0167: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/shelf_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/shelf_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0168: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/sunlit_region_layout.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/sunlit_region_layout.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0169: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/sunlit_survey_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/sunlit_survey_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0170: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/twilight_shelf_layout.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/world/twilight_shelf_layout.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0171: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_accessibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_accessibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0172: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_active_sonar.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_active_sonar.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0173: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_art_direction.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_art_direction.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0174: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_compact_interface.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_compact_interface.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0175: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_creature_fsm.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_creature_fsm.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0176: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_discovery_map.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_discovery_map.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0177: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_expedition_save.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_expedition_save.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0178: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_feedback.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_feedback.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0179: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_halcyon_descent.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_halcyon_descent.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0180: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_hud.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_hud.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0181: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_interface_review.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_interface_review.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0182: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_mission_framework.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_mission_framework.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0183: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_narrative_slice.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_narrative_slice.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0184: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_passive_sonar.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_passive_sonar.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0185: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_playtest.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_playtest.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0186: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_predator_encounter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_predator_encounter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0187: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_revision_two.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_revision_two.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0188: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_scientific_scanning.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_scientific_scanning.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0189: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_shelf.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_shelf.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0190: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_soundscape.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_soundscape.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0191: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_station_services.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_station_services.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0192: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_submarine_upgrades.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_submarine_upgrades.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0193: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_sunlit_environment.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_sunlit_environment.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0194: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_sunlit_survey.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_sunlit_survey.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0195: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0196: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_expanded_expedition.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_expanded_expedition.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0197: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_revision_two.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_revision_two.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0198: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_story_choice.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_story_choice.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0199: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_environment.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_environment.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0200: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0201: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_survey_matrix.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/drive_sunlit_survey_matrix.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0202: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/intentional_failure.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/intentional_failure.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0203: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/passive_test_rig.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/passive_test_rig.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0204: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/profile_scanner.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/profile_scanner.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0205: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/rejecting_sonar_battery.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/rejecting_sonar_battery.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0206: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/shelf_route_driver.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/shelf_route_driver.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0207: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/sonar_test_rig.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/sonar_test_rig.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0208: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_accelerating_torpedoes.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_accelerating_torpedoes.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0209: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_accessibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_accessibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0210: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_acoustic_creature.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_acoustic_creature.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0211: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_acoustic_lifecycle.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_acoustic_lifecycle.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0212: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_active_sonar_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_active_sonar_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0213: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_art_presentation.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_art_presentation.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0214: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_chapter_journey.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_chapter_journey.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0215: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_cinematic_title.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_cinematic_title.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0216: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_compact_interface.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_compact_interface.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0217: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_continental_shelf.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_continental_shelf.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0218: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_depth_damage_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_depth_damage_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0219: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_discovery_map.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_discovery_map.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0220: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expanded_expedition.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expanded_expedition.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0221: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expanded_sunlit.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expanded_sunlit.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0222: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expedition_resume.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expedition_resume.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0223: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expedition_revision.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_expedition_revision.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0224: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_gameplay_audio.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_gameplay_audio.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0225: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_hud_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_hud_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0226: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_input_menu.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_input_menu.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0227: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_interface_presentation.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_interface_presentation.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0228: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_light_bloom.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_light_bloom.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0229: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_mission_framework.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_mission_framework.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0230: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_narrative_slice.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_narrative_slice.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0231: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_passive_sonar_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_passive_sonar_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0232: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_playtest_observer.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_playtest_observer.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0233: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_predator_encounter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_predator_encounter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0234: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_resource_prototype.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_resource_prototype.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0235: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_scientific_scanning.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_scientific_scanning.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0236: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_station_interaction.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_station_interaction.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0237: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_submarine_controller.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_submarine_controller.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0238: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_submarine_upgrades.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_submarine_upgrades.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0239: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_sunlit_environment.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_sunlit_environment.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0240: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_sunlit_review.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_sunlit_review.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0241: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_sunlit_shallows.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_sunlit_shallows.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0242: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_surface_polish.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_surface_polish.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0243: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_surface_review.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_surface_review.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0244: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_torpedo_collision.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_torpedo_collision.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0245: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_accessibility_settings.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_accessibility_settings.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0246: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_acoustic_acceptance.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_acoustic_acceptance.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0247: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_acoustic_bus.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_acoustic_bus.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0248: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_acoustic_event.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_acoustic_event.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0249: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_active_sonar.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_active_sonar.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0250: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_ambient_acoustics.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_ambient_acoustics.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0251: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_bounded_resource.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_bounded_resource.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0252: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_campaign_data.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_campaign_data.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0253: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_creature_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_creature_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0254: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_depth_mapping.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_depth_mapping.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0255: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_discovery_registry.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_discovery_registry.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0256: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_discovery_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_discovery_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0257: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_expedition_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_expedition_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0258: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_feedback_foundation.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_feedback_foundation.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0259: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_fish_schools.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_fish_schools.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0260: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_graybox_route.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_graybox_route.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0261: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_hammerhead_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_hammerhead_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0262: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_harness.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_harness.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0263: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_input_bindings.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_input_bindings.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0264: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_mission_service.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_mission_service.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0265: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_mission_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_mission_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0266: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_narrative_service.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_narrative_service.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0267: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_passive_sonar.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_passive_sonar.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0268: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_playtest_recorder.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_playtest_recorder.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0269: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_predator_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_predator_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0270: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_radio_playback.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_radio_playback.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0271: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_research_experience.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_research_experience.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0272: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_research_pricing.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_research_pricing.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0273: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_research_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_research_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0274: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_scientific_scanner.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_scientific_scanner.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0275: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_settings_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_settings_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0276: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_soundscape.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_soundscape.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0277: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_station_services.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_station_services.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0278: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_story_state.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_story_state.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0279: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_damage.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_damage.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0280: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_hud.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_hud.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0281: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_hull.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_hull.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0282: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_motion.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_motion.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0283: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_resources.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_submarine_resources.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0284: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_ui_typography.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_ui_typography.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0285: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_upgrade_store.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_upgrade_store.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running parser-0286: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tools/render_science_thumbnails.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tools/render_science_thumbnails.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Discovered 286 GDScript file(s).
+Pinned addons/gut checked by project import and GUT runner, not standalone parsing.
+1: scripts/accessibility/input_context.gd
+2: scripts/accessibility/ui_accessibility.gd
+3: scripts/ai/acoustic_creature.gd
+4: scripts/ai/ambient_fish_school.gd
+5: scripts/ai/creature_navigation.gd
+6: scripts/ai/creature_profile.gd
+7: scripts/ai/creature_state.gd
+8: scripts/ai/fish_school_profile.gd
+9: scripts/ai/fish_school_state.gd
+10: scripts/ai/hammerhead_creature.gd
+11: scripts/ai/predator_creature.gd
+12: scripts/ai/predator_profile.gd
+13: scripts/ai/predator_state.gd
+14: scripts/ai/wreck_scavenger.gd
+15: scripts/audio/audio_cue.gd
+16: scripts/audio/gameplay_audio.gd
+17: scripts/audio/soundscape_mixer.gd
+18: scripts/audio/soundscape_profile.gd
+19: scripts/campaign/campaign_data.gd
+20: scripts/campaign/expedition_revision.gd
+21: scripts/campaign/research_experience_data.gd
+22: scripts/campaign/research_experience_rules.gd
+23: scripts/campaign/research_tree.gd
+24: scripts/combat/blast_effect.gd
+25: scripts/combat/blast_profile.gd
+26: scripts/combat/blast_receiver.gd
+27: scripts/combat/destructible_rock.gd
+28: scripts/combat/excavation_state.gd
+29: scripts/combat/excavation_system.gd
+30: scripts/combat/torpedo_launcher.gd
+31: scripts/combat/torpedo_projectile.gd
+32: scripts/combat/torpedo_trail.gd
+33: scripts/core/input_bindings.gd
+34: scripts/core/settings_store.gd
+35: scripts/equipment/submarine_upgrades.gd
+36: scripts/equipment/upgrade_catalog.gd
+37: scripts/equipment/upgrade_definition.gd
+38: scripts/missions/mission_catalog.gd
+39: scripts/missions/mission_definition.gd
+40: scripts/missions/mission_objective.gd
+41: scripts/missions/mission_service.gd
+42: scripts/narrative/narrative_catalog.gd
+43: scripts/narrative/narrative_entry.gd
+44: scripts/narrative/narrative_service.gd
+45: scripts/narrative/shelf_story_details.gd
+46: scripts/onboarding/tutorial_director.gd
+47: scripts/persistence/discovery_store.gd
+48: scripts/persistence/expedition_schema.gd
+49: scripts/persistence/expedition_store.gd
+50: scripts/persistence/mission_store.gd
+51: scripts/persistence/research_store.gd
+52: scripts/persistence/save_coordinator.gd
+53: scripts/persistence/upgrade_store.gd
+54: scripts/player/bounded_resource.gd
+55: scripts/player/scientific_scanner.gd
+56: scripts/player/submarine_controller.gd
+57: scripts/player/submarine_damage_config.gd
+58: scripts/player/submarine_damage_system.gd
+59: scripts/player/submarine_hull_system.gd
+60: scripts/player/submarine_motion.gd
+61: scripts/player/submarine_resource_config.gd
+62: scripts/player/submarine_resource_system.gd
+63: scripts/playtesting/playtest_observer.gd
+64: scripts/playtesting/playtest_recorder.gd
+65: scripts/playtesting/playtest_report.gd
+66: scripts/playtesting/playtest_store.gd
+67: scripts/sonar/acoustic_bus.gd
+68: scripts/sonar/acoustic_contract_example.gd
+69: scripts/sonar/acoustic_dispatch_profile.gd
+70: scripts/sonar/acoustic_emission_profile.gd
+71: scripts/sonar/acoustic_emitter.gd
+72: scripts/sonar/acoustic_event.gd
+73: scripts/sonar/acoustic_receiver.gd
+74: scripts/sonar/acoustic_receiver_profile.gd
+75: scripts/sonar/active_sonar_profile.gd
+76: scripts/sonar/ambient_acoustic_field.gd
+77: scripts/sonar/ambient_emission_profile.gd
+78: scripts/sonar/ambient_sound_emitter.gd
+79: scripts/sonar/passive_receiver.gd
+80: scripts/sonar/passive_sonar_example.gd
+81: scripts/sonar/passive_sonar_profile.gd
+82: scripts/sonar/sonar_emitter.gd
+83: scripts/sonar/sonar_pulse.gd
+84: scripts/sonar/sonar_reveal_target.gd
+85: scripts/stations/service_station.gd
+86: scripts/stations/station_notice.gd
+87: scripts/stations/station_profile.gd
+88: scripts/story/chapter_journey.gd
+89: scripts/story/choice_data.gd
+90: scripts/story/emergency_buoy_visual.gd
+91: scripts/story/expedition_journey_state.gd
+92: scripts/story/expedition_pressure_fit.gd
+93: scripts/story/light_bloom_encounter.gd
+94: scripts/story/light_bloom_visual.gd
+95: scripts/story/story_choice_catalog.gd
+96: scripts/story/story_state.gd
+97: scripts/story/sunlit_dressing.gd
+98: scripts/story/sunlit_field_guide.gd
+99: scripts/story/sunlit_shallows.gd
+100: scripts/story/sunlit_shallows_data.gd
+101: scripts/ui/accessibility_panel.gd
+102: scripts/ui/audio_settings_panel.gd
+103: scripts/ui/bloom_choice_panel.gd
+104: scripts/ui/expedition_interface.gd
+105: scripts/ui/expedition_log.gd
+106: scripts/ui/exploration_map.gd
+107: scripts/ui/exploration_map_canvas.gd
+108: scripts/ui/graybox_route_menu.gd
+109: scripts/ui/input_test_menu.gd
+110: scripts/ui/instrument_glyph.gd
+111: scripts/ui/mechanics_help.gd
+112: scripts/ui/mission_board.gd
+113: scripts/ui/mission_tracker.gd
+114: scripts/ui/passive_contacts_panel.gd
+115: scripts/ui/pilot_context.gd
+116: scripts/ui/playtest_panel.gd
+117: scripts/ui/prototype_resource_panel.gd
+118: scripts/ui/radio_notifications.gd
+119: scripts/ui/radio_playback.gd
+120: scripts/ui/radio_portraits.gd
+121: scripts/ui/research_log.gd
+122: scripts/ui/resource_gauge.gd
+123: scripts/ui/scientific_discovery_popup.gd
+124: scripts/ui/station_menu.gd
+125: scripts/ui/submarine_hud.gd
+126: scripts/ui/threat_indicator.gd
+127: scripts/ui/tutorial_card.gd
+128: scripts/ui/ui_dialog_layout.gd
+129: scripts/ui/ui_scroll_reader.gd
+130: scripts/ui/ui_typography.gd
+131: scripts/visuals/benthic_garden.gd
+132: scripts/visuals/creature_paint.gd
+133: scripts/visuals/excavation_sediment.gd
+134: scripts/visuals/expedition_wreck.gd
+135: scripts/visuals/halcyon_departure.gd
+136: scripts/visuals/halcyon_descent.gd
+137: scripts/visuals/marine_animal_paint.gd
+138: scripts/visuals/outer_shelf_ink.gd
+139: scripts/visuals/research_tree_illustration.gd
+140: scripts/visuals/seascape_relief.gd
+141: scripts/visuals/shelf_atmosphere.gd
+142: scripts/visuals/shelf_landmark_ink.gd
+143: scripts/visuals/shelf_motes.gd
+144: scripts/visuals/station_illustration.gd
+145: scripts/visuals/station_interior.gd
+146: scripts/visuals/submarine_headlight.gd
+147: scripts/visuals/submarine_illustration.gd
+148: scripts/visuals/submarine_portrait.gd
+149: scripts/visuals/sunlit_ocean.gd
+150: scripts/visuals/sunlit_rock_dressing.gd
+151: scripts/world/continental_shelf.gd
+152: scripts/world/depth_mapping.gd
+153: scripts/world/depth_region.gd
+154: scripts/world/discovery_catalog.gd
+155: scripts/world/discovery_registry.gd
+156: scripts/world/graybox_rock.gd
+157: scripts/world/graybox_route_check.gd
+158: scripts/world/graybox_route_zone.gd
+159: scripts/world/movement_prototype.gd
+160: scripts/world/point_of_interest.gd
+161: scripts/world/research_catalog.gd
+162: scripts/world/research_registry.gd
+163: scripts/world/scan_definition.gd
+164: scripts/world/scientific_scan_target.gd
+165: scripts/world/shelf_chapter_data.gd
+166: scripts/world/shelf_expansion.gd
+167: scripts/world/shelf_prototype.gd
+168: scripts/world/sunlit_region_layout.gd
+169: scripts/world/sunlit_survey_data.gd
+170: scripts/world/twilight_shelf_layout.gd
+171: tests/fixtures/capture_accessibility.gd
+172: tests/fixtures/capture_active_sonar.gd
+173: tests/fixtures/capture_art_direction.gd
+174: tests/fixtures/capture_compact_interface.gd
+175: tests/fixtures/capture_creature_fsm.gd
+176: tests/fixtures/capture_discovery_map.gd
+177: tests/fixtures/capture_expedition_save.gd
+178: tests/fixtures/capture_feedback.gd
+179: tests/fixtures/capture_halcyon_descent.gd
+180: tests/fixtures/capture_hud.gd
+181: tests/fixtures/capture_interface_review.gd
+182: tests/fixtures/capture_mission_framework.gd
+183: tests/fixtures/capture_narrative_slice.gd
+184: tests/fixtures/capture_passive_sonar.gd
+185: tests/fixtures/capture_playtest.gd
+186: tests/fixtures/capture_predator_encounter.gd
+187: tests/fixtures/capture_revision_two.gd
+188: tests/fixtures/capture_scientific_scanning.gd
+189: tests/fixtures/capture_shelf.gd
+190: tests/fixtures/capture_soundscape.gd
+191: tests/fixtures/capture_station_services.gd
+192: tests/fixtures/capture_submarine_upgrades.gd
+193: tests/fixtures/capture_sunlit_environment.gd
+194: tests/fixtures/capture_sunlit_survey.gd
+195: tests/fixtures/drive_chapter_handoff.gd
+196: tests/fixtures/drive_expanded_expedition.gd
+197: tests/fixtures/drive_revision_two.gd
+198: tests/fixtures/drive_story_choice.gd
+199: tests/fixtures/drive_sunlit_environment.gd
+200: tests/fixtures/drive_sunlit_shallows.gd
+201: tests/fixtures/drive_sunlit_survey_matrix.gd
+202: tests/fixtures/intentional_failure.gd
+203: tests/fixtures/passive_test_rig.gd
+204: tests/fixtures/profile_scanner.gd
+205: tests/fixtures/rejecting_sonar_battery.gd
+206: tests/fixtures/shelf_route_driver.gd
+207: tests/fixtures/sonar_test_rig.gd
+208: tests/integration/test_accelerating_torpedoes.gd
+209: tests/integration/test_accessibility.gd
+210: tests/integration/test_acoustic_creature.gd
+211: tests/integration/test_acoustic_lifecycle.gd
+212: tests/integration/test_active_sonar_prototype.gd
+213: tests/integration/test_art_presentation.gd
+214: tests/integration/test_chapter_journey.gd
+215: tests/integration/test_cinematic_title.gd
+216: tests/integration/test_compact_interface.gd
+217: tests/integration/test_continental_shelf.gd
+218: tests/integration/test_depth_damage_prototype.gd
+219: tests/integration/test_discovery_map.gd
+220: tests/integration/test_expanded_expedition.gd
+221: tests/integration/test_expanded_sunlit.gd
+222: tests/integration/test_expedition_resume.gd
+223: tests/integration/test_expedition_revision.gd
+224: tests/integration/test_gameplay_audio.gd
+225: tests/integration/test_hud_prototype.gd
+226: tests/integration/test_input_menu.gd
+227: tests/integration/test_interface_presentation.gd
+228: tests/integration/test_light_bloom.gd
+229: tests/integration/test_mission_framework.gd
+230: tests/integration/test_narrative_slice.gd
+231: tests/integration/test_passive_sonar_prototype.gd
+232: tests/integration/test_playtest_observer.gd
+233: tests/integration/test_predator_encounter.gd
+234: tests/integration/test_resource_prototype.gd
+235: tests/integration/test_scientific_scanning.gd
+236: tests/integration/test_station_interaction.gd
+237: tests/integration/test_submarine_controller.gd
+238: tests/integration/test_submarine_upgrades.gd
+239: tests/integration/test_sunlit_environment.gd
+240: tests/integration/test_sunlit_review.gd
+241: tests/integration/test_sunlit_shallows.gd
+242: tests/integration/test_surface_polish.gd
+243: tests/integration/test_surface_review.gd
+244: tests/integration/test_torpedo_collision.gd
+245: tests/unit/test_accessibility_settings.gd
+246: tests/unit/test_acoustic_acceptance.gd
+247: tests/unit/test_acoustic_bus.gd
+248: tests/unit/test_acoustic_event.gd
+249: tests/unit/test_active_sonar.gd
+250: tests/unit/test_ambient_acoustics.gd
+251: tests/unit/test_bounded_resource.gd
+252: tests/unit/test_campaign_data.gd
+253: tests/unit/test_creature_state.gd
+254: tests/unit/test_depth_mapping.gd
+255: tests/unit/test_discovery_registry.gd
+256: tests/unit/test_discovery_store.gd
+257: tests/unit/test_expedition_store.gd
+258: tests/unit/test_feedback_foundation.gd
+259: tests/unit/test_fish_schools.gd
+260: tests/unit/test_graybox_route.gd
+261: tests/unit/test_hammerhead_state.gd
+262: tests/unit/test_harness.gd
+263: tests/unit/test_input_bindings.gd
+264: tests/unit/test_mission_service.gd
+265: tests/unit/test_mission_store.gd
+266: tests/unit/test_narrative_service.gd
+267: tests/unit/test_passive_sonar.gd
+268: tests/unit/test_playtest_recorder.gd
+269: tests/unit/test_predator_state.gd
+270: tests/unit/test_radio_playback.gd
+271: tests/unit/test_research_experience.gd
+272: tests/unit/test_research_pricing.gd
+273: tests/unit/test_research_store.gd
+274: tests/unit/test_scientific_scanner.gd
+275: tests/unit/test_settings_store.gd
+276: tests/unit/test_soundscape.gd
+277: tests/unit/test_station_services.gd
+278: tests/unit/test_story_state.gd
+279: tests/unit/test_submarine_damage.gd
+280: tests/unit/test_submarine_hud.gd
+281: tests/unit/test_submarine_hull.gd
+282: tests/unit/test_submarine_motion.gd
+283: tests/unit/test_submarine_resources.gd
+284: tests/unit/test_ui_typography.gd
+285: tests/unit/test_upgrade_store.gd
+286: tools/render_science_thumbnails.gd
+
+Running smoke: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--quit-after', '60']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--quit-after', '60']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+PASS: 4.6.3.stable.official.7d41c59c4; import; 286 script checks; startup smoke.
+

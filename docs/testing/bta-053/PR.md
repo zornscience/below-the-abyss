@@ -39,9 +39,10 @@ No new independent store, renamed stable ID, or fake Twilight mission ledger.
 - Actual native keyboard/Observe and controller/Collect fresh + separate-process
   Continue/refit/resume routes pass, including **800×600 Large Text, High Contrast,
   reduced presentation and mute**. No shots required, no repeated choice/claim.
-- Final import/parser/startup, four-process headless handoff and clean Linux export
-  evidence is listed in the linked release report. Hosted Actions is reported
-  separately; local results are not described as a hosted CI run.
+- Final import/parser/startup (**286 scripts**), **4/4** headless handoff processes,
+  clean Linux export and extracted standalone smoke all pass. The tested source is
+  commit `0d940c31ed18`; the following commit adds evidence only. Hosted Actions has
+  not been observed because API access is blocked; local results are not a hosted run.
 
 [Commands, manual route, limits, acceptance mapping, screenshots and logs](https://github.com/zornscience/below-the-abyss/blob/bta-053-chapter-handoff/docs/testing/bta-053/README.md)
 · [Release results](https://github.com/zornscience/below-the-abyss/blob/bta-053-chapter-handoff/docs/testing/bta-053/release-results.md)

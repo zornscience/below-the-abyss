@@ -41,7 +41,7 @@ No new independent store, renamed stable ID, or fake Twilight mission ledger.
   reduced presentation and mute**. No shots required, no repeated choice/claim.
 - Final import/parser/startup (**286 scripts**), **4/4** headless handoff processes,
   clean Linux export and extracted standalone smoke all pass. The tested source is
-  commit `0d940c31ed18`; the following commit adds evidence only. Hosted Actions has
+  commit `0d940c31ed18`; subsequent commits add evidence only. Hosted Actions has
   not been observed because API access is blocked; local results are not a hosted run.
 
 [Commands, manual route, limits, acceptance mapping, screenshots and logs](https://github.com/zornscience/below-the-abyss/blob/bta-053-chapter-handoff/docs/testing/bta-053/README.md)

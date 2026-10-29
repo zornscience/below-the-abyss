@@ -22,8 +22,8 @@ under Xorg/Mesa llvmpipe with muted audio; on-demand rendering is not a benchmar
 The exported package is `build/below-the-abyss-playtest-linux-0d940c31ed18.zip`.
 Its embedded executable SHA256 is
 `27df6dc59d84e2c5c9287b418a0bd548138a438f47f1674ce866cd887a678921`.
-The manifest reports `development_dirty: false`. The following evidence-only commit
-changes documentation/logs; runtime content is identical to the tested export.
+The manifest reports `development_dirty: false`. Subsequent evidence-only commits
+change documentation/logs; runtime content is identical to the tested export.
 Normal native runs report the software driver's unsupported-VSync warning; no Godot
 engine/script errors occurred. Headless validation and standalone launch logged no errors.
 

@@ -1045,4 +1045,3 @@ Results saved to /workspace/below-the-abyss/build/ci-logs/unit-tests.xml
 
 tests=686, passed=686, failures=0, errors=0, skipped=0
 PASS: tests=686, passed=686, failures=0, errors=0, skipped=0
-

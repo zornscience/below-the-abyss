@@ -606,4 +606,3 @@ Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
 [  98% ] savepack | Storing File: res://.godot/uid_cache.bin
 [  98% ] savepack | Storing File: res://project.binary
 [ DONE ] savepack
-

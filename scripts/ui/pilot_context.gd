@@ -27,12 +27,14 @@ func _process(_delta: float) -> void:
 	var binding: String = _scene.input_context.describe(&"interact")
 	progress.visible = state.active_id != &""
 	progress.value = state.progress*100.0
-	if _scene.station.is_in_range(_scene.submarine.global_position):
+	if _scene.journey!=null and _scene.journey.near_tether():
+		text = binding+" · Return to Halcyon / refit"
+	elif _scene.station.is_in_range(_scene.submarine.global_position):
 		text = _scene._station_failure if _scene._station_failure_remaining>0.0 else (binding+" · Dock at Shelf Base" if _scene.station.can_interact(_scene.submarine) else _scene.station.docking_hint(_scene.submarine))
 	elif state.active_id != &"":
 		text = "SCANNING %.0f%% · %s cancel" % [state.progress*100.0,binding]
 	elif _scene.chapter!=null and _scene.chapter.can_review_buoy():
-		text = binding+" · Replay Mara’s archived buoy message"
+		text = binding+(" · Review recording / finish chapter" if _scene.journey!=null and _scene.journey.can_finish() else " · Replay Mara’s archived buoy message")
 	elif _scene.bloom!=null and _scene.bloom.in_range():
 		text = _scene.bloom.prompt()
 	elif _scene.submarine.scanner.candidate_id() != &"":

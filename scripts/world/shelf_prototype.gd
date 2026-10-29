@@ -8,6 +8,7 @@ extends MovementPrototype
 @export var canonical_chapter: bool = true
 var mission_tracker: MissionTracker
 var chapter: SunlitShallows
+var journey: ChapterJourney
 var _station_failure: String = ""
 var _station_failure_remaining: float = 0.0
 var story: StoryState
@@ -283,6 +284,10 @@ func _ready() -> void:
 			chapter = SunlitShallows.new()
 			add_child(chapter)
 			chapter.setup(self)
+			if saves!=null:
+				journey = ChapterJourney.new()
+				add_child(journey)
+				journey.setup(self)
 	if extended_expedition:
 		mission_tracker = MissionTracker.new()
 		get_node("UI").add_child(mission_tracker)
@@ -379,6 +384,7 @@ func open_audio_settings() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if journey!=null and journey.transitioning: return
 	if bloom!=null and bloom.modal(): return
 	if revision!=null and revision.ui.modal(): return
 	if help_panel != null and help_panel.visible: return
@@ -405,7 +411,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif not route_layer.visible:
 		if not development_mode and _menu == null and not event.is_echo() and event.is_action_pressed("interact"):
-			if station.is_in_range(submarine.global_position):
+			if journey!=null and journey.near_tether():
+				journey.offer_return()
+			elif station.is_in_range(submarine.global_position):
 				open_station()
 			elif chapter!=null and chapter.can_review_buoy():
 				chapter.read_buoy()

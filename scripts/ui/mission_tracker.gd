@@ -26,17 +26,22 @@ func setup(value: ShelfPrototype) -> void:
 	refresh()
 func refresh() -> void:
 	if scene==null: return
+	if scene.journey!=null and scene.journey.active():
+		title.text = "◇ THE TWILIGHT SHELF"
+		detail.text = "◇ Explore west and east · Ascent tether for refit"
+		_reflow()
+		return
 	var chapter: SunlitShallows = scene.chapter
 	if chapter!=null and chapter.active:
 		visible = chapter.state()!="available"
 		title.text = "◇ THE SUNLIT SHALLOWS"
 		var text: String
-		if chapter.concluded(): text = "✓ Complete · Twilight Shelf is not yet playable"
+		if chapter.concluded(): text = "✓ Complete · Twilight Shelf exploration available"
 		elif chapter.can_debrief(): text = "◇ Dock and submit expedition debrief"
 		elif not scene.story.resolved(LightBloomEncounter.ENCOUNTER): text = "◇ Consult map · study the light bloom"
 		elif scene.discoveries.state_of(SunlitShallowsData.POI)==DiscoveryRegistry.State.HIDDEN: text = "◇ Explore open shelf · sonar search area"
 		elif not scene.research.is_completed(SunlitShallowsData.BUOY): text = "◇ Scan the identified emergency buoy"
-		else: text = "◇ Return to Halcyon with the recording"
+		else: text = "◇ Finish chapter at buoy / log · Return to Halcyon"
 		detail.text = text
 	else:
 		var lines: PackedStringArray = []

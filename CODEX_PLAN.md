@@ -272,3 +272,13 @@ rounded matching terrain/collision/map, warm destructible geology, opt-in shelte
 buoy reception, propulsion-driven animal animation, bounded stronger hammerhead,
 original radio portrait atlas, and removal of obsolete canonical prototype markings.
 No new milestone or save schema. Evidence: docs/testing/bta-052/revision/README.md.
+
+## BTA-053 — Buoy handoff and Twilight Shelf foundation
+
+First implementation step of the user-approved chapter design and revised handoff.
+Scope: optional buoy/log finish, atomic shared checkpoint transition and recovery,
+full deep deployment with authored pressure fit, central return/refit tether, and
+bidirectional graybox loops. Preserve manual/legacy routes and all prior systems.
+Do not implement the full sentinel/log/glyph narrative or its rewards in this PR.
+
+[Implementation, verification and manual route](docs/testing/bta-053/README.md).

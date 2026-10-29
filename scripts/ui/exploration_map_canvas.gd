@@ -2,6 +2,8 @@ class_name ExplorationMapCanvas
 extends Control
 ## Draw only an explicit discovered snapshot, public survey extent and own position.
 
+var chart_caption: String = ""
+var public_anchor: Vector2 = Vector2.INF
 var bounds: Rect2
 var points: Array[PointOfInterest] = []
 var player_position: Vector2
@@ -48,7 +50,7 @@ func _draw() -> void:
 	var font: Font = ThemeDB.fallback_font
 	if survey_enabled:
 		_draw_survey()
-	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), "HALCYON / SURVEY CHART" if survey_enabled else "SURVEY EXTENT / SURFACE Y = 0", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
+	draw_string(font, Vector2(24,24) if survey_enabled else start-Vector2(0,8), chart_caption if not chart_caption.is_empty() else ("HALCYON / SURVEY CHART" if survey_enabled else "SURVEY EXTENT / SURFACE Y = 0"), HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), ink)
 	for index: int in range(points.size()):
 		var point: PointOfInterest = points[index]
 		var at: Vector2 = _point(point.map_position)
@@ -74,6 +76,11 @@ func _draw() -> void:
 	var side: Vector2 = direction.orthogonal()
 	draw_colored_polygon(PackedVector2Array([player+direction*10,player-direction*6+side*6,player-direction*6-side*6]),Color("f4dc94"))
 	draw_string(font, player + Vector2(12, 18), "YOU", HORIZONTAL_ALIGNMENT_LEFT, -1, UiTypography.for_control(self,&"hud"), Color("f4dc94"))
+
+	if public_anchor.is_finite():
+		var anchor: Vector2 = _point(public_anchor)
+		draw_arc(anchor,8,0,TAU,24,ink,2,true)
+		draw_string(font,anchor+Vector2(12,-12),"ASCENT TETHER",HORIZONTAL_ALIGNMENT_LEFT,-1,UiTypography.for_control(self,&"secondary"),ink)
 
 func _draw_survey() -> void:
 	# Only charted geometry is supplied by the chapter adapter. No hidden POI metadata.

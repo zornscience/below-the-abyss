@@ -2,7 +2,7 @@ class_name ExpeditionSchema
 extends RefCounted
 ## Pure validation/migration. No node restoration or executable data from disk.
 
-const VERSION: int = 8
+const VERSION: int = 9
 const REGION: String = "continental_shelf"
 const DISCOVERIES: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
 const RESEARCH: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
@@ -47,7 +47,7 @@ static func decode(value: Variant) -> Dictionary:
 	if not value is Dictionary or not InputBindings.is_integer(value.get("schema_version")):
 		return {"error": ERR_INVALID_DATA}
 	var version: int = int(value.schema_version)
-	if version not in [1, 2, 3, 4, 5, 6, 7, VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, VERSION]:
 		return {"error": ERR_UNAVAILABLE}
 	var data: Dictionary = value.duplicate(true)
 	if version in [1,2]:
@@ -72,7 +72,10 @@ static func decode(value: Variant) -> Dictionary:
 			var previous_campaign: Dictionary = CampaignData.migrate_previous(data.prototype.campaign)
 			if previous_campaign.is_empty(): return {"error":ERR_INVALID_DATA}
 			data.prototype.campaign = previous_campaign
-	if data.size() != 11 or not StoryState.valid_snapshot(data.get("story")) or not valid_prototype(data.get("prototype")) or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id != REGION \
+	if version<9:
+		if data.has("journey"): return {"error":ERR_INVALID_DATA}
+		data.journey = ExpeditionJourneyState.fresh()
+	if data.size() != 12 or not StoryState.valid_snapshot(data.get("story")) or not valid_prototype(data.get("prototype")) or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id not in [REGION,ExpeditionJourneyState.TWILIGHT] \
 		or not data.get("legacy_imported") is bool or data.legacy_imported != true or not data.get("player") is Dictionary \
 		or not data.get("route") is Dictionary or not valid_progress(data.get("progress")):
 		return {"error": ERR_INVALID_DATA}
@@ -87,6 +90,7 @@ static func decode(value: Variant) -> Dictionary:
 		var objectives: Array = data.progress.missions[String(SunlitShallowsData.MISSION)].objectives
 		if ("recover-maras-message" in objectives or "return-message-to-halcyon" in objectives) and String(SunlitShallowsData.BUOY) not in data.progress.research: return {"error":ERR_INVALID_DATA}
 		if "study-light-bloom" in objectives and not (String(LightBloomEncounter.OBSERVE) in data.story.decisions or String(LightBloomEncounter.COLLECT) in data.story.decisions): return {"error":ERR_INVALID_DATA}
+	if not ExpeditionJourneyState.valid(data.get("journey"),data.progress) or data.region_id!=ExpeditionJourneyState.region(data.journey): return {"error":ERR_INVALID_DATA}
 	data.story.resonance = int(data.story.resonance)
 	data.schema_version = VERSION
 	var player: Dictionary = data.player

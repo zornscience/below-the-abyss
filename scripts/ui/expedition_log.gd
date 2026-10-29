@@ -3,6 +3,9 @@ extends Control
 ## Paused, rereadable narrative view; hidden entries never enter its controls/text.
 
 signal close_requested
+signal finish_requested
+var finish_available: Callable
+var finish_button: Button
 var narrative: NarrativeService
 var _station: WeakRef
 var _selected: StringName = &"shelf-station-briefing"
@@ -18,6 +21,12 @@ func _ready() -> void:
 	close_button.pressed.connect(func() -> void: close_requested.emit())
 	begin_button.pressed.connect(_begin)
 	debrief_button.pressed.connect(_debrief)
+	finish_button = Button.new()
+	finish_button.name = "FinishChapterFromLog"
+	finish_button.text = "Finish chapter / return to Halcyon"
+	UiTypography.style(finish_button,&"dialog_button")
+	debrief_button.get_parent().add_child(finish_button)
+	finish_button.pressed.connect(func() -> void: finish_requested.emit())
 
 
 func setup(service: NarrativeService) -> void:
@@ -65,7 +74,9 @@ func refresh() -> void:
 	debrief_button.disabled = not narrative.progress_allowed() or station == null or not narrative.can_debrief()
 	debrief_button.text = "Chapter acknowledged / saved" if narrative.is_concluded() else (
 		"Submit expedition debrief" if station != null else ("Dock at Halcyon to debrief" if narrative.entries_provider.is_valid() else "Dock at Shelf Base to debrief"))
+	finish_button.visible = finish_available.is_valid() and finish_available.call()
 	var controls: Array[Control] = [close_button]
+	if finish_button.visible: controls.append(finish_button)
 	for button: Button in [begin_button, debrief_button]:
 		if not button.disabled:
 			controls.append(button)

@@ -50,6 +50,7 @@ func test_backup_merges_earned_once_and_keeps_allocations_intentional() -> void:
 func test_version_six_migrates_records_without_xp_or_loss_of_prior_state() -> void:
 	var old: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
 	old.schema_version = 6
+	old.erase("journey")
 	old.prototype.campaign.erase("science")
 	old.prototype.campaign.erase("legacy_ranks")
 	old.prototype.campaign.ranks = {"sonar":old.prototype.campaign.ranks.sonar,"hull":old.prototype.campaign.ranks.hull}
@@ -77,6 +78,7 @@ func test_malformed_legacy_progress_is_rejected_before_migration_reads_nested_fi
 	for invalid: Variant in [null,[],true,"bad",{}, {"research":null}]:
 		var data: Dictionary = ExpeditionSchema.decode(JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/expedition_v1.json"))).data
 		data.schema_version = 6
+		data.erase("journey")
 		data.prototype.campaign.erase("science")
 		data.progress = invalid
 		assert_eq(ExpeditionSchema.decode(data).error,ERR_INVALID_DATA)

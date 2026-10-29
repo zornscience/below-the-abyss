@@ -4,6 +4,7 @@ extends Control
 
 signal research_requested
 signal close_requested
+var presentation_name: String = "CONTINENTAL SHELF"
 var presentation_bounds: Rect2
 var presentation_excluded_ids: Array[StringName] = []
 var registry: DiscoveryRegistry
@@ -43,12 +44,17 @@ func setup(value: DiscoveryRegistry, persistence: DiscoveryStore) -> void:
 
 
 func refresh() -> void:
+	var heading: Label = find_child("Title",true,false) as Label
+	if heading!=null: heading.text = "EXPLORATION / "+presentation_name
 	canvas.bounds = registry.survey_bounds()
 	canvas.points = registry.discovered_points()
 	if presentation_bounds.has_area():
 		canvas.bounds = presentation_bounds
 		canvas.points = canvas.points.filter(func(point: PointOfInterest) -> bool: return presentation_bounds.has_point(point.map_position))
 	canvas.points = canvas.points.filter(func(point: PointOfInterest) -> bool: return point.stable_id not in presentation_excluded_ids)
+	if not canvas.points.any(func(point: PointOfInterest) -> bool: return point.stable_id==canvas.selected_id):
+		canvas.selected_id = &""
+		(%SelectedLandmark as Label).text = ""
 	var list: VBoxContainer = %LandmarkList
 	for child: Node in list.get_children():
 		list.remove_child(child)
@@ -94,7 +100,7 @@ func _select(id: StringName) -> void:
 
 func _refresh_status() -> void:
 	(%DiscoverySaveStatus as Label).text = store.status
-	(%DiscoverySaveStatus as Label).visible = not (canvas.survey_enabled and store.status.begins_with("Progress managed by expedition checkpoint"))
+	(%DiscoverySaveStatus as Label).visible = not ((canvas.survey_enabled or not canvas.chart_caption.is_empty()) and store.last_result==OK and store.status.begins_with("Progress "))
 
 
 func present(position: Vector2, binding_hint: String) -> void:

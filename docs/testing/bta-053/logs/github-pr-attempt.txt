@@ -1,0 +1,10 @@
+Observed 2026-10-29, after the clean Linux export and standalone smoke passed.
+
+gh pr create --repo zornscience/below-the-abyss --base main --head bta-053-chapter-handoff --title "BTA-053: Chapter handoff and deep Twilight Shelf foundation" --body-file docs/testing/bta-053/PR.md
+
+Exit: 1
+Post "https://api.github.com/graphql": Forbidden
+
+The current managed environment policy allows github.com Git access but excludes
+api.github.com. Branch push succeeded; no PR number or hosted Actions status was
+obtained. No merge was performed.

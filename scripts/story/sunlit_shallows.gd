@@ -80,8 +80,13 @@ func entry(id: StringName) -> NarrativeEntry:
 		if item.stable_id==id: return item.duplicate(true) as NarrativeEntry
 	return null
 func primary_title() -> String:
+	if scene.journey!=null and scene.journey.state.phase=="prototype": return "Continue prototype expedition"
+	if scene.journey!=null and scene.journey.state.phase!="sunlit": return "Continue The Twilight Shelf"
 	return "Begin The Sunlit Shallows" if state()=="available" else "Continue The Sunlit Shallows"
 func start() -> void:
+	if scene.journey!=null and scene.journey.state.phase!="sunlit":
+		scene.journey.continue_from_title()
+		return
 	if not scene.revision.can_write(): return
 	var saved: Dictionary = scene.saves._state.player
 	var at: Vector2 = Vector2(saved.position[0],saved.position[1])
@@ -119,6 +124,12 @@ func launch() -> void:
 	scene.revision.start()
 	scene.missions.reconcile()
 func start_prototype() -> void:
+	if scene.journey!=null:
+		if scene.saves.transfer_prototype()!=OK: return
+		await scene.journey.settle_camera()
+		scene.revision.ui.title_page.hide()
+		scene.resume_route()
+		return
 	_activate(false)
 	scene.revision.ui.title_page.hide()
 	scene.revision.start()
@@ -198,6 +209,7 @@ func _submit_debrief() -> void:
 	else: _back_to_dock()
 func show_conclusion() -> void:
 	scene.revision.ui.show_story_page("THE SUNLIT SHALLOWS / CHAPTER COMPLETE",entry(&"sunlit-debrief").text+"\n\n"+scene.bloom.response_text(),"Return to operations",_back_to_dock,&"FinishSunlit",_back_to_dock)
+	if scene.journey!=null: scene.revision.ui.add_story_option("Explore The Twilight Shelf",scene.journey.offer_deploy,&"ExploreTwilight")
 func _back_to_dock() -> void:
 	scene.revision.ui.radio_page.hide()
 	scene.revision.ui.show_dock()
@@ -224,10 +236,10 @@ func log_text() -> String:
 	for record: NarrativeEntry in entries(): parts.append(record.title+"\n"+record.text)
 	return "\n\n".join(parts)
 func guidance() -> String:
-	if concluded(): return "CHAPTER COMPLETE · Mara's message is archived · Twilight Shelf awaits a future expedition"
+	if concluded(): return "CHAPTER COMPLETE · Mara's message is archived · Twilight Shelf exploration available at Halcyon"
 	if not scene.story.resolved(LightBloomEncounter.ENCOUNTER): return "Study the light bloom east of Halcyon · scan unharmed or bottle a specimen"
 	if not scene.research.is_completed(SunlitShallowsData.BUOY): return "Consult the map · explore the open shelf · search the reported signal area with sonar"
-	return "Bring Mara's recording home · retrace the surveyed passages west and dock at Halcyon"
+	return "Recording secured · Finish chapter at the buoy / expedition log, or return to Halcyon"
 func _scan_completed(id: StringName) -> void:
 	if active and id==SunlitShallowsData.BUOY:
 		scene.revision.ui.notifications.enqueue("sunlit-buoy-recovered",entry(&"sunlit-buoy-recovered").text,"Wick / Mara’s buoy")
@@ -270,5 +282,8 @@ func can_review_buoy() -> bool:
 	return active and scene.research.is_completed(SunlitShallowsData.BUOY) and scene.submarine.global_position.distance_to(buoy.global_position)<=180.0
 func read_buoy() -> Error:
 	if not can_review_buoy() or scene.revision.ui.modal(): return ERR_UNAVAILABLE
+	if scene.journey!=null and scene.journey.can_finish():
+		scene.journey.offer_finish()
+		return OK
 	scene.revision.ui.notifications.replay("sunlit-buoy-recovered",entry(&"sunlit-buoy-recovered").text,"Wick / Mara’s buoy")
 	return OK

@@ -63,7 +63,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 func can_write() -> bool:
 	return scene.saves!=null and scene.saves.can_write()
 func capabilities() -> Dictionary:
-	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)],"hull":tree.hull_ratings[int(campaign.ranks.hull)],"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
+	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)],"hull":tree.hull_ratings[int(campaign.ranks.hull)]+(ChapterJourney.PRESSURE_FIT.baseline_safe_depth_m-tree.hull_ratings[0] if scene.journey!=null and scene.journey.state.commissioned else 0.0),"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
 func snapshot() -> Dictionary:
 	return {"ammunition":scene.torpedoes.ammunition,"campaign":campaign.duplicate(true)}
 func restore(value: Dictionary) -> void:
@@ -141,6 +141,9 @@ func on_docked() -> Error:
 	ui.show_dock()
 	return OK
 func undock() -> void:
+	if scene.journey!=null and scene.journey.at_station():
+		scene.journey.resume_expedition()
+		return
 	ui.dock_page.hide()
 	scene.close_station()
 func _refresh_ammo() -> void:
@@ -160,7 +163,7 @@ func _reward_survey() -> void:
 func _physics_process(delta: float) -> void:
 	_refresh_ammo()
 	if scene==null or not scene.submarine.is_physics_processing(): return
-	if scene.chapter!=null and scene.chapter.active: return
+	if (scene.chapter!=null and scene.chapter.active) or (scene.journey!=null and scene.journey.active()): return
 	_clock += delta
 	if scene.station.is_in_range(scene.submarine.global_position) or _clock<_defer_until or ui.modal(): return
 	if scene.missions.snapshot()[String(ShelfChapterData.OUTER)].state=="available":
@@ -192,6 +195,9 @@ func accept_transmission(id: String, offer: bool) -> void:
 func defer_transmission() -> void:
 	ui.notifications.defer_current()
 func _refresh_map_marker() -> void:
+	if scene.journey!=null and scene.journey.active():
+		scene.journey.refresh()
+		return
 	if scene.chapter!=null and scene.chapter.active:
 		scene.chapter._refresh()
 		return

@@ -1043,12 +1043,12 @@ res://tests/integration/test_twilight_habitat.gd
 * test_continue_preserves_damage_and_records_but_resets_transient_eruption
 * test_comfort_modes_keep_warning_legible_without_motion_or_particles
 * test_refit_and_restart_cleanup_do_not_erase_permanent_progress
-    [WARNING]:  Warn:  Float/Int comparison.  Got FLOAT but expected INT
 * test_jet_boundaries_and_terrain_occlusion_are_conservative
 * test_thermal_depletion_clamps_and_destruction_emits_once
 * test_historical_deep_pose_inside_new_chimney_uses_existing_safe_fallback
 * test_both_canonical_regions_hide_prototype_ridges_and_prototype_restores_them
-12/12 passed.
+* test_only_active_regional_ambience_uses_existing_marine_life_contract
+13/13 passed.
 
 
 
@@ -1059,18 +1059,16 @@ res://tests/integration/test_twilight_habitat.gd
 
 Totals
 ------
-Warnings              1
-
 Scripts              80
-Tests               704
-Passing Tests       704
-Asserts           42941
-Time              679.116s
+Tests               705
+Passing Tests       705
+Asserts           42960
+Time              545.394s
 
 
 ---- All tests passed! ----
 
 Results saved to /workspace/below-the-abyss/build/ci-logs/unit-tests.xml
 
-tests=704, passed=704, failures=0, errors=0, skipped=0
-PASS: tests=704, passed=704, failures=0, errors=0, skipped=0
+tests=705, passed=705, failures=0, errors=0, skipped=0
+PASS: tests=705, passed=705, failures=0, errors=0, skipped=0

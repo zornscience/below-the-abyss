@@ -31,17 +31,27 @@ log, sentinel decision, reward, currency, new region or independent save store.
 
 ## Verification and review
 
-- Full GUT suite: **704/704**, **42,941 assertions**, 679.116 s.
-- Final focused geometry/UI suite: **58/58**; final hazard/compact UI: **33/33**.
-- Import, **295** parser checks and startup passed; changed scripts were rechecked.
+- Full GUT suite: **705/705**, **42,960 assertions**, 545.394 s.
+- Import, **295** parser checks and startup passed.
 - New four-process headless hazard/Continue/refit matrix passed on both input devices.
-- Native 1280×800 keyboard and 800×600 controller/Large Text/High Contrast/comfort
-  routes, the existing canonical matrix and clean Linux export results are recorded
-  in the linked report as they complete. Local results are separate from hosted CI.
+- Final native keyboard/1280 and controller/800 Large Text/High Contrast/comfort
+  walkthroughs passed, including safe bypass, actual heat damage, pause, sonar
+  reaction, save/Continue and station refit. Both are muted and fire zero torpedoes.
+- Existing expanded/revised expeditions, eight story-choice processes, four chapter
+  handoff processes and the **12-process canonical Sunlit matrix** passed. The
+  extended controller route retained its original 300-second budget (261.837 s).
+- **7/7 Python tests**, clean Linux export and packaged standalone smoke passed.
+  Exact source/hash, diagnostic timing notes and raw logs are in the release report.
+- These are local results. Hosted GitHub Actions status and human review remain
+  separate; no human playtest or physical-controller claim.
 
 [Full evidence, tuning, acceptance and manual route](https://github.com/zornscience/below-the-abyss/blob/bta-054-twilight-environment/docs/testing/bta-054/README.md)
 · [Changed files](https://github.com/zornscience/below-the-abyss/blob/bta-054-twilight-environment/docs/testing/bta-054/changed-files.txt)
 · [Asset provenance/workflow](https://github.com/zornscience/below-the-abyss/blob/bta-054-twilight-environment/assets/art/twilight/README.md)
+
+![Illustrated historic wreck and deep shelf](https://raw.githubusercontent.com/zornscience/below-the-abyss/bta-054-twilight-environment/docs/testing/bta-054/screenshots/1280/historic-whaler.png)
+
+![Thermal hull feedback at 800×600 Large Text](https://raw.githubusercontent.com/zornscience/below-the-abyss/bta-054-twilight-environment/docs/testing/bta-054/screenshots/800/thermal-hull-damage.png)
 
 Manual route: finish buoy chapter → deploy at 350 m → west eel/wreck gallery →
 west lower vent → observe warning from safe side → deliberately enter a jet →

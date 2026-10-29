@@ -2,11 +2,12 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **BTA-051 — Expanded Sunlit Shallows and research XP**,
-on **The Sunlit Shallows**, the canonical first expedition.
+Current build: **BTA-054 — Twilight Shelf environment, wildlife and thermal vents**,
+following **The Sunlit Shallows**, the canonical first expedition.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
-recover missing acoustician Mara Voss's emergency buoy. Bring the recording home
-for a first-expedition debrief. The Twilight Shelf is a future chapter, not playable.
+recover missing acoustician Mara Voss's emergency buoy. Finish the chapter at the
+buoy or bring the recording home for a debrief, then deploy to the branching
+Twilight Shelf exploration preview. Its full investigation story remains in development.
 
 - **Start:** Begin/Continue The Sunlit Shallows, Options and Quit on the illustrated
   title. **New Game** confirms and archives the current campaign before starting fresh;
@@ -15,7 +16,8 @@ for a first-expedition debrief. The Twilight Shelf is a future chapter, not play
   M/Back map/research, P/Start pause. Bindings are remappable. Optional Wick tutorial
   cards can be disabled under Pause → Help & tutorials.
 - **Investigate:** follow Halcyon's pylons east, study the bloom, then consult the map, clear the fractured passage and search the reported area. Sonar identifies subjects; deliberate scans recover records. Read
-  the recovered message in the expedition log. Return through the cleared shallow route.
+  the recovered message in the expedition log. Return through the cleared shallow route
+  or finish the chapter at the buoy.
 - **Choose:** scan the bloom unharmed or bottle a specimen for Crane. Its visual
   outcome and Wick/Okafor/Crane dialogue persist without a numeric morality score.
   Neither branch blocks completion or can be repeated for rewards.

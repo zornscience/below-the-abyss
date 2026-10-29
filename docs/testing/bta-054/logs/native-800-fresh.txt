@@ -34,11 +34,11 @@ TWILIGHT_RENDER_SAMPLE deep-eel-gallery draw_calls=36.0 texture_bytes=154719383.
 TWILIGHT_RENDER_SAMPLE historic-whaler draw_calls=48.0 texture_bytes=154719383.0
 TWILIGHT_RENDER_SAMPLE vent-warning draw_calls=43.0 texture_bytes=154719383.0
 TWILIGHT_RENDER_SAMPLE vent-eruption-safe-bypass draw_calls=41.0 texture_bytes=154719383.0
-TWILIGHT_RENDER_SAMPLE vent-clear-the-jet draw_calls=51.0 texture_bytes=154850455.0
+TWILIGHT_RENDER_SAMPLE vent-clear-the-jet draw_calls=51.0 texture_bytes=154719383.0
 TWILIGHT_RENDER_SAMPLE thermal-hull-damage draw_calls=53.0 texture_bytes=154850455.0
 TWILIGHT_RENDER_SAMPLE squid-patrol draw_calls=44.0 texture_bytes=154850455.0
-TWILIGHT_SONAR_REACTION states=[1] accepted=shelf-playtest/neris-01/sonar/4/1 at=(34442.04, 2810.974)
+TWILIGHT_SONAR_REACTION states=[1] accepted=shelf-playtest/neris-01/sonar/4/1 at=(34440.57, 2810.619)
 TWILIGHT_RENDER_SAMPLE squid-investigates-sonar draw_calls=51.0 texture_bytes=154850455.0
 TWILIGHT_RENDER_SAMPLE mineral-garden-and-east-vent draw_calls=38.0 texture_bytes=154850455.0
 TWILIGHT_RENDER_SAMPLE jelly-drift draw_calls=39.0 texture_bytes=154850455.0
-TWILIGHT_HABITAT_WALK_PASS input=controller hull=89.0000000000012 records_unchanged=true shots=0
+TWILIGHT_HABITAT_WALK_PASS input=controller hull=88.933333333334 records_unchanged=true shots=0

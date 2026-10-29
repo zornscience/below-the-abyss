@@ -181,13 +181,14 @@ Local Godot 4.6.3 / GUT 9.6.1:
 
 | Check | Result |
 | --- | --- |
-| Complete GUT suite | **704/704**, **42,941 assertions**, 679.116 s; [text](logs/gut.txt), [JUnit XML](logs/unit-tests.xml) |
-| Focused terrain/UI/transfer regressions | **58/58**, 5,971 assertions; [log](logs/focused-geometry-ui.txt) |
-| Final focused hazard/compact UI | **33/33**, 428 assertions; [log](logs/focused-final-ui.txt) |
-| Import/parser/startup | Passed; **295 scripts**; [full validation](logs/validation.txt), [final changed-script checks](logs/final-changed-script-checks.txt) |
+| Complete GUT suite | **705/705**, **42,960 assertions**, 545.394 s; [text](logs/gut.txt), [JUnit XML](logs/unit-tests.xml) |
+| Import/parser/startup | Passed; **295 scripts**; [validation](logs/validation.txt), [inventory](logs/parser-inventory.txt) |
 | New headless hazard/Continue/refit matrix | **4/4 processes**, both input devices/outcomes; [log](logs/headless-habitat.txt) |
 | Existing expanded/revised expeditions, story choices and chapter handoff | Passed; [log](logs/legacy-and-handoff.txt) |
-| Canonical chapter matrix, final native matrix and clean Linux export | Final results retained in [release results](release-results.md) |
+| Canonical Sunlit chapter matrix | **12/12 processes**, including both paths/devices, buoy checkpoint/Continue and the extended controller route; [log](logs/release-pipeline.txt) |
+| Final native hazard routes | **4/4 processes**, keyboard/1280 and controller/800 comfort, fresh + Continue/refit; [1280](logs/native-1280-fresh.txt), [800](logs/native-800-fresh.txt) |
+| Python tooling regressions | **7/7**, in [release pipeline](logs/release-pipeline.txt) |
+| Clean Linux export + packaged startup | Passed; [export result](logs/linux-export.json), [standalone](logs/standalone-result.txt), [manifest](logs/manifest.json) |
 
 Native captures are actual, unedited Godot Compatibility viewports under Xorg :98 /
 Mesa llvmpipe. Keyboard/Observe uses 1280×800 normal visuals; controller/Collect uses
@@ -225,13 +226,14 @@ The objective panel keeps its natural wrapped height instead of repeatedly forci
 zero height. The thermal cue is compact; hazard instructions appear in the existing
 context panel. No duplicate world-space helper labels overlap the instruments.
 
-Render snapshots are observations, **not frame-time/GPU benchmarks**. Before renderer
-warm-up, the captured regional samples were 44–56 draw calls at 1280×800 and 36–53 at
-800×600 comfort, with up to about 150.1 / 147.7 MiB scene-wide texture allocation.
-Final samples are retained in [1280 JSON](render-samples-1280.json) and
-[800 JSON](render-samples-800.json); these include the whole loaded scene, not marginal
-new-asset memory. There is no measured target-GPU/baseline frame-time comparison or
-60 FPS claim. Warm-up/UI frames can have more draws; see complete native logs.
+Render snapshots are observations, **not frame-time/GPU benchmarks**. Renderer-warmed
+regional samples recorded **44–60 draw calls at 1280×800**, with up to **150.08 MiB**
+scene-wide texture allocation. At 800×600 comfort, samples were **36–53 draw calls** and **147.68 MiB**.
+These include the whole loaded scene, not marginal new-asset memory. Complete native
+logs also contain older-region/menu warm-up draws, which are deliberately excluded
+from the regional range. There is no measured target-GPU/baseline frame-time
+comparison or 60 FPS claim. See [1280 JSON](render-samples-1280.json),
+[800 JSON](render-samples-800.json) and [release results](release-results.md).
 
 ## Scope and remaining review
 

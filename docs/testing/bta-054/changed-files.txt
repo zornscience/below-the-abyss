@@ -30,6 +30,7 @@ docs/testing/bta-054/logs/native-1280-fresh.txt
 docs/testing/bta-054/logs/native-800-continue.txt
 docs/testing/bta-054/logs/native-800-fresh.txt
 docs/testing/bta-054/logs/parser-inventory.txt
+docs/testing/bta-054/logs/pr-publication.txt
 docs/testing/bta-054/logs/release-pipeline.txt
 docs/testing/bta-054/logs/standalone-result.txt
 docs/testing/bta-054/logs/standalone-smoke.log

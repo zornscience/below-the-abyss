@@ -44,5 +44,14 @@ No human playtest, physical-controller, audible-mix or target-GPU/60 FPS approva
 is claimed. Artwork/readability still require user review. This is environmental
 content, not the complete Twilight narrative, glyph/sentinel choice or new quest.
 
-Hosted CI and PR publication status will be recorded after the branch is pushed.
-No automatic merge.
+## Publication
+
+Branch `bta-054-twilight-environment` was pushed successfully. `gh pr create`
+returned exit 1: `Post "https://api.github.com/graphql": Forbidden`.
+The GitHub API request was blocked; **no PR was created** and hosted CI status
+could not be inspected. Local results above are not a claim of hosted CI success.
+[Exact attempt](logs/pr-publication.txt).
+
+[Open the comparison and create the review PR](https://github.com/zornscience/below-the-abyss/compare/main...bta-054-twilight-environment?expand=1).
+Title: **BTA-054: Twilight Shelf details, wildlife and erupting vents**.
+Copy the prepared body from [PR.md](PR.md). Nothing was merged.

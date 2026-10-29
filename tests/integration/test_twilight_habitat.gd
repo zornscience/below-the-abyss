@@ -201,3 +201,23 @@ func test_both_canonical_regions_hide_prototype_ridges_and_prototype_restores_th
 	assert_false(atmosphere.visible)
 	assert_eq(game.saves.transfer_prototype(),OK)
 	assert_eq(atmosphere.visible,game.chapter.dressing._legacy_visible)
+
+func test_only_active_regional_ambience_uses_existing_marine_life_contract() -> void:
+	_deploy()
+	game.submarine.set_simulation_enabled(true)
+	var bus: AcousticBus = game.get_node("AcousticBus") as AcousticBus
+	var before: int = bus.history_count()
+	var original_clock: float = game.ambient._clock
+	for tick: int in range(3): game._physics_process(1)
+	assert_eq(game.ambient._clock,original_clock)
+	assert_eq(bus.history_count(),before,"Inactive prototype ambience must not consume the deep event history")
+	var records: Dictionary = game.saves.progress_snapshot()
+	game.submarine.global_position = Vector2(37900,1800)
+	game.submarine.passive.advance(2)
+	assert_eq(game.journey.habitat.ambient.advance(2),OK)
+	var contacts: Array[Dictionary] = game.submarine.passive.contacts_snapshot()
+	assert_eq(contacts.size(),1)
+	assert_eq(contacts[0].classification,&"marine_life")
+	assert_eq(PassiveContactsPanel.CLASS_LABELS.get(contacts[0].classification),"MARINE LIFE")
+	assert_eq(GameplayAudio.contact_cue(&"marine_life"),&"biological")
+	assert_eq(game.saves.progress_snapshot(),records)

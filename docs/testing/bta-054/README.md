@@ -69,6 +69,11 @@ at y=2900 bypasses both jets. The west pocket is optional. The lower eastern app
 can be traversed in a quiet window or bypassed above the plume. Chimneys do not
 move, seal passages or trap the player.
 
+The biological habitat uses the existing `marine_life` classification, shown as
+MARINE LIFE / LIFE and routed to the existing biological audio cue. Only the active
+regional field advances; inactive prototype emitters do not consume deep history.
+No existing history entry or duplicate-suppression rule is rewritten.
+
 `TwilightHabitat` owns ecology, three bounded ambient sources, NPC lifecycle and
 presentation. No singleton. It advances only while the deep expedition is actively
 simulating. Pausing freezes vents, NPC logic, sound scheduling and decorative phase. Each source uses the existing 256-event

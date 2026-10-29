@@ -55,7 +55,7 @@ static func contact_cue(classification: StringName) -> StringName:
 	match classification:
 		&"mechanical": return &"mechanical"
 		&"geological": return &"geological"
-		&"biological": return &"biological"
+		&"biological", &"marine_life": return &"biological"
 		_: return &"unknown"
 
 

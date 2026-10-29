@@ -28,7 +28,7 @@ func setup(game: ShelfPrototype,world: TwilightShelfLayout) -> void:
 		vents.append(vent)
 		_add_source(VENT_IDS[index],VENT_SITES[index]-Vector2(0,300),&"geological",12.0)
 	_make_fauna()
-	_add_source(&"twilight-jelly-drift",Vector2(37900,1800),&"biological",17.0)
+	_add_source(&"twilight-jelly-drift",Vector2(37900,1800),&"marine_life",17.0)
 	_require(ambient.bind_bus(scene.get_node("AcousticBus") as AcousticBus))
 	scene.submarine.simulation_enabled_changed.connect(_simulation)
 	scene.saves.checkpoint_restored.connect(reset_session)

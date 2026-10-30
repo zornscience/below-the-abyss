@@ -233,3 +233,19 @@ Continue must restore region/pose, actual reserves, all chapter-one records, new
 4. Review actual Mara log wording and the first glyph's artwork/recognition; full translation remains later.
 
 **Design history:** this proposal was originally prepared without gameplay changes or game tests. BTA-053 now implements delivery step 1 only; the later content and complete-chapter acceptance criteria above remain planned. See [implementation, migration and verification](../testing/bta-053/README.md).
+
+## BTA-055 implementation review
+
+The user explicitly authorized BTA-055 after the BTA-054 environment pass. The new
+chapter adapter implements the required cable/log/marking/net evidence, optional
+loggers, both approaches, sentinel decision and intentional Halcyon debrief. Choices
+take six simulation seconds. Common acknowledgement is 2 RP; living capture delivery
+adds 1 RP and a unique additive +100 sonar-range calibration. Weapon deaths produce
+a permanent loss record without blocking required evidence or paying a live bounty.
+A released animal's subsequent death invalidates future guidance via a separate flag.
+Existing checkpoint/mission authorities remain; no Zone 3 is implemented.
+
+The 30–45-minute human pacing target is still an evaluation gate. Preliminary normal-
+input repeat runs took approximately 4–5 minutes in the deep region; no human pacing
+or unfamiliar-player comprehension is claimed. See [BTA-055 verification](../testing/bta-055/README.md)
+for final timings, screenshots, save compatibility, manual route and remaining limits.

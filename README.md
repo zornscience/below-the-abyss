@@ -2,12 +2,13 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **BTA-054 — Twilight Shelf environment, wildlife and thermal vents**,
+Current build: **BTA-055 — The Twilight Shelf: The Severed Line**,
 following **The Sunlit Shallows**, the canonical first expedition.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
 recover missing acoustician Mara Voss's emergency buoy. Finish the chapter at the
 buoy or bring the recording home for a debrief, then deploy to the branching
-Twilight Shelf exploration preview. Its full investigation story remains in development.
+Twilight Shelf investigation. Trace severed cables, recover Mara's field log and
+resolve the trapped sentinel encounter before returning for debrief.
 
 - **Start:** Begin/Continue The Sunlit Shallows, Options and Quit on the illustrated
   title. **New Game** confirms and archives the current campaign before starting fresh;
@@ -726,3 +727,19 @@ Watch for the pressure-building warning, wait for a quiet window or use the uppe
 bypass. Hot jets damage hull through the existing resource system; passive listening
 stays silent. Full investigation/sentinel story remains a later step.
 [Controls, tuning, manual route and native evidence](docs/testing/bta-054/README.md).
+
+### The Severed Line / Twilight expedition (BTA-055)
+
+The deep chapter now has a western whaler marking, an eastern severed sensor line,
+Mara's required first field log, two optional loggers and a luminous trapped sentinel.
+Scan visible evidence with Interact; active sonar locates subjects and passive
+contacts remain temporary. Investigate either approach first. After scanning the net,
+Interact again to release the animal or intentionally secure a living specimen.
+Pause freezes work; moving out of range or Interact cancels before completion.
+
+Return through the ascent tether, then open **Twilight expedition debrief** at Halcyon.
+The shared checkpoint commits the one-time 2-RP acknowledgement and capture-only
+1-RP allowance/+100 sonar range calibration together. A killed animal cannot count
+as a living specimen or block the evidence route. No Zone 3 is playable.
+
+[Controls, save-10 compatibility, manual route, evidence and pacing limits](docs/testing/bta-055/README.md).

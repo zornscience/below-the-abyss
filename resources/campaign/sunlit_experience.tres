@@ -3,4 +3,4 @@
 [resource]
 script = ExtResource("1")
 species_ids = Array[StringName]([&"observer-ecology",&"zone1-light-bloom-scan",&"sunlit-silver-shoal",&"sunlit-amber-darter",&"sunlit-blue-grazer"])
-study_ids = Array[StringName]([&"shelf-calibration-plate",&"sunlit-basalt-arch",&"sunlit-mineral-terrace",&"sunlit-sediment-fan",&"sunlit-vent-survey",&"sunlit-pillow-basalt",&"sunlit-lantern1-buoy-record"])
+study_ids = Array[StringName]([&"shelf-calibration-plate",&"sunlit-basalt-arch",&"sunlit-mineral-terrace",&"sunlit-sediment-fan",&"sunlit-vent-survey",&"sunlit-pillow-basalt",&"sunlit-lantern1-buoy-record",&"twilight-mara-log-two",&"twilight-mara-log-three"])

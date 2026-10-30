@@ -1,0 +1,25 @@
+{
+  "milestone": "BTA-055",
+  "file": "sentinel.png",
+  "source_file": "/workspace/generated_images/exec-61be1210-68d7-40bb-8066-3d56731dc816.png",
+  "dimensions": [
+    1952,
+    806
+  ],
+  "sha256": "2915d095055ec37fdf0746ac4f9e02cd279e0004cbb7c167e555c364bf7a76b4",
+  "provenance": "Original OpenAI image_gen PNG, unchanged bytes. No stock asset or imitation request. Generated artwork is not a human-painted layered source; project licensing remains pending, no new exclusive-rights or license claim.",
+  "import": "lossless; alpha-border fix; mipmaps; linear mipmap sampling; explicit-phase existing fauna shader; no screen-read effect",
+  "additional_assets": [
+    {
+      "file": "retrieval_net.png",
+      "source_file": "/workspace/generated_images/exec-13ad56b2-d592-4b24-b07f-af2a0476bfda.png",
+      "dimensions": [
+        1942,
+        809
+      ],
+      "sha256": "b6857a97c4ca05f521e5042909ff1fd4a59a0a904aa3c4dd87d3d91a0adac389",
+      "provenance": "Original OpenAI image_gen PNG, unchanged bytes. No stock asset or imitation request. Generated artwork is not a human-painted layered source; project licensing remains pending, no new exclusive-rights or license claim.",
+      "import": "lossless; alpha-border fix; mipmaps; linear mipmap sampling; explicit-phase existing fauna shader; no screen-read effect"
+    }
+  ]
+}

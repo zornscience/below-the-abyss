@@ -4,6 +4,8 @@ extends Node
 const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twilight_pressure_fit.tres")
 var scene: ShelfPrototype
 var habitat: TwilightHabitat
+var expedition: TwilightExpedition
+var _shallow_resources: SubmarineResourceConfig
 var layout: TwilightShelfLayout
 var state: Dictionary = ExpeditionJourneyState.fresh()
 signal camera_settled
@@ -14,6 +16,7 @@ var _prompt_open: bool = false
 var _pause_title: String
 func setup(game: ShelfPrototype) -> void:
 	scene = game
+	_shallow_resources = scene.submarine.resource_system.configuration
 	set_physics_process(false)
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
 	_pause_title = title.text if title!=null else "EXPEDITION / PAUSED"
@@ -24,6 +27,9 @@ func setup(game: ShelfPrototype) -> void:
 	habitat = TwilightHabitat.new()
 	add_child(habitat)
 	habitat.setup(scene,layout)
+	expedition = TwilightExpedition.new()
+	add_child(expedition)
+	expedition.setup(scene,self)
 	state = scene.saves._state.journey.duplicate(true)
 	scene.expedition_log.finish_available = can_finish
 	scene.expedition_log.finish_requested.connect(offer_finish)
@@ -68,7 +74,7 @@ func _finish() -> void:
 	scene.chapter.show_conclusion()
 func offer_deploy() -> void:
 	if not scene.chapter.concluded(): return
-	_show("THE TWILIGHT SHELF / DEEP DEPLOYMENT","Lantern-2 will be serviced and commissioned with a 1,000 m baseline pressure fit before deployment at 350 m. Existing research bonuses carry over. A nearby ascent tether provides return and refit access. Explore the west and east passages.\n\nThis exploration build includes historic wreck scenery, deep-water wildlife and erupting hydrothermal vents. Wait for a quiet window or pass around the hot jets. The wreck investigation and sentinel story encounter are not yet available.","Begin deep expedition",deploy,&"BeginTwilight")
+	_show("THE TWILIGHT SHELF / DEEP DEPLOYMENT","Lantern-2 will be serviced and commissioned with a 1,000 m baseline pressure fit before deployment at 350 m. Existing research bonuses carry over. A nearby ascent tether provides return and refit access. Explore the west and east passages.\n\nFollow the severed sensor line and investigate the historic whaler in either order. Recover Mara's field record, record the untranslated marking and investigate the trapped living contact. Return through the ascent tether for a debrief. Optional loggers and thermal-vent pockets can be explored without weapons.","Begin deep expedition",deploy,&"BeginTwilight")
 func deploy() -> void:
 	if not scene.chapter.concluded(): return
 	await _transfer("twilight",not state.commissioned)
@@ -84,6 +90,7 @@ func resume_expedition() -> void:
 	await _transfer("twilight",false)
 func _transfer(phase: String,restock: bool) -> void:
 	if transitioning: return
+	var first_deployment: bool = phase=="twilight" and not state.commissioned
 	var result: Error = scene.saves.transfer_chapter(phase,restock)
 	if result!=OK:
 		scene.revision.ui.add_story_notice("Transfer not saved; current expedition preserved. Retry after recovery.")
@@ -94,7 +101,9 @@ func _transfer(phase: String,restock: bool) -> void:
 	scene.revision.ui.dock_page.hide()
 	scene.revision.ui.title_page.hide()
 	if at_station(): show_station()
-	else: scene.resume_route()
+	else:
+		scene.resume_route()
+		if first_deployment: scene.revision.ui.notifications.enqueue("twilight-arrival","Lantern-2 is commissioned for the deeper shelf. The ascent tether is behind us. The eastern cable is broken; the western gallery holds older wrecks. Investigate either approach, keep the records and return here for Halcyon.","Wick")
 func show_station() -> void:
 	scene.station.interact(scene.submarine)
 	scene.revision.docking_report = "HALCYON TRANSFER · Supplies serviced · Expedition records preserved"
@@ -105,6 +114,14 @@ func prepare(value: Dictionary) -> void:
 	scene.chapter._activate(not active() and state.phase!="prototype")
 	layout.set_enabled(active())
 	habitat.set_enabled(active())
+	expedition.set_enabled(active())
+	var pools: SubmarineResourceSystem = scene.submarine.resource_system
+	var profile: SubmarineResourceConfig = preload("res://resources/balance/twilight_resources.tres") if active() else _shallow_resources
+	if pools.configuration!=profile:
+		var battery: float = pools.battery
+		var oxygen: float = pools.oxygen
+		pools.configure(profile)
+		pools.restore_snapshot(battery,oxygen)
 	scene.chapter.dressing.set_legacy_hidden(active() or scene.chapter.active)
 	if not active():
 		scene.exploration_map.canvas.chart_caption = ""
@@ -112,16 +129,16 @@ func prepare(value: Dictionary) -> void:
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
 	if title!=null: title.text = "TWILIGHT SHELF / PAUSED" if active() else _pause_title
 	if active():
-		(scene.route_menu.get_node("%Brief") as Label).text = "Explore the west and east passages. Return to the ascent tether for Halcyon services and refitting. The wreck investigation and sentinel encounter will follow in a later release."
+		(scene.route_menu.get_node("%Brief") as Label).text = "Trace the severed line, recover Mara's field log, inspect the western whaler and resolve the trapped contact in either order. Optional loggers are not required. Return through the ascent tether for Halcyon refit and debrief."
 		(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2"
 		scene.region.spawn.position = TwilightShelfLayout.SPAWN
 		scene.region.camera_bounds = TwilightShelfLayout.CAMERA
 		scene.region.configure_camera(scene.submarine.get_node("Camera2D") as Camera2D)
-		scene.missions.progress_filter = func(_id: StringName) -> bool: return false
+		scene.missions.progress_filter = func(id: StringName) -> bool: return id==TwilightShelfData.MISSION
 		scene.narrative.entries_provider = entries
 		scene.narrative.conclusion_provider = func() -> bool: return false
 		scene.narrative.debrief_ready_provider = func() -> bool: return false
-		scene.narrative.guidance_provider = func() -> String: return "Explore the west and east passages · Return to the ascent tether for Halcyon refitting"
+		scene.narrative.guidance_provider = expedition.guidance
 	refresh()
 func refresh() -> void:
 	if active():
@@ -137,16 +154,13 @@ func continue_from_title() -> void:
 	if transitioning or scene.saves.continue_expedition()!=OK: return
 	await settle_camera()
 	scene.revision.ui.title_page.hide()
+	if active() and scene.missions.snapshot()[String(TwilightShelfData.MISSION)].state=="available": scene.missions.accept(TwilightShelfData.MISSION)
 	if at_station(): show_station()
 	else: scene.resume_route()
 
 func entries() -> Array[NarrativeEntry]:
 	var result: Array[NarrativeEntry] = scene.chapter.entries()
-	var entry: NarrativeEntry = NarrativeEntry.new()
-	entry.stable_id = &"twilight-deployment"
-	entry.title = "Twilight Shelf / deployment"
-	entry.text = "Lantern-2 deployed at 350 m with a commissioned pressure fit. Explore either the western wreck passage or eastern cable passage. Both connect through the lower shelf. The ascent tether returns to Halcyon for services and refitting. The full wreck investigation and sentinel encounter are not available in this exploration preview."
-	result.append(entry)
+	result.append_array(expedition.entries())
 	return result
 
 func settle_camera() -> void:

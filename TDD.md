@@ -462,3 +462,23 @@ overlap; ThermalVent checks exposure/terrain and calls SubmarineHullSystem only.
 Existing scene pause/reset and checkpoint hull restoration remain authoritative.
 Schema 9 is unchanged; transient cycles/NPCs reset silently with a safe quiet arrival.
 [API, lifecycle, source provenance and tests](docs/testing/bta-054/README.md).
+
+## BTA-055 — Twilight investigation and checkpoint extension
+
+TwilightShelfData extends validated discovery/research/mission catalogues while
+retaining all legacy IDs. TwilightExpedition is a scene-owned adapter over those
+registries, StoryState, the shared AcousticBus, scanner and existing story UI.
+TwilightSentinel specializes only entangled translation; release reuses the existing
+AcousticCreature navigation/state machine. Simulation-time six-second work cancels
+on range loss/Interact and freezes on pause. Existing BlastReceiver gains a default-
+true enable gate for removed/secured actors; real damage and casualty outcomes remain.
+
+Expedition schema 10 retains the twelve existing fields and atomic store. Old 1–9
+saves/catalogues validate; merges preserve old progress and add the new available
+mission. Commissioning/intentional old-preview Continue accepts it without refilling.
+Explicit tether return witnesses mission return, and station claiming commits
+mission acknowledgement, bounded RP award IDs and additive sonar calibration in
+one file transaction before events. Restoring does not replay choices or claims.
+Failed writes grant nothing; pending casualty reports block unrelated checkpoints.
+Regional drain-profile swaps preserve actual resource values. No new save file,
+ledger, dispatcher or later-region architecture. See docs/testing/bta-055/README.md.

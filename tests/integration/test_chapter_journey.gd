@@ -106,6 +106,7 @@ func test_deployment_is_full_350m_and_suitable_pressure_without_erasing_old_prog
 	assert_gte(game.submarine.damage_system.get_maximum_depth_m(),1000.0)
 	assert_false(game.chapter.departure.is_visible_in_tree())
 	assert_false(game.chapter.ocean.is_visible_in_tree())
+	permanent.missions[String(TwilightShelfData.MISSION)].state = "accepted"
 	assert_eq(game.saves.progress_snapshot(),permanent)
 func test_continue_preserves_actual_pose_supplies_and_does_not_recommission_or_reset_history() -> void:
 	_deploy()

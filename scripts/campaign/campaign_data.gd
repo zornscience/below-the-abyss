@@ -1,13 +1,13 @@
 class_name CampaignData
 extends RefCounted
-const AWARDS: Array[String] = ["commission","outer-survey","wreck-decoded"]
+const AWARDS: Array[String] = ["commission","outer-survey","wreck-decoded","twilight-expedition","twilight-specimen"]
 const MESSAGES: Array[String] = ["dispatch","relay","wreck-recovered","next-signal","survey-complete"]
 const BRANCHES: Array[String] = ["sonar","hull","torpedo_acceleration","torpedo_area","engine"]
 const PRICING: ResearchTree = preload("res://resources/campaign/research_tree.tres")
 static func fresh() -> Dictionary:
 	return {"ranks":{"sonar":0,"hull":0,"torpedo_acceleration":0,"torpedo_area":0,"engine":0},"legacy_ranks":{"sonar":0,"hull":0},"awards":["commission"],"messages":[],"decoded":false,"science":ResearchExperienceData.fresh()}
 static func earned(data: Dictionary) -> int:
-	return (2 if "commission" in data.awards else 0)+(1 if "outer-survey" in data.awards else 0)+(1 if "wreck-decoded" in data.awards else 0)+ResearchExperienceData.points(data.science)
+	return (2 if "commission" in data.awards else 0)+(1 if "outer-survey" in data.awards else 0)+(1 if "wreck-decoded" in data.awards else 0)+(2 if "twilight-expedition" in data.awards else 0)+(1 if "twilight-specimen" in data.awards else 0)+ResearchExperienceData.points(data.science)
 static func legacy_count(data: Dictionary) -> int:
 	return int(data.legacy_ranks.sonar)+int(data.legacy_ranks.hull)
 static func new_count(data: Dictionary) -> int:

@@ -125,7 +125,7 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 
 
 func safe_to_save() -> bool:
-	return _scene.submarine.hull_system.hull>0 and _scene.submarine.resource_system.oxygen>0 \
+	return (_scene.journey==null or not _scene.journey.expedition.pending_loss) and _scene.submarine.hull_system.hull>0 and _scene.submarine.resource_system.oxygen>0 \
 		and (_scene.journey==null or not _scene.journey.habitat.unsafe_at(_scene.submarine.global_position)) \
 		and not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
 		and _scene.submarine.damage_system.warning_state != SubmarineDamageSystem.WarningState.EXCEEDED \
@@ -135,6 +135,8 @@ func safe_to_save() -> bool:
 func _write(candidate: Dictionary, message: String, scientific_awards: Array[StringName] = []) -> Error:
 	if _busy or not _ready_to_write:
 		return _report("Save blocked; recover the existing checkpoint before writing.", ERR_BUSY)
+	if _scene.journey!=null and _scene.journey.expedition.pending_loss and String(TwilightShelfData.LOST) not in candidate.story.decisions and "zone2-released-sentinel-lost" not in candidate.story.flags:
+		return _report("Record the pending casualty before saving other progress.",ERR_BUSY)
 	_busy = true
 	var reconciled: Dictionary = StoryState.merge_snapshots(candidate.story,_state.story)
 	if reconciled.error!=OK:
@@ -178,12 +180,19 @@ func commit_progress(kind: StringName, proposed: Variant) -> Error:
 	candidate.progress[String(kind)] = proposed.duplicate(true) if proposed is Dictionary else _strings(proposed)
 	if not ExpeditionSchema.valid_progress(candidate.progress):
 		return ERR_INVALID_DATA
+	var twilight_claim: bool = kind==&"missions" and candidate.progress.missions.get(String(TwilightShelfData.MISSION),{}).get("state")=="claimed" and _state.progress.missions.get(String(TwilightShelfData.MISSION),{}).get("state")!="claimed"
+	if twilight_claim:
+		if _scene.journey==null or not _scene.journey.at_station() or _state.progress.missions.get(String(TwilightShelfData.MISSION),{}).get("state")!="completed" or not TwilightShelfData.ready(_scene.research,_scene.story): return ERR_UNAUTHORIZED
+		if "twilight-expedition" not in candidate.prototype.campaign.awards: candidate.prototype.campaign.awards.append("twilight-expedition")
+		if _scene.story.has_decision(TwilightShelfData.CAPTURE) and "twilight-specimen" not in candidate.prototype.campaign.awards: candidate.prototype.campaign.awards.append("twilight-specimen")
 	# Docked domain operations are safe checkpoints. Else only permanent records advance.
 	if _scene.station_menu.visible and safe_to_save():
 		var current: Dictionary = snapshot()
 		candidate.player = current.player
 		candidate.route = current.route
-	return _write(candidate, "Progress committed; expedition checkpoint retained." if not _scene.station_menu.visible else "Station checkpoint saved with permanent progress.")
+	var result: Error = _write(candidate, "Progress committed; expedition checkpoint retained." if not _scene.station_menu.visible else "Station checkpoint saved with permanent progress.")
+	if result==OK and twilight_claim: _scene.revision.restore(_state.prototype)
+	return result
 
 
 func apply_progress(progress: Dictionary) -> void:
@@ -374,6 +383,12 @@ func commit_story(value: Dictionary, choice_id: StringName) -> Error:
 	if choice_id!=&"":
 		var choice: ChoiceData = _scene.story.definition(choice_id)
 		if choice==null: return ERR_INVALID_PARAMETER
+		if choice.encounter_id==TwilightShelfData.ENCOUNTER:
+			if _scene.journey==null or not _scene.journey.active(): return ERR_UNAVAILABLE
+			if choice_id in [TwilightShelfData.RELEASE,TwilightShelfData.CAPTURE] and (not _scene.journey.expedition.near_net() or not _scene.research.is_completed(&"twilight-net-survey")): return ERR_UNAUTHORIZED
+			if not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) or _scene.submarine.hull_system.hull<=0 or _scene.journey.habitat.unsafe_at(_scene.submarine.global_position): return ERR_UNAVAILABLE
+			candidate.player = snapshot().player
+			candidate.route = snapshot().route
 		if choice.research_record_id!=&"" and String(choice.research_record_id) not in candidate.progress.research:
 			candidate.progress.research.append(String(choice.research_record_id))
 			candidate.progress.research.sort()
@@ -393,7 +408,7 @@ func commit_research_checkpoint(proposed: Array[StringName]) -> Error:
 	candidate.progress.research = _strings(proposed)
 	if not ExpeditionSchema.valid_progress(candidate.progress): return ERR_INVALID_DATA
 	var awards: Array[StringName] = []
-	if _scene.chapter!=null and _scene.chapter.active:
+	if (_scene.chapter!=null and _scene.chapter.active) or (_scene.journey!=null and _scene.journey.active()):
 		for id: StringName in proposed:
 			if not _scene.research.is_completed(id):
 				if not _scene.submarine.scanner.eligible(id): return ERR_UNAUTHORIZED
@@ -500,12 +515,23 @@ func transfer_chapter(phase: String,restock: bool) -> Error:
 	if phase=="refit" and not service.has("after"): return service.error
 	var candidate: Dictionary = snapshot()
 	candidate.journey = {"phase":phase,"commissioned":true}
+	var twilight_record: Dictionary = candidate.progress.missions[String(TwilightShelfData.MISSION)]
+	if phase=="twilight" and twilight_record.state=="available": twilight_record.state = "accepted"
+	if phase=="refit" and twilight_record.state in ["accepted","completed"]:
+		var plan: Dictionary = _scene.missions.plan_scripted_return(TwilightShelfData.MISSION)
+		if plan.error==OK:
+			candidate.progress.missions = plan.records
+			candidate.progress.missions[String(TwilightShelfData.MISSION)].state = "completed"
 	candidate.region_id = ExpeditionJourneyState.region(candidate.journey)
 	_transfer_player(candidate,TwilightShelfLayout.SPAWN if phase=="twilight" else SunlitSurveyData.SPAWN,restock)
 	if phase=="refit":
 		for kind: String in ["hull","battery","oxygen"]: candidate.player[kind] = service.after[kind]
+	var completed_now: bool = phase=="refit" and _scene.missions.snapshot()[String(TwilightShelfData.MISSION)].state=="accepted" and candidate.progress.missions[String(TwilightShelfData.MISSION)].state=="completed"
 	var result: Error = _write(candidate,"Chapter transfer committed; expedition progress preserved.")
-	return continue_expedition() if result==OK else result
+	if result!=OK: return result
+	result = continue_expedition()
+	if result==OK and completed_now: _scene.missions.mission_completed.emit(TwilightShelfData.MISSION)
+	return result
 
 func transfer_prototype() -> Error:
 	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing(): return ERR_UNAVAILABLE

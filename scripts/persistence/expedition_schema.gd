@@ -2,7 +2,7 @@ class_name ExpeditionSchema
 extends RefCounted
 ## Pure validation/migration. No node restoration or executable data from disk.
 
-const VERSION: int = 9
+const VERSION: int = 10
 const REGION: String = "continental_shelf"
 const DISCOVERIES: DiscoveryCatalog = preload("res://resources/regions/shelf_discoveries.tres")
 const RESEARCH: ResearchCatalog = preload("res://resources/regions/shelf_research.tres")
@@ -30,24 +30,24 @@ static func valid_progress(progress: Variant) -> bool:
 	if not progress is Dictionary or progress.size() != 4:
 		return false
 	var discoveries: Array[StringName] = []
-	for point: Resource in ShelfChapterData.discoveries(true).points:
+	for point: Resource in TwilightShelfData.discoveries().points:
 		discoveries.append(point.stable_id)
 	var research: Array[StringName] = []
-	for target: Resource in ShelfChapterData.research(true).targets:
+	for target: Resource in TwilightShelfData.research().targets:
 		research.append(target.stable_id)
 	var upgrades: Array[StringName] = []
 	for definition: Resource in UPGRADES.upgrades:
 		upgrades.append(definition.stable_id)
 	return ids(progress.get("discoveries"), discoveries) and ids(progress.get("research"), research) \
 		and ids(progress.get("upgrades"), upgrades) and progress.get("missions") is Dictionary \
-		and (MISSIONS.valid_records(progress.missions) or ShelfChapterData.missions().valid_records(progress.missions) or SunlitShallowsData.valid_records(progress.missions))
+		and (MISSIONS.valid_records(progress.missions) or ShelfChapterData.missions().valid_records(progress.missions) or SunlitShallowsData.valid_records(progress.missions) or TwilightShelfData.missions().valid_records(progress.missions))
 
 
 static func decode(value: Variant) -> Dictionary:
 	if not value is Dictionary or not InputBindings.is_integer(value.get("schema_version")):
 		return {"error": ERR_INVALID_DATA}
 	var version: int = int(value.schema_version)
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, VERSION]:
 		return {"error": ERR_UNAVAILABLE}
 	var data: Dictionary = value.duplicate(true)
 	if version in [1,2]:
@@ -90,6 +90,18 @@ static func decode(value: Variant) -> Dictionary:
 		var objectives: Array = data.progress.missions[String(SunlitShallowsData.MISSION)].objectives
 		if ("recover-maras-message" in objectives or "return-message-to-halcyon" in objectives) and String(SunlitShallowsData.BUOY) not in data.progress.research: return {"error":ERR_INVALID_DATA}
 		if "study-light-bloom" in objectives and not (String(LightBloomEncounter.OBSERVE) in data.story.decisions or String(LightBloomEncounter.COLLECT) in data.story.decisions): return {"error":ERR_INVALID_DATA}
+	if "zone2-released-sentinel-lost" in data.story.flags and String(TwilightShelfData.RELEASE) not in data.story.decisions: return {"error":ERR_INVALID_DATA}
+	var twilight: Dictionary = data.progress.missions.get(String(TwilightShelfData.MISSION),{})
+	var claimed: bool = twilight.get("state")=="claimed"
+	var capture: bool = String(TwilightShelfData.CAPTURE) in data.story.decisions
+	var awards: Array = data.prototype.campaign.awards
+	if ("twilight-expedition" in awards)!=claimed or ("twilight-specimen" in awards)!=(claimed and capture): return {"error":ERR_INVALID_DATA}
+	if not twilight.is_empty():
+		for objective: MissionObjective in TwilightShelfData.missions().definition(TwilightShelfData.MISSION).objectives:
+			if String(objective.stable_id) not in twilight.objectives: continue
+			if objective.kind==MissionObjective.Kind.STORY_CHOICE:
+				if not (String(TwilightShelfData.RELEASE) in data.story.decisions or capture or String(TwilightShelfData.LOST) in data.story.decisions): return {"error":ERR_INVALID_DATA}
+			elif String(objective.target_id) not in data.progress.research: return {"error":ERR_INVALID_DATA}
 	if not ExpeditionJourneyState.valid(data.get("journey"),data.progress) or data.region_id!=ExpeditionJourneyState.region(data.journey): return {"error":ERR_INVALID_DATA}
 	data.story.resonance = int(data.story.resonance)
 	data.schema_version = VERSION
@@ -123,7 +135,11 @@ static func merge_progress(a: Dictionary, b: Dictionary) -> Dictionary:
 		merged[key].sort()
 	var left: Dictionary = a.missions
 	var right: Dictionary = b.missions
-	if left.size()==6 or right.size()==6:
+	if left.size()==7 or right.size()==7:
+		if left.size()!=7: left = TwilightShelfData.upgrade_records(left)
+		if right.size()!=7: right = TwilightShelfData.upgrade_records(right)
+		merged.missions = TwilightShelfData.missions().merge_records(left,right)
+	elif left.size()==6 or right.size()==6:
 		if left.size()!=6: left = SunlitShallowsData.upgrade_records(left)
 		if right.size()!=6: right = SunlitShallowsData.upgrade_records(right)
 		merged.missions = SunlitShallowsData.missions().merge_records(left,right)

@@ -126,6 +126,7 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 
 func safe_to_save() -> bool:
 	return _scene.submarine.hull_system.hull>0 and _scene.submarine.resource_system.oxygen>0 \
+		and (_scene.journey==null or not _scene.journey.habitat.unsafe_at(_scene.submarine.global_position)) \
 		and not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
 		and _scene.submarine.damage_system.warning_state != SubmarineDamageSystem.WarningState.EXCEEDED \
 		and _scene.predator.threat.phase not in [PredatorState.Phase.ALERT, PredatorState.Phase.PURSUE]
@@ -162,7 +163,7 @@ func save_current() -> Error:
 		if result != OK:
 			return result
 	if not safe_to_save():
-		return _report("Not saved: pause in clear terrain, outside pressure danger and predator alert/pursuit.", ERR_UNAVAILABLE)
+		return _report("Not saved: pause in clear terrain, outside pressure/thermal danger and predator alert/pursuit.", ERR_UNAVAILABLE)
 	return _write(snapshot(), "Expedition saved: position, supplies and progress committed.")
 
 

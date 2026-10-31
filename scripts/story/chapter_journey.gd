@@ -3,6 +3,7 @@ extends Node
 ## Scene-owned explicit transfers; existing mission/checkpoint/resource APIs own state.
 const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twilight_pressure_fit.tres")
 var scene: ShelfPrototype
+var habitat: TwilightHabitat
 var layout: TwilightShelfLayout
 var state: Dictionary = ExpeditionJourneyState.fresh()
 signal camera_settled
@@ -20,6 +21,9 @@ func setup(game: ShelfPrototype) -> void:
 	layout = TwilightShelfLayout.new()
 	scene.region.add_child(layout)
 	layout.configure(scene.chapter.dressing.rocks._paint)
+	habitat = TwilightHabitat.new()
+	add_child(habitat)
+	habitat.setup(scene,layout)
 	state = scene.saves._state.journey.duplicate(true)
 	scene.expedition_log.finish_available = can_finish
 	scene.expedition_log.finish_requested.connect(offer_finish)
@@ -64,7 +68,7 @@ func _finish() -> void:
 	scene.chapter.show_conclusion()
 func offer_deploy() -> void:
 	if not scene.chapter.concluded(): return
-	_show("THE TWILIGHT SHELF / DEEP DEPLOYMENT","Lantern-2 will be serviced and commissioned with a 1,000 m baseline pressure fit before deployment at 350 m. Existing research bonuses carry over. A nearby ascent tether provides return and refit access. Explore the west and east passages.\n\nThis release opens the exploration graybox; the wreck investigation and sentinel story encounter are not yet available.","Begin deep expedition",deploy,&"BeginTwilight")
+	_show("THE TWILIGHT SHELF / DEEP DEPLOYMENT","Lantern-2 will be serviced and commissioned with a 1,000 m baseline pressure fit before deployment at 350 m. Existing research bonuses carry over. A nearby ascent tether provides return and refit access. Explore the west and east passages.\n\nThis exploration build includes historic wreck scenery, deep-water wildlife and erupting hydrothermal vents. Wait for a quiet window or pass around the hot jets. The wreck investigation and sentinel story encounter are not yet available.","Begin deep expedition",deploy,&"BeginTwilight")
 func deploy() -> void:
 	if not scene.chapter.concluded(): return
 	await _transfer("twilight",not state.commissioned)
@@ -100,6 +104,8 @@ func prepare(value: Dictionary) -> void:
 	scene.exploration_map.presentation_name = "TWILIGHT SHELF" if active() else "CONTINENTAL SHELF"
 	scene.chapter._activate(not active() and state.phase!="prototype")
 	layout.set_enabled(active())
+	habitat.set_enabled(active())
+	scene.chapter.dressing.set_legacy_hidden(active() or scene.chapter.active)
 	if not active():
 		scene.exploration_map.canvas.chart_caption = ""
 		scene.exploration_map.canvas.public_anchor = Vector2.INF

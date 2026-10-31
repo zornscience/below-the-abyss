@@ -27,7 +27,9 @@ func _process(_delta: float) -> void:
 	var binding: String = _scene.input_context.describe(&"interact")
 	progress.visible = state.active_id != &""
 	progress.value = state.progress*100.0
-	if _scene.journey!=null and _scene.journey.near_tether():
+	if _scene.journey!=null and not _scene.journey.habitat.hazard_prompt().is_empty():
+		text = _scene.journey.habitat.hazard_prompt()
+	elif _scene.journey!=null and _scene.journey.near_tether():
 		text = binding+" · Return to Halcyon / refit"
 	elif _scene.station.is_in_range(_scene.submarine.global_position):
 		text = _scene._station_failure if _scene._station_failure_remaining>0.0 else (binding+" · Dock at Shelf Base" if _scene.station.can_interact(_scene.submarine) else _scene.station.docking_hint(_scene.submarine))

@@ -282,3 +282,12 @@ bidirectional graybox loops. Preserve manual/legacy routes and all prior systems
 Do not implement the full sentinel/log/glyph narrative or its rewards in this PR.
 
 [Implementation, verification and manual route](docs/testing/bta-053/README.md).
+
+## BTA-054 — Twilight environment, wildlife and erupting vents
+
+User-authorized follow-up to merged PR #37: illustrated level detail, natural NPCs
+and a reusable non-depth hull hazard. Preserve the two loops and existing campaign
+contracts; use warning/quiet windows and bypasses, deterministic simulation-time
+thermal damage, existing acoustic AI, pause/comfort settings and existing saves.
+Do not implement the later sentinel/log/glyph narrative or new rewards in this pass.
+[Acceptance, commands, evidence and limits](docs/testing/bta-054/README.md).

@@ -207,3 +207,13 @@ Okafor/Crane/Mara appearances are provisional visual proposals because the suppl
 Story Bible does not fix their physical features. Wick remains an optical instrument,
 not a human. Source dimensions/import/provenance: assets/art/portraits/README.md and
 assets/art/sunlit/README.md. Human character-art approval remains outstanding.
+
+## BTA-054 — Twilight Shelf environment and wildlife
+
+Carry the submerged illustrated language into cold mineral gardens, weathered
+historic timber and pale natural fauna. Original atlas art supplies real material
+detail; rock trim follows the unchanged passage contours. A distant whaler is not
+Lantern-1. No surface waves, alien architecture, glyph or later-story revelation.
+Visible/textual vent warnings and a bounded local plume survive comfort settings;
+cosmetic phase never moves the vessel. See [masters, authored regions, provenance
+and reusable workflow](../assets/art/twilight/README.md).

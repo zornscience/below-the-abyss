@@ -9,11 +9,11 @@ var bodies: Array[GrayboxRock] = []
 func configure(paint: ShaderMaterial) -> void:
 	var water: Polygon2D = Polygon2D.new()
 	water.polygon = SunlitSurveyData._rect(Rect2(CAMERA))
-	water.texture = preload("res://assets/art/sunlit/water_column.png")
+	water.texture = preload("res://assets/art/twilight/deep_water.png")
 	var size: Vector2 = water.texture.get_size()
 	water.uv = PackedVector2Array([Vector2.ZERO,Vector2(size.x,0),size,Vector2(0,size.y)])
 	water.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	water.color = Color(0.16,0.24,0.30,1)
+	water.color = Color(0.5,0.62,0.7,1)
 	water.z_index = -20
 	add_child(water)
 	for polygon: PackedVector2Array in contours():

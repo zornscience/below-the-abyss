@@ -452,3 +452,13 @@ commissioning and station access while retaining the existing bus/domain service
 Continue never commissions/refills. Explicit prototype phase preserves legacy access.
 
 [Implementation, verification and manual route](docs/testing/bta-053/README.md).
+
+## BTA-054 — Scene-owned Twilight ecology and thermal damage
+
+TwilightHabitat composes existing AcousticCreature/Receiver navigation, ambient
+AcousticBus sources, shared rock-edge dressing and new original atlas sprites.
+ThermalVentProfile validates tuning; ThermalVentState integrates exact active-time
+overlap; ThermalVent checks exposure/terrain and calls SubmarineHullSystem only.
+Existing scene pause/reset and checkpoint hull restoration remain authoritative.
+Schema 9 is unchanged; transient cycles/NPCs reset silently with a safe quiet arrival.
+[API, lifecycle, source provenance and tests](docs/testing/bta-054/README.md).

@@ -1,0 +1,362 @@
+[
+  {
+    "file": "screenshots/1280/deep-commissioning.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/deep-start-350m.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/deep-eel-gallery.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/historic-whaler.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/vent-warning.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/vent-eruption-safe-bypass.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/vent-clear-the-jet.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/thermal-hull-damage.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/squid-patrol.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/squid-investigates-sonar.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/mineral-garden-and-east-vent.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/jelly-drift.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/continue-supplies-preserved.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/halcyon-refit.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/1280/resume-from-tether.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "outcome": "observe",
+    "large_high_contrast_reduced": false,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/deep-commissioning.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/deep-start-350m.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/deep-eel-gallery.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/historic-whaler.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/vent-warning.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/vent-eruption-safe-bypass.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/vent-clear-the-jet.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/thermal-hull-damage.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/squid-patrol.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/squid-investigates-sonar.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/mineral-garden-and-east-vent.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/jelly-drift.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/continue-supplies-preserved.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/halcyon-refit.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  },
+  {
+    "file": "screenshots/800/resume-from-tether.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "outcome": "collect",
+    "large_high_contrast_reduced": true,
+    "muted": true,
+    "source": "actual Godot viewport; normal input-driven walkthrough; PNG unedited"
+  }
+]

@@ -8,6 +8,7 @@ const MAX_MESH_CACHE: int = 64
 # Numeric geometry only; no scene Nodes, gameplay state or persisted instance IDs.
 static var _mesh_cache: Dictionary[String,Array] = {}
 var _surfaces: Array[Dictionary] = []
+var paint_bounds: Rect2 = Rect2(120,180,21880,2420)
 var _paint: ShaderMaterial
 var _edge: ShaderMaterial
 var _fractured: ShaderMaterial
@@ -17,14 +18,7 @@ var _dirty: bool = true
 var _pieces: Array[PackedVector2Array] = []
 
 func configure(region: Node2D,boundary: Node2D) -> void:
-	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_paint = ShaderMaterial.new()
-	_paint.shader = PAINT
-	_paint.set_shader_parameter("painted_rock",preload("res://assets/art/sunlit/basalt_strata.png"))
-	_edge = ShaderMaterial.new()
-	_edge.shader = preload("res://assets/shaders/sunlit_edge.gdshader")
-	_fractured = _paint.duplicate(false) as ShaderMaterial
-	_fractured.set_shader_parameter("friable",1.0)
+	_make_materials()
 	for node: Node in region.get_node("Terrain").get_children():
 		if node is GrayboxRock: _remember(node,node.get_node("Silhouette") as CanvasItem,not String(node.name).begins_with("Station"))
 		elif node is DestructibleRock: _remember(node,node,true)
@@ -34,6 +28,22 @@ func configure(region: Node2D,boundary: Node2D) -> void:
 	if layout!=null:
 		for node: GrayboxRock in layout.bodies: _remember(node,node.get_node("Silhouette") as CanvasItem,true)
 	refresh()
+
+func configure_geometry(sources: Array[GrayboxRock],bounds: Rect2) -> void:
+	paint_bounds = bounds
+	_make_materials()
+	for source: GrayboxRock in sources: _remember(source,source.get_node("Silhouette") as CanvasItem,true)
+	refresh()
+
+func _make_materials() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_paint = ShaderMaterial.new()
+	_paint.shader = PAINT
+	_paint.set_shader_parameter("painted_rock",preload("res://assets/art/sunlit/basalt_strata.png"))
+	_edge = ShaderMaterial.new()
+	_edge.shader = preload("res://assets/shaders/sunlit_edge.gdshader")
+	_fractured = _paint.duplicate(false) as ShaderMaterial
+	_fractured.set_shader_parameter("friable",1.0)
 
 func _remember(source: Node2D,target: CanvasItem,painted: bool) -> void:
 	_surfaces.append({"source":weakref(source),"target":weakref(target),"original":target.material,"painted":painted,"geometry":[],"trims":[]})
@@ -93,7 +103,7 @@ func _rebuild() -> void:
 		var geometry: Array[PackedVector2Array] = _geometry(item)
 		_pieces.append_array(geometry)
 		collected.append(geometry)
-	var context: String = var_to_bytes(_pieces).hex_encode().sha256_text()
+	var context: String = (var_to_bytes(paint_bounds)+var_to_bytes(_pieces)).hex_encode().sha256_text()
 	for index: int in range(_surfaces.size()):
 		var item: Dictionary = _surfaces[index]
 		var geometry: Array = collected[index]
@@ -118,6 +128,7 @@ func _rebuild() -> void:
 
 func _build_specs(geometry: Array) -> Array:
 	var specs: Array = []
+	var area: PackedVector2Array = SunlitSurveyData._rect(paint_bounds)
 	for polygon: PackedVector2Array in geometry:
 		for index: int in range(polygon.size()):
 			var start: Vector2 = polygon[index]
@@ -132,11 +143,11 @@ func _build_specs(geometry: Array) -> Array:
 				var a: Vector2 = start+along*distance*step/count
 				var b: Vector2 = start+along*distance*(step+1)/count
 				var middle: Vector2 = (a+b)*0.5
-				if middle.x<120 or middle.x>22000 or middle.y<180 or middle.y>2600: continue
+				if not paint_bounds.has_point(middle): continue
 				if contains_stone(middle-inward*2.0): continue
 				var strip: PackedVector2Array = PackedVector2Array([a,b,b+inward*72,a+inward*72])
 				for inside: PackedVector2Array in Geometry2D.intersect_polygons(strip,polygon):
-					for clipped: PackedVector2Array in Geometry2D.intersect_polygons(inside,PackedVector2Array(AREA)):
+					for clipped: PackedVector2Array in Geometry2D.intersect_polygons(inside,area):
 						var vertices: PackedVector2Array = []
 						var uv: PackedVector2Array = []
 						for point: Vector2 in clipped:

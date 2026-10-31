@@ -24,6 +24,16 @@ void fragment() {
  if (mode==3) { // Hammerhead: powerful caudal stroke; no bending of the head.
   wave = sin(clock-p.x*8.0)*pow(tail,1.6)*0.055;
  }
+ if (mode==4) { // Squid: mantle contraction and trailing-arm waves.
+  float arms = 1.0-smoothstep(0.25,0.60,p.x);
+  wave = sin(clock*1.7-p.x*10.0)*arms*0.055;
+  p.y += (p.y-0.5)*sin(clock*1.7)*0.04*(1.0-arms)*amount;
+ }
+ if (mode==5) { // Jelly: slow bell pulses, fine trailing filaments.
+  float skirt = 1.0-smoothstep(0.2,0.65,p.x);
+  wave = sin(clock-p.x*9.0)*skirt*0.035;
+  p.y += (p.y-0.5)*sin(clock)*0.07*amount;
+ }
  p.y += wave*amount;
  vec4 texel = texture(TEXTURE,cell.xy+clamp(p,vec2(0.001),vec2(0.999))*cell.zw);
  if (p.y<0.0 || p.y>1.0) texel.a = 0.0;

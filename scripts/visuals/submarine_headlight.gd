@@ -31,5 +31,7 @@ func _physics_process(delta: float) -> void:
 			stops.append(origin.distance_to(hit.position) if not hit.is_empty() else 600.0)
 	var quiet: bool = scene.settings.snapshot().accessibility.reduced_flashing
 	scene.chapter.dressing.rocks.set_headlight(origin,facing,stops,0.38 if quiet else 0.68)
+	if scene.journey!=null and scene.journey.active() and scene.journey.habitat.dressing.rocks!=null:
+		scene.journey.habitat.dressing.rocks.set_headlight(origin,facing,stops,0.38 if quiet else 0.68)
 	var illustration: Node2D = scene.submarine.get_node("Visual") as Node2D
 	if illustration!=null: illustration.set("beam_length",clampf(stops[4],20.0,500.0))

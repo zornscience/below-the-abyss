@@ -70,7 +70,7 @@ func _process(_delta: float) -> void:
 func _reflow() -> void:
 	var viewport: Vector2 = get_viewport_rect().size
 	var width: float = minf(340,viewport.x*0.34)-16
-	size = Vector2(width,0)
+	size = Vector2(width,maxf(1.0,get_combined_minimum_size().y))
 	position = Vector2(viewport.x-width-16,16)
 
 func _priority(a: MissionDefinition,b: MissionDefinition,records: Dictionary) -> bool:

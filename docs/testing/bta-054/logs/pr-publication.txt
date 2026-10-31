@@ -1,0 +1,3 @@
+Command: ['gh', 'pr', 'create', '--repo', 'zornscience/below-the-abyss', '--base', 'main', '--head', 'bta-054-twilight-environment', '--title', 'BTA-054: Twilight Shelf details, wildlife and erupting vents', '--body-file', 'docs/testing/bta-054/PR.md']
+Exit: 1
+Post "https://api.github.com/graphql": Forbidden

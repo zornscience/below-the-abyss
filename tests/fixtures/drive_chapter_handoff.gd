@@ -27,6 +27,7 @@ func _after_buoy_recovery() -> bool:
 	assert(_scene.torpedoes.ammunition==10 and _scene.submarine.damage_system.get_maximum_depth_m()>=1000)
 	assert(not _scene.chapter.departure.is_visible_in_tree() and not _scene.chapter.ocean.is_visible_in_tree())
 	await _capture("deep-start-350m")
+	if await _after_deployment(): return true
 	await _tap(JOY_BUTTON_X)
 	var course: Array[Vector2] = TwilightShelfLayout.WEST_LOOP if _keyboard else TwilightShelfLayout.EAST_LOOP
 	for index: int in range(1,course.size()):
@@ -116,3 +117,6 @@ func _wait_transfer() -> void:
 			return
 	push_error("Chapter transfer did not finish its bounded camera settle.")
 	quit(1)
+
+func _after_deployment() -> bool:
+	return false

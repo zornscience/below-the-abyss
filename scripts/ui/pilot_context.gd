@@ -29,6 +29,10 @@ func _process(_delta: float) -> void:
 	progress.value = state.progress*100.0
 	if _scene.journey!=null and not _scene.journey.habitat.hazard_prompt().is_empty():
 		text = _scene.journey.habitat.hazard_prompt()
+	elif _scene.journey!=null and not _scene.journey.expedition.prompt().is_empty():
+		text = _scene.journey.expedition.prompt()
+		progress.visible = _scene.journey.expedition.action!=&""
+		progress.value = _scene.journey.expedition.elapsed/TwilightExpedition.ACTION_SECONDS*100.0
 	elif _scene.journey!=null and _scene.journey.near_tether():
 		text = binding+" · Return to Halcyon / refit"
 	elif _scene.station.is_in_range(_scene.submarine.global_position):

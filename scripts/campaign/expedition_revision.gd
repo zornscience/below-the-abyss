@@ -63,7 +63,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 func can_write() -> bool:
 	return scene.saves!=null and scene.saves.can_write()
 func capabilities() -> Dictionary:
-	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)],"hull":tree.hull_ratings[int(campaign.ranks.hull)]+(ChapterJourney.PRESSURE_FIT.baseline_safe_depth_m-tree.hull_ratings[0] if scene.journey!=null and scene.journey.state.commissioned else 0.0),"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
+	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)]+(100.0 if "twilight-specimen" in campaign.awards else 0.0),"hull":tree.hull_ratings[int(campaign.ranks.hull)]+(ChapterJourney.PRESSURE_FIT.baseline_safe_depth_m-tree.hull_ratings[0] if scene.journey!=null and scene.journey.state.commissioned else 0.0),"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
 func snapshot() -> Dictionary:
 	return {"ammunition":scene.torpedoes.ammunition,"campaign":campaign.duplicate(true)}
 func restore(value: Dictionary) -> void:
@@ -206,6 +206,7 @@ func _refresh_map_marker() -> void:
 	scene.exploration_map.canvas.has_report = accepted and scene.discoveries.state_of(NarrativeService.SPIRES)!=DiscoveryRegistry.State.DISCOVERED
 	scene.exploration_map.canvas.queue_redraw()
 func research_text(id: StringName, fallback: String) -> String:
+	if TwilightShelfData.knows(id) and scene.journey!=null: return scene.journey.expedition.record_text(id)
 	if id==WRECK: return decoded_text() if campaign.decoded else "ENCRYPTED FLIGHT LOGS RECOVERED\nThe damaged recorder cannot be decoded aboard NERIS. Return to Shelf Base for automatic upload and decoding."
 	return fallback
 func decoded_text() -> String:

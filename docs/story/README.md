@@ -105,3 +105,19 @@ Actual Godot evidence (updated after the alignment):
 ![Choice](../testing/bta-046/screenshots/choice-observe.png)
 ![Unharmed plankton response](../testing/bta-046/screenshots/feedback-observe.png)
 ![Bottled, extinguished sample at 800×600](../testing/bta-046/screenshots/feedback-collect-small.png)
+
+## Current Twilight Shelf implementation — BTA-055
+
+The canonical Twilight investigation now follows the severed cable, Mara's first
+field log and the historic whaler's untranslated marking to a trapped luminous
+sentinel. Two further logger transcriptions are optional. New log/dialogue wording
+is an authored adaptation, not quoted Bible text. Release/capture/loss are recorded
+in StoryState; one intentional station debrief uses the existing mission ledger and
+atomic checkpoint. The player's preferred research points replace the Bible's
+separate credits: 2 RP common acknowledgement, capture-only 1 RP and +100 sonar range.
+No later region, translation, Mara-fate/Choir explanation or Crane-secret reveal.
+
+Schema 10 preserves older campaign IDs and records. Future guide eligibility must
+check both release and absence of the post-release casualty flag; no Zone 3 behavior
+is implied. The 30–45-minute human pacing target remains unverified.
+[Commands, save notes, native screenshots and manual route](../testing/bta-055/README.md).

@@ -1,0 +1,470 @@
+[
+  {
+    "file": "screenshots/1280/deep-commissioning.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "2063cc8817094927c32169b5f27d17441841ba2dfb07cda48b4977bada0a8f12"
+  },
+  {
+    "file": "screenshots/1280/deep-start-350m.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "7031e02a2f1fab1299489d25cb54c0aea87f336e4e1e655bcae39efeb2a6ba0e"
+  },
+  {
+    "file": "screenshots/1280/whaler-before-scan.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "e72342e5887fb6d69e0e98c17e72de388f5d71739438046c310341f7099ef6ff"
+  },
+  {
+    "file": "screenshots/1280/unclassified-marking.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "13d20a0890d22b375fa9064328f6a4647221ba3521bef31bf98686158531236b"
+  },
+  {
+    "file": "screenshots/1280/severed-sensor-line.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "21df056382b753c7549ae95cb5bf923b852ea46d671ca434ed5360b9affbb863"
+  },
+  {
+    "file": "screenshots/1280/mara-first-log.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "34a098d84ac20f55464d16aa6f704ed6de67094b0227c7b39f72fd7c31faf66c"
+  },
+  {
+    "file": "screenshots/1280/sentinel-in-drift-net.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "f7608e855da5b82ad8a64666be75c41af929969d449ff6fe3fb8356f1852fd5e"
+  },
+  {
+    "file": "screenshots/1280/twilight-net-survey.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "fc0dc6d43f8577093f52b5ecc5291d1cf913dcd3c0306443002d8ac749a09638"
+  },
+  {
+    "file": "screenshots/1280/sentinel-choice.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "798e16831c8b817f10d0cb7fb6f1553911cd6cff232389c2866a260e39aa1c6e"
+  },
+  {
+    "file": "screenshots/1280/sentinel-action-progress.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "ae1ca64f7ac26ef317e7682f100fa4376ab1f0febe8308fef082d1e041244f03"
+  },
+  {
+    "file": "screenshots/1280/sentinel-outcome.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "98b8fcbf7c78af046403b485206898ccff235ff76cdb59246b36b3af874ea441"
+  },
+  {
+    "file": "screenshots/1280/sentinel-habitat-after.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "1c399a6523516fa34c200b8b016ca5020fd592226689f9f52705dd1306d391e1"
+  },
+  {
+    "file": "screenshots/1280/twilight-discovered-map.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "a30ed096643bddb5b1eb1141c99c471d39644c99f8f65c8f9ca2ea0e2baec3a7"
+  },
+  {
+    "file": "screenshots/1280/twilight-debrief-before-claim.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "416083761d5bd62c8bcf4ce5d83ac0018ba702add4224fba85ac46a38fc7e3d3"
+  },
+  {
+    "file": "screenshots/1280/twilight-research-allowance.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "f89b7f7a6f82158f2ee6686d704b55126e1faa0163e2649800a508c306eb5625"
+  },
+  {
+    "file": "screenshots/1280/twilight-continue-no-replay.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "7e39a4d2326e55b880b7fc727c5abeee19536923775dc5643f3d61857b98e55e"
+  },
+  {
+    "file": "screenshots/1280/twilight-persistent-debrief.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "38bb6788ca30af12fdd8c560882e821c5d132ad92565cf73f434d5b654e9d399"
+  },
+  {
+    "file": "screenshots/1280/optional-mara-logger.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "5ba19d87b9603004ff65ecd91c2e347b139e1acba699a497dcf438873abd5ec4"
+  },
+  {
+    "file": "screenshots/800/deep-commissioning.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "87f36de9e50f018469cd409b110bdc1aa2829894a2a1914336ef4aabee0cdcc0"
+  },
+  {
+    "file": "screenshots/800/deep-start-350m.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "0c2b12fc95fef4120e5ae954aed341418def16f03bc7841b380b100531512241"
+  },
+  {
+    "file": "screenshots/800/whaler-before-scan.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "78fe589a29e2319cfdcdcf8fc9a5fa3e9514558fd087ed23e89bcc9cc204dfe2"
+  },
+  {
+    "file": "screenshots/800/unclassified-marking.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "ecb16cef515f1c5539d70c603142e9b602f70e8c220acdbaa00cc1729abdde9f"
+  },
+  {
+    "file": "screenshots/800/severed-sensor-line.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "2bd3a43d9589e0a8fcb67359b23a0e944e1974906984a4ff44d6845c45be4b0a"
+  },
+  {
+    "file": "screenshots/800/mara-first-log.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "eff1be297d365d8f30febf8370512e3fbe78b876154e679d6f1c4b99c3346058"
+  },
+  {
+    "file": "screenshots/800/sentinel-in-drift-net.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "89a2b5505ed196b3260a1ce1ec496f6e347eeebb21159e49d1d887a7fc30ce67"
+  },
+  {
+    "file": "screenshots/800/twilight-net-survey.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "904063d04863c8cc818035e3a3aa5d90d245432b7a640b4317657e3072a4b879"
+  },
+  {
+    "file": "screenshots/800/sentinel-choice.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "6e73af434fe1b93919a4557f2879ad248e56561372e876400173ec28690876aa"
+  },
+  {
+    "file": "screenshots/800/sentinel-action-progress.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "80369aa054ccf2c3a719e35fe60c410787618a1fddb7418306b0cd455d8c03f5"
+  },
+  {
+    "file": "screenshots/800/sentinel-outcome.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "26f5bc9180fe97fdf8f11d483e847eacbd0a18e02d10d0dd54f7c78e3637149c"
+  },
+  {
+    "file": "screenshots/800/sentinel-habitat-after.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "550ff0ac08cb723df386d12c07b67c474a84a13fa39e6eb5ee93b4f59ccfedd0"
+  },
+  {
+    "file": "screenshots/800/twilight-discovered-map.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "1595de93a933cebc697ca021d7c943e3d5c010cc48eb79ffb73e0d46af978e6f"
+  },
+  {
+    "file": "screenshots/800/twilight-debrief-before-claim.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "61a638b8c9450c4f80d8368b62c8af09ed72a81b26a8eeaaa24d8ef4d76016cc"
+  },
+  {
+    "file": "screenshots/800/twilight-research-allowance.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "1f81c0f8d601452f9f61e80c4a76a217defd83d311bff09f22bbfd32c378c057"
+  },
+  {
+    "file": "screenshots/800/twilight-continue-no-replay.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "3f37966a743f6d649b7f89c1fbd9525fa117dce6bb62e5bd23c241d308f04d85"
+  },
+  {
+    "file": "screenshots/800/twilight-persistent-debrief.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "a203334624c1f3b04d45f20844cb002c151217421ddaf1d422bd9ef4f61ffe17"
+  },
+  {
+    "file": "screenshots/800/capture-confirmation.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "source": "Unedited native Godot Compatibility viewport; ordinary input-driven chapter route",
+    "sha256": "6613951769a7f43d5a3d17c5135bf4ae8675e1c0af8d52932f082840a73d3acf"
+  }
+]

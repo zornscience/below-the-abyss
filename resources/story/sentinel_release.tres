@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone2-sentinel-release"
+encounter_id = &"zone2-net-sentinel"
+resonance_delta = 15
+flags = Array[StringName]([&"zone2-sentinel-freed", &"zone2-future-guide"])
+action_text = "Carefully release the sentinel"
+response_text = "Wick: The mesh is open. It has room to leave.\n\nOkafor: It chose to wait beside us. Keep your lamp steady.\n\nCrane: Send the complete recording. We will work with what you brought back."

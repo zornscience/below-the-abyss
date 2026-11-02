@@ -28,7 +28,7 @@ func refresh() -> void:
 	if scene==null: return
 	if scene.journey!=null and scene.journey.active():
 		title.text = "◇ THE TWILIGHT SHELF"
-		detail.text = "◇ Explore west and east · Ascent tether for refit"
+		detail.text = scene.journey.expedition.guidance()
 		_reflow()
 		return
 	var chapter: SunlitShallows = scene.chapter

@@ -1,0 +1,20 @@
+Command: ['godot', '--path', '/workspace/below-the-abyss', '--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--disable-render-loop', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--no-excavation', '--profile=bta055-final-native-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_STORY_BEGIN outcome=release
+TWILIGHT_RECORD_BEGIN twilight-mara-log-two at=(28053.01, 1871.064)
+TWILIGHT_RECORD_PASS twilight-mara-log-two
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29123.95, 3120.729)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35956.96, 1937.385)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35797.82, 2818.506)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37702.06, 3157.716)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=release input=keyboard deep_simulation_seconds=252.549999999777 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true

@@ -59,7 +59,7 @@ func test_fresh_title_introduces_canon_without_accepting_or_scoring() -> void:
 	assert_eq(game.chapter.state(),"available")
 	assert_eq(game.story.resonance(),0)
 	assert_false(game.chapter.active)
-	assert_eq(game.missions.definitions().size(),6)
+	assert_eq(game.missions.definitions().size(),7)
 	var primary: Button = game.revision.ui.find_child("Begin",true,false) as Button
 	assert_true(primary.text.contains("Sunlit Shallows"))
 	game.chapter.start()
@@ -141,6 +141,7 @@ func test_version_five_adds_unaccepted_chapter_without_rewriting_legacy_claims()
 	document.prototype.campaign.erase("legacy_ranks")
 	document.prototype.campaign.ranks = {"sonar":document.prototype.campaign.ranks.sonar,"hull":document.prototype.campaign.ranks.hull}
 	document.progress.missions.erase(String(SunlitShallowsData.MISSION))
+	document.progress.missions.erase(String(TwilightShelfData.MISSION))
 	var old: Dictionary = document.progress.duplicate(true)
 	var loaded: Dictionary = ExpeditionSchema.decode(document)
 	assert_eq(loaded.error,OK)

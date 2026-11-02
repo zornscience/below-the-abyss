@@ -126,7 +126,7 @@ func show_title() -> void:
 	var available: bool = revision.scene.saves != null and revision.scene.saves.has_checkpoint()
 	_button(controls,revision.scene.chapter.primary_title() if revision.scene.chapter!=null else ("Continue expedition" if available else "Begin expedition"),revision.start_from_title,not revision.can_write()).name = "Begin"
 	if revision.scene.journey!=null and revision.scene.chapter.concluded() and revision.scene.journey.state.phase=="sunlit":
-		_button(controls,"Twilight Shelf / exploration preview",revision.scene.journey.offer_deploy).name = "TwilightPreview"
+		_button(controls,"Begin The Twilight Shelf",revision.scene.journey.offer_deploy).name = "TwilightPreview"
 	_button(controls,"New Game",show_new_game_confirmation).name = "NewGame"
 	_button(controls,"Options",show_options).name = "TitleOptions"
 	_button(controls,"Quit",func() -> void: get_tree().quit()).name = "TitleQuit"
@@ -207,10 +207,11 @@ func show_dock(tab: String = "home") -> void:
 		_dock_body.add_child(row)
 		_button(row,"Research technology",func() -> void: show_dock("technology")).name = "Technology"
 		_button(row,"Expedition log" if canonical else "Expedition logs",func() -> void: show_dock("logs")).name = "DockLogs"
-		if canonical: _button(_dock_body,"First expedition debrief",revision.scene.chapter.show_debrief).name = "ChapterDebrief"
+		if revision.scene.journey!=null and revision.scene.journey.at_station(): _button(_dock_body,"Twilight expedition debrief",revision.scene.journey.expedition.show_debrief).name = "TwilightDebrief"
+		elif canonical: _button(_dock_body,"First expedition debrief",revision.scene.chapter.show_debrief).name = "ChapterDebrief"
 		_button(row,"Radio archive",func() -> void: show_dock("radio"))
 		if canonical and revision.scene.chapter.concluded() and revision.scene.journey!=null and not revision.scene.journey.at_station():
-			_button(_dock_body,"Twilight Shelf / exploration preview",revision.scene.journey.offer_deploy).name = "TwilightPreview"
+			_button(_dock_body,"Begin The Twilight Shelf",revision.scene.journey.offer_deploy).name = "TwilightPreview"
 		_button(_dock_body,"Resume Twilight Shelf" if revision.scene.journey!=null and revision.scene.journey.at_station() else "Depart station",revision.undock).name = "Depart"
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
@@ -240,7 +241,7 @@ func show_dock(tab: String = "home") -> void:
 			header.add_child(icon)
 			_label(header,ResearchTree.TITLES[branch],&"section").size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			var rank: int = int(revision.campaign.ranks[branch])
-			_label(column,"Rank %d / 3 · %s" % [rank,revision.tree.comparison(branch,rank,revision.capabilities().hull-revision.tree.hull_ratings[int(revision.campaign.ranks.hull)])])
+			_label(column,"Rank %d / 3 · %s" % [rank,revision.tree.comparison(branch,rank,revision.capabilities().hull-revision.tree.hull_ratings[int(revision.campaign.ranks.hull)],revision.capabilities().sonar-revision.tree.sonar_radii[int(revision.campaign.ranks.sonar)])])
 			var actions: HFlowContainer = HFlowContainer.new()
 			column.add_child(actions)
 			var price: int = CampaignData.next_cost(revision.campaign)
@@ -250,10 +251,13 @@ func show_dock(tab: String = "home") -> void:
 		_label(_dock_body,revision.feedback)
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	elif tab=="logs":
-		_label(_dock_body,revision.scene.chapter.log_text() if canonical else (revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research."),&"body")
+		if revision.scene.journey!=null and revision.scene.journey.at_station():
+			_label(_dock_body,revision.scene.journey.expedition.log_text(),&"body")
+		else:
+			_label(_dock_body,revision.scene.chapter.log_text() if canonical else (revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research."),&"body")
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	else:
-		_label(_dock_body,revision.scene.chapter.log_text() if canonical else revision.archive_text(),&"body")
+		_label(_dock_body,revision.scene.journey.expedition.log_text() if revision.scene.journey!=null and revision.scene.journey.at_station() else (revision.scene.chapter.log_text() if canonical else revision.archive_text()),&"body")
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	_focus()
 func _assign(branch: String, difference: int) -> void:

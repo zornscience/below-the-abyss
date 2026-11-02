@@ -291,3 +291,21 @@ contracts; use warning/quiet windows and bypasses, deterministic simulation-time
 thermal damage, existing acoustic AI, pause/comfort settings and existing saves.
 Do not implement the later sentinel/log/glyph narrative or new rewards in this pass.
 [Acceptance, commands, evidence and limits](docs/testing/bta-054/README.md).
+
+## BTA-055 — Twilight Shelf expedition and narrative
+
+Authorized by the user's “Do BTA-055”: finish the approved cable/wreck/log/first
+marking/sentinel investigation on the BTA-054 branch, preserving both approaches,
+hazards, refitting, research, Chapter 1 and legacy saves. BTA-054 was the branch
+dependency during implementation and is now merged as PR #38 (main `55d1769`);
+this review contains only BTA-055 changes.
+
+Use existing research, mission, StoryState and checkpoint authorities; three Mara
+loggers (two optional), release/capture/casualty outcomes, explicit station debrief,
+once-only 2 RP plus capture-only 1 RP/+100 sonar calibration. No new currency,
+Zone 3, full translation, Mara-fate reveal, ending or combat framework.
+Verify all GUT/import/parser/startup/export checks, both ordered real-input courses,
+separate-process Continue and native mute/comfort/small-screen captures. Distinguish
+automated timing from the unverified 30–45-minute human pacing target. Review through
+a separate PR targeting main; do not merge automatically.
+[Acceptance, commands and evidence](docs/testing/bta-055/README.md).

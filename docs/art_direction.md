@@ -217,3 +217,13 @@ Lantern-1. No surface waves, alien architecture, glyph or later-story revelation
 Visible/textual vent warnings and a bounded local plume survive comfort settings;
 cosmetic phase never moves the vessel. See [masters, authored regions, provenance
 and reusable workflow](../assets/art/twilight/README.md).
+
+### BTA-055 sentinel
+
+The Twilight sentinel is an original generated long-bodied luminous marine animal,
+not a recoloured predator. It shares the region's painted cool materials and
+restrained ivory/cyan light. Existing explicit-phase fauna shader supplies motion;
+Reduced Motion disables cosmetic deformation. An illustrated retrieval-net overlay shares its material detail; the scratched
+marking and muted curved cable are small authored functional illustrations.
+[PNG provenance/import details](../assets/art/twilight/sentinel-provenance.json).
+Human art/readability acceptance remains separate from automated validation.

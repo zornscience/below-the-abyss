@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone2-sentinel-capture"
+encounter_id = &"zone2-net-sentinel"
+resonance_delta = -15
+flags = Array[StringName]([&"zone2-sentinel-captured", &"zone2-wardens-wary"])
+action_text = "Secure a living specimen for Crane"
+response_text = "Wick: Retrieval cradle secured. The animal is alive. Its light has contracted.\n\nCrane: Bring the cradle to Halcyon. The specimen allowance and sonar calibration require delivery.\n\nOkafor: The water was full of light a moment ago."

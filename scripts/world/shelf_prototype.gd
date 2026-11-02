@@ -98,7 +98,7 @@ func _ready() -> void:
 			push_error("Shelf sonar target registration failed.")
 	discoveries = DiscoveryRegistry.new()
 	add_child(discoveries)
-	if discoveries.configure(ShelfChapterData.discoveries(revised_expedition) if extended_expedition else DISCOVERY_CATALOG) != OK:
+	if discoveries.configure(TwilightShelfData.discoveries() if canonical_chapter and revised_expedition and extended_expedition else (ShelfChapterData.discoveries(revised_expedition) if extended_expedition else DISCOVERY_CATALOG)) != OK:
 		push_error("Invalid discovery catalog.")
 	for node: Node in region.get_node("SonarTargets").get_children():
 		var result: Error = discoveries.connect_sonar_target(node as SonarRevealTarget)
@@ -112,14 +112,14 @@ func _ready() -> void:
 	exploration_map.close_requested.connect(close_map)
 	research = ResearchRegistry.new()
 	add_child(research)
-	if research.configure(ShelfChapterData.research(revised_expedition) if extended_expedition else RESEARCH_CATALOG) != OK:
+	if research.configure(TwilightShelfData.research() if canonical_chapter and revised_expedition and extended_expedition else (ShelfChapterData.research(revised_expedition) if extended_expedition else RESEARCH_CATALOG)) != OK:
 		push_error("Invalid research catalogue.")
 	research_store.path = research_path if not research_path.is_empty() else (
 		ResearchStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".research.json")
 	research_store.load_registry(research)
 	research.scan_completed.connect(func(_id: StringName) -> void: research_store.save_registry(research))
 	var targets: Array[ScientificScanTarget] = []
-	var research_catalog: ResearchCatalog = ShelfChapterData.research(revised_expedition) if extended_expedition else RESEARCH_CATALOG
+	var research_catalog: ResearchCatalog = TwilightShelfData.research() if canonical_chapter and revised_expedition and extended_expedition else (ShelfChapterData.research(revised_expedition) if extended_expedition else RESEARCH_CATALOG)
 	for definition: ScanDefinition in research_catalog.targets:
 		var target: ScientificScanTarget = ScientificScanTarget.new()
 		target.name = String(definition.stable_id)
@@ -160,7 +160,7 @@ func _ready() -> void:
 	add_child(missions)
 	var missions_file: String = mission_path if not mission_path.is_empty() else (
 		MissionStore.DEFAULT_PATH if settings_path == SettingsStore.DEFAULT_PATH else settings_path + ".missions.json")
-	if missions.setup(SunlitShallowsData.missions() if extended_expedition and revised_expedition and canonical_chapter else (ShelfChapterData.missions() if extended_expedition else MISSION_CATALOG), discoveries, research, route_check, missions_file, story) != OK:
+	if missions.setup(TwilightShelfData.missions() if extended_expedition and revised_expedition and canonical_chapter else (ShelfChapterData.missions() if extended_expedition else MISSION_CATALOG), discoveries, research, route_check, missions_file, story) != OK:
 		push_error("Mission framework setup failed.")
 	station.missions = missions
 	missions.missions_changed.connect(_refresh_mission_status)
@@ -413,6 +413,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not development_mode and _menu == null and not event.is_echo() and event.is_action_pressed("interact"):
 			if journey!=null and journey.near_tether():
 				journey.offer_return()
+			elif journey!=null and journey.expedition.interact():
+				pass
 			elif station.is_in_range(submarine.global_position):
 				open_station()
 			elif chapter!=null and chapter.can_review_buoy():

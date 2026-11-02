@@ -25,7 +25,7 @@ text = "EMERGENCY BUOY / Dr. Mara Voss\n\n\"It isn't empty down there. Tell Elia
 script = ExtResource("2")
 stable_id = &"sunlit-debrief"
 title = "Halcyon · first expedition debrief"
-text = "HALCYON / FIRST EXPEDITION ACKNOWLEDGED\n\nOkafor: I know that voice. Mara heard something she couldn't leave unanswered. This recording tells us what she was investigating, not what happened to her.\n\nWick: The buoy record and your observations are archived. Lantern-2 is safely home.\n\nCrane: We'll prepare an investigation toward the Twilight Shelf. Today, we stop here.\n\nNEXT INVESTIGATION / The Twilight Shelf. This chapter is complete. Research technology and the shallows remain available. The Twilight Shelf exploration preview can be deployed from Halcyon."
+text = "HALCYON / FIRST EXPEDITION ACKNOWLEDGED\n\nOkafor: I know that voice. Mara heard something she couldn't leave unanswered. This recording tells us what she was investigating, not what happened to her.\n\nWick: The buoy record and your observations are archived. Lantern-2 is safely home.\n\nCrane: We'll prepare an investigation toward the Twilight Shelf. Bring these records into the next descent.\n\nNEXT INVESTIGATION / The Twilight Shelf. This chapter is complete. Research technology and the shallows remain available. The Twilight Shelf expedition can be deployed from Halcyon."
 [resource]
 script = ExtResource("1")
 entries = Array[ExtResource("2")]([SubResource("E0"), SubResource("E1"), SubResource("E2"), SubResource("E3"), SubResource("E4")])

@@ -30,9 +30,10 @@ func values(branch: String) -> PackedFloat32Array:
 
 const TITLES: Dictionary = {"sonar":"ACOUSTIC ARRAY","hull":"PRESSURE HULL","torpedo_acceleration":"TORPEDO DRIVE","torpedo_area":"TORPEDO WARHEAD","engine":"MAIN ENGINES"}
 const ICONS: Dictionary = {"sonar":preload("res://assets/art/upgrades/sonar.svg"),"hull":preload("res://assets/art/upgrades/hull.svg"),"torpedo_acceleration":preload("res://assets/art/upgrades/torpedo_acceleration.svg"),"torpedo_area":preload("res://assets/art/upgrades/torpedo_area.svg"),"engine":preload("res://assets/art/upgrades/engine.svg")}
-func comparison(branch: String,rank: int,hull_baseline_bonus: float = 0.0) -> String:
+func comparison(branch: String,rank: int,hull_baseline_bonus: float = 0.0,sonar_bonus: float = 0.0) -> String:
 	var levels: PackedFloat32Array = values(branch)
 	var next: int = mini(3,rank+1)
+	if branch=="sonar" and sonar_bonus>0: return "Sonar range %.0f → %.0f units · delivery calibration included" % [levels[rank]+sonar_bonus,levels[next]+sonar_bonus]
 	if branch=="hull": return "Rated depth %.0f → %.0f m" % [levels[rank]+hull_baseline_bonus,levels[next]+hull_baseline_bonus]
 	var current: float = levels[rank]/levels[0]
 	var upgraded: float = levels[next]/levels[0]

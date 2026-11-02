@@ -1,0 +1,29 @@
+Running handoff-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-keyboard', '--input=keyboard', '--outcome=observe']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-keyboard', '--input=keyboard', '--outcome=observe']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+CHAPTER_HANDOFF_CHECKPOINT_PASS input=keyboard outcome=observe battery=94.6860500074141 hull=98.8198257446289 shots=0
+
+Running handoff-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-keyboard', '--input=keyboard', '--outcome=observe', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-keyboard', '--input=keyboard', '--outcome=observe', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHAPTER_HANDOFF_INPUT_PASS input=keyboard outcome=observe replayed_choices=0 replayed_claims=0
+
+Running handoff-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-controller', '--input=controller', '--outcome=collect']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-controller', '--input=controller', '--outcome=collect']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+CHAPTER_HANDOFF_CHECKPOINT_PASS input=controller outcome=collect battery=94.9094967578265 hull=100.0 shots=0
+
+Running handoff-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-controller', '--input=controller', '--outcome=collect', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1793627966815499716-controller', '--input=controller', '--outcome=collect', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHAPTER_HANDOFF_INPUT_PASS input=controller outcome=collect replayed_choices=0 replayed_claims=0
+
+PASS: both buoy choices, keyboard/controller, west/east loops, deep Continue and Halcyon refit/resume

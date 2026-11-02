@@ -274,3 +274,15 @@ Four-second visual/text warnings precede modest time-bounded hull damage through
 the existing hull API. Both approaches, quiet windows and a clear upper bypass
 remain. No new mission, sentinel decision, reward or economy is implied.
 [Scope, balancing and verification](docs/testing/bta-054/README.md).
+
+## BTA-055 — The Severed Line
+
+User-authorized Twilight Shelf investigation on the BTA-054 environment: western
+whaler marking, eastern cable cut, Mara's first log/two optional loggers and one
+trapped sentinel with release/capture/loss outcomes. Required records can be found
+in either order; a deliberate tether return and station debrief acknowledge once.
+Use the existing finite research budget: 2 RP common allowance, capture delivery
++1 RP and unique +100 sonar-range calibration; no new currency or combat progression.
+The Bible is canonical; new dialogue/log transcriptions remain authored adaptations.
+The 30–45-minute novice target requires human evaluation, not padded automation.
+[Decisions, budget, manual route and verification](docs/testing/bta-055/README.md).

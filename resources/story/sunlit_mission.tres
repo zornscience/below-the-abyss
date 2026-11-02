@@ -25,5 +25,5 @@ stable_id = &"sunlit-shallows-expedition"
 title = "The Sunlit Shallows"
 description = "Pilot Lantern-2 from Halcyon. Observe the light bloom, recover Lantern-1's emergency buoy near Twin Spires and bring Mara's message home."
 acknowledgement_id = &"sunlit-first-expedition-acknowledged"
-acknowledgement = "Halcyon has archived Mara's message. The next investigation leads toward the Twilight Shelf; that zone is not yet playable."
+acknowledgement = "Halcyon has archived Mara's message. The next investigation leads toward the Twilight Shelf; deep expedition commissioning is available at Halcyon."
 objectives = Array[ExtResource("2")]([SubResource("Bloom"),SubResource("Buoy"),SubResource("Return")])

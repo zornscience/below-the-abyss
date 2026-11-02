@@ -1,0 +1,49 @@
+Running story-observe-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=keyboard', '--profile=bta046-1793626866008134453-observe-keyboard']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=keyboard', '--profile=bta046-1793626866008134453-observe-keyboard']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=observe input=keyboard resumed=false events=1 mute=true
+
+Running story-observe-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=keyboard', '--profile=bta046-1793626866008134453-observe-keyboard', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=keyboard', '--profile=bta046-1793626866008134453-observe-keyboard', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=observe input=keyboard resumed=true events=0 mute=true
+
+Running story-observe-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=controller', '--profile=bta046-1793626866008134453-observe-controller']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=controller', '--profile=bta046-1793626866008134453-observe-controller']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=observe input=controller resumed=false events=1 mute=true
+
+Running story-observe-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=controller', '--profile=bta046-1793626866008134453-observe-controller', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=observe', '--input=controller', '--profile=bta046-1793626866008134453-observe-controller', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=observe input=controller resumed=true events=0 mute=true
+
+Running story-collect-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=keyboard', '--profile=bta046-1793626866008134453-collect-keyboard']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=keyboard', '--profile=bta046-1793626866008134453-collect-keyboard']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=collect input=keyboard resumed=false events=1 mute=true
+
+Running story-collect-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=keyboard', '--profile=bta046-1793626866008134453-collect-keyboard', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=keyboard', '--profile=bta046-1793626866008134453-collect-keyboard', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=collect input=keyboard resumed=true events=0 mute=true
+
+Running story-collect-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=controller', '--profile=bta046-1793626866008134453-collect-controller']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=controller', '--profile=bta046-1793626866008134453-collect-controller']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=collect input=controller resumed=false events=1 mute=true
+
+Running story-collect-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=controller', '--profile=bta046-1793626866008134453-collect-controller', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_story_choice.gd', '--quit-after', '12000', '--', '--comfort', '--outcome=collect', '--input=controller', '--profile=bta046-1793626866008134453-collect-controller', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY_CHOICE_WALK_PASS outcome=collect input=controller resumed=true events=0 mute=true
+
+PASS: both bloom outcomes, keyboard/controller, mute and separate-process Continue

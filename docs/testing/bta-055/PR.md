@@ -1,15 +1,14 @@
 # BTA-055: Twilight Shelf expedition and narrative
 
-**Dependency:** built on `bta-054-twilight-environment` (`838a862`), which has not yet
-been merged. Review/merge BTA-054 first. This PR targets main; until that merge its
-comparison includes the environmental milestone. The BTA-055-only changed-file
-inventory and verification are linked below. Do not merge automatically.
-
 The Twilight Shelf now connects the illustrated environment to a playable investigation:
 follow severed cables, recover Mara's first field log, record the whaler's untranslated
 marking and resolve a trapped luminous sentinel encounter. West-first and east-first
 approaches work; two extra field loggers are optional. Return through the existing
 ascent tether, refit and intentionally archive the Halcyon debrief.
+
+**Base:** BTA-054 is now merged as PR #38 (main `55d1769`). Implementation began
+on its source `838a862`; this PR contains only BTA-055 changes and targets main.
+Do not merge automatically.
 
 - Reuse scientific scanning, sonar wavefront discovery, temporary passive contacts,
   MissionService, StoryState, existing acoustic creature/navigation and shared UI.
@@ -30,12 +29,19 @@ ascent tether, refit and intentionally archive the Halcyon debrief.
 · [BTA-055-only changed files](https://github.com/zornscience/below-the-abyss/blob/bta-055-twilight-expedition/docs/testing/bta-055/changed-files.txt)
 · [Artwork provenance](https://github.com/zornscience/below-the-abyss/blob/bta-055-twilight-expedition/assets/art/twilight/sentinel-provenance.json)
 
-Final automated results, native screenshots and export identity are recorded in the
-linked evidence report once verification completes. No hosted-CI or human acceptance
-claim is made in advance.
+Local verification passed: **727/727 GUT tests**, **43,271 assertions**, import,
+**301 parser checks**, startup, all previous walkthroughs, the new four-process
+headless chapter matrix, four native fresh/Continue processes, **7/7 Python tests**,
+clean Linux export and packaged standalone smoke. Raw logs, save-compatibility notes,
+exact commands and native gallery are in the linked report. Hosted CI and human
+acceptance are reported separately.
 
-**Pacing limit:** the 30–45-minute main expedition is a novice-human target. Preliminary
-experienced automated deep routes took approximately 3:46 keyboard and 5:00 controller,
+![Sentinel and illustrated drift net](https://raw.githubusercontent.com/zornscience/below-the-abyss/bta-055-twilight-expedition/docs/testing/bta-055/screenshots/1280/twilight-net-survey.png)
+
+![Capture choice at 800×600 with Large Text/High Contrast](https://raw.githubusercontent.com/zornscience/below-the-abyss/bta-055-twilight-expedition/docs/testing/bta-055/screenshots/800/sentinel-choice.png)
+
+**Pacing limit:** the 30–45-minute main expedition is a novice-human target. Final
+experienced native routes took 252.5 seconds keyboard and 343.2 seconds controller,
 without torpedoes. Those are not human playtests. Final measured values and native
 captures are retained honestly; human comprehension, pacing and visual acceptance
 remain open review gates. No artificial delays pad the route.

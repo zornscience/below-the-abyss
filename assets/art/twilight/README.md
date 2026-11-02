@@ -42,3 +42,18 @@ and collision/holdfast anchors explicitly; keep render art separate from authori
 terrain; validate alpha/gutters at native gameplay scale; add comfort flags and bounded
 updates; capture actual Godot evidence and obtain human art review. Pixel-identical
 regeneration, professional art acceptance and target-GPU 60 FPS are not claimed.
+
+## BTA-055 additions
+
+`sentinel.png` and `retrieval_net.png` are two additional original generated PNG
+masters, each 1942×809, copied unchanged from image_gen output. The animal uses the
+existing explicit-phase fauna shader; the net is a static foreground overlay with
+worn braided strands, floats and recovery hardware. Both use lossless import,
+alpha-border fix, mipmaps and linear mipmap sampling. Net/animal art is separate
+from world collision geometry. Reduced Motion stops cosmetic deformation, while
+actual released-animal motion uses the existing collision-safe controller.
+
+Exact source identities, dimensions and hashes: [sentinel-provenance.json](sentinel-provenance.json).
+The marking is a provisional authored scratch pattern, not a final translated
+alphabet. Licensing remains pending and generated outputs are not layered human-
+painted masters. Native quality and readability require user/artist review.

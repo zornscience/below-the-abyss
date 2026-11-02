@@ -1,8 +1,8 @@
 # BTA-055 — The Twilight Shelf: The Severed Line
 
-Based on the published BTA-054 branch `838a862`, which is not yet merged into main
-(`67a6a0e`, PR #37). **Merge/review BTA-054 first.** This branch depends on its art,
-wildlife and thermal-vent systems; no automatic merge is authorized.
+Implementation began on BTA-054 source `838a862`. BTA-054 is now merged as
+**PR #38**, main `55d1769`; this review contains only BTA-055 changes. Its art,
+wildlife and thermal-vent systems are retained. No automatic merge is authorized.
 
 The chapter's canon is the user-supplied Story Bible, p. 6, and its implementation
 uses the approved [Twilight design](../../design/twilight-shelf.md). Dialogue and
@@ -67,7 +67,8 @@ on intentional Continue; position, supplies, ammo and research allocations survi
 Loading/recovery does not replay choice/claim events or commission/refill a vessel.
 Existing atomic replacement, write-ahead backup, rejected-file recovery, monotonic
 history and conflict checks remain authoritative. Old builds reject schema 10;
-keep backups and use the updated build for these campaigns.
+keep backups and use the updated build for these campaigns. Uncommitted scan/work
+progress is transient and restarts on Continue; committed evidence/choices remain.
 
 Only the Twilight active region changes drain tuning: idle 0.003, full thrust 0.009
 battery/s, oxygen 0.02/s. A conservative 45-minute continuous full-thrust budget with
@@ -78,7 +79,8 @@ weapon/engine talent tuning remain in their existing authorities.
 
 ## Verification
 
-Results and native evidence are added after final verification. Reproduce with
+The full local suite passed **727/727 tests**, **43,271 assertions**, in **579.083 s**,
+with no failures, errors or skips. Reproduce with
 Godot `4.6.3.stable.official.7d41c59c4`, GUT 9.6.1 and Compatibility:
 
 ```sh
@@ -94,7 +96,8 @@ python3 tools/verify_revision_two.py
 python3 tools/verify_story_choice.py
 python3 -m unittest discover -s tests/python -v
 python3 tools/build_playtest.py
-python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-<build-id>.zip
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-<build-id>.zip \
+  --log build/playtest/standalone-smoke.log
 ```
 
 The new fixture uses actual movement, Interact, sonar, pause, and keyboard/controller
@@ -136,4 +139,74 @@ No playable Drowned Caves, glyph translation, Vael explanation, ending, new econ
 general combat framework or replacement save architecture. Thermal ecology remains
 the BTA-054 system. Sentinel art is an original generated PNG; provenance, dimensions,
 import policy and licensing limits are recorded separately. Visual quality remains
-subject to user/artist review.
+subject to user/artist review. Some research thumbnails reuse generic instrument
+art; the in-world animal and net use the new illustrated masters.
+
+## Final local evidence
+
+| Check | Result |
+| --- | --- |
+| Full GUT | 727/727, 43,271 assertions; [log](logs/gut.txt), [JUnit](logs/unit-tests.xml) |
+| Import / parser / startup | Passed; 301 scripts; [log](logs/validation.txt), [inventory](logs/parser.log) |
+| Original expanded and revised expeditions | Passed; [expanded](logs/expanded.txt), [revision](logs/revision.txt) |
+| Original story-choice matrix | Passed; [log](logs/story-choice.txt) |
+| Full canonical Sunlit chapter matrix | 12/12 processes; [log](logs/sunlit.txt) |
+| Existing deep handoff and habitat matrices | 4/4 each; [handoff](logs/handoff.txt), [habitat](logs/habitat.txt) |
+| New headless Twilight expedition matrix | 4/4 processes; [log](logs/twilight-story.txt) |
+| New native routes | 4/4 processes, both orders/outcomes/devices and separate Continue; [1280](logs/native-1280-fresh.txt), [800](logs/native-800-fresh.txt) |
+| Python tooling | 7/7; [log](logs/python.txt) |
+| Clean Linux export and packaged smoke | Passed; [manifest](logs/manifest.json), [export](logs/linux-export.json), [standalone](logs/standalone-result.txt) |
+
+Native captures use Xorg :98, Godot Compatibility and Mesa llvmpipe. The known
+unsupported-VSync warning is retained in raw logs. On-demand warmed readback is
+not a realtime frame-rate benchmark or human/physical-controller playtest.
+
+| Scene | 1280×800 keyboard / release | 800×600 controller / capture, Large Text/High Contrast/reduced |
+| --- | --- | --- |
+| Commissioning | [view](screenshots/1280/deep-commissioning.png) | [view](screenshots/800/deep-commissioning.png) |
+| Deep starting pocket | [view](screenshots/1280/deep-start-350m.png) | [view](screenshots/800/deep-start-350m.png) |
+| Historic whaler | [view](screenshots/1280/whaler-before-scan.png) | [view](screenshots/800/whaler-before-scan.png) |
+| Recorded marking | [view](screenshots/1280/unclassified-marking.png) | [view](screenshots/800/unclassified-marking.png) |
+| Severed sensor line | [view](screenshots/1280/severed-sensor-line.png) | [view](screenshots/800/severed-sensor-line.png) |
+| Mara first field log | [view](screenshots/1280/mara-first-log.png) | [view](screenshots/800/mara-first-log.png) |
+| Living animal/net | [view](screenshots/1280/sentinel-in-drift-net.png) | [view](screenshots/800/sentinel-in-drift-net.png) |
+| Scanned net / standoff view | [view](screenshots/1280/twilight-net-survey.png) | [view](screenshots/800/twilight-net-survey.png) |
+| Choice dialog | [view](screenshots/1280/sentinel-choice.png) | [view](screenshots/800/sentinel-choice.png) |
+| Action progress | [view](screenshots/1280/sentinel-action-progress.png) | [view](screenshots/800/sentinel-action-progress.png) |
+| Choice response | [view](screenshots/1280/sentinel-outcome.png) | [view](screenshots/800/sentinel-outcome.png) |
+| Habitat consequence | [view](screenshots/1280/sentinel-habitat-after.png) | [view](screenshots/800/sentinel-habitat-after.png) |
+| Discovered-only map | [view](screenshots/1280/twilight-discovered-map.png) | [view](screenshots/800/twilight-discovered-map.png) |
+| Station debrief | [view](screenshots/1280/twilight-debrief-before-claim.png) | [view](screenshots/800/twilight-debrief-before-claim.png) |
+| Research allowance | [view](screenshots/1280/twilight-research-allowance.png) | [view](screenshots/800/twilight-research-allowance.png) |
+| Continue without replay | [view](screenshots/1280/twilight-continue-no-replay.png) | [view](screenshots/800/twilight-continue-no-replay.png) |
+| Persistent debrief | [view](screenshots/1280/twilight-persistent-debrief.png) | [view](screenshots/800/twilight-persistent-debrief.png) |
+
+[Optional logger](screenshots/1280/optional-mara-logger.png) ·
+[Live-capture confirmation](screenshots/800/capture-confirmation.png) ·
+[Complete screenshot inventory](screenshots.json).
+
+Native commands (create the output directory first; fixtures reset only their named
+test profiles). On this managed software-rendered host, prefix with
+`DISPLAY=:98 LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=1` and use the workspace's XDG
+cache/data/config directories. A local graphical desktop can use its normal display.
+
+```sh
+mkdir -p /tmp/bta055-native
+BTA_EVIDENCE_DIR=/tmp/bta055-native godot --path . --audio-driver Dummy \
+  --rendering-method gl_compatibility --disable-render-loop --fixed-fps 60 \
+  --script res://tests/fixtures/drive_twilight_expedition.gd --quit-after 180000 -- \
+  --no-excavation --profile=bta055-review-keyboard --input=keyboard \
+  --outcome=observe --sentinel=release
+```
+
+Repeat with the same named profile and `--twilight-resume` for a separate-process
+Continue/debrief replay check. For the other branch use a different profile plus
+`--input=controller --outcome=collect --sentinel=capture --small --high-contrast`
+in both processes. Both tests mute audio; the small case enables Large Text and
+reduced presentation. No gameplay pose, scan, choice or mission state is injected.
+
+The workflow adds the new four-process chapter matrix. Its job-wide budget is now
+75 minutes to accommodate the additional routes. Original per-check/per-route
+limits remain unchanged; each new combined first/second-chapter process is bounded
+at 480 seconds. Hosted GitHub Actions conclusions are separate from these local
+runs and will be reported with the PR publication status.

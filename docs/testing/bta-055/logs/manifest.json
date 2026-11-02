@@ -1,0 +1,9 @@
+{
+  "game_version": "0.1.0-playtest",
+  "build_id": "3ecfa35d0aa7d33cfe3987a4efa4e113045705d3",
+  "source_commit": "3ecfa35d0aa7d33cfe3987a4efa4e113045705d3",
+  "development_dirty": false,
+  "engine": "4.6.3.stable.official.7d41c59c4",
+  "platform": "Linux x86_64",
+  "sha256": "e7cf3c053078041a0476176b0955b70580d7bdd8c5d1e68d163ddb40df4f7df4"
+}

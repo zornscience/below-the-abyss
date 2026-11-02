@@ -19,7 +19,7 @@
       ],
       "sha256": "b6857a97c4ca05f521e5042909ff1fd4a59a0a904aa3c4dd87d3d91a0adac389",
       "provenance": "Original OpenAI image_gen PNG, unchanged bytes. No stock asset or imitation request. Generated artwork is not a human-painted layered source; project licensing remains pending, no new exclusive-rights or license claim.",
-      "import": "lossless; alpha-border fix; mipmaps; linear mipmap sampling; explicit-phase existing fauna shader; no screen-read effect"
+      "import": "lossless; alpha-border fix; mipmaps; linear mipmap sampling; static foreground net overlay; no screen-read effect"
     }
   ]
 }

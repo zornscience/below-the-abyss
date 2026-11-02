@@ -1,0 +1,7 @@
+Command: ['godot', '--path', '/workspace/below-the-abyss', '--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--disable-render-loop', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--no-excavation', '--profile=bta055-final-native-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+TWILIGHT_EXPEDITION_CONTINUE_PASS outcome=release input=keyboard choices=0 acknowledgements=0

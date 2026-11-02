@@ -296,8 +296,9 @@ Do not implement the later sentinel/log/glyph narrative or new rewards in this p
 
 Authorized by the user's “Do BTA-055”: finish the approved cable/wreck/log/first
 marking/sentinel investigation on the BTA-054 branch, preserving both approaches,
-hazards, refitting, research, Chapter 1 and legacy saves. Main still ends at PR #37;
-BTA-054 is an explicit branch dependency and must be reviewed/merged first.
+hazards, refitting, research, Chapter 1 and legacy saves. BTA-054 was the branch
+dependency during implementation and is now merged as PR #38 (main `55d1769`);
+this review contains only BTA-055 changes.
 
 Use existing research, mission, StoryState and checkpoint authorities; three Mara
 loggers (two optional), release/capture/casualty outcomes, explicit station debrief,

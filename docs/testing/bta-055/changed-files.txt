@@ -29,6 +29,7 @@ docs/testing/bta-055/logs/native-800-fresh.txt
 docs/testing/bta-055/logs/native-pipeline.txt
 docs/testing/bta-055/logs/parser.log
 docs/testing/bta-055/logs/pipeline.txt
+docs/testing/bta-055/logs/pr-publication.txt
 docs/testing/bta-055/logs/python.txt
 docs/testing/bta-055/logs/revision.txt
 docs/testing/bta-055/logs/standalone-result.txt

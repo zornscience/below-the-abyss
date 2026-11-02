@@ -27,4 +27,14 @@ physical-gamepad testing, target-GPU performance and art/readability approval.
 Native screenshots are original unedited Godot viewports on software rendering.
 No Drowned Caves or later-campaign gameplay is implemented.
 
-PR/hosted-CI publication status will be recorded after push. No automatic merge.
+## Publication status
+
+The feature branch was pushed successfully. `gh pr create` returned exit 1:
+`Post "https://api.github.com/graphql": Forbidden`. The API request was blocked;
+this run could not open the PR or inspect hosted GitHub Actions conclusions.
+Local results above are not a claim of hosted CI success.
+[Exact publication attempt](logs/pr-publication.txt).
+
+[Create the review PR from this comparison](https://github.com/zornscience/below-the-abyss/compare/main...bta-055-twilight-expedition?expand=1).
+Title: **BTA-055: Twilight Shelf expedition and narrative**.
+Copy the prepared body from [PR.md](PR.md). Main was not changed; no PR was merged.

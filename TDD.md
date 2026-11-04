@@ -482,3 +482,22 @@ one file transaction before events. Restoring does not replay choices or claims.
 Failed writes grant nothing; pending casualty reports block unrelated checkpoints.
 Regional drain-profile swaps preserve actual resource values. No new save file,
 ledger, dispatcher or later-region architecture. See docs/testing/bta-055/README.md.
+
+## BTA-056 — Optional survey network
+
+TwilightShelfLayout carves only the central mass into two 300-unit chimneys and a
+300-unit cross-gallery with reversible end pockets. Outer bounds, spawn, required
+scan anchors and old outer-loop waypoints remain fixed. Shared rounded contours
+still drive collision, trim and map boundaries; the passage is real geometry.
+TwilightShelfData adds four stable optional research/discovery IDs to the existing
+validated catalogues. No new service, ledger, mission, checkpoint field or save
+file. Schema 10 remains structurally unchanged; versions 1–9 migration is retained.
+Earlier binaries may reject newly recorded IDs, so preserve backups and continue
+with this or newer builds. Existing campaign IDs and progress are not rewritten.
+
+A first clear line of sight within 900 units produces one transient contextual
+sighting per session before the net scan. It checks the actual animal and terrain,
+freezes with simulation and emits no acoustic event/discovery/choice. Continue may
+show this descriptive hint again; it has no reward or persistence. Subject images
+share one static illustrated atlas across world anchors and research UI; living
+contact uses the existing animal. No additional animated actor or dispatcher.

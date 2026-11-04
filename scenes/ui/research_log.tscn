@@ -53,7 +53,18 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_scroll_mode = 0
-[node name="ResearchDetail" type="Label" parent="Margin/Content/Body/DetailScroll"]
+[node name="DetailContent" type="VBoxContainer" parent="Margin/Content/Body/DetailScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+[node name="SubjectImage" type="TextureRect" parent="Margin/Content/Body/DetailScroll/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 140)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+[node name="ResearchDetail" type="Label" parent="Margin/Content/Body/DetailScroll/DetailContent"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

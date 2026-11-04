@@ -13,6 +13,7 @@ var enabled: bool = false
 var action: StringName = &""
 var elapsed: float = 0.0
 var pending_loss: bool = false
+var glimpse_seen: bool = false
 var _phase: float = 0.0
 var _material: ShaderMaterial
 var _previous_gate: Callable
@@ -46,7 +47,7 @@ func _build_subjects() -> void:
 		echo.target_id = StringName(item.id+"-echo")
 		echo.caption = item.title
 		echo.position = item.at
-		echo.reveal_state_changed.connect(func(_visible: bool) -> void: (echo.get_node("Caption") as Label).hide())
+		echo.revealed_for_ping.connect(func(_event: StringName) -> void: (echo.get_node("Caption") as Label).hide())
 		props.add_child(echo)
 		(echo.get_node("Caption") as Label).hide()
 		assert(echo.bind_bus(scene.get_node("AcousticBus") as AcousticBus)==OK)
@@ -54,21 +55,13 @@ func _build_subjects() -> void:
 		assert(scene.discoveries.connect_sonar_target(echo)==OK)
 		_echoes.append(echo)
 		if item.id=="twilight-net-survey": continue
-		if item.id!="twilight-whaler-marking":
-			var marker: Sprite2D = Sprite2D.new()
-			marker.texture = preload("res://assets/art/sunlit/plate_thumbnail.png")
-			marker.scale = Vector2.ONE*85.0/marker.texture.get_width()
-			marker.position = item.at
-			marker.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-			props.add_child(marker)
-		if item.id=="twilight-whaler-marking":
-			# Authored scratches, deliberately unclassified and untranslated.
-			var scratches: Line2D = Line2D.new()
-			scratches.position = item.at
-			scratches.points = PackedVector2Array([Vector2(-35,18),Vector2(-12,-18),Vector2(0,8),Vector2(12,-18),Vector2(35,18)])
-			scratches.width = 3
-			scratches.default_color = Color("688779")
-			props.add_child(scratches)
+		var marker: Sprite2D = Sprite2D.new()
+		marker.texture = TwilightShelfData.subject_texture(StringName(item.id))
+		var width: float = 210.0 if item.id=="twilight-whaler-marking" else (130.0 if item.id in ["twilight-thermal-crust","twilight-ballast-pocket","twilight-cargo-timber"] else 100.0)
+		marker.scale = Vector2.ONE*width/marker.texture.get_width()
+		marker.position = item.at
+		marker.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		props.add_child(marker)
 	# Interrupted, sagging physical cable, not a perfect quest trail.
 	for points: PackedVector2Array in [PackedVector2Array([Vector2(35350,1630),Vector2(35680,1720),Vector2(35950,1940)]),PackedVector2Array([Vector2(35990,1980),Vector2(36160,2200),Vector2(36070,2470),Vector2(35800,2820)])]:
 		var cable: Line2D = Line2D.new()
@@ -167,6 +160,7 @@ func reset_session() -> void:
 	sentinel.reset_session()
 	health.reset_session()
 	_phase = 0.0
+	glimpse_seen = false
 	refresh()
 
 func near_net() -> bool:
@@ -223,6 +217,7 @@ func advance(delta: float) -> void:
 	_material.set_shader_parameter("phase",_phase)
 	if absf(sentinel.velocity.x)>1: art.flip_h = sentinel.velocity.x<0
 	contact.global_position = sentinel.global_position
+	_observe_glimpse()
 	if action==&"": return
 	if not near_net() or pending_loss or scene.story.resolved(TwilightShelfData.ENCOUNTER):
 		cancel_action()
@@ -235,6 +230,15 @@ func advance(delta: float) -> void:
 		if result!=OK:
 			scene.revision.ui.notifications.enqueue("twilight-choice-save-failed","The operation was not recorded. No decision or allowance was granted. Recover the checkpoint and try again.","Wick")
 
+func _observe_glimpse() -> void:
+	# The actual net-bound animal, never a duplicate actor/event or a discovery reward.
+	if glimpse_seen or scene.story.resolved(TwilightShelfData.ENCOUNTER) or scene.research.is_completed(&"twilight-net-survey") or not sentinel.visible: return
+	if scene.submarine.global_position.distance_to(sentinel.global_position)>900: return
+	var ray: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(scene.submarine.global_position,sentinel.global_position,1)
+	if not scene.submarine.get_world_2d().direct_space_state.intersect_ray(ray).is_empty(): return
+	glimpse_seen = true
+	scene.revision.ui.notifications.enqueue("twilight-first-light","A long light contracts beneath the eastern ledge. It stays beside the same patch of water. Approach quietly; no weapon is needed.","Wick")
+
 func _physics_process(delta: float) -> void:
 	advance(delta)
 
@@ -243,7 +247,9 @@ func prompt() -> String:
 	var binding: String = scene.input_context.describe(&"interact")
 	if action!=&"": return "%s %.0f%% · %s cancels" % ["RELEASING" if action==TwilightShelfData.RELEASE else "SECURING",elapsed/ACTION_SECONDS*100,binding]
 	if pending_loss: return binding+" · Record casualty report / save retry"
-	if not scene.research.is_completed(&"twilight-net-survey"): return binding+" · Scan the net and living contact"
+	if not scene.research.is_completed(&"twilight-net-survey"):
+		if scene.submarine.global_position.distance_to(TwilightShelfData.NET)>190: return "Approach the net to scan"
+		return binding+" · Scan the net and living contact"
 	return binding+" · "+("Review encounter record" if scene.story.resolved(TwilightShelfData.ENCOUNTER) else "Release or collect the trapped animal")
 
 func _killed() -> void:
@@ -282,6 +288,8 @@ func _show_response() -> void:
 
 func guidance() -> String:
 	if concluded(): return "✓ Expedition archived · Drowned Caves investigation pending"
+	# Offer the western evidence when the pilot chooses that branch; never gate it on cable order.
+	if scene.submarine.global_position.x<33000 and not scene.research.is_completed(&"twilight-whaler-marking"): return "◇ Examine markings in the western whaler gallery"
 	if not scene.research.is_completed(&"twilight-severed-cable"): return "◇ Follow the broken sensor line · examine its cut"
 	if not scene.research.is_completed(&"twilight-mara-log-one"): return "◇ Recover the survey instrument below the cable break"
 	if not scene.research.is_completed(&"twilight-whaler-marking"): return "◇ Examine markings in the western whaler gallery"
@@ -297,7 +305,7 @@ func entries() -> Array[NarrativeEntry]:
 	var opening: NarrativeEntry = NarrativeEntry.new()
 	opening.stable_id = &"twilight-expedition-orders"
 	opening.title = "Twilight Shelf / the severed line"
-	opening.text = "Lantern-2 / 350 m. Trace the broken eastern sensor cable and investigate the western wreck gallery in either order. Recover evidence, record without translating and return through the ascent tether. Optional detached loggers do not block the expedition. Halcyon services and research refitting remain available."
+	opening.text = "Lantern-2 / 350 m. Trace the broken eastern sensor cable and investigate the western wreck gallery in either order. Recover evidence, record without translating and return through the ascent tether. Two central chimneys join a cross-gallery with blind cargo pockets. Optional observations and detached loggers do not block the expedition. Halcyon services and research refitting remain available."
 	result.append(opening)
 	for item: Dictionary in TwilightShelfData.RECORDS:
 		if not scene.research.is_completed(StringName(item.id)): continue

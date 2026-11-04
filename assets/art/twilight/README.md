@@ -57,3 +57,19 @@ Exact source identities, dimensions and hashes: [sentinel-provenance.json](senti
 The marking is a provisional authored scratch pattern, not a final translated
 alphabet. Licensing remains pending and generated outputs are not layered human-
 painted masters. Native quality and readability require user/artist review.
+
+## BTA-056 research subjects
+
+`research_atlas.png` is an original image_gen illustrated PNG master (2172×724),
+with waterlogged scratched whaler timber, a weathered cable/logger instrument and
+mineral-crusted basalt/tube worms. Its original bytes and authored regions are
+recorded in [research-provenance.json](research-provenance.json). Runtime uses
+AtlasTexture with filter clipping, lossless import, alpha border fix, mipmaps and
+linear mipmap filtering. No texture reads the screen or updates every frame.
+
+The same subject art appears beside the physical scan anchor and in the research
+interface. The living-contact record reuses the actual sentinel master. Timber
+scratches remain unclassified/untranslated and the whaler remains historic, never
+Lantern-1. No new civilization art, later-region reveal or licensed stock is used.
+This remains generated raster artwork without editable painted layers; professional
+visual acceptance is reserved for user/artist review.

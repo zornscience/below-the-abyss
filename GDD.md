@@ -286,3 +286,14 @@ Use the existing finite research budget: 2 RP common allowance, capture delivery
 The Bible is canonical; new dialogue/log transcriptions remain authored adaptations.
 The 30–45-minute novice target requires human evaluation, not padded automation.
 [Decisions, budget, manual route and verification](docs/testing/bta-055/README.md).
+
+## BTA-056 — Twilight exploration and pacing polish
+
+Two central chimneys and a transverse gallery connect the existing shelf loops.
+Blind cargo pockets reward observation and comparison rather than compulsory
+excavation. A cable anchor bridges departure and the severed line; a cool thermal
+margin offers optional research beside an existing hazard. All four observations
+are optional. Required evidence, both sentinel choices and return/debrief remain
+unchanged. A clear-water glimpse refers to the actual net-bound animal, not a new
+encounter or reward. The 30–45-minute human target remains unverified; repeatable
+input-route timings must not be presented as human playtest results.

@@ -743,3 +743,10 @@ The shared checkpoint commits the one-time 2-RP acknowledgement and capture-only
 as a living specimen or block the evidence route. No Zone 3 is playable.
 
 [Controls, save-10 compatibility, manual route, evidence and pacing limits](docs/testing/bta-055/README.md).
+
+BTA-056 adds an optional connected Twilight Shelf survey gallery, blind observation
+pockets, cable/thermal research and illustrated subject records. The main expedition
+and both sentinel outcomes remain completable without these optional scans. See
+[verification, layout and pacing protocol](docs/testing/bta-056/README.md).
+Run `python3 tools/verify_twilight_survey.py` for keyboard/controller optional-circuit
+and complete-chapter fresh/Continue verification.

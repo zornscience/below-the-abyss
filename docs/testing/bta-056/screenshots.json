@@ -1,0 +1,314 @@
+[
+  {
+    "file": "screenshots/1280/inner-chimney.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "687b27b7c151fbe8986535c7aa7b76d2ec3a8f859436fb94773a6cc7380e6bcd",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/twilight-cargo-timber.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "653af23acbcff7381cf69d8b40d89b51fd4ad34bfcbbbb14a7990cddc9a8db14",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/cargo-pocket.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "d8ff22af30c45b8caae0eb7eb1053d5ad701fe88a2b84ec54f35d3e00a3e7bf4",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/anchor-clue.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "51b8a84296267095d3105bf8d12f693167b570e5232991bfcf0b2e853ded5e95",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/illustrated-research-record.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "c6136509af301c19b56cb4774efc1d724ab75191d2c69f1f4baede72e9ef2615",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/thermal-observation.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "8bc37cb307255f4c32ef5beedddf08c2a07086d7ab0fd4784acc7e5d767c03c2",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/first-living-glimpse.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "c22fd6fb532a96d3dab28636e5451fac129056abebbe8962b595e15128910e05",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/twilight-net-survey.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "393a27573dc6ef31d2296a54030e6791148f2fe61317a349b3328cb80b99fa9b",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/unclassified-marking.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "d0e2c499258cd073ec5e83250dabd0c74f07b28800a07cdc2192804498635bf9",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/twilight-discovered-map.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "8eec349b140c8b7e1e96aa80b67a625516a46fd7fb90e09d7e621747a3bebafb",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/sentinel-outcome.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "5427c4c62087e07e006c1853bb8564f9106f027d1b4887a9ed030d563bd88cf7",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/1280/twilight-persistent-debrief.png",
+    "size": [
+      1280,
+      800
+    ],
+    "input": "keyboard",
+    "sentinel_outcome": "release",
+    "muted": true,
+    "large_high_contrast_reduced": false,
+    "sha256": "38bb6788ca30af12fdd8c560882e821c5d132ad92565cf73f434d5b654e9d399",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/inner-chimney.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "b98f88733aa5bc8f06ff2b053162f38d63f03c6d90a4848788f95febc03a6f37",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/twilight-cargo-timber.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "6b10d612d41e5893e7eddf957fbdfe2fd66fa6afec5e96e86627938b93ef1dc5",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/cargo-pocket.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "c83d39d970331de1381511bd993a6745a2c597300abff3017632af01457cc8d6",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/anchor-clue.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "06efa21ba37ec2039342d9779e6f66b44bfa3e8d42ed2445b27daa0950fd03a8",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/illustrated-research-record.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "10667263ec44b1e7e20b57eea359bccbc69b35114bb407421143e8d66ae1523a",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/thermal-observation.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "6da2482cd3c89b174341e4aab476e5a9c080b192f97966f756506a62d5d8e183",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/first-living-glimpse.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "f21ececaf99d3eaac142c0589b5362d2936a0e966b8e1408a7813b52b32c12a8",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/twilight-net-survey.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "c72aaadf32a5dc47ad0091b862340f0dd6436ad234e2421cdc6950fb3f5f6a56",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/unclassified-marking.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "8e8e81284bfe010feb3410d9fa976da2c9e4bac8ba26b6fd83ea255a2fc60996",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/twilight-discovered-map.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "4a8ce2b483f22f1448b208b1e9f83ecb3d847703b16bbdb440d30c8da9dabf9a",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/sentinel-outcome.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "26f5bc9180fe97fdf8f11d483e847eacbd0a18e02d10d0dd54f7c78e3637149c",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  },
+  {
+    "file": "screenshots/800/twilight-persistent-debrief.png",
+    "size": [
+      800,
+      600
+    ],
+    "input": "controller",
+    "sentinel_outcome": "capture",
+    "muted": true,
+    "large_high_contrast_reduced": true,
+    "sha256": "a203334624c1f3b04d45f20844cb002c151217421ddaf1d422bd9ef4f61ffe17",
+    "source": "Unedited native Godot Compatibility viewport; input-driven complete chapter with optional survey"
+  }
+]

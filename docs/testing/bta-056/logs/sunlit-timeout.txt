@@ -1,0 +1,16 @@
+Running sunlit-observe-keyboard-full: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta052-1793828722980233974-observe-keyboard', '--outcome=observe', '--input=keyboard']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta052-1793828722980233974-observe-keyboard', '--outcome=observe', '--input=keyboard']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=3
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=3
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=keyboard resumed=false choices=1 claims=1 simulation_seconds=439.899999999929 wall_seconds=124.677792 research_xp=100 shots=3 muted=true
+
+Running sunlit-observe-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta052-1793828722980233974-observe-keyboard', '--outcome=observe', '--input=keyboard', '--resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta052-1793828722980233974-observe-keyboard', '--outcome=observe', '--input=keyboard', '--resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_CHAPTER_WALK_PASS outcome=observe input=keyboard resumed=true choices=0 claims=0 simulation_seconds=1.5 wall_seconds=3.282001 research_xp=100 shots=0 muted=true
+
+Running sunlit-observe-controller-full: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta052-1793828722980233974-observe-controller', '--outcome=observe', '--input=controller', '--survey-studies', '--vent-damage-demo', '--missed-ping-demo', '--empty-ammo-demo', '--low-energy-demo', '--fauna-demo']
+FAIL: sunlit-observe-controller-full timed out; see /workspace/below-the-abyss/build/ci-logs/sunlit-observe-controller-full.log

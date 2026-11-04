@@ -1,0 +1,20 @@
+RUN survey
+RESULT survey 0
+RUN gut
+Completed GUT report verified: PASS: tests=735, passed=735, failures=0, errors=0, skipped=0
+RESULT gut 0
+RUN validation
+RUN expanded
+RUN revision
+RESULT expanded 0
+RUN story-choice
+RESULT story-choice 0
+RUN sunlit
+RESULT revision 0
+RUN handoff
+RESULT handoff 0
+RUN habitat
+RESULT sunlit 1
+RUN twilight-story
+RESULT habitat 1
+RESULT twilight-story 0

@@ -1,0 +1,18 @@
+import os,sys,hashlib,shutil
+from pathlib import Path
+sys.path.insert(0,str(Path('tools').resolve()))
+from validate_godot import run_check,LOGS
+LOGS.mkdir(parents=True,exist_ok=True)
+folder=Path('/workspace/.local/share/godot/app_userdata/Below the Abyss')
+for device,bloom,outcome in [('keyboard','observe','release'),('controller','collect','capture')]:
+ old=f'bta055-final-native-{device}'
+ new=f'bta056-copied-legacy-{device}'
+ hashes={}
+ for source in folder.glob(old+'.json*'):
+  hashes[source]=hashlib.sha256(source.read_bytes()).hexdigest()
+  shutil.copyfile(source,folder/source.name.replace(old,new,1))
+ assert hashes,'Missing actual old BTA-055 fixture profile'
+ output=run_check('legacy055-'+device,['--fixed-fps','60','--script','res://build/bta056-verification/verify_prior_checkpoint.gd','--quit-after','180000','--',f'--profile={new}',f'--input={device}',f'--outcome={bloom}',f'--sentinel={outcome}','--twilight-resume'],timeout=120)
+ assert 'ACTUAL_BTA055_CONTINUE_PASS' in output
+ assert all(hashlib.sha256(p.read_bytes()).hexdigest()==h for p,h in hashes.items())
+ print('ACTUAL_BTA055_COPY_CONTINUE_PASS',device,'original_profiles_unchanged=true',flush=True)

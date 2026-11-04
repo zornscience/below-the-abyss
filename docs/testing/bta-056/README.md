@@ -73,6 +73,8 @@ For reviewers only, authored navigation coordinates (not extra player markers):
 | Optional anchor | (34900,1440) |
 | Thermal observation | (36500,3100), east of the plume |
 
+[Every changed file](changed-files.txt).
+
 ## Save compatibility
 
 Same schema **10**, twelve top-level fields and atomic checkpoint/backup/recovery.
@@ -115,7 +117,7 @@ process for each outcome. It is also part of the existing GitHub Actions job.
 Logs distinguish the optional circuit from the unchanged required-evidence route.
 Automated input is not a human or physical-controller playtest.
 
-Results and screenshots are recorded in the release results alongside this document.
+[Exact results and source identity](release-results.md). Local checks passed; hosted GitHub Actions status could not be queried through the blocked API.
 
 ## Pacing protocol and limitations
 
@@ -134,3 +136,55 @@ median/range and navigation confusion before changing more terrain or mission
 requirements. No claim that this milestone meets the duration target or professional
 art acceptance; no suitable modest-GPU hardware or physical gamepad testing here.
 No Zone 3, translation, later lore, new economy, new combat or extra missions.
+
+## Retained native evidence
+
+Native Godot Compatibility on Xorg :98 / Mesa llvmpipe, muted audio. The 800×600
+route uses Large Text, High Contrast and Reduced Motion/Effects/Particles; 1280×800
+uses normal presentation. Screenshots are original viewport captures, not generated
+mockups. On-demand render-loop warm-up is not a realtime performance benchmark.
+
+| Scene | 1280×800 keyboard/release | 800×600 controller/capture, comfort settings |
+| --- | --- | --- |
+| inner chimney | [view](screenshots/1280/inner-chimney.png) | [view](screenshots/800/inner-chimney.png) |
+| twilight cargo timber | [view](screenshots/1280/twilight-cargo-timber.png) | [view](screenshots/800/twilight-cargo-timber.png) |
+| cargo pocket | [view](screenshots/1280/cargo-pocket.png) | [view](screenshots/800/cargo-pocket.png) |
+| anchor clue | [view](screenshots/1280/anchor-clue.png) | [view](screenshots/800/anchor-clue.png) |
+| illustrated research record | [view](screenshots/1280/illustrated-research-record.png) | [view](screenshots/800/illustrated-research-record.png) |
+| thermal observation | [view](screenshots/1280/thermal-observation.png) | [view](screenshots/800/thermal-observation.png) |
+| first living glimpse | [view](screenshots/1280/first-living-glimpse.png) | [view](screenshots/800/first-living-glimpse.png) |
+| twilight net survey | [view](screenshots/1280/twilight-net-survey.png) | [view](screenshots/800/twilight-net-survey.png) |
+| unclassified marking | [view](screenshots/1280/unclassified-marking.png) | [view](screenshots/800/unclassified-marking.png) |
+| twilight discovered map | [view](screenshots/1280/twilight-discovered-map.png) | [view](screenshots/800/twilight-discovered-map.png) |
+| sentinel outcome | [view](screenshots/1280/sentinel-outcome.png) | [view](screenshots/800/sentinel-outcome.png) |
+| twilight persistent debrief | [view](screenshots/1280/twilight-persistent-debrief.png) | [view](screenshots/800/twilight-persistent-debrief.png) |
+
+[Dimensions, provenance and image hashes](screenshots.json).
+
+| Subject comparison | BTA-055 before | BTA-056 after |
+| --- | --- | --- |
+| Whaler marking at its unchanged anchor | [native before](../bta-055/screenshots/1280/unclassified-marking.png) | [native after](screenshots/1280/unclassified-marking.png) |
+
+The comparison shows the same authored subject, not pixel-aligned camera poses.
+The inner gallery has no before counterpart: it was previously solid rock.
+
+Reproduce graphical evidence on a desktop (create the output directory first):
+
+```sh
+mkdir -p /tmp/bta056-native
+BTA_EVIDENCE_DIR=/tmp/bta056-native godot --path . --audio-driver Dummy \
+  --rendering-method gl_compatibility --disable-render-loop --fixed-fps 60 \
+  --script res://tests/fixtures/drive_twilight_survey.gd --quit-after 180000 -- \
+  --no-excavation --profile=bta056-review-keyboard --input=keyboard \
+  --outcome=observe --sentinel=release
+```
+
+Run again with the same profile and `--twilight-resume` for quit/Continue. A different
+profile with `--input=controller --outcome=collect --sentinel=capture --small
+--high-contrast --comfort` captures the accessibility case. These fixture profiles
+are reset by fresh runs; never use your personal campaign profile name. On this
+cloud host also set DISPLAY=:98, LIBGL_ALWAYS_SOFTWARE=1 and LP_NUM_THREADS=1.
+
+For local verification outputs stored under `build/`, create `build/.gdignore` before
+capturing screenshots there so the editor does not import generated evidence as
+project art. Export already excludes `build/` and `docs/`.

@@ -1,0 +1,14 @@
+Running legacy055-keyboard: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://build/bta056-verification/verify_prior_checkpoint.gd', '--quit-after', '180000', '--', '--profile=bta056-copied-legacy-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://build/bta056-verification/verify_prior_checkpoint.gd', '--quit-after', '180000', '--', '--profile=bta056-copied-legacy-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ACTUAL_BTA055_CONTINUE_PASS phase=refit input=keyboard no_replayed_events=true
+
+ACTUAL_BTA055_COPY_CONTINUE_PASS keyboard original_profiles_unchanged=true
+Running legacy055-controller: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://build/bta056-verification/verify_prior_checkpoint.gd', '--quit-after', '180000', '--', '--profile=bta056-copied-legacy-controller', '--input=controller', '--outcome=collect', '--sentinel=capture', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://build/bta056-verification/verify_prior_checkpoint.gd', '--quit-after', '180000', '--', '--profile=bta056-copied-legacy-controller', '--input=controller', '--outcome=collect', '--sentinel=capture', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ACTUAL_BTA055_CONTINUE_PASS phase=refit input=controller no_replayed_events=true
+
+ACTUAL_BTA055_COPY_CONTINUE_PASS controller original_profiles_unchanged=true

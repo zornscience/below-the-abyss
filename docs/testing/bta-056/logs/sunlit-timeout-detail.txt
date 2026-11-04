@@ -1,0 +1,12 @@
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_sunlit_shallows.gd', '--quit-after', '90000', '--', '--comfort', '--profile=bta052-1793828722980233974-observe-controller', '--outcome=observe', '--input=controller', '--survey-studies', '--vent-damage-demo', '--missed-ping-demo', '--empty-ammo-demo', '--low-energy-demo', '--fauna-demo']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=13
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=14
+SUNLIT_ROUTE_SCAN sunlit-amber-darter shots=14
+SUNLIT_ROUTE_SCAN sunlit-basalt-arch shots=15
+SUNLIT_ROUTE_SCAN sunlit-vent-survey shots=15
+SUNLIT_ROUTE_SCAN sunlit-blue-grazer shots=15
+SUNLIT_ROUTE_SCAN sunlit-pillow-basalt shots=15
+SUNLIT_ROUTE_SCAN sunlit-sediment-fan shots=15
+VALIDATION FAILURE: exceeded 300 seconds

@@ -1,0 +1,2 @@
+Running twilight-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1793829086296203926-keyboard', '--input=keyboard', '--outcome=observe']
+FAIL: twilight-keyboard-fresh timed out; see /workspace/below-the-abyss/build/ci-logs/twilight-keyboard-fresh.log

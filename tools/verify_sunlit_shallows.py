@@ -9,7 +9,11 @@ def launch(profile, outcome, device, suffix, extra=()):
     args = ["--fixed-fps", "60", "--script", "res://tests/fixtures/drive_sunlit_shallows.gd",
             "--quit-after", "90000", "--", "--comfort", f"--profile={profile}",
             f"--outcome={outcome}", f"--input={device}", *extra]
-    output = run_check(f"sunlit-{outcome}-{device}-{suffix}", args, timeout=300)
+    # The all-studies controller run also exercises damage, empty ammunition,
+    # missed pings and low-energy recovery. Retain every assertion and error
+    # check; give only that longer scenario a bounded completion budget.
+    budget = 480 if "--survey-studies" in extra else 300
+    output = run_check(f"sunlit-{outcome}-{device}-{suffix}", args, timeout=budget)
     token = "SUNLIT_BUOY_CHECKPOINT_PASS" if "--stop-at-buoy" in extra else "SUNLIT_CHAPTER_WALK_PASS"
     if token not in output:
         raise RuntimeError(f"Missing {token}: {suffix}")

@@ -188,3 +188,11 @@ cloud host also set DISPLAY=:98, LIBGL_ALWAYS_SOFTWARE=1 and LP_NUM_THREADS=1.
 For local verification outputs stored under `build/`, create `build/.gdignore` before
 capturing screenshots there so the editor does not import generated evidence as
 project art. Export already excludes `build/` and `docs/`.
+
+## Review handoff
+
+[Create the review PR](https://github.com/zornscience/below-the-abyss/compare/main...bta-056-twilight-polish?expand=1)
+using [PR.md](PR.md). The branch and all evidence are pushed. Automatic creation
+returned `Post "https://api.github.com/graphql": Forbidden`; see the
+[publication record](logs/pr-publication.txt). No PR was opened or merged, and
+hosted CI status remains unverified. All reported passing checks are local.

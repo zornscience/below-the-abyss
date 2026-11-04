@@ -74,7 +74,17 @@ matrix passed after this expectation fix; the modified fixture was parsed again.
 [Initial assertion](logs/habitat-initial-detail.txt), [final matrix](logs/habitat.txt),
 [follow-up parser](logs/habitat-parser-followup.txt).
 
-Hosted CI and PR publication status are recorded separately after the final attempt.
+## Publication status
+
+Source, artwork and evidence are pushed to `bta-056-twilight-polish`.
+`gh pr create` returned exit 1: `Post "https://api.github.com/graphql": Forbidden`.
+The API request could not complete, so no PR was opened and hosted GitHub Actions
+conclusions could not be checked. Local results above do not claim hosted CI success.
+[Exact attempt](logs/pr-publication.txt).
+
+[Create the review PR](https://github.com/zornscience/below-the-abyss/compare/main...bta-056-twilight-polish?expand=1).
+Title: **BTA-056: Twilight Shelf Exploration and Pacing Polish**.
+Copy the prepared [PR body](PR.md). No merge was performed.
 
 ## Exact verified Linux package commands
 

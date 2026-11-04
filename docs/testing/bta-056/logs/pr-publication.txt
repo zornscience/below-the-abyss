@@ -1,0 +1,3 @@
+Command: gh pr create --repo zornscience/below-the-abyss --base main --head bta-056-twilight-polish --title "BTA-056: Twilight Shelf Exploration and Pacing Polish" --body-file docs/testing/bta-056/PR.md
+Exit status: 1
+Post "https://api.github.com/graphql": Forbidden

@@ -76,6 +76,9 @@ jobs:
       - name: Verify Twilight expedition, both sentinel choices and durable debrief
         run: python3 tools/verify_twilight_expedition.py
 
+      - name: Verify optional Twilight survey circuit, chapter and Continue
+        run: python3 tools/verify_twilight_survey.py
+
       - name: Test playtest analysis tooling
         run: python3 -m unittest discover -s tests/python -v
 

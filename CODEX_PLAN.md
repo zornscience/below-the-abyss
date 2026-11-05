@@ -309,3 +309,14 @@ separate-process Continue and native mute/comfort/small-screen captures. Disting
 automated timing from the unverified 30–45-minute human pacing target. Review through
 a separate PR targeting main; do not merge automatically.
 [Acceptance, commands and evidence](docs/testing/bta-055/README.md).
+
+## BTA-056 — Twilight Shelf Exploration and Pacing Polish
+
+Authorized by the user's “Do this: BTA-056”. Begin after merged PR #39/BTA-055.
+Add connected central passages, two reversible observation pockets, optional cable
+and thermal observations, an actual-animal glimpse and subject-specific research
+art. Preserve mandatory evidence/choices/rewards and all prior systems. Validate
+actual hull clearance, optionality, persistence and keyboard/controller complete
+routes. Record native screenshots and simulation timings separately from the
+unverified 30–45-minute first-time human pacing target. No later region or artificial
+waiting. Evidence and manual protocol: docs/testing/bta-056/README.md.

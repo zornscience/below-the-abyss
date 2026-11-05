@@ -69,12 +69,20 @@ func _after_deployment() -> bool:
 	await _capture("jelly-drift")
 	await _move(Vector2(35800,1400))
 	await _move(TwilightShelfLayout.SPAWN)
-	assert(_scene.saves.progress_snapshot()==records)
+	var current: Dictionary = _scene.saves.progress_snapshot()
+	for field: String in ["research","missions","upgrades"]: assert(current[field]==records[field])
+	for id: String in records.discoveries: assert(id in current.discoveries)
+	var eligible: Array[String] = []
+	for id: StringName in TwilightShelfData.OPTIONAL_SURVEY: eligible.append(String(id)+"-poi")
+	for id: String in current.discoveries:
+		if id not in records.discoveries: assert(id in eligible)
+	# A real active ping may discover an added optional subject at wavefront arrival;
+	# it must never scan it, alter missions/upgrades or erase an earlier discovery.
 	await _tap(JOY_BUTTON_START)
 	await _activate(_scene.route_menu.get_node("%SaveExpedition") as Control)
 	assert(_scene.saves._state.player.hull<100)
 	assert(_scene.saves._state.player.battery<99)
-	print("TWILIGHT_HABITAT_WALK_PASS input=",("keyboard" if _keyboard else "controller")," hull=",_scene.saves._state.player.hull," records_unchanged=true shots=",_shots)
+	print("TWILIGHT_HABITAT_WALK_PASS input=",("keyboard" if _keyboard else "controller")," hull=",_scene.saves._state.player.hull," research_missions_upgrades_preserved=true optional_sonar_discoveries=",current.discoveries.size()-records.discoveries.size()," shots=",_shots)
 	await _finish_process()
 	return true
 func _wait_phase(vent: ThermalVent,desired: ThermalVentState.Phase) -> void:

@@ -1,0 +1,17 @@
+Runtime files unchanged since abc4411; HEAD differs only in verification tooling/fixture expectations.
+Initial habitat equality assertion rejected a legitimate new optional sonar discovery; stricter field/subset expectations then passed the full matrix.
+Initial Sunlit attempt reached 300s limit without engine/assertion errors; complete 480s-budget matrix then passed. Both logs retained.
+RESULT gut 0
+RESULT validation 0
+RESULT expanded 0
+RESULT revision 0
+RESULT story-choice 0
+RESULT sunlit 0
+RESULT handoff 0
+RESULT habitat 0
+RESULT twilight-story 0
+RESULT python 0
+RESULT survey-final 0
+RESULT native 0
+RESULT legacy 0
+ALL_LOCAL_CHECKS_PASS

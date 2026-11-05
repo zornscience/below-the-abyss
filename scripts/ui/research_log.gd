@@ -38,6 +38,7 @@ func refresh() -> void:
 		child.free()
 	var controls: Array[Control] = [%CloseResearch, %RetryResearch, %RecoverResearch]
 	var entries: Array[ScanDefinition] = registry.completed_records()
+	(%SubjectImage as TextureRect).hide()
 	(%ResearchDetail as Label).text = "No completed research. Discover a subject with sonar, approach and intentionally scan it."
 	for entry: ScanDefinition in entries:
 		var button: Button = Button.new()
@@ -63,6 +64,15 @@ func refresh_summary() -> void:
 func _select(id: StringName) -> void:
 	if registry.is_completed(id):
 		var entry: ScanDefinition = registry.definition(id)
+		var image: TextureRect = %SubjectImage
+		image.texture = entry.subject_texture
+		if entry.subject_texture!=null and entry.subject_region.has_area():
+			var clipped: AtlasTexture = AtlasTexture.new()
+			clipped.atlas = entry.subject_texture
+			clipped.region = entry.subject_region
+			clipped.filter_clip = true
+			image.texture = clipped
+		image.visible = image.texture!=null
 		(%ResearchDetail as Label).text = "%s\n%s / COMPLETED\n\n%s" % [entry.title, entry.classification.to_upper(), entry_text_provider.call(id,entry.description) if entry_text_provider.is_valid() else entry.description]
 
 

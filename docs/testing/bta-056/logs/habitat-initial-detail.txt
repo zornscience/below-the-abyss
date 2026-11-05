@@ -1,0 +1,26 @@
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1793829086296203926-keyboard', '--input=keyboard', '--outcome=observe']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_SONAR_REACTION states=[1] accepted=shelf-playtest/neris-01/sonar/4/1 at=(33750.42, 2761.2)
+SCRIPT ERROR: Assertion failed.
+          at: _after_deployment (res://tests/fixtures/drive_twilight_habitat.gd:72)
+          GDScript backtrace (most recent call first):
+              [0] _after_deployment (res://tests/fixtures/drive_twilight_habitat.gd:72)
+              [1] _move (res://tests/fixtures/drive_sunlit_shallows.gd:104)
+              [2] _frames (res://tests/fixtures/drive_sunlit_shallows.gd:25)
+SCRIPT ERROR: Assertion failed.
+          at: _after_buoy_recovery (res://tests/fixtures/drive_chapter_handoff.gd:37)
+          GDScript backtrace (most recent call first):
+              [0] _after_buoy_recovery (res://tests/fixtures/drive_chapter_handoff.gd:37)
+              [1] _move (res://tests/fixtures/drive_sunlit_shallows.gd:104)
+              [2] _frames (res://tests/fixtures/drive_sunlit_shallows.gd:25)
+SCRIPT ERROR: Assertion failed.
+          at: _initialize (res://tests/fixtures/drive_sunlit_shallows.gd:491)
+          GDScript backtrace (most recent call first):
+              [0] _initialize (res://tests/fixtures/drive_sunlit_shallows.gd:491)
+              [1] _after_buoy_recovery (res://tests/fixtures/drive_chapter_handoff.gd:37)
+              [2] _move (res://tests/fixtures/drive_sunlit_shallows.gd:104)
+              [3] _frames (res://tests/fixtures/drive_sunlit_shallows.gd:25)
+VALIDATION FAILURE: exceeded 360 seconds

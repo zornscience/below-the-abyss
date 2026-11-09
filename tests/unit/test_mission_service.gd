@@ -215,3 +215,11 @@ func test_failed_route_progress_can_be_retried_after_test_restart_without_redete
 	assert_eq(_service.recover_backup(), OK)
 	assert_eq(_service.reconcile(), OK)
 	assert_eq(_service.snapshot()[String(MAIN)].objectives, ["return-to-base"])
+
+
+func test_state_of_matches_snapshot_without_copying_and_tracks_changes() -> void:
+	var before: String = _service.state_of(MAIN)
+	assert_eq(before, String(_service.snapshot()[String(MAIN)].state))
+	assert_eq(_service.accept(MAIN), OK)
+	assert_eq(_service.state_of(MAIN), "accepted", "no stale value after a change")
+	assert_eq(_service.state_of(&"unknown"), "", "unknown ids read as empty, not an error")

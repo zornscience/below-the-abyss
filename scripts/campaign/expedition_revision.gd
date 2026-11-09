@@ -166,7 +166,7 @@ func _physics_process(delta: float) -> void:
 	if (scene.chapter!=null and scene.chapter.active) or (scene.journey!=null and scene.journey.active()): return
 	_clock += delta
 	if scene.station.is_in_range(scene.submarine.global_position) or _clock<_defer_until or ui.modal(): return
-	if scene.missions.snapshot()[String(ShelfChapterData.OUTER)].state=="available":
+	if scene.missions.state_of(ShelfChapterData.OUTER)=="available":
 		show_transmission("dispatch",true)
 		return
 	if campaign.decoded: show_transmission("next-signal")

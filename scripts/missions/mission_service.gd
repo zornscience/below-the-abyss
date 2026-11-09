@@ -66,6 +66,11 @@ func snapshot() -> Dictionary:
 	return _records.duplicate(true)
 
 
+## Allocation-free state read for per-frame callers; snapshot() deep-copies every record.
+func state_of(id: StringName) -> String:
+	return String((_records.get(String(id), {}) as Dictionary).get("state", ""))
+
+
 func _satisfied(objective: MissionObjective) -> bool:
 	match objective.kind:
 		MissionObjective.Kind.DISCOVERY:

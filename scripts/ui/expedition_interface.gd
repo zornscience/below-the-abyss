@@ -216,7 +216,7 @@ func show_dock(tab: String = "home") -> void:
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
 		if canonical: _label(_dock_body,"RESEARCH XP %d · BONUS POINTS %d/%d" % [ResearchExperienceData.total(revision.campaign.science),ResearchExperienceData.points(revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points],&"body")
-		_label(_dock_body,"First new rank: 2 RP · Additional ranks: 3 RP · Free reassignment. This chapter funds one or two new ranks.")
+		_label(_dock_body,"First new rank: %d RP · Additional ranks: %d RP · Free reassignment. This chapter funds one or two new ranks." % [CampaignData.PRICING.first_rank_cost,CampaignData.PRICING.rank_cost])
 		if CampaignData.legacy_count(revision.campaign)>0: _label(_dock_body,"Earlier fits keep their original cost. Refunds return the points actually paid.")
 		var branches: GridContainer = GridContainer.new()
 		branches.columns = 1 if get_viewport().get_visible_rect().size.x<1100 else 2

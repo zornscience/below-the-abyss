@@ -29,7 +29,7 @@ Direct feedback from the designer's playthrough of the Twilight Shelf, build on 
 | Shelf spans 350–760 m; rated depth 1000 m | `twilight_pressure_fit.tres` | The depth rule exists but the level never reaches it. |
 | Hull ranks rate 300 / 400 / 450 / 500 m; Twilight adds a 1000 m baseline | `research_tree.tres`, `expedition_revision.gd` | Effective Twilight ratings are 1000 / 1100 / 1150 / 1200 m. A deep section can gate on rank. |
 | Research points: 2 commissioning + 1 survey + 1 decode + 2 expedition + 1 specimen, plus scan XP capped at **2** extra | `research_tree.tres`, `research_experience_rules.gd` | "Plenty of scans to earn the hull points" requires raising a cap that the validator currently rejects above 2. This is an economy change. |
-| Torpedo blasts emit **no** acoustic event ("no secondary acoustic emissions") | `blast_effect.gd`, `torpedo_launcher.gd` | Creatures cannot currently hear blasts. New behaviour, not tuning. |
+| Torpedo detonations DO emit an acoustic `explosion` event (mechanical, 1800 u) and the existing shelf predator already accepts it. The "no secondary acoustic emissions" comment is about the visual `blast_effect.gd`. | `torpedo_launcher.gd:131`, `predator_state.gd:47`, `shelf_predator.tres` | **Corrected after reading code.** Blast hearing is NOT new work. The gaps are: no such creature in Twilight, a small 500 u hearing range, one-shot encounter phases, and blasts can currently KILL creatures that carry a `BlastReceiver` (40 health vs 60 damage). |
 | Torpedo damage 60; excavation mechanic already exists | `torpedo_profile.tres`, `excavation_system.gd` | Tunnel gating reuses an existing system. |
 | Creature AI with Investigate / Pursue / Flee / Return exists | `scripts/ai/` (`PredatorCreature`, `HammerheadCreature`) | The hunting creature reuses existing AI; it is not new technology. |
 | Echo reveal: radius 900 u, 600 u/s, fades over 6 s, cooldown 4 s | `prototype_sonar.tres`, `twilight_visibility_profile.gd` | Pinging every cooldown keeps most of the screen lit. Cost and risk must make that a choice. |
@@ -132,9 +132,8 @@ if the player lingers.
 
 **Goal.** Pings and blasts have consequences; torpedoes become a defensive tool.
 
-- **Blast sound.** Torpedo detonations emit an acoustic event through the existing acoustic bus
-  (new behaviour; the current code forbids secondary emissions on purpose, so make this explicit
-  and update the relevant docs/decision record). Only creatures that subscribe react.
+- **Blast sound.** Already exists (see section 1 correction). Reuse the existing `explosion` event;
+  do not add a second emission. Decide per creature profile which events it hears and how far.
 - **Creature.** One acoustic predator built on the existing AI. States: Idle, Patrol, Investigate
   (toward a ping or blast), Pursue (once it senses the vessel), Flee, Return. Per-creature Resource
   for hearing thresholds, speed, territory, cooldowns.

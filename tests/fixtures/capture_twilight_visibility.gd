@@ -94,6 +94,10 @@ func run() -> void:
 	preferences.reduced_flashing = true
 	if game.settings.set_accessibility(preferences)!=OK: quit(1)
 	await capture("reduced")
+	game.submarine.set_simulation_enabled(false)
+	game.queue_free()
+	await frames(8)
+	game = null
 	print("BTA057_NATIVE_PASS")
 	quit()
 

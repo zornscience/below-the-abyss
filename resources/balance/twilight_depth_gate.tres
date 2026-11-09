@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DepthGateProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/depth_gate_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+gate_rank = 2
+depth_m = 1120.0
+floor_y = 4560.0
+approach = Vector2(30000,3100)
+exit = Vector2(33100,3100)
+lower_left = Vector2(30000,4480)
+lower_right = Vector2(33100,4480)

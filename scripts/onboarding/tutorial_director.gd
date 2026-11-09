@@ -18,6 +18,7 @@ const TEXT: Dictionary = {
 	"depth":["Respect the pressure rating","Depth is shown beside your hull rating. CAUTION means you are near it; DANGER means ascend. Install the pressure hull before a deep investigation."],
 	"wildlife":["A living acoustic landmark","Grazers investigate nearby sound, then return to feeding. Passive listening is silent. You can study wildlife without harming it."],
 	"passive":["Listen quietly","The panel at lower right is passive sonar. It shows the direction and type of sounds nearby without making any noise of your own: MECH is machinery, GEO is rock or vents, LIFE is animals."],
+	"twilight-depth":["Wick / pressure margin","The optional basin reaches {basin_depth} m. Compare that with your hull rating. Hull rank {gate_rank} is rated for it; lower ranks have only a brief pressure grace before damage. The upper shelf remains open. No required evidence lies below."],
 	"twilight-cable":["Wick / the sensor line","This cable carried Halcyon's shelf sensors. Follow the line to where it ends and scan the break: how it was cut may explain why the data stopped. Scan with {interact} while close and in line of sight."],
 	"twilight-net":["Wick / living contact","An animal is caught in a drift net. Scan the net to learn what it is, then choose with {interact}: loosen the net to release it, or secure it alive for Crane. Either choice is allowed, and no weapon is needed."],
 	"torpedo":["A tool with consequences","{fire}: fire in your last thrust direction (2 battery; 1.2s rearm). Explosions excavate soft rock and damage nearby wildlife. Hard perimeter bedrock and the station remain solid."]}
@@ -42,6 +43,7 @@ func _preferences_changed() -> void:
 		message_changed.emit("","")
 func _body(id: String) -> String:
 	var text: String = TEXT[id][1]
+	if id=="twilight-depth": text = text.replace("{basin_depth}","%.0f" % TwilightShelfLayout.DEPTH_GATE.depth_m).replace("{gate_rank}",str(TwilightShelfLayout.DEPTH_GATE.gate_rank))
 	if _scene.revision!=null and id=="station": text = "Near the station cradle, slow down and press {interact}. Docking automatically repairs, refills and rearms. Spend or freely reassign your finite research points in Research technology."
 	if _scene.revision!=null and id=="torpedo": text = "{fire}: launch one of ten torpedoes in the direction NERIS faces. The torpedo accelerates and leaves a fading wake. Explosions excavate soft rock and damage wildlife. Dock to rearm."
 	if _scene.revision!=null and id=="movement": text = "Use {move} to thrust. NERIS takes time to accelerate in water; release to coast and reverse to brake. Base will radio an investigation after you depart."

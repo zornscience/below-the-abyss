@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ResearchExperienceRules" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/campaign/research_experience_rules.gd" id="1"]
+[resource]
+script = ExtResource("1")
+study_xp = 40
+maximum_extra_points = 2
+study_ids = Array[StringName]([&"twilight-line-anchor",&"twilight-cargo-timber",&"twilight-ballast-pocket",&"twilight-thermal-crust",&"twilight-depth-margin",&"twilight-depth-layers",&"twilight-upper-grains",&"twilight-cable-crust",&"twilight-wreck-silt",&"twilight-deep-crust",&"twilight-deep-sediment"])

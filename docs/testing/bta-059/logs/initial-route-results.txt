@@ -1,0 +1,8 @@
+verify_chapter_handoff.py: 0
+verify_expanded_expedition.py: 0
+verify_revision_two.py: 0
+verify_story_choice.py: 0
+verify_sunlit_shallows.py: 0
+verify_twilight_expedition.py: 0
+verify_twilight_habitat.py: 1
+verify_twilight_survey.py: 0

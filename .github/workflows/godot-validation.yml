@@ -166,6 +166,19 @@ jobs:
           fi
           grep -q RELEASE_RESOURCE_WIRING_FAIL build/playtest/resource-negative.log
 
+      - name: Prove depth and failure wiring in release
+        shell: bash
+        run: |
+          set -euo pipefail
+          package=(build/below-the-abyss-playtest-linux-*.zip)
+          for wiring in depth-rating depth-section failure; do
+            if python3 tools/smoke_playtest.py "${package[0]}" --log "build/playtest/$wiring-negative.log" "--break-$wiring-wiring"; then
+              exit 1
+            fi
+            token=$(echo "$wiring" | tr '[:lower:]-' '[:upper:]_')
+            grep -q "RELEASE_${token}_WIRING_FAIL" "build/playtest/$wiring-negative.log"
+          done
+
       - name: Retain package, manifest and export logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

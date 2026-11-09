@@ -17,6 +17,8 @@ def main():
     parser.add_argument('--break-resource-wiring',action='store_true')
     parser.add_argument('--break-visibility-wiring',action='store_true')
     parser.add_argument('--break-registration-wiring',action='store_true')
+    for flag in ['depth-rating','depth-section','failure']:
+        parser.add_argument('--break-'+flag+'-wiring',action='store_true')
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix='bta-standalone-') as tmp:
         root = Path(tmp)
@@ -35,11 +37,13 @@ def main():
         env = os.environ.copy()
         for key, folder in [('XDG_DATA_HOME','data'),('XDG_CONFIG_HOME','config'),('XDG_CACHE_HOME','cache')]:
             env[key] = str(root/folder)
-        result = subprocess.run([str(binary),'--headless','--quit-after','60','--','--release-smoke']+(['--break-visibility-wiring'] if args.break_visibility_wiring else [])+(['--break-registration-wiring'] if args.break_registration_wiring else [])+(['--break-resource-wiring'] if args.break_resource_wiring else []),cwd=binary.parent,env=env,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=60)
+        result = subprocess.run([str(binary),'--headless','--quit-after','60','--','--release-smoke']+(['--break-visibility-wiring'] if args.break_visibility_wiring else [])+(['--break-registration-wiring'] if args.break_registration_wiring else [])+(['--break-resource-wiring'] if args.break_resource_wiring else [])+['--break-'+flag+'-wiring' for flag in ['depth-rating','depth-section','failure'] if getattr(args,'break_'+flag.replace('-','_')+'_wiring')],cwd=binary.parent,env=env,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=60)
         args.log.parent.mkdir(parents=True,exist_ok=True)
         args.log.write_text(result.stdout)
         if result.returncode or re.search(r'^\s*(ERROR:|SCRIPT ERROR:|Parse Error:)',result.stdout,re.M):
             raise SystemExit(f'Standalone smoke failed: see {args.log}')
+        if 'RELEASE_DEPTH_GATE_PASS' not in result.stdout:
+            raise SystemExit('Missing depth gate export proof')
         if 'RELEASE_RESOURCE_WIRING_PASS' not in result.stdout:
             raise SystemExit('Missing release resource cost wiring proof')
         if 'RELEASE_REGISTRATION_WIRING_PASS' not in result.stdout:

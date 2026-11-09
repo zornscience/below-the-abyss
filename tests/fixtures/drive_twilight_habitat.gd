@@ -73,7 +73,7 @@ func _after_deployment() -> bool:
 	for field: String in ["research","missions","upgrades"]: assert(current[field]==records[field])
 	for id: String in records.discoveries: assert(id in current.discoveries)
 	var eligible: Array[String] = []
-	for id: StringName in TwilightShelfData.OPTIONAL_SURVEY: eligible.append(String(id)+"-poi")
+	for id: StringName in TwilightShelfData.OPTIONAL_SURVEY+TwilightShelfData.DEPTH_SURVEY: eligible.append(String(id)+"-poi")
 	for id: String in current.discoveries:
 		if id not in records.discoveries: assert(id in eligible)
 	# A real active ping may discover an added optional subject at wavefront arrival;

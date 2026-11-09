@@ -8,7 +8,15 @@ const CAPTURE: StringName = &"zone2-sentinel-capture"
 const LOST: StringName = &"zone2-sentinel-lost"
 const NET: Vector2 = Vector2(37700,3190)
 const OPTIONAL_SURVEY: Array[StringName] = [&"twilight-line-anchor",&"twilight-cargo-timber",&"twilight-ballast-pocket",&"twilight-thermal-crust"]
+const DEPTH_SURVEY: Array[StringName] = [&"twilight-depth-margin",&"twilight-depth-layers",&"twilight-upper-grains",&"twilight-cable-crust",&"twilight-wreck-silt",&"twilight-deep-crust",&"twilight-deep-sediment"]
 const RECORDS: Array[Dictionary] = [
+	{"id":"twilight-upper-grains","title":"Shelf grains / optional study","at":Vector2(30000,1400),"type":"geological","text":"Mixed coarse and fine grains on the upper shelf. An optional sediment comparison."},
+	{"id":"twilight-cable-crust","title":"Cable margin crust / optional study","at":Vector2(35800,2500),"type":"geological","text":"Mineral crust beside the suspended cable. Record the surface without disturbing the line."},
+	{"id":"twilight-wreck-silt","title":"Wreck margin silt / optional study","at":Vector2(29000,2600),"type":"geological","text":"Fine silt at the margin of the old wreck passage. Optional observation; no sample is required."},
+	{"id":"twilight-depth-margin","title":"Pressure margin / optional study","at":Vector2(30000,3100),"type":"geological","text":"A mineral band borders the deeper basin. The existing upper shelf remains accessible without descending."},
+	{"id":"twilight-depth-layers","title":"Sediment layers / optional study","at":Vector2(34100,3100),"type":"geological","text":"Layered sediment overlooks the deep basin. No expedition evidence requires this descent."},
+	{"id":"twilight-deep-crust","title":"Deep crust / optional study","at":Vector2(31200,4480),"type":"geological","text":"A dark mineral crust on the basin floor. Optional observation; the upper shelf route remains open."},
+	{"id":"twilight-deep-sediment","title":"Deep sediment / optional study","at":Vector2(33000,4480),"type":"geological","text":"Fine sediment has settled beneath the shelf. Record it without collecting a sample."},
 	{"id":"twilight-severed-cable","title":"The severed line","at":Vector2(35950,1940),"type":"artificial","text":"Wick: The outer jacket is weathered. The exposed fibres are not. This was a clean separation, not a cable pulled apart by a falling rock.\n\nOkafor: Record both ends. Leave the line where it is; its position may tell us more than a sample."},
 	{"id":"twilight-mara-log-one","title":"Mara / field log 01","at":Vector2(35800,2820),"type":"artificial","text":"Mara Voss / recovered survey instrument\n\nThe breaks repeat at the anchors. Not the weakest points: the anchors. I stopped transmitting and waited. Something moved beside the line, keeping pace with me. When I turned the lamp away, its lights remained.\n\nI am recording the gaps as well as the sound. Elias will understand why."},
 	{"id":"twilight-whaler-marking","title":"Unclassified hull marking","at":Vector2(29100,3100),"type":"artificial","text":"A repeated arrangement has been scratched into the old whaler's timber, beneath later damage. This historic ship is not Lantern-1.\n\nWick: The arrangement repeats. That is a description, not a translation.\n\nOkafor: Keep the spacing and the surrounding wood in the record. We do not yet know what we are looking at."},
@@ -28,7 +36,7 @@ static func knows(id: StringName) -> bool:
 	return not record(id).is_empty()
 static func discoveries() -> DiscoveryCatalog:
 	var catalog: DiscoveryCatalog = ShelfChapterData.discoveries(true)
-	catalog.survey_bounds = Rect2(0,0,39000,4000)
+	catalog.survey_bounds = Rect2(0,0,39000,5200)
 	for item: Dictionary in RECORDS:
 		var point: PointOfInterest = PointOfInterest.new()
 		point.stable_id = StringName(item.id+"-poi")

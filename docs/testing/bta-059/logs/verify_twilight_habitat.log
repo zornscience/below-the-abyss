@@ -1,0 +1,31 @@
+Running twilight-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-keyboard', '--input=keyboard', '--outcome=observe']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-keyboard', '--input=keyboard', '--outcome=observe']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_SONAR_REACTION states=[1] accepted=shelf-playtest/neris-01/sonar/4/1 at=(33750.42, 2761.2)
+TWILIGHT_HABITAT_WALK_PASS input=keyboard hull=86.133333333336 research_missions_upgrades_preserved=true optional_sonar_discoveries=2 shots=0
+
+Running twilight-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-keyboard', '--input=keyboard', '--outcome=observe', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-keyboard', '--input=keyboard', '--outcome=observe', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHAPTER_HANDOFF_INPUT_PASS input=keyboard outcome=observe replayed_choices=0 replayed_claims=0
+
+Running twilight-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-controller', '--input=controller', '--outcome=collect']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-controller', '--input=controller', '--outcome=collect']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_SONAR_REACTION states=[1] accepted=shelf-playtest/neris-01/sonar/4/1 at=(34442.72, 2811.155)
+TWILIGHT_HABITAT_WALK_PASS input=controller hull=89.0666666666679 research_missions_upgrades_preserved=true optional_sonar_discoveries=2 shots=0
+
+Running twilight-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-controller', '--input=controller', '--outcome=collect', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_habitat.gd', '--quit-after', '120000', '--', '--comfort', '--no-excavation', '--profile=bta054-1794244804768262170-controller', '--input=controller', '--outcome=collect', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHAPTER_HANDOFF_INPUT_PASS input=controller outcome=collect replayed_choices=0 replayed_claims=0
+
+PASS: wildlife, optional vent warning/damage/bypass, pause, both input devices, Continue and refit

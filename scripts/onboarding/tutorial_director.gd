@@ -66,7 +66,7 @@ func _process(delta: float) -> void:
 	if _current != "" and _clock >= _visible_until:
 		_current = ""
 		message_changed.emit("","")
-	if _scene.submarine.global_position.distance_to(_initial_position) > 100.0 and "movement" not in _scene.settings.snapshot().onboarding.seen:
+	if _scene.submarine.global_position.distance_to(_initial_position) > 100.0 and not _scene.settings.onboarding_has_seen("movement"):
 		complete("movement")
 		show_hint("sonar")
 	if _clock > 15.0 and _scene.station.is_in_range(_scene.submarine.global_position):

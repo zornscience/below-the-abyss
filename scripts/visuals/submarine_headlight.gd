@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 			query.hit_from_inside = true
 			var hit: Dictionary = scene.submarine.get_world_2d().direct_space_state.intersect_ray(query)
 			stops.append(origin.distance_to(hit.position) if not hit.is_empty() else 600.0)
-	var quiet: bool = scene.settings.snapshot().accessibility.reduced_flashing
+	var quiet: bool = scene.settings.accessibility_flag(&"reduced_flashing")
 	scene.chapter.dressing.rocks.set_headlight(origin,facing,stops,0.38 if quiet else 0.68)
 	if scene.journey!=null and scene.journey.active() and scene.journey.habitat.dressing.rocks!=null:
 		scene.journey.habitat.dressing.rocks.set_headlight(origin,facing,stops,0.38 if quiet else 0.68)

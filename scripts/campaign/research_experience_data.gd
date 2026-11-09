@@ -3,32 +3,42 @@ extends RefCounted
 ## Subrecord of the existing atomic campaign checkpoint; never a separate save file.
 const RULES: ResearchExperienceRules = preload("res://resources/campaign/sunlit_experience.tres")
 
+const TWILIGHT: ResearchExperienceRules = preload("res://resources/campaign/twilight_experience.tres")
+
+static func award_for(id: StringName) -> int:
+	return RULES.award_for(id)+TWILIGHT.award_for(id)
+
 static func fresh() -> Dictionary:
 	return {"credited":[],"imported":[]}
 
 static func valid(value: Variant) -> bool:
-	if not value is Dictionary or value.size()!=2 or not RULES.is_valid(): return false
+	if not value is Dictionary or value.size()!=2 or not RULES.is_valid() or not TWILIGHT.is_valid(): return false
 	var seen: Array[String] = []
 	for key: String in ["credited","imported"]:
 		if not value.get(key) is Array or value[key].size()>64: return false
 		for id: Variant in value[key]:
-			if not id is String or RULES.award_for(StringName(id))==0 or id in seen: return false
+			if not id is String or award_for(StringName(id))==0 or id in seen: return false
 			seen.append(id)
 	return true
 
 static func total(value: Dictionary) -> int:
 	var result: int = 0
-	for id: String in value.credited: result += RULES.award_for(StringName(id))
+	for id: String in value.credited: result += award_for(StringName(id))
 	return result
 
 static func points(value: Dictionary) -> int:
-	return mini(RULES.maximum_extra_points,total(value)/RULES.xp_per_point)
+	var shallow: int = 0
+	var deep: int = 0
+	for id: String in value.credited:
+		shallow += RULES.award_for(StringName(id))
+		deep += TWILIGHT.award_for(StringName(id))
+	return mini(RULES.maximum_extra_points,shallow/RULES.xp_per_point)+mini(TWILIGHT.maximum_extra_points,deep/TWILIGHT.xp_per_point)
 
 static func reconcile(value: Dictionary, completed: Array, awards: Array[StringName] = []) -> Dictionary:
 	var result: Dictionary = value.duplicate(true)
 	for token: Variant in completed:
 		var id: String = String(token)
-		if RULES.award_for(StringName(id))==0 or id in result.credited or id in result.imported: continue
+		if award_for(StringName(id))==0 or id in result.credited or id in result.imported: continue
 		if StringName(id) in awards: result.credited.append(id)
 		else: result.imported.append(id)
 	result.credited.sort()

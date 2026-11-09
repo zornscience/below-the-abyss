@@ -1,0 +1,11 @@
+Running depth-gate-route: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_depth_gate.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_depth_gate.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+DEPTH_CROSSING rank=0 unsafe_seconds=24.2166666666666 hull=11.1333333333339
+DEPTH_CROSSING rank=1 unsafe_seconds=19.5666666666668 hull=29.7333333333338
+DEPTH_CROSSING rank=2 unsafe_seconds=0.0 hull=100.0
+DEPTH_LINGER_RESPAWN_PASS
+DEPTH_ROUTE_PASS
+
+PASS: authored depth crossing, lower and gate ranks, lingering and durable respawn

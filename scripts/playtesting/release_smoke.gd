@@ -77,4 +77,43 @@ func _verify() -> void:
 		get_tree().quit(1)
 		return
 	print("RELEASE_VISIBILITY_WIRING_PASS")
+	await _verify_depth_gate(game)
+
+func _verify_depth_gate(game: ShelfPrototype) -> void:
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	var rank_before: int = game.revision.campaign.ranks.hull
+	for rank: int in range(4):
+		game.revision.campaign.ranks.hull = rank
+		game.upgrades.reapply()
+		if args.has("--break-depth-rating-wiring"): game.submarine.damage_system.set_maximum_depth_m(300)
+		var expected: float = game.revision.tree.hull_ratings[rank]+ChapterJourney.PRESSURE_FIT.baseline_safe_depth_m-game.revision.tree.hull_ratings[0]
+		if game.submarine.damage_system.get_maximum_depth_m()!=expected:
+			push_error("RELEASE_DEPTH_RATING_WIRING_FAIL")
+			get_tree().quit(1)
+			return
+	game.revision.campaign.ranks.hull = rank_before
+	game.upgrades.reapply()
+	var gate: DepthGateProfile = TwilightShelfLayout.DEPTH_GATE
+	if args.has("--break-depth-section-wiring"): game.journey.layout.set_enabled(false)
+	var registered: bool = game.submarine.scanner._known(&"twilight-deep-crust") and game.journey.layout.visible and Rect2(game.region.camera_bounds).has_point(gate.lower_left)
+	for rock: GrayboxRock in game.journey.layout.bodies:
+		registered = registered and rock.collision_layer==1
+	if not registered:
+		push_error("RELEASE_DEPTH_SECTION_WIRING_FAIL")
+		get_tree().quit(1)
+		return
+	var flow: TwilightDepthGate = game.journey.depth_gate
+	if args.has("--break-failure-wiring"): game.submarine.hull_system.vessel_destroyed.disconnect(flow._destroyed)
+	if not game.submarine.hull_system.vessel_destroyed.is_connected(flow._destroyed):
+		push_error("RELEASE_FAILURE_WIRING_FAIL")
+		get_tree().quit(1)
+		return
+	game.submarine.hull_system.apply_damage(game.submarine.hull_system.hull,&"pressure")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not flow.pending or not flow.panel.visible or game.submarine.is_physics_processing():
+		push_error("RELEASE_FAILURE_WIRING_FAIL presentation")
+		get_tree().quit(1)
+		return
+	print("RELEASE_DEPTH_GATE_PASS")
 	get_tree().quit()

@@ -2,7 +2,7 @@ extends GutTest
 func test_optional_records_are_valid_unique_and_not_new_mission_gates() -> void:
 	assert_true(TwilightShelfData.research().is_valid())
 	assert_true(TwilightShelfData.discoveries().is_valid())
-	assert_eq(TwilightShelfData.RECORDS.size(),10)
+	assert_eq(TwilightShelfData.RECORDS.size(),17) # Ten existing records plus seven BTA-059 optional studies.
 	var mission: MissionDefinition = TwilightShelfData.missions().definition(TwilightShelfData.MISSION)
 	assert_eq(mission.objectives.size(),6)
 	for id: StringName in TwilightShelfData.OPTIONAL_SURVEY:

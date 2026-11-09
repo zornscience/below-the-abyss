@@ -23,7 +23,7 @@ func setup(game: ShelfPrototype) -> void:
 	scene.get_node("UI").add_child(popup)
 	popup.setup(scene)
 	scene.research_log.summary_provider = func() -> String:
-		return "RESEARCH XP %d · BONUS RESEARCH POINTS %d/%d · Unique records only · Historical records award no retroactive XP" % [ResearchExperienceData.total(scene.revision.campaign.science),ResearchExperienceData.points(scene.revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points] if _enabled else "Prototype research retains its original finite awards."
+		return "RESEARCH XP %d · BONUS RESEARCH POINTS %d/%d · Unique records only · Historical records award no retroactive XP" % [ResearchExperienceData.total(scene.revision.campaign.science),ResearchExperienceData.points(scene.revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points+(ResearchExperienceData.TWILIGHT.maximum_extra_points if scene.journey!=null and scene.journey.state.commissioned else 0)] if _enabled or (scene.journey!=null and scene.journey.active()) else "Prototype research retains its original finite awards."
 	scene.revision.research_changed.connect(scene.research_log.refresh_summary)
 	ambient = AmbientAcousticField.new()
 	ambient.name = "SunlitAmbientField"

@@ -54,7 +54,7 @@ Direct feedback from the designer's playthrough of the Twilight Shelf, build on 
 | D | Blast reaction | **Blasts draw investigators from far away (loud) but frighten the one nearest the blast. Ambiguity is deliberate and readable.** |
 | E | Target duration | **30–45 min for a first-time player (existing target). Not a measured fact until playtested.** |
 | F | Extra scan points | **Raise the scan-XP cap so a thorough player can fund hull rank 2; do not let a rushing player be blocked.** See issue 059. |
-| G | Deep section depth | **Authored at the rank-1 rating plus 50 m, so rank 1 (1100 m) is comfortable and baseline (1000 m) is a gamble.** Tune after playtest. |
+| G | Deep section depth | **Authored just under the gate rank's rating (for a rank-2 gate: 1100–1140 m against a 1150 m rating), so the gate rank is safe and every lower rank can only barely cross before the hull buckles.** Timing is computed from the movement profile (existing pressure rule: 2 s grace, then 4 hull per second, i.e. about 27 s from full hull). Corrected: the earlier wording contradicted itself. Tune after playtest. |
 
 ## 4. Constraints for every issue
 

@@ -5,6 +5,7 @@ const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twili
 var scene: ShelfPrototype
 var habitat: TwilightHabitat
 var visibility: TwilightVisibility
+var depth_gate: TwilightDepthGate
 var expedition: TwilightExpedition
 const ACTION_COSTS: ActionCostProfile = preload("res://resources/balance/twilight_action_costs.tres")
 var _shallow_ping_cost: float
@@ -40,6 +41,9 @@ func setup(game: ShelfPrototype) -> void:
 	add_child(visibility)
 	var visibility_result: Error = visibility.setup(scene)
 	if visibility_result!=OK: push_error("Twilight visibility setup failed")
+	depth_gate = TwilightDepthGate.new()
+	add_child(depth_gate)
+	depth_gate.setup(scene)
 	state = scene.saves._state.journey.duplicate(true)
 	scene.expedition_log.finish_available = can_finish
 	scene.expedition_log.finish_requested.connect(offer_finish)

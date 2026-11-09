@@ -1,0 +1,1 @@
+PASS: runtime assertions contain only allowlisted pure checks

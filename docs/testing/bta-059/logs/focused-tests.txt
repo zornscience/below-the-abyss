@@ -1,0 +1,40 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/unit/test_twilight_depth_gate.gd
+* test_rating_grace_and_buckling_at_authored_depth_for_each_rank
+* test_twilight_budget_and_old_records_never_retroactively_award_or_double_award
+* test_old_save_can_fund_gate_from_five_new_safe_studies_without_retroactive_awards
+3/3 passed.
+
+
+res://tests/integration/test_depth_respawn.gd
+* test_failure_saves_zero_hull_and_continue_derives_panel_then_respawns_without_refill
+* test_deep_route_and_subjects_are_registered_without_required_evidence
+* test_failure_keyboard_and_gamepad_cancel_stays_and_confirm_respawns
+3/3 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                 6
+Passing Tests         6
+Asserts             130
+Time              4.401s
+
+
+---- All tests passed! ----
+
+Results saved to res://build/ci-logs/bta059-target.xml

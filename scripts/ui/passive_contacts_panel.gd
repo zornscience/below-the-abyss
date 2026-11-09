@@ -8,6 +8,8 @@ const CLASS_LABELS: Dictionary[StringName, String] = {
 var _source: WeakRef
 var _compact: bool = false
 var quiet: bool = false
+## Production layout hides the panel until a contact exists, so an empty box never competes for attention.
+var hide_when_empty: bool = false
 
 
 func _ready() -> void:
@@ -45,6 +47,7 @@ func _refresh() -> void:
 		contacts = source.contacts_snapshot()
 	var status: String = source.status_text() if source != null else "OFFLINE"
 	(%PassiveHeader as Label).text = "PASSIVE" if quiet else "PASSIVE / %s" % status
+	visible = not (hide_when_empty and contacts.is_empty())
 	(%PassiveEmpty as Label).visible = contacts.is_empty()
 	(%PassiveEmpty as Label).text = "No recent contacts" if status != "OFFLINE" else "No receiver bound"
 	for index: int in range(3):

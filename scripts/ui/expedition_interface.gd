@@ -18,6 +18,7 @@ var _buttons: Array[Button] = []
 var _story_back: Callable
 var _dock_tab: String = "home"
 var _scrolls: Dictionary = {}
+var _hints: Dictionary = {}
 func setup(owner_revision: ExpeditionRevision) -> void:
 	revision = owner_revision
 	layer = 80
@@ -34,6 +35,7 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	_dock_body = _content(dock_page,true)
 	radio_page = _screen()
 	_radio_body = _content(radio_page,true)
+	for page: PanelContainer in [dock_page,radio_page]: _add_hint(page)
 	dock_page.hide()
 	radio_page.hide()
 	UiDialogLayout.bind_panel(dock_page,Vector2(960,580))
@@ -105,8 +107,24 @@ func _button(column: Container, text: String, callback: Callable, disabled: bool
 	column.add_child(button)
 	if not disabled: _buttons.append(button)
 	return button
+func _add_hint(page: PanelContainer) -> void:
+	var label: Label = Label.new()
+	UiTypography.style(label,&"secondary")
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	((page.get_child(0) as MarginContainer).get_child(0) as VBoxContainer).add_child(label)
+	_hints[page] = label
+## Footer that names what the back and confirm controls do on this exact page.
+func _refresh_hint() -> void:
+	var page: PanelContainer = radio_page if radio_page.visible else (dock_page if dock_page.visible else null)
+	if page==null: return
+	var controller: bool = revision.scene.input_context.controller
+	var back: String = "go back"
+	if page==dock_page: back = "depart station" if _dock_tab=="home" else "back to operations"
+	(_hints[page] as Label).text = ("B: %s · D-pad: choose · A: confirm · right stick: scroll" if controller else "Esc: %s · Up / Down: choose · Enter: confirm · PgUp / PgDn: scroll") % back
 func _focus() -> void:
 	var panel: Control = radio_page if radio_page.visible else (dock_page if dock_page.visible else title_page)
+	_refresh_hint()
 	var controls: Array[Control] = []
 	controls.assign(_buttons)
 	controls.append(_scrolls[panel] as Control)

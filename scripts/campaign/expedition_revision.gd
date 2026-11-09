@@ -151,6 +151,8 @@ func _refresh_ammo() -> void:
 	var state: String = "EMPTY · DOCK TO REARM" if scene.torpedoes.ammunition==0 else ("REARMING %.1fs" % scene.torpedoes._cooldown if scene.torpedoes._cooldown>0 else "READY")
 	if scene.torpedoes.ammunition>0 and scene.submarine.resource_system.battery<scene.torpedoes._rules.battery_cost: state = "LOW BATTERY"
 	_ammo_label.text = "TORPEDOES %d/%d · %s" % [scene.torpedoes.ammunition,TorpedoLauncher.CAPACITY,state]
+	# A full, ready magazine is not actionable information; show the line once it matters.
+	_ammo_label.visible = scene.torpedoes.ammunition<TorpedoLauncher.CAPACITY or state!="READY"
 func _reward_survey_deferred() -> void:
 	_reward_survey.call_deferred()
 func _reward_survey() -> void:

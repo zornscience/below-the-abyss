@@ -257,6 +257,7 @@ func set_quiet_layout(value: bool) -> void:
 	identity.name = "SecondaryInstruments"
 	(%DepthPanel as Control).reparent(self)
 	(%PassiveContacts as PassiveContactsPanel).quiet = true
+	(%PassiveContacts as PassiveContactsPanel).hide_when_empty = true
 	(%PassiveContacts as Control).reparent(self)
 	(%PassiveContacts as PassiveContactsPanel).set_compact(true)
 	(get_node("Bottom/Feedback") as Control).reparent(self)

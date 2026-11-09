@@ -100,7 +100,7 @@ func _process(delta: float) -> void:
 	_active = scene.journey.active() and (scene.get_node("WorldRoot") as Node2D).visible
 	veil.visible = _active
 	edges.visible = _active
-	status.visible = _active
+	status.visible = _active and not status.text.is_empty()
 	if not _active: return
 	if scene.submarine.is_physics_processing():
 		for index: int in range(8):
@@ -130,4 +130,6 @@ func _process(delta: float) -> void:
 			var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(at,at+direction*profile.safety_radius,1)
 			var hit: Dictionary = scene.submarine.get_world_2d().direct_space_state.intersect_ray(query)
 			if not hit.is_empty(): _distance = minf(_distance,at.distance_to(hit.position))
-		status.text = ("CLOSE TERRAIN %.0f units" % _distance if is_finite(_distance) else "QUIET NAVIGATION · CLOSE CUE ON")+"\nVISION "+("REDUCED" if reduced else "STANDARD")+" · SONAR "+scene.submarine.sonar.status_text()
+		# Only the safety cue is shown; sonar state already lives in the main HUD and the vision setting in Accessibility.
+		status.text = "CLOSE TERRAIN %.0f units" % _distance if is_finite(_distance) else ""
+		status.visible = not status.text.is_empty()

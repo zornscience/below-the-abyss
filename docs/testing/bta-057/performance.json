@@ -1,0 +1,38 @@
+{
+  "hardware": "Intel Xeon Platinum 8573C, five visible vCPUs; Mesa 25.0.7 llvmpipe LLVM19; LP_NUM_THREADS=1; no physical GPU",
+  "method": "120 warmed forced-draw frames per case; same authored camera pose; includes frame scheduling, not physical-GPU FPS",
+  "samples": [
+    {
+      "width": 1280,
+      "height": 800,
+      "mode": "lit",
+      "frame_ms": 145.037608333333,
+      "draw_calls": 51,
+      "texture_bytes": 181539375
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "mode": "dark",
+      "frame_ms": 190.267666666667,
+      "draw_calls": 54,
+      "texture_bytes": 186999375
+    },
+    {
+      "width": 800,
+      "height": 600,
+      "mode": "lit",
+      "frame_ms": 30.511825,
+      "draw_calls": 45,
+      "texture_bytes": 177187375
+    },
+    {
+      "width": 800,
+      "height": 600,
+      "mode": "dark",
+      "frame_ms": 52.453625,
+      "draw_calls": 47,
+      "texture_bytes": 179744775
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+RUN gut
+RESULT gut 0
+RUN validation
+RESULT validation 0
+RUN verify_chapter_handoff
+RUN verify_expanded_expedition
+RESULT verify_expanded_expedition 0
+RUN verify_revision_two
+RESULT verify_revision_two 0
+RUN verify_story_choice
+RESULT verify_story_choice 0
+RUN verify_sunlit_shallows
+RESULT verify_chapter_handoff 0
+RUN verify_twilight_expedition
+RESULT verify_twilight_expedition 0
+RUN verify_twilight_habitat
+RESULT verify_twilight_habitat 0
+RUN verify_twilight_survey
+RESULT verify_sunlit_shallows 0
+RESULT verify_twilight_survey 0
+RUN python
+RESULT python 0
+RUN release-lint
+RESULT release-lint 0
+ALL_CHECKS_PASS

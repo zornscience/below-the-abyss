@@ -108,3 +108,7 @@ func _draw() -> void:
 		for index: int in range(24):
 			var direction: Vector2 = Vector2.from_angle(index * TAU / 24.0)
 			draw_line(direction * maxf(0.0, radius - 5.0), direction * radius, Color(0.7, 1.0, 0.9, fade * 0.65), 1.0, true)
+
+
+func travel_speed() -> float:
+	return _rules.travel_speed if _rules!=null else 0.0

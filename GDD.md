@@ -297,3 +297,8 @@ are optional. Required evidence, both sentinel choices and return/debrief remain
 unchanged. A clear-water glimpse refers to the actual net-bound animal, not a new
 encounter or reward. The 30–45-minute human target remains unverified; repeatable
 input-route timings must not be presented as human playtest results.
+
+BTA-057 approved change: Twilight Shelf is dim outside short vessel illumination;
+accepted sonar wavefronts reveal local scenery temporarily. Close-range terrain
+outlines permit quiet navigation without mandatory repeated pings. Reduced darkness,
+High Contrast and text cues preserve accessibility. Sunlit Shallows stays lit.

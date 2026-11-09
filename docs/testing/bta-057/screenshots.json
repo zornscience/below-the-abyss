@@ -1,0 +1,74 @@
+[
+  {
+    "file": "screenshots/1280/lit.png",
+    "dimensions": [
+      1280,
+      800
+    ],
+    "sha256": "ad1726390da84a6f33dca984c1c073f3a6ff80abec7e34a8eea7e04adc6f7ae2",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/1280/dark.png",
+    "dimensions": [
+      1280,
+      800
+    ],
+    "sha256": "b587bc35c9af79a4a211c40e8793ae1af09cb047511fc9a690f06c1b84e15df8",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/1280/mid-pulse.png",
+    "dimensions": [
+      1280,
+      800
+    ],
+    "sha256": "386af716f4d8148a4f21884ad1ee122d5d3a216e43bc1f218a73efe64810eeb2",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/1280/reduced.png",
+    "dimensions": [
+      1280,
+      800
+    ],
+    "sha256": "720c0516462990fdd5ffb48a28ff31925d7988a605f5d00d1f62f2ce8a45d68d",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/800/lit.png",
+    "dimensions": [
+      800,
+      600
+    ],
+    "sha256": "fd7f507557f51f607aed08155a00707f47e5f6e1aa22b47c298d4a68dacd5e52",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/800/dark.png",
+    "dimensions": [
+      800,
+      600
+    ],
+    "sha256": "aa73330bc408aa25a752532c6670532dbf260b1febda3b36c3ec6d47c5fedc40",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/800/mid-pulse.png",
+    "dimensions": [
+      800,
+      600
+    ],
+    "sha256": "206803de5ce3ca543a359eadf89eaeb536243725d1abaa2ae881ff1117c54f56",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  },
+  {
+    "file": "screenshots/800/reduced.png",
+    "dimensions": [
+      800,
+      600
+    ],
+    "sha256": "e226dd28a6380f057126b03481863f5f1bd1403136d9db807363413f7f8e055f",
+    "provenance": "Unedited native Godot Compatibility/Xorg/Mesa llvmpipe viewport. Diagnostic region fixture; lit disables the presentation pass for comparison."
+  }
+]

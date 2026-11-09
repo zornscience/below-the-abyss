@@ -30,7 +30,8 @@ func setup(game: ShelfPrototype,owner_journey: ChapterJourney) -> void:
 	_build_sentinel()
 	journey.habitat._add_source(&"twilight-net-contact",TwilightShelfData.NET,&"marine_life",14.0)
 	contact = journey.habitat.ambient.get_child(journey.habitat.ambient.get_child_count()-1) as AmbientSoundEmitter
-	assert(journey.habitat.ambient.bind_bus(scene.get_node("AcousticBus") as AcousticBus)==OK)
+	var registration_32: Error = journey.habitat.ambient.bind_bus(scene.get_node("AcousticBus") as AcousticBus)
+	if registration_32!=OK: push_error("Twilight registration failed: "+error_string(registration_32))
 	_previous_gate = scene.research.completion_gate
 	scene.research.completion_gate = _scan_gate
 	scene.research.scan_completed.connect(_scanned)
@@ -50,9 +51,12 @@ func _build_subjects() -> void:
 		echo.revealed_for_ping.connect(func(_event: StringName) -> void: (echo.get_node("Caption") as Label).hide())
 		props.add_child(echo)
 		(echo.get_node("Caption") as Label).hide()
-		assert(echo.bind_bus(scene.get_node("AcousticBus") as AcousticBus)==OK)
-		assert(scene.submarine.sonar.listen_to(echo)==OK)
-		assert(scene.discoveries.connect_sonar_target(echo)==OK)
+		var registration_52: Error = echo.bind_bus(scene.get_node("AcousticBus") as AcousticBus)
+		if registration_52!=OK: push_error("Twilight registration failed: "+error_string(registration_52))
+		var registration_53: Error = scene.submarine.sonar.listen_to(echo)
+		if registration_53!=OK: push_error("Twilight registration failed: "+error_string(registration_53))
+		var registration_54: Error = scene.discoveries.connect_sonar_target(echo)
+		if registration_54!=OK: push_error("Twilight registration failed: "+error_string(registration_54))
 		_echoes.append(echo)
 		if item.id=="twilight-net-survey": continue
 		var marker: Sprite2D = Sprite2D.new()
@@ -96,7 +100,8 @@ func _build_sentinel() -> void:
 	sentinel.damageable = true
 	journey.layout.add_child(sentinel)
 	(sentinel.get_node("StateCaption") as Label).hide()
-	assert(sentinel.bind_bus(scene.get_node("AcousticBus") as AcousticBus)==OK)
+	var registration_98: Error = sentinel.bind_bus(scene.get_node("AcousticBus") as AcousticBus)
+	if registration_98!=OK: push_error("Twilight registration failed: "+error_string(registration_98))
 	health = BlastReceiver.new()
 	sentinel.add_child(health)
 	health.setup(sentinel)

@@ -4,6 +4,7 @@ extends Node
 const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twilight_pressure_fit.tres")
 var scene: ShelfPrototype
 var habitat: TwilightHabitat
+var visibility: TwilightVisibility
 var expedition: TwilightExpedition
 var _shallow_resources: SubmarineResourceConfig
 var layout: TwilightShelfLayout
@@ -30,6 +31,10 @@ func setup(game: ShelfPrototype) -> void:
 	expedition = TwilightExpedition.new()
 	add_child(expedition)
 	expedition.setup(scene,self)
+	visibility = TwilightVisibility.new()
+	add_child(visibility)
+	var visibility_result: Error = visibility.setup(scene)
+	if visibility_result!=OK: push_error("Twilight visibility setup failed")
 	state = scene.saves._state.journey.duplicate(true)
 	scene.expedition_log.finish_available = can_finish
 	scene.expedition_log.finish_requested.connect(offer_finish)

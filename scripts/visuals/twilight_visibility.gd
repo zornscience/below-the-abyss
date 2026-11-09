@@ -17,6 +17,7 @@ var shaders: Array[ShaderMaterial] = []
 var slot: int = 0
 var reduced: bool = false
 var _active: bool = false
+var _epoch: int = 0
 var _last_time: float = 0.0
 var _sample: float = 0.0
 var _distance: float = INF
@@ -63,6 +64,8 @@ func setup(game: ShelfPrototype) -> Error:
 	status.position = Vector2(16,190)
 	UiTypography.style(status,&"secondary")
 	hud_layer.add_child(status)
+	_epoch = scene.submarine.sonar._epoch
+	scene.submarine.sonar.state_changed.connect(_sonar_state_changed)
 	scene.settings.settings_changed.connect(_preferences)
 	scene.submarine.sonar.pulse_emitted.connect(_ping)
 	scene.saves.checkpoint_restored.connect(clear_echoes)
@@ -81,6 +84,10 @@ func _preferences() -> void:
 		shader.set_shader_parameter("cone_angle",profile.cone_half_angle)
 		shader.set_shader_parameter("echo_gain",profile.calm_echo_gain if preferences.reduced_flashing else profile.echo_gain)
 		shader.set_shader_parameter("duration",profile.reveal_seconds)
+func _sonar_state_changed() -> void:
+	if _epoch!=scene.submarine.sonar._epoch:
+		_epoch = scene.submarine.sonar._epoch
+		clear_echoes()
 func clear_echoes() -> void:
 	for index: int in range(8): speeds[index] = 0
 func _ping(event: AcousticEvent) -> void:

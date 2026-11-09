@@ -42,5 +42,5 @@ func test_visibility_scopes_accepted_pings_pause_and_restore_without_discovering
 	assert_eq(view.pings[0].z,0.0)
 	assert_eq(game.saves.progress_snapshot(),before)
 	assert_eq(view.pings[0].x,origin.x)
-	view.clear_echoes()
+	assert_eq(game.submarine.sonar.reset_session(),OK)
 	assert_eq(view.speeds[0],0.0)

@@ -77,6 +77,9 @@ func _verify() -> void:
 		get_tree().quit(1)
 		return
 	print("RELEASE_VISIBILITY_WIRING_PASS")
+	if not await _verify_stalker(game):
+		get_tree().quit(1)
+		return
 	await _verify_depth_gate(game)
 
 func _verify_depth_gate(game: ShelfPrototype) -> void:
@@ -117,3 +120,69 @@ func _verify_depth_gate(game: ShelfPrototype) -> void:
 		return
 	print("RELEASE_DEPTH_GATE_PASS")
 	get_tree().quit()
+
+func _verify_stalker(game: ShelfPrototype) -> bool:
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	var hunt: TwilightHunt = game.journey.hunt
+	if hunt==null or hunt.actors.size()!=1:
+		push_error("RELEASE_STALKER_REGISTRATION_WIRING_FAIL actor")
+		return false
+	var actor: RiftStalker = hunt.actors[0]
+	var bus: AcousticBus = game.get_node("AcousticBus") as AcousticBus
+	if args.has("--break-stalker-registration-wiring"): actor.bind_bus(null)
+	if actor.receiver.get_bus()!=bus or not hunt.enabled or actor.damageable or actor.collision_layer!=8:
+		push_error("RELEASE_STALKER_REGISTRATION_WIRING_FAIL")
+		return false
+	for node: Node in actor.get_children():
+		if node is BlastReceiver:
+			push_error("RELEASE_STALKER_REGISTRATION_WIRING_FAIL damage receiver")
+			return false
+	if args.has("--break-stalker-passive-wiring"): hunt.passive.bind_bus(null)
+	game.submarine.global_position = actor.global_position+Vector2(hunt.PROFILE.sense_radius*0.5,0)
+	game.submarine.passive.reset_session()
+	hunt._next_contact = 0
+	hunt._physics_process(0.01)
+	var heard: bool = false
+	for contact: Dictionary in game.submarine.passive.contacts_snapshot():
+		if contact.source_id==hunt.passive.source_id and contact.classification==&"marine_life": heard = true
+	if hunt.passive.get_bus()!=bus or not heard:
+		push_error("RELEASE_STALKER_PASSIVE_WIRING_FAIL")
+		return false
+	actor.set_physics_process(false)
+	actor.hunt.reset_session()
+	if args.has("--break-stalker-hearing-wiring"): actor.receiver.profile.accepted_event_types = [&"ambient"]
+	game.submarine.sonar.reset_session()
+	var ping: Error = game.submarine.sonar.request_ping()
+	actor.hunt.advance(0.01,actor.position)
+	if ping!=OK or actor.hunt.phase!=RiftStalkerState.Phase.INVESTIGATE:
+		push_error("RELEASE_STALKER_HEARING_WIRING_FAIL ping")
+		return false
+	actor.hunt.reset_session()
+	var far: TorpedoProjectile = TorpedoProjectile.new()
+	far.event_id = &"release/stalker-far"
+	game.get_node("WorldRoot/WorldEffects").add_child(far)
+	game.torpedoes._impact(far,actor.global_position+Vector2(hunt.PROFILE.scare_radius*1.5,0))
+	actor.hunt.advance(0.01,actor.position)
+	if actor.hunt.phase!=RiftStalkerState.Phase.INVESTIGATE:
+		push_error("RELEASE_STALKER_HEARING_WIRING_FAIL explosion")
+		return false
+	actor.hunt.reset_session()
+	if args.has("--break-stalker-scare-wiring"): game.torpedoes.detonated.disconnect(hunt._blast)
+	# Prove the real projectile reaches the invulnerable weapon-contact collider.
+	game.submarine.global_position = actor.global_position-Vector2(hunt.PROFILE.scare_radius*0.8,0)
+	await get_tree().physics_frame
+	game.torpedoes._cooldown = 0
+	var fired: Error = game.torpedoes.request_fire()
+	if fired!=OK:
+		push_error("RELEASE_STALKER_SCARE_WIRING_FAIL launch")
+		return false
+	var near: TorpedoProjectile = game.torpedoes._projectiles.back()
+	for tick: int in range(240):
+		near.advance(1.0/120.0)
+		if near.exploded: break
+	if not near.exploded or actor.hunt.phase!=RiftStalkerState.Phase.STUN or actor._destroyed:
+		push_error("RELEASE_STALKER_SCARE_WIRING_FAIL")
+		return false
+	print("RELEASE_STALKER_WIRING_PASS")
+	game.submarine.global_position = TwilightShelfLayout.SPAWN
+	return true

@@ -14,6 +14,9 @@ func test_quiet_navigation_and_invalid_configuration() -> void:
 	var rules: TwilightVisibilityProfile = TwilightVisibilityProfile.new()
 	assert_gt(rules.close_strength(rules.safety_radius/2),0.0)
 	assert_eq(rules.close_strength(rules.safety_radius),0.0)
+	rules.safety_radius = rules.passive_radius
+	assert_false(rules.is_valid())
+	rules.safety_radius *= 2
 	rules.reveal_seconds = -1
 	assert_false(rules.is_valid())
 func test_darkness_preference_roundtrip_and_legacy_defaults() -> void:

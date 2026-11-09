@@ -13,7 +13,7 @@ extends Resource
 func is_valid() -> bool:
 	for value: float in [ambient,reduced_ambient,echo_gain,calm_echo_gain,passive_radius,safety_radius,headlight_range,cone_half_angle,reveal_seconds]:
 		if not is_finite(value): return false
-	return echo_gain>=0 and echo_gain<=1 and calm_echo_gain>=0 and calm_echo_gain<=echo_gain and ambient>=0 and reduced_ambient>=ambient and reduced_ambient<=1 and passive_radius>0 and safety_radius>=passive_radius and headlight_range>=safety_radius and cone_half_angle>0 and cone_half_angle<PI/2 and reveal_seconds>0
+	return echo_gain>=0 and echo_gain<=1 and calm_echo_gain>=0 and calm_echo_gain<=echo_gain and ambient>=0 and reduced_ambient>=ambient and reduced_ambient<=1 and passive_radius>0 and safety_radius>passive_radius and headlight_range>=safety_radius and cone_half_angle>0 and cone_half_angle<PI/2 and reveal_seconds>0
 static func echo_strength(distance: float, age: float, speed: float, radius: float, duration: float) -> float:
 	if not is_finite(distance) or not is_finite(age) or distance<0 or speed<=0 or duration<=0 or distance>radius: return 0
 	var since: float = age-distance/speed

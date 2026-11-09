@@ -67,6 +67,14 @@ func run() -> void:
 		push_error("Visibility did not receive input-driven ping")
 		quit(1)
 		return
+	var middle: float = view.pings[0].w/(2.0*view.speeds[0])
+	for tick: int in range(180):
+		if view.pings[0].z>=middle: break
+		await frames(1)
+	if view.pings[0].z<middle:
+		push_error("Pulse did not reach its middle travel phase")
+		quit(1)
+		return
 	await capture("mid-pulse")
 	game.open_accessibility()
 	var panel: AccessibilityPanel = game.accessibility_panel

@@ -87,7 +87,7 @@ func _ping(event: AcousticEvent) -> void:
 	if not scene.journey.active(): return
 	pings[slot] = Vector4(event.origin.x,event.origin.y,0,event.range_units)
 	starts[slot] = event.simulation_time
-	speeds[slot] = scene.submarine.sonar._rules.travel_speed
+	speeds[slot] = scene.submarine.sonar.pulse_speed(event.event_id)
 	slot = (slot+1)%8
 func _process(delta: float) -> void:
 	if scene==null: return

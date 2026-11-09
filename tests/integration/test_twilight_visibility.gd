@@ -31,6 +31,11 @@ func test_visibility_scopes_accepted_pings_pause_and_restore_without_discovering
 	var before: Dictionary = game.saves.progress_snapshot()
 	assert_eq(game.submarine.sonar.request_ping(),OK)
 	assert_gt(view.speeds[0],0.0)
+	var old_speed: float = view.speeds[0]
+	var changed: ActiveSonarProfile = game.submarine.sonar.configuration.duplicate() as ActiveSonarProfile
+	changed.travel_speed *= 2
+	assert_eq(game.submarine.sonar.configure(changed),OK)
+	assert_eq(game.submarine.sonar.pulse_speed(game.submarine.sonar._last_ping),old_speed)
 	var origin: Vector4 = view.pings[0]
 	game.submarine.set_simulation_enabled(false)
 	view._process(0.5)

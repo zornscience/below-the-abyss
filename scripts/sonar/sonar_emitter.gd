@@ -262,3 +262,11 @@ func restore_cooldown(seconds: float) -> Error:
 	_cooldown = seconds
 	state_changed.emit()
 	return OK
+
+
+func pulse_speed(id: StringName) -> float:
+	# Read the accepted pulse snapshot, never a subsequently reconfigured profile.
+	var reference: WeakRef = _pulses.get(id)
+	if reference==null: return 0.0
+	var pulse: SonarPulse = reference.get_ref() as SonarPulse
+	return pulse.travel_speed() if is_instance_valid(pulse) and not pulse.is_queued_for_deletion() else 0.0

@@ -77,6 +77,9 @@ func _verify() -> void:
 		get_tree().quit(1)
 		return
 	print("RELEASE_VISIBILITY_WIRING_PASS")
+	if not _verify_tunnels(game):
+		get_tree().quit(1)
+		return
 	if not await _verify_stalker(game):
 		get_tree().quit(1)
 		return
@@ -185,4 +188,48 @@ func _verify_stalker(game: ShelfPrototype) -> bool:
 		return false
 	print("RELEASE_STALKER_WIRING_PASS")
 	game.submarine.global_position = TwilightShelfLayout.SPAWN
+	return true
+
+func _verify_tunnels(game: ShelfPrototype) -> bool:
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	var layout: TwilightShelfLayout = game.journey.layout
+	var tunnels: TwilightTunnels = game.journey.tunnels
+	if args.has("--break-tunnel-geometry-wiring") and not layout.tunnel_bodies.is_empty(): layout.tunnel_bodies[0].collision_layer = 0
+	var expected: int = 0
+	for profile: TunnelProfile in TwilightTunnelCatalog.DATA.systems: expected += profile.rock_polygons().size()
+	if expected==0 or layout.tunnel_bodies.size()!=expected:
+		push_error("RELEASE_TUNNEL_GEOMETRY_WIRING_FAIL count")
+		return false
+	for body: GrayboxRock in layout.tunnel_bodies:
+		var covered: bool = false
+		for child: Node in game.journey.visibility.contours.get_children():
+			if child is Line2D and (child as Line2D).points==body.outline: covered = true
+		if body.collision_layer!=1 or not covered or body.find_children("*","CollisionPolygon2D",true,false).is_empty():
+			push_error("RELEASE_TUNNEL_GEOMETRY_WIRING_FAIL collision/visibility")
+			return false
+	if args.has("--break-tunnel-gates-wiring") and not tunnels.gates.is_empty(): game.excavation._rocks.erase(tunnels.gates[0].rock_id)
+	if args.has("--break-tunnel-vents-wiring") and not tunnels.vents.is_empty():
+		var removed: ThermalVent = tunnels.vents.pop_back()
+		removed.enabled = false
+	for profile: TunnelProfile in TwilightTunnelCatalog.DATA.systems:
+		var rock: DestructibleRock = game.excavation._rocks.get(profile.gate_id) as DestructibleRock
+		if rock==null or rock not in tunnels.gates or rock.collision_layer!=1 or rock.get_parent()!=tunnels:
+			push_error("RELEASE_TUNNEL_GATES_WIRING_FAIL "+profile.gate_id)
+			return false
+		var covered: bool = false
+		for child: Node in game.journey.visibility.contours.get_children():
+			if child is Line2D and (child as Line2D).points==rock.original: covered = true
+		if not covered or not game.excavation.geometry_changed.is_connected(game.journey.visibility.rebuild_contours):
+			push_error("RELEASE_TUNNEL_GEOMETRY_WIRING_FAIL gate outlines")
+			return false
+		if profile.vent_id.is_empty(): continue
+		var found: bool = false
+		for vent: ThermalVent in tunnels.vents:
+			if vent.stable_id==profile.vent_id and vent.enabled and vent._solid!=null and vent._solid.collision_layer==1 and vent.damage_applied.is_connected(game.hud.show_thermal_damage): found = true
+		if not found or not tunnels.is_physics_processing():
+			push_error("RELEASE_TUNNEL_VENTS_WIRING_FAIL "+String(profile.vent_id))
+			return false
+	print("RELEASE_TUNNEL_GEOMETRY_WIRING_PASS")
+	print("RELEASE_TUNNEL_GATES_WIRING_PASS")
+	print("RELEASE_TUNNEL_VENTS_WIRING_PASS")
 	return true

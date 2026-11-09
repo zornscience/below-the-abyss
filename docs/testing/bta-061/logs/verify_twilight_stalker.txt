@@ -1,0 +1,105 @@
+Running stalker-keyboard-quiet: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794266897641502661-stalker-keyboard-quiet', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--quiet-stalker']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794266897641502661-stalker-keyboard-quiet', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--quiet-stalker']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+TWILIGHT_STORY_BEGIN outcome=release
+TWILIGHT_RECORD_BEGIN twilight-mara-log-two at=(27984.16, 1871.041)
+WARNING: Radio message rejected, id not registered: twilight-mara-log-two
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-mara-log-two
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29123.5, 3116.041)
+WARNING: Radio message rejected, id not registered: twilight-whaler-marking
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35951.82, 1938.613)
+WARNING: Radio message rejected, id not registered: twilight-severed-cable
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35796.38, 2817.792)
+WARNING: Radio message rejected, id not registered: twilight-mara-log-one
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+WARNING: Radio message rejected, id not registered: twilight-first-light
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _observe_glimpse (res://scripts/story/twilight_expedition.gd:245)
+         [2] advance (res://scripts/story/twilight_expedition.gd:225)
+         [3] _physics_process (res://scripts/story/twilight_expedition.gd:248)
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37702.11, 3157.26)
+WARNING: Radio message rejected, id not registered: twilight-net-survey
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=release input=keyboard deep_simulation_seconds=254.633333333113 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true
+STALKER_QUIET_CHAPTER_PASS no_pings=true no_encounter=true
+
+Running stalker-keyboard-hunted: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794266897641502661-stalker-keyboard-hunted', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794266897641502661-stalker-keyboard-hunted', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+STALKER_ESCAPE_PASS input=keyboard hull=95.0
+
+Running stalker-controller-hunted: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794266897641502661-stalker-controller-hunted', '--input=controller', '--outcome=observe', '--sentinel=release']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794266897641502661-stalker-controller-hunted', '--input=controller', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+STALKER_ESCAPE_PASS input=controller hull=95.0
+
+PASS: quiet complete chapter and both-device ping/pursuit/escape

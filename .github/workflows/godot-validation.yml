@@ -166,12 +166,12 @@ jobs:
           fi
           grep -q RELEASE_RESOURCE_WIRING_FAIL build/playtest/resource-negative.log
 
-      - name: Prove depth and failure wiring in release
+      - name: Prove depth, hunter and tunnel wiring in release
         shell: bash
         run: |
           set -euo pipefail
           package=(build/below-the-abyss-playtest-linux-*.zip)
-          for wiring in depth-rating depth-section failure stalker-registration stalker-passive stalker-hearing stalker-scare; do
+          for wiring in depth-rating depth-section failure stalker-registration stalker-passive stalker-hearing stalker-scare tunnel-geometry tunnel-gates tunnel-vents; do
             if python3 tools/smoke_playtest.py "${package[0]}" --log "build/playtest/$wiring-negative.log" "--break-$wiring-wiring"; then
               exit 1
             fi

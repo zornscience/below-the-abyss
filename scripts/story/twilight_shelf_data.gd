@@ -28,8 +28,12 @@ const RECORDS: Array[Dictionary] = [
 	{"id":"twilight-ballast-pocket","title":"Ballast pocket / optional observation","at":Vector2(34100,2300),"type":"geological","text":"Rounded ballast lies mixed with fresh mineral crust in the eastern blind pocket. There is no recorder beneath it.\n\nWick: No excavation is needed. Both chimneys connect to the open shelf; the lower passage returns toward the broken cable."},
 	{"id":"twilight-thermal-crust","title":"Thermal margin / optional observation","at":Vector2(36500,3100),"type":"geological","text":"Pale mineral crust and tube worms occupy the cooler margin beside the eastern vent. The plume itself remains hazardous.\n\nOkafor: Observe from this side. We do not need to cross the eruption to record where life returns to the rock."}
 ]
+static func all_records() -> Array[Dictionary]:
+	var result: Array[Dictionary] = RECORDS.duplicate(true)
+	result.append_array(TwilightTunnelCatalog.records())
+	return result
 static func record(id: StringName) -> Dictionary:
-	for item: Dictionary in RECORDS:
+	for item: Dictionary in all_records():
 		if StringName(item.id)==id: return item.duplicate(true)
 	return {}
 static func knows(id: StringName) -> bool:
@@ -37,7 +41,7 @@ static func knows(id: StringName) -> bool:
 static func discoveries() -> DiscoveryCatalog:
 	var catalog: DiscoveryCatalog = ShelfChapterData.discoveries(true)
 	catalog.survey_bounds = Rect2(0,0,39000,5200)
-	for item: Dictionary in RECORDS:
+	for item: Dictionary in all_records():
 		var point: PointOfInterest = PointOfInterest.new()
 		point.stable_id = StringName(item.id+"-poi")
 		point.sonar_target_id = StringName(item.id+"-echo")
@@ -47,7 +51,7 @@ static func discoveries() -> DiscoveryCatalog:
 	return catalog
 static func research() -> ResearchCatalog:
 	var catalog: ResearchCatalog = ShelfChapterData.research(true)
-	for item: Dictionary in RECORDS:
+	for item: Dictionary in all_records():
 		var definition: ScanDefinition = ScanDefinition.new()
 		definition.stable_id = StringName(item.id)
 		definition.required_poi_id = StringName(item.id+"-poi")
@@ -66,7 +70,7 @@ static func subject_texture(id: StringName) -> Texture2D:
 	var texture: AtlasTexture = AtlasTexture.new()
 	texture.atlas = preload("res://assets/art/twilight/research_atlas.png")
 	# Authored regions measured against the original master, not an assumed grid.
-	texture.region = Rect2(0,0,755,724) if id in [&"twilight-whaler-marking",&"twilight-cargo-timber"] else (Rect2(1550,0,622,724) if id in [&"twilight-ballast-pocket",&"twilight-thermal-crust"] else Rect2(760,0,785,724))
+	texture.region = Rect2(0,0,755,724) if id in [&"twilight-whaler-marking",&"twilight-cargo-timber"] else (Rect2(1550,0,622,724) if (id in [&"twilight-ballast-pocket",&"twilight-thermal-crust"] or String(id) in TwilightTunnelCatalog.payoff_ids()) else Rect2(760,0,785,724))
 	texture.filter_clip = true
 	return texture
 

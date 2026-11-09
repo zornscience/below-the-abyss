@@ -27,8 +27,8 @@ func _process(_delta: float) -> void:
 	var binding: String = _scene.input_context.describe(&"interact")
 	progress.visible = state.active_id != &""
 	progress.value = state.progress*100.0
-	if _scene.journey!=null and not _scene.journey.habitat.hazard_prompt().is_empty():
-		text = _scene.journey.habitat.hazard_prompt()
+	if _scene.journey!=null and not _scene.journey.hazard_prompt().is_empty():
+		text = _scene.journey.hazard_prompt()
 	elif _scene.journey!=null and not _scene.journey.expedition.prompt().is_empty():
 		text = _scene.journey.expedition.prompt()
 		progress.visible = _scene.journey.expedition.action!=&""

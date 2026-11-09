@@ -1,0 +1,7 @@
+ERROR: RELEASE_TUNNEL_GATES_WIRING_FAIL twilight-west-shortcut
+   at: push_error (core/variant/variant_utility.cpp:1024)
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+RELEASE_REGISTRATION_WIRING_PASS
+RELEASE_RESOURCE_WIRING_PASS
+RELEASE_VISIBILITY_WIRING_PASS

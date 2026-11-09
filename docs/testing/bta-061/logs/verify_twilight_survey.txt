@@ -1,0 +1,225 @@
+Running twilight-survey-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+WARNING: Radio message rejected, id not registered: twilight-cargo-timber
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-ballast-pocket
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-line-anchor
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-thermal-crust
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-first-light
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _observe_glimpse (res://scripts/story/twilight_expedition.gd:245)
+         [2] advance (res://scripts/story/twilight_expedition.gd:225)
+         [3] _physics_process (res://scripts/story/twilight_expedition.gd:248)
+TWILIGHT_SURVEY_INPUT_PASS input=keyboard optional_simulation_seconds=174.966666666519 optional_records=4 unchanged_required_evidence=true
+TWILIGHT_STORY_BEGIN outcome=release
+TWILIGHT_RECORD_BEGIN twilight-mara-log-two at=(28052.04, 1866.951)
+WARNING: Radio message rejected, id not registered: twilight-mara-log-two
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-mara-log-two
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29123.58, 3116.102)
+WARNING: Radio message rejected, id not registered: twilight-whaler-marking
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35969.48, 1943.647)
+WARNING: Radio message rejected, id not registered: twilight-severed-cable
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35797.3, 2885.252)
+WARNING: Radio message rejected, id not registered: twilight-mara-log-one
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37734.21, 3078.93)
+WARNING: Radio message rejected, id not registered: twilight-net-survey
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=release input=keyboard deep_simulation_seconds=243.599999999778 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true
+
+Running twilight-survey-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TWILIGHT_EXPEDITION_CONTINUE_PASS outcome=release input=keyboard choices=0 acknowledgements=0
+
+Running twilight-survey-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-controller', '--input=controller', '--outcome=collect', '--sentinel=capture']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-controller', '--input=controller', '--outcome=collect', '--sentinel=capture']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+WARNING: Radio message rejected, id not registered: twilight-cargo-timber
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-ballast-pocket
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-line-anchor
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-thermal-crust
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+WARNING: Radio message rejected, id not registered: twilight-first-light
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _observe_glimpse (res://scripts/story/twilight_expedition.gd:245)
+         [2] advance (res://scripts/story/twilight_expedition.gd:225)
+         [3] _physics_process (res://scripts/story/twilight_expedition.gd:248)
+TWILIGHT_SURVEY_INPUT_PASS input=controller optional_simulation_seconds=210.999999999808 optional_records=4 unchanged_required_evidence=true
+TWILIGHT_STORY_BEGIN outcome=capture
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35940.26, 1939.504)
+WARNING: Radio message rejected, id not registered: twilight-severed-cable
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35800.18, 2810.16)
+WARNING: Radio message rejected, id not registered: twilight-mara-log-one
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+TWILIGHT_RECORD_BEGIN twilight-mara-log-three at=(38440.26, 1719.985)
+WARNING: Radio message rejected, id not registered: twilight-mara-log-three
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-mara-log-three
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37702.62, 3094.752)
+WARNING: Radio message rejected, id not registered: twilight-net-survey
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29095.9, 3091.169)
+WARNING: Radio message rejected, id not registered: twilight-whaler-marking
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _scanned (res://scripts/story/twilight_expedition.gd:280)
+         [2] complete_scan (res://scripts/world/research_registry.gd:53)
+         [3] advance (res://scripts/player/scientific_scanner.gd:138)
+         [4] _physics_process (res://scripts/player/submarine_controller.gd:48)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=capture input=controller deep_simulation_seconds=342.816666666355 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true
+
+Running twilight-survey-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-controller', '--input=controller', '--outcome=collect', '--sentinel=capture', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_survey.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta056-1794266900497837970-controller', '--input=controller', '--outcome=collect', '--sentinel=capture', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TWILIGHT_EXPEDITION_CONTINUE_PASS outcome=capture input=controller choices=0 acknowledgements=0
+
+PASS: optional gallery, pockets, anchor and thermal scans; both chapter choices/input devices and Continue

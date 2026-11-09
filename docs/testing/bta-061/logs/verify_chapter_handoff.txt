@@ -1,0 +1,50 @@
+Running handoff-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-keyboard', '--input=keyboard', '--outcome=observe']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-keyboard', '--input=keyboard', '--outcome=observe']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+CHAPTER_HANDOFF_CHECKPOINT_PASS input=keyboard outcome=observe battery=93.7180000074241 hull=97.6291229248047 shots=0
+
+Running handoff-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-keyboard', '--input=keyboard', '--outcome=observe', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-keyboard', '--input=keyboard', '--outcome=observe', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHAPTER_HANDOFF_INPUT_PASS input=keyboard outcome=observe replayed_choices=0 replayed_claims=0
+
+Running handoff-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-controller', '--input=controller', '--outcome=collect']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-controller', '--input=controller', '--outcome=collect']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+WARNING: Radio message rejected, id not registered: twilight-arrival
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _transfer (res://scripts/story/chapter_journey.gd:128)
+         [2] settle_camera (res://scripts/story/chapter_journey.gd:205)
+         [3] _physics_process (res://scripts/story/chapter_journey.gd:220)
+WARNING: Radio message rejected, id not registered: twilight-first-light
+     at: push_warning (core/variant/variant_utility.cpp:1034)
+     GDScript backtrace (most recent call first):
+         [0] enqueue (res://scripts/ui/radio_notifications.gd:114)
+         [1] _observe_glimpse (res://scripts/story/twilight_expedition.gd:245)
+         [2] advance (res://scripts/story/twilight_expedition.gd:225)
+         [3] _physics_process (res://scripts/story/twilight_expedition.gd:248)
+CHAPTER_HANDOFF_CHECKPOINT_PASS input=controller outcome=collect battery=93.9094967578265 hull=100.0 shots=0
+
+Running handoff-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-controller', '--input=controller', '--outcome=collect', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_chapter_handoff.gd', '--quit-after', '90000', '--', '--comfort', '--no-excavation', '--profile=bta053-1794266224981136166-controller', '--input=controller', '--outcome=collect', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHAPTER_HANDOFF_INPUT_PASS input=controller outcome=collect replayed_choices=0 replayed_claims=0
+
+PASS: both buoy choices, keyboard/controller, west/east loops, deep Continue and Halcyon refit/resume

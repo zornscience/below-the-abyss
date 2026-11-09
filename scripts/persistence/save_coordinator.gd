@@ -126,7 +126,7 @@ func position_clear(at: Vector2, orientation: float) -> bool:
 
 func safe_to_save() -> bool:
 	return (_scene.journey==null or not _scene.journey.expedition.pending_loss) and _scene.submarine.hull_system.hull>0 and _scene.submarine.resource_system.oxygen>0 \
-		and (_scene.journey==null or not _scene.journey.habitat.unsafe_at(_scene.submarine.global_position)) \
+		and (_scene.journey==null or not _scene.journey.unsafe_at(_scene.submarine.global_position)) \
 		and not _scene.submarine.is_physics_processing() and position_clear(_scene.submarine.global_position, _scene.submarine.rotation) \
 		and _scene.submarine.damage_system.warning_state != SubmarineDamageSystem.WarningState.EXCEEDED \
 		and _scene.predator.threat.phase not in [PredatorState.Phase.ALERT, PredatorState.Phase.PURSUE]
@@ -386,7 +386,7 @@ func commit_story(value: Dictionary, choice_id: StringName) -> Error:
 		if choice.encounter_id==TwilightShelfData.ENCOUNTER:
 			if _scene.journey==null or not _scene.journey.active(): return ERR_UNAVAILABLE
 			if choice_id in [TwilightShelfData.RELEASE,TwilightShelfData.CAPTURE] and (not _scene.journey.expedition.near_net() or not _scene.research.is_completed(&"twilight-net-survey")): return ERR_UNAUTHORIZED
-			if not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) or _scene.submarine.hull_system.hull<=0 or _scene.journey.habitat.unsafe_at(_scene.submarine.global_position): return ERR_UNAVAILABLE
+			if not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) or _scene.submarine.hull_system.hull<=0 or _scene.journey.unsafe_at(_scene.submarine.global_position): return ERR_UNAVAILABLE
 			candidate.player = snapshot().player
 			candidate.route = snapshot().route
 		if choice.research_record_id!=&"" and String(choice.research_record_id) not in candidate.progress.research:

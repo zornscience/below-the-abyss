@@ -1,0 +1,11 @@
+verify_chapter_handoff.py: exit 0 / PASS
+verify_depth_gate.py: exit 0 / PASS
+verify_expanded_expedition.py: exit 0 / PASS
+verify_revision_two.py: exit 0 / PASS
+verify_story_choice.py: exit 0 / PASS
+verify_sunlit_shallows.py: exit 0 / PASS
+verify_twilight_expedition.py: exit 0 / PASS
+verify_twilight_habitat.py: exit 0 / PASS (rerun after adding clear-path echoes; original assertions unchanged)
+verify_twilight_stalker.py: exit 0 / PASS
+verify_twilight_survey.py: exit 0 / PASS
+verify_twilight_tunnels.py: exit 0 / PASS (final authored approach; both-device Continue)

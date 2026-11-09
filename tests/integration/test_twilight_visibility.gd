@@ -44,3 +44,9 @@ func test_visibility_scopes_accepted_pings_pause_and_restore_without_discovering
 	assert_eq(view.pings[0].x,origin.x)
 	assert_eq(game.submarine.sonar.reset_session(),OK)
 	assert_eq(view.speeds[0],0.0)
+	assert_eq(game.submarine.sonar.request_ping(),OK)
+	view._process(0)
+	var positive: int = 0
+	for speed: float in view.speeds:
+		if speed>0: positive += 1
+	assert_eq(positive,1,"First zero-time ping after reset must survive")

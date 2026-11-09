@@ -18,7 +18,6 @@ var slot: int = 0
 var reduced: bool = false
 var _active: bool = false
 var _epoch: int = 0
-var _last_time: float = 0.0
 var _sample: float = 0.0
 var _distance: float = INF
 func setup(game: ShelfPrototype) -> Error:
@@ -103,8 +102,6 @@ func _process(delta: float) -> void:
 	edges.visible = _active
 	status.visible = _active
 	if not _active: return
-	if scene.submarine.sonar._time<_last_time: clear_echoes()
-	_last_time = scene.submarine.sonar._time
 	if scene.submarine.is_physics_processing():
 		for index: int in range(8):
 			if speeds[index]>0:

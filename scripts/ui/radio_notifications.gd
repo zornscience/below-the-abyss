@@ -108,7 +108,11 @@ func _button(text: String,callback: Callable,id: String) -> Button:
 	button.focus_entered.connect(func() -> void: _choice = _controls.find(button))
 	return button
 func enqueue(id: String,body: String,source: String = "Shelf Base",urgent: bool = false) -> void:
-	if texts.has(id) or (id not in ExpeditionRevision.TRANSMISSIONS and id!="sunlit-buoy-recovered" and id not in SunlitFieldGuide.RADIO_IDS): return
+	if texts.has(id): return
+	if id not in ExpeditionRevision.TRANSMISSIONS and id!="sunlit-buoy-recovered" and id not in SunlitFieldGuide.RADIO_IDS and id not in TwilightHunt.RADIO_IDS:
+		# A silently dropped message once hid a required warning; make the rejection visible.
+		push_warning("Radio message rejected, id not registered: "+id)
+		return
 	texts[id] = body
 	sources[id] = source
 	pending.append(id)

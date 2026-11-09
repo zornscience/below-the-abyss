@@ -114,3 +114,18 @@ func test_guidance_cards_stay_silent_outside_twilight_and_when_tutorials_are_off
 	game.settings.set_onboarding(onboarding)
 	game.tutorial._process(0.1)
 	assert_false("Wick / living contact" in titles, "the saved tutorial switch is respected")
+
+
+func test_every_registered_radio_id_is_accepted_and_unknown_ids_are_rejected() -> void:
+	var radio: RadioNotifications = game.revision.ui.notifications
+	for id: String in TwilightHunt.RADIO_IDS:
+		radio.enqueue(id, "Wick: registered message.", "Wick")
+		assert_true(radio.contains_message(id), "registered radio id must queue: " + id)
+	radio.enqueue("not-a-registered-radio-id", "Wick: unregistered.", "Wick")
+	assert_false(radio.contains_message("not-a-registered-radio-id"))
+
+
+func test_stalker_warning_phase_queues_the_wick_line() -> void:
+	_twilight()
+	game.journey.hunt._phase(RiftStalkerState.Phase.WARNING)
+	assert_true(game.revision.ui.notifications.contains_message("twilight-stalker-warning"), "the required Wick warning must reach the radio")

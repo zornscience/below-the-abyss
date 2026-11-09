@@ -1,6 +1,8 @@
 class_name TwilightHunt
 extends Node
 ## One opted-in threat. Existing wildlife and the launcher's single blast emission are untouched.
+## Radio ids this node may queue; RadioNotifications.enqueue drops ids it does not know.
+const RADIO_IDS: Array[String] = ["twilight-stalker-warning"]
 const PROFILE: RiftStalkerProfile = preload("res://resources/creatures/twilight_stalker.tres")
 var scene: ShelfPrototype
 var actors: Array[RiftStalker] = []

@@ -18,8 +18,8 @@ The vessel/HUD remain legible. High Contrast boosts visibility, Reduced Flashing
 softens echoes, and pauses/restarts clear or freeze transient presentation correctly.
 Personal preferences retain legacy defaults; no terrain map persistence is added.
 
-**Automated test command and result:** Full GUT, import/parser/startup, all eight
-existing verify routes, Python and release lint passed. Exact final counts, commands,
+**Automated test command and result:** 739/739 GUT tests (44,767 assertions), 310 parser checks plus final follow-ups, startup, all eight
+existing verify routes, 10 Python tests and release lint passed. Exact final counts, commands,
 logs and export source identity are in the evidence document. No assertions were
 loosened and no timeouts were raised. The suite caught a controller focus regression;
 placing Darkness after existing toggles preserved the old navigation assertions.
@@ -53,3 +53,6 @@ not physical-controller or human usability acceptance. No automatic merge.
 
 **Cross-platform impact:** Shared Godot 4.6.3 Compatibility shader and GDScript;
 Linux standalone tested. Windows/macOS/physical GPU validation remains unperformed.
+
+The branch is pushed. Automated draft creation was blocked by GitHub API `Forbidden`;
+no hosted Actions status or actual PR creation is claimed. Local evidence is complete.

@@ -1,0 +1,3 @@
+Command: gh pr create --repo zornscience/below-the-abyss --base main --head bta-057-sonar-visibility --draft --title "BTA-057: Sonar-driven visibility on the Twilight Shelf (Phase 1)" --body-file docs/testing/bta-057/PR.md
+Exit status: 1
+Post "https://api.github.com/graphql": Forbidden

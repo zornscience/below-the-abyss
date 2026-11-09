@@ -22,6 +22,7 @@ docs/testing/bta-057/logs/parser.log
 docs/testing/bta-057/logs/pipeline.txt
 docs/testing/bta-057/logs/positive-export.txt
 docs/testing/bta-057/logs/positive-result.txt
+docs/testing/bta-057/logs/pr-publication.txt
 docs/testing/bta-057/logs/python-followup.txt
 docs/testing/bta-057/logs/release-gut.txt
 docs/testing/bta-057/logs/release-lint.txt

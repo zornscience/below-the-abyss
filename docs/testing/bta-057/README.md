@@ -172,3 +172,15 @@ was tested here.
 [All changed files](changed-files.txt).
 
 The package path above is the actual verified build. Rebuilding after evidence-only commits yields a different build ID; use the printed package path.
+
+## Publication status
+
+All source and evidence are pushed to `bta-057-sonar-visibility`. Draft PR creation
+returned `Post "https://api.github.com/graphql": Forbidden` (exit 1); the request
+could not complete. No PR was opened or merged, and hosted Actions conclusions
+could not be checked. All passing results above are local, not hosted CI claims.
+[Exact attempt](logs/pr-publication.txt).
+
+[Create the review PR](https://github.com/zornscience/below-the-abyss/compare/main...bta-057-sonar-visibility?expand=1)
+with [the prepared PR body](PR.md). Keep the performance acceptance gap visible:
+physical baseline-GPU 60 FPS and human playtesting remain unverified.

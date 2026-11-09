@@ -9,6 +9,7 @@ signal state_changed
 @export var session_id: StringName = &"shelf-playtest"
 @export var configuration: ActiveSonarProfile = ActiveSonarProfile.new()
 var _rules: ActiveSonarProfile = ActiveSonarProfile.new()
+var _battery_cost_override: float = -1.0
 var _resources: SubmarineResourceSystem
 var _effects: Node2D
 var _listeners: Array[WeakRef] = []
@@ -37,6 +38,7 @@ func configure(profile: ActiveSonarProfile) -> Error:
 		return ERR_INVALID_PARAMETER
 	configuration = profile
 	_rules = profile.duplicate() as ActiveSonarProfile
+	if _battery_cost_override>0.0: _rules.battery_cost = _battery_cost_override
 	var emission: AcousticEmissionProfile = AcousticEmissionProfile.new()
 	emission.event_type = &"active_sonar"
 	emission.classification = &"scientific"
@@ -199,6 +201,13 @@ func active_pulse_count() -> int:
 func cooldown_remaining() -> float:
 	return _cooldown
 
+
+func set_battery_cost(cost: float) -> Error:
+	if not is_finite(cost) or cost <= 0: return ERR_INVALID_PARAMETER
+	_battery_cost_override = cost
+	_rules.battery_cost = cost
+	state_changed.emit()
+	return OK
 
 func battery_cost() -> float:
 	return _rules.battery_cost

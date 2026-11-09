@@ -1,0 +1,39 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/integration/test_twilight_action_costs.gd
+* test_selection_preserves_supplies_upgrades_and_shallow_costs
+* test_actions_debit_exactly_and_rejection_preserves_ammo_cooldown_and_events
+* test_empty_battery_tether_refit_and_continue_preserve_actual_supplies
+3/3 passed.
+
+
+res://tests/unit/test_action_cost_profile.gd
+* test_resource_budget_is_computed_with_slow_travel_unchanged
+* test_profile_rejects_invalid_costs
+2/2 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                 5
+Passing Tests         5
+Asserts              75
+Time              4.508s
+
+
+---- All tests passed! ----
+
+Results saved to res://build/ci-logs/bta058-target.xml

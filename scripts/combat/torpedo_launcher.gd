@@ -42,6 +42,14 @@ func setup(scene: ShelfPrototype) -> Error:
 		receiver.setup(creature)
 		_receivers.append(receiver)
 	return OK
+func battery_cost() -> float:
+	return _rules.battery_cost
+
+func set_battery_cost(cost: float) -> Error:
+	if not is_finite(cost) or cost <= 0: return ERR_INVALID_PARAMETER
+	_rules.battery_cost = cost
+	return OK
+
 func request_fire() -> Error:
 	if revised:
 		aim = _scene.submarine.facing_direction()

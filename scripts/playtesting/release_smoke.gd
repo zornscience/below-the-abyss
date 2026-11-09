@@ -41,14 +41,35 @@ func _verify() -> void:
 		get_tree().quit(1)
 		return
 	game.journey.prepare({"phase":"twilight","commissioned":true})
+	# Continue and refitting reapply upgrade profiles after regional preparation.
+	game.upgrades.reapply()
+	if OS.get_cmdline_user_args().has("--break-resource-wiring"):
+		game.submarine.sonar.set_battery_cost(game.journey._shallow_ping_cost)
+		game.torpedoes.set_battery_cost(game.journey._shallow_torpedo_cost)
+	var costs: ActionCostProfile = ChapterJourney.ACTION_COSTS
+	if game.submarine.sonar.battery_cost()!=costs.ping_battery or game.torpedoes.battery_cost()!=costs.torpedo_battery:
+		push_error("RELEASE_RESOURCE_WIRING_FAIL")
+		get_tree().quit(1)
+		return
 	game.submarine.global_position = TwilightShelfLayout.SPAWN
 	(game.get_node("WorldRoot") as Node2D).show()
 	game.submarine.set_simulation_enabled(true)
+	var battery_before: float = game.submarine.resource_system.battery
 	var emitted: Error = game.submarine.sonar.request_ping()
 	if emitted!=OK or view.speeds[0]<=0:
 		push_error("RELEASE_VISIBILITY_EMISSION_FAIL")
 		get_tree().quit(1)
 		return
+	if not is_equal_approx(game.submarine.resource_system.battery,battery_before-costs.ping_battery):
+		push_error("RELEASE_RESOURCE_WIRING_FAIL ping debit")
+		get_tree().quit(1)
+		return
+	var fired: Error = game.torpedoes.request_fire()
+	if fired!=OK or not is_equal_approx(game.submarine.resource_system.battery,battery_before-costs.ping_battery-costs.torpedo_battery):
+		push_error("RELEASE_RESOURCE_WIRING_FAIL torpedo debit")
+		get_tree().quit(1)
+		return
+	print("RELEASE_RESOURCE_WIRING_PASS")
 	game.submarine.sonar.advance(0.25)
 	view._process(0)
 	if view.pings[0].z<0.24 or not view.veil.visible:

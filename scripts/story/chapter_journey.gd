@@ -6,6 +6,9 @@ var scene: ShelfPrototype
 var habitat: TwilightHabitat
 var visibility: TwilightVisibility
 var expedition: TwilightExpedition
+const ACTION_COSTS: ActionCostProfile = preload("res://resources/balance/twilight_action_costs.tres")
+var _shallow_ping_cost: float
+var _shallow_torpedo_cost: float
 var _shallow_resources: SubmarineResourceConfig
 var layout: TwilightShelfLayout
 var state: Dictionary = ExpeditionJourneyState.fresh()
@@ -17,6 +20,8 @@ var _prompt_open: bool = false
 var _pause_title: String
 func setup(game: ShelfPrototype) -> void:
 	scene = game
+	_shallow_ping_cost = scene.submarine.sonar.battery_cost()
+	_shallow_torpedo_cost = scene.torpedoes.battery_cost()
 	_shallow_resources = scene.submarine.resource_system.configuration
 	set_physics_process(false)
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
@@ -127,6 +132,12 @@ func prepare(value: Dictionary) -> void:
 		var oxygen: float = pools.oxygen
 		pools.configure(profile)
 		pools.restore_snapshot(battery,oxygen)
+	if not ACTION_COSTS.is_valid():
+		push_error("Invalid Twilight action costs")
+		return
+	var ping_result: Error = scene.submarine.sonar.set_battery_cost(ACTION_COSTS.ping_battery if active() else _shallow_ping_cost)
+	var torpedo_result: Error = scene.torpedoes.set_battery_cost(ACTION_COSTS.torpedo_battery if active() else _shallow_torpedo_cost)
+	if ping_result!=OK or torpedo_result!=OK: push_error("Regional action cost selection failed")
 	scene.chapter.dressing.set_legacy_hidden(active() or scene.chapter.active)
 	if not active():
 		scene.exploration_map.canvas.chart_caption = ""

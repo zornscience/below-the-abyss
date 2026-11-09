@@ -1,0 +1,1685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="GutTests" failures="0" tests="752" >
+  <testsuite name="tests/unit/test_accessibility_settings.gd" tests="6" failures="0" skipped="0" time="0.117576" >
+      <testcase name="test_preferences_roundtrip_preserves_audio_and_bindings" assertions="7" status="pass" classname="tests/unit/test_accessibility_settings.gd" time="0.007777" >
+      </testcase>
+      <testcase name="test_legacy_three_and_four_field_settings_gain_defaults_in_memory_only" assertions="6" status="pass" classname="tests/unit/test_accessibility_settings.gd" time="0.002926" >
+      </testcase>
+      <testcase name="test_invalid_preferences_reject_without_partial_application" assertions="61" status="pass" classname="tests/unit/test_accessibility_settings.gd" time="0.102438" >
+      </testcase>
+      <testcase name="test_explicit_invalid_settings_recovery_preserves_original_and_never_overwrites_backup" assertions="8" status="pass" classname="tests/unit/test_accessibility_settings.gd" time="0.002175" >
+      </testcase>
+      <testcase name="test_gameplay_remap_cannot_replace_fixed_menu_recovery" assertions="4" status="pass" classname="tests/unit/test_accessibility_settings.gd" time="0.001095" >
+      </testcase>
+      <testcase name="test_last_device_filters_prompts_and_ignores_drift" assertions="9" status="pass" classname="tests/unit/test_accessibility_settings.gd" time="0.001165" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_acoustic_acceptance.gd" tests="2" failures="0" skipped="0" time="0.001668" >
+      <testcase name="test_acceptance_gate_runs_only_for_valid_new_events_and_preserves_history_semantics" assertions="9" status="pass" classname="tests/unit/test_acoustic_acceptance.gd" time="0.000918" >
+      </testcase>
+      <testcase name="test_acceptance_gate_is_locked_and_cannot_mutate_the_frozen_payload" assertions="3" status="pass" classname="tests/unit/test_acoustic_acceptance.gd" time="0.00075" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_acoustic_bus.gd" tests="14" failures="0" skipped="0" time="0.00911" >
+      <testcase name="test_registration_is_idempotent_and_conflicting_stable_ids_are_rejected" assertions="11" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.00066" >
+      </testcase>
+      <testcase name="test_invalid_outside_tree_and_cross_bus_registration_are_rejected" assertions="10" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000529" >
+      </testcase>
+      <testcase name="test_removal_is_explicit_and_removed_receivers_never_receive" assertions="9" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000495" >
+      </testcase>
+      <testcase name="test_range_and_receiver_radius_boundaries_are_inclusive_and_zero_is_coincident_only" assertions="12" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.00096" >
+      </testcase>
+      <testcase name="test_types_classifications_sources_enablement_and_thresholds_filter_without_duplicates" assertions="11" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000804" >
+      </testcase>
+      <testcase name="test_attenuation_is_optional_and_minimum_strength_uses_the_attenuated_value" assertions="11" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000673" >
+      </testcase>
+      <testcase name="test_duplicate_ids_are_suppressed_and_conflicting_payloads_are_rejected" assertions="9" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000545" >
+      </testcase>
+      <testcase name="test_history_capacity_fails_closed_without_eviction_and_configure_preserves_history" assertions="11" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000619" >
+      </testcase>
+      <testcase name="test_invalid_events_or_unregistered_and_spoofed_sources_do_not_consume_history" assertions="8" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000353" >
+      </testcase>
+      <testcase name="test_delivery_is_sorted_by_stable_receiver_id_not_registration_order" assertions="7" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.00102" >
+      </testcase>
+      <testcase name="test_callback_mutations_cannot_change_other_recipients_or_the_history_payload" assertions="11" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000705" >
+      </testcase>
+      <testcase name="test_reentrant_dispatch_is_busy_and_does_not_record_a_rejected_event" assertions="5" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000414" >
+      </testcase>
+      <testcase name="test_large_finite_world_coordinates_do_not_overflow_distance_calculation" assertions="6" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000366" >
+      </testcase>
+      <testcase name="test_emitter_validates_requests_and_notifies_only_for_accepted_events" assertions="11" status="pass" classname="tests/unit/test_acoustic_bus.gd" time="0.000967" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_acoustic_event.gd" tests="6" failures="0" skipped="0" time="0.001463" >
+      <testcase name="test_valid_event_has_explicit_stable_identity_units_and_time" assertions="11" status="pass" classname="tests/unit/test_acoustic_event.gd" time="0.000292" >
+      </testcase>
+      <testcase name="test_empty_oversized_or_unsupported_tokens_are_rejected_in_every_field" assertions="18" status="pass" classname="tests/unit/test_acoustic_event.gd" time="0.000256" >
+      </testcase>
+      <testcase name="test_negative_nonfinite_and_nonfinite_position_values_are_rejected" assertions="16" status="pass" classname="tests/unit/test_acoustic_event.gd" time="0.000295" >
+      </testcase>
+      <testcase name="test_snapshots_are_distinct_and_payload_comparison_uses_all_fields" assertions="11" status="pass" classname="tests/unit/test_acoustic_event.gd" time="0.000294" >
+      </testcase>
+      <testcase name="test_profiles_validate_finite_bounds_tokens_and_modes" assertions="9" status="pass" classname="tests/unit/test_acoustic_event.gd" time="0.00015" >
+      </testcase>
+      <testcase name="test_optional_attenuation_is_bounded_and_zero_range_has_no_division" assertions="5" status="pass" classname="tests/unit/test_acoustic_event.gd" time="0.000176" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_action_cost_profile.gd" tests="2" failures="0" skipped="0" time="0.000309" >
+      <testcase name="test_resource_budget_is_computed_with_slow_travel_unchanged" assertions="8" status="pass" classname="tests/unit/test_action_cost_profile.gd" time="0.000215" >
+      </testcase>
+      <testcase name="test_profile_rejects_invalid_costs" assertions="8" status="pass" classname="tests/unit/test_action_cost_profile.gd" time="0.000094" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_active_sonar.gd" tests="18" failures="0" skipped="0" time="0.03064" >
+      <testcase name="test_ping_charges_exactly_once_and_starts_cooldown_only_on_acceptance" assertions="9" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.001241" >
+      </testcase>
+      <testcase name="test_insufficient_and_failed_final_cost_do_not_emit_or_start_cooldown" assertions="12" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.001259" >
+      </testcase>
+      <testcase name="test_exact_energy_and_exact_cooldown_boundary_are_accepted" assertions="6" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000746" >
+      </testcase>
+      <testcase name="test_invalid_duplicate_conflicting_and_full_ledger_requests_never_charge" assertions="12" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000917" >
+      </testcase>
+      <testcase name="test_wavefront_and_exact_range_wait_for_arrival_and_outside_stays_hidden" assertions="12" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.002443" >
+      </testcase>
+      <testcase name="test_duplicate_receipts_and_repeat_reveals_are_suppressed_per_ping" assertions="4" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.001503" >
+      </testcase>
+      <testcase name="test_removed_unbound_rebound_and_freed_targets_cancel_pending_reveals" assertions="6" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.00212" >
+      </testcase>
+      <testcase name="test_target_added_after_emission_receives_no_old_ping_or_late_reveal" assertions="3" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000843" >
+      </testcase>
+      <testcase name="test_restart_cancels_pulses_and_reveals_without_clearing_acoustic_history" assertions="11" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.001433" >
+      </testcase>
+      <testcase name="test_large_steps_and_30_60_120_steps_preserve_arrival_expiry_cooldown_and_cost" assertions="27" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.007445" >
+      </testcase>
+      <testcase name="test_invalid_config_preserves_rules_and_invalid_delta_preserves_clock" assertions="14" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000987" >
+      </testcase>
+      <testcase name="test_battery_signal_reentrancy_cannot_double_charge_or_emit" assertions="4" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000676" >
+      </testcase>
+      <testcase name="test_eligible_filters_are_owned_by_the_bus_and_direct_acoustics_do_not_spawn_waves" assertions="5" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.00081" >
+      </testcase>
+      <testcase name="test_zero_cost_empty_battery_and_configurable_pulse_limit" assertions="6" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000809" >
+      </testcase>
+      <testcase name="test_pulse_radius_is_bounded_and_shared_profile_edits_do_not_change_active_rules" assertions="5" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.000514" >
+      </testcase>
+      <testcase name="test_bus_teardown_cancels_pending_arrivals_and_reports_offline" assertions="6" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.00154" >
+      </testcase>
+      <testcase name="test_overlapping_pings_refresh_visibility_from_arrival_times_without_duplicate_reveals" assertions="8" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.001559" >
+      </testcase>
+      <testcase name="test_removing_the_sonar_owner_clears_its_temporary_reveals_and_visuals" assertions="5" status="pass" classname="tests/unit/test_active_sonar.gd" time="0.003795" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_ambient_acoustics.gd" tests="5" failures="0" skipped="0" time="0.020679" >
+      <testcase name="test_global_schedule_order_ids_and_contacts_match_at_30_60_120_and_large_steps" assertions="31" status="pass" classname="tests/unit/test_ambient_acoustics.gd" time="0.018256" >
+      </testcase>
+      <testcase name="test_restart_uses_new_epoch_ids_and_retains_acoustic_history" assertions="6" status="pass" classname="tests/unit/test_ambient_acoustics.gd" time="0.00107" >
+      </testcase>
+      <testcase name="test_emission_budget_and_full_bus_stop_without_retry_floods" assertions="8" status="pass" classname="tests/unit/test_ambient_acoustics.gd" time="0.000713" >
+      </testcase>
+      <testcase name="test_emitter_configuration_rejects_active_types_invalid_frequency_and_nonfinite_values" assertions="7" status="pass" classname="tests/unit/test_ambient_acoustics.gd" time="0.000171" >
+      </testcase>
+      <testcase name="test_conflicting_source_registration_rolls_back_only_new_bindings" assertions="3" status="pass" classname="tests/unit/test_ambient_acoustics.gd" time="0.000469" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_bounded_resource.gd" tests="7" failures="0" skipped="0" time="0.004221" >
+      <testcase name="test_consumption_and_refill_saturate_and_return_actual_transfers" assertions="7" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.000271" >
+      </testcase>
+      <testcase name="test_discrete_costs_are_all_or_nothing" assertions="7" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.000252" >
+      </testcase>
+      <testcase name="test_depletion_is_an_edge_and_rearms_after_refill" assertions="5" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.000301" >
+      </testcase>
+      <testcase name="test_zero_and_invalid_transfers_do_not_change_state_or_emit" assertions="18" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.000368" >
+      </testcase>
+      <testcase name="test_explicit_values_clamp_but_nonfinite_values_are_rejected" assertions="10" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.000224" >
+      </testcase>
+      <testcase name="test_small_capacities_and_fractional_endpoint_drift_are_supported" assertions="6" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.002519" >
+      </testcase>
+      <testcase name="test_transfer_result_is_stable_when_an_observer_refills_on_depletion" assertions="3" status="pass" classname="tests/unit/test_bounded_resource.gd" time="0.000286" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_campaign_data.gd" tests="9" failures="0" skipped="0" time="0.004453" >
+      <testcase name="test_finite_budget_requires_real_authored_award_ids_and_cannot_overspend" assertions="9" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000469" >
+      </testcase>
+      <testcase name="test_duplicate_invalid_and_malformed_ledgers_are_rejected" assertions="7" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000296" >
+      </testcase>
+      <testcase name="test_reassignment_preserves_total_earned_and_permanent_awards" assertions="3" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000119" >
+      </testcase>
+      <testcase name="test_legacy_upgrade_ids_migrate_into_paid_ranks_without_double_stacking" assertions="5" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.00029" >
+      </testcase>
+      <testcase name="test_v3_save_migrates_ammunition_and_allocations_in_memory" assertions="6" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.002178" >
+      </testcase>
+      <testcase name="test_prototype_save_rejects_invalid_ammunition_and_unknown_fields" assertions="7" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000126" >
+      </testcase>
+      <testcase name="test_research_tree_resource_has_monotonic_capabilities_and_valid_bounds" assertions="2" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000152" >
+      </testcase>
+      <testcase name="test_launch_profile_rejects_invalid_acceleration_or_cruise_speed" assertions="3" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000122" >
+      </testcase>
+      <testcase name="test_recovery_merges_earned_progress_without_creating_additional_currency" assertions="5" status="pass" classname="tests/unit/test_campaign_data.gd" time="0.000701" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_creature_state.gd" tests="14" failures="0" skipped="0" time="0.005772" >
+      <testcase name="test_patrol_waypoints_wrap_without_sound" assertions="5" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000288" >
+      </testcase>
+      <testcase name="test_sound_receipt_is_pending_until_simulation_advance_then_investigates_origin" assertions="6" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000289" >
+      </testcase>
+      <testcase name="test_total_priority_is_order_independent_for_overlapping_events" assertions="9" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000433" >
+      </testcase>
+      <testcase name="test_strength_then_timestamp_then_source_break_priority_ties" assertions="5" status="pass" classname="tests/unit/test_creature_state.gd" time="0.0003" >
+      </testcase>
+      <testcase name="test_active_ping_outweighs_stronger_ambient_noise" assertions="2" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000269" >
+      </testcase>
+      <testcase name="test_duplicate_pending_or_current_event_cannot_extend_deadline" assertions="5" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000314" >
+      </testcase>
+      <testcase name="test_retargeting_does_not_restart_fixed_investigation_deadline" assertions="5" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000259" >
+      </testcase>
+      <testcase name="test_exact_timeout_and_recovery_are_simulation_time" assertions="8" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000323" >
+      </testcase>
+      <testcase name="test_arrival_returns_to_nearest_patrol_location" assertions="6" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000397" >
+      </testcase>
+      <testcase name="test_unreachable_goal_returns_and_blocked_patrol_skips_without_teleport_logic" assertions="4" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000372" >
+      </testcase>
+      <testcase name="test_range_strength_filters_bounds_and_unknown_types_fail_closed" assertions="6" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000311" >
+      </testcase>
+      <testcase name="test_stale_and_far_future_timestamps_are_rejected_and_near_future_waits" assertions="6" status="pass" classname="tests/unit/test_creature_state.gd" time="0.00032" >
+      </testcase>
+      <testcase name="test_invalid_tuning_or_time_cannot_mutate_valid_runtime_rules" assertions="9" status="pass" classname="tests/unit/test_creature_state.gd" time="0.000383" >
+      </testcase>
+      <testcase name="test_timeout_is_identical_at_30_60_120_steps" assertions="10" status="pass" classname="tests/unit/test_creature_state.gd" time="0.001514" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_depth_mapping.gd" tests="3" failures="0" skipped="0" time="0.000627" >
+      <testcase name="test_surface_reference_scale_and_above_water_clamping" assertions="5" status="pass" classname="tests/unit/test_depth_mapping.gd" time="0.000181" >
+      </testcase>
+      <testcase name="test_region_transforms_are_applied_before_depth_conversion" assertions="2" status="pass" classname="tests/unit/test_depth_mapping.gd" time="0.000181" >
+      </testcase>
+      <testcase name="test_invalid_mapping_coordinates_and_singular_transform_are_rejected" assertions="11" status="pass" classname="tests/unit/test_depth_mapping.gd" time="0.000265" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_discovery_registry.gd" tests="5" failures="0" skipped="0" time="0.002002" >
+      <testcase name="test_authored_ids_are_unique_stable_and_initially_hidden" assertions="8" status="pass" classname="tests/unit/test_discovery_registry.gd" time="0.000324" >
+      </testcase>
+      <testcase name="test_duplicate_discovery_is_idempotent_and_signals_once" assertions="9" status="pass" classname="tests/unit/test_discovery_registry.gd" time="0.000655" >
+      </testcase>
+      <testcase name="test_catalog_rejects_duplicate_ids_targets_and_invalid_definitions" assertions="10" status="pass" classname="tests/unit/test_discovery_registry.gd" time="0.000291" >
+      </testcase>
+      <testcase name="test_restore_validates_entire_list_then_merges_without_erasing" assertions="8" status="pass" classname="tests/unit/test_discovery_registry.gd" time="0.000448" >
+      </testcase>
+      <testcase name="test_authored_and_returned_resources_cannot_mutate_registry_metadata" assertions="5" status="pass" classname="tests/unit/test_discovery_registry.gd" time="0.000284" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_discovery_store.gd" tests="7" failures="0" skipped="0" time="0.0106" >
+      <testcase name="test_missing_file_roundtrip_atomic_replace_and_last_valid_backup" assertions="10" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.001581" >
+      </testcase>
+      <testcase name="test_corrupt_unknown_ids_duplicates_and_wrong_types_never_partially_load_or_overwrite" assertions="42" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.003131" >
+      </testcase>
+      <testcase name="test_incompatible_version_and_oversize_are_preserved" assertions="5" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.0008" >
+      </testcase>
+      <testcase name="test_external_corruption_blocks_save_without_destroying_valid_backup" assertions="7" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.002048" >
+      </testcase>
+      <testcase name="test_explicit_backup_recovery_preserves_rejected_file_and_unsaved_discoveries" assertions="7" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.001106" >
+      </testcase>
+      <testcase name="test_invalid_or_missing_backup_and_failed_write_preserve_memory" assertions="6" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.000812" >
+      </testcase>
+      <testcase name="test_retry_after_manual_file_repair_merges_and_saves_pending_discoveries" assertions="6" status="pass" classname="tests/unit/test_discovery_store.gd" time="0.001122" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_expedition_store.gd" tests="8" failures="0" skipped="0" time="0.182854" >
+      <testcase name="test_version_one_migrates_in_memory_without_overwriting_original" assertions="9" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.0054" >
+      </testcase>
+      <testcase name="test_missing_atomic_roundtrip_and_checkpoint_backup_preserve_latest_claims" assertions="6" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.007119" >
+      </testcase>
+      <testcase name="test_wrong_versions_types_fields_regions_and_resource_bounds_are_rejected" assertions="78" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.118412" >
+      </testcase>
+      <testcase name="test_invalid_position_structure_progress_and_route_never_partially_validate" assertions="21" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.028654" >
+      </testcase>
+      <testcase name="test_corruption_explicit_recovery_keeps_rejected_claim_and_blocks_second_recovery" assertions="6" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.008182" >
+      </testcase>
+      <testcase name="test_missing_primary_with_backup_is_not_silently_replaced" assertions="3" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.005407" >
+      </testcase>
+      <testcase name="test_invalid_backup_size_limit_and_write_failure_preserve_originals" assertions="5" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.004683" >
+      </testcase>
+      <testcase name="test_stale_writer_cannot_remove_persistent_claim_or_upgrade" assertions="2" status="pass" classname="tests/unit/test_expedition_store.gd" time="0.004997" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_feedback_foundation.gd" tests="9" failures="0" skipped="0" time="0.007589" >
+      <testcase name="test_expanded_authored_catalogs_are_valid_and_do_not_replace_legacy_records" assertions="7" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.000834" >
+      </testcase>
+      <testcase name="test_battery_travel_window_and_sonar_relative_cost_are_authored" assertions="4" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.000237" >
+      </testcase>
+      <testcase name="test_legacy_bindings_migrate_without_overwriting_custom_controls" assertions="3" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.000859" >
+      </testcase>
+      <testcase name="test_optional_tutorial_preferences_validate_and_scoped_defaults_preserve_choice" assertions="4" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.000306" >
+      </testcase>
+      <testcase name="test_real_excavation_removes_solid_area_and_supports_an_internal_hole" assertions="7" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.000993" >
+      </testcase>
+      <testcase name="test_terrain_record_bounds_and_unknown_authored_ids_reject" assertions="4" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.000165" >
+      </testcase>
+      <testcase name="test_legacy_completed_checkpoint_migrates_without_erasing_the_ending" assertions="4" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.001321" >
+      </testcase>
+      <testcase name="test_completed_legacy_checkpoint_migrates_without_requiring_outer_missions" assertions="3" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.00116" >
+      </testcase>
+      <testcase name="test_malformed_terrain_and_conclusion_fields_are_rejected" assertions="5" status="pass" classname="tests/unit/test_feedback_foundation.gd" time="0.001714" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_fish_schools.gd" tests="4" failures="0" skipped="0" time="0.054881" >
+      <testcase name="test_population_and_invalid_configuration_are_bounded" assertions="8" status="pass" classname="tests/unit/test_fish_schools.gd" time="0.000236" >
+      </testcase>
+      <testcase name="test_schooling_separation_and_smooth_turns_stay_in_habitat" assertions="9602" status="pass" classname="tests/unit/test_fish_schools.gd" time="0.040327" >
+      </testcase>
+      <testcase name="test_only_eligible_loud_sounds_startle_once_with_bounded_history" assertions="6" status="pass" classname="tests/unit/test_fish_schools.gd" time="0.001939" >
+      </testcase>
+      <testcase name="test_fixed_step_school_motion_matches_at_30_60_120_and_reset" assertions="25" status="pass" classname="tests/unit/test_fish_schools.gd" time="0.012379" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_graybox_route.gd" tests="5" failures="0" skipped="0" time="0.001723" >
+      <testcase name="test_base_alone_and_a_return_without_the_landmark_do_not_complete" assertions="5" status="pass" classname="tests/unit/test_graybox_route.gd" time="0.00019" >
+      </testcase>
+      <testcase name="test_landmark_then_return_completes_once_and_freezes_the_result" assertions="8" status="pass" classname="tests/unit/test_graybox_route.gd" time="0.000333" >
+      </testcase>
+      <testcase name="test_invalid_time_and_ambiguous_zone_samples_do_not_fake_completion" assertions="6" status="pass" classname="tests/unit/test_graybox_route.gd" time="0.000166" >
+      </testcase>
+      <testcase name="test_route_clock_is_consistent_at_30_60_and_120_steps" assertions="6" status="pass" classname="tests/unit/test_graybox_route.gd" time="0.000801" >
+      </testcase>
+      <testcase name="test_zone_uses_its_authored_collision_shape_and_transform" assertions="3" status="pass" classname="tests/unit/test_graybox_route.gd" time="0.000233" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_hammerhead_state.gd" tests="3" failures="0" skipped="0" time="0.002924" >
+      <testcase name="test_visual_warning_holds_motion_and_cannot_damage_before_pursuit" assertions="8" status="pass" classname="tests/unit/test_hammerhead_state.gd" time="0.000401" >
+      </testcase>
+      <testcase name="test_obscured_targets_and_targets_outside_optional_lagoon_do_not_trigger" assertions="2" status="pass" classname="tests/unit/test_hammerhead_state.gd" time="0.000207" >
+      </testcase>
+      <testcase name="test_ram_budget_and_escape_match_30_60_120_steps" assertions="7" status="pass" classname="tests/unit/test_hammerhead_state.gd" time="0.002316" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_harness.gd" tests="2" failures="0" skipped="0" time="0.006515" >
+      <testcase name="test_json_round_trip_preserves_sample_data" assertions="1" status="pass" classname="tests/unit/test_harness.gd" time="0.000197" >
+      </testcase>
+      <testcase name="test_main_scene_contains_the_movement_prototype" assertions="5" status="pass" classname="tests/unit/test_harness.gd" time="0.006318" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_input_bindings.gd" tests="6" failures="0" skipped="0" time="0.051153" >
+      <testcase name="test_defaults_cover_keyboard_controller_and_menu_navigation" assertions="58" status="pass" classname="tests/unit/test_input_bindings.gd" time="0.002755" >
+      </testcase>
+      <testcase name="test_remap_replaces_one_device_group_and_preserves_the_other" assertions="6" status="pass" classname="tests/unit/test_input_bindings.gd" time="0.001184" >
+      </testcase>
+      <testcase name="test_conflicting_unknown_and_unsupported_remaps_leave_state_unchanged" assertions="6" status="pass" classname="tests/unit/test_input_bindings.gd" time="0.005626" >
+      </testcase>
+      <testcase name="test_controller_axis_remap_round_trip" assertions="6" status="pass" classname="tests/unit/test_input_bindings.gd" time="0.006979" >
+      </testcase>
+      <testcase name="test_analog_deadzone_and_diagonal_vector_are_applied_by_godot" assertions="4" status="pass" classname="tests/unit/test_input_bindings.gd" time="0.028252" >
+      </testcase>
+      <testcase name="test_reapplying_bindings_releases_held_actions_and_rejects_invalid_data" assertions="6" status="pass" classname="tests/unit/test_input_bindings.gd" time="0.006357" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_mission_service.gd" tests="11" failures="0" skipped="0" time="0.034169" >
+      <testcase name="test_catalog_validation_stable_ids_target_validation_and_defensive_snapshots" assertions="10" status="pass" classname="tests/unit/test_mission_service.gd" time="0.001094" >
+      </testcase>
+      <testcase name="test_accept_unknown_repeat_and_claim_before_completion_are_noops" assertions="9" status="pass" classname="tests/unit/test_mission_service.gd" time="0.001866" >
+      </testcase>
+      <testcase name="test_domain_signal_progress_duplicates_and_route_order_are_idempotent" assertions="11" status="pass" classname="tests/unit/test_mission_service.gd" time="0.003202" >
+      </testcase>
+      <testcase name="test_prior_permanent_discoveries_and_scans_and_current_complete_route_count_on_accept" assertions="8" status="pass" classname="tests/unit/test_mission_service.gd" time="0.002134" >
+      </testcase>
+      <testcase name="test_scan_must_be_completed_and_unrelated_evidence_does_not_count" assertions="4" status="pass" classname="tests/unit/test_mission_service.gd" time="0.001834" >
+      </testcase>
+      <testcase name="test_restart_and_reload_never_replay_completion_or_claim_and_keep_partial_route_evidence" assertions="9" status="pass" classname="tests/unit/test_mission_service.gd" time="0.004193" >
+      </testcase>
+      <testcase name="test_reentrant_transitions_are_blocked_and_acknowledgement_is_saved_before_signal" assertions="5" status="pass" classname="tests/unit/test_mission_service.gd" time="0.001979" >
+      </testcase>
+      <testcase name="test_save_failure_and_corruption_do_not_grant_completion_or_rewards" assertions="9" status="pass" classname="tests/unit/test_mission_service.gd" time="0.003043" >
+      </testcase>
+      <testcase name="test_30_60_120_steps_produce_identical_persistent_state_and_one_completion" assertions="7" status="pass" classname="tests/unit/test_mission_service.gd" time="0.0108" >
+      </testcase>
+      <testcase name="test_failed_route_progress_can_be_retried_after_test_restart_without_redetecting_route" assertions="5" status="pass" classname="tests/unit/test_mission_service.gd" time="0.002997" >
+      </testcase>
+      <testcase name="test_state_of_matches_snapshot_without_copying_and_tracks_changes" assertions="5" status="pass" classname="tests/unit/test_mission_service.gd" time="0.001027" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_mission_store.gd" tests="8" failures="0" skipped="0" time="0.019049" >
+      <testcase name="test_missing_roundtrip_atomic_checkpoint_contains_latest_claim" assertions="6" status="pass" classname="tests/unit/test_mission_store.gd" time="0.001163" >
+      </testcase>
+      <testcase name="test_invalid_states_ids_progress_and_reward_combinations_are_rejected" assertions="45" status="pass" classname="tests/unit/test_mission_store.gd" time="0.004925" >
+      </testcase>
+      <testcase name="test_wrong_schema_catalog_format_extra_fields_malformed_and_size_limit" assertions="11" status="pass" classname="tests/unit/test_mission_store.gd" time="0.003226" >
+      </testcase>
+      <testcase name="test_corruption_recovery_preserves_claim_and_rejected_and_blocks_second_recovery" assertions="6" status="pass" classname="tests/unit/test_mission_store.gd" time="0.002351" >
+      </testcase>
+      <testcase name="test_missing_primary_with_backup_requires_explicit_recovery" assertions="3" status="pass" classname="tests/unit/test_mission_store.gd" time="0.001148" >
+      </testcase>
+      <testcase name="test_monotonic_recovery_merge_and_stale_write_cannot_erase_claims" assertions="4" status="pass" classname="tests/unit/test_mission_store.gd" time="0.002916" >
+      </testcase>
+      <testcase name="test_failed_write_and_missing_invalid_backup_preserve_files" assertions="4" status="pass" classname="tests/unit/test_mission_store.gd" time="0.000779" >
+      </testcase>
+      <testcase name="test_deleted_or_stale_primary_cannot_overwrite_newer_claim_checkpoint" assertions="3" status="pass" classname="tests/unit/test_mission_store.gd" time="0.002541" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_narrative_service.gd" tests="11" failures="0" skipped="0" time="0.046428" >
+      <testcase name="test_catalog_has_valid_unique_stable_records_and_rejects_invalid_authored_text" assertions="8" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.001582" >
+      </testcase>
+      <testcase name="test_opening_briefing_is_always_readable_while_all_future_evidence_is_hidden" assertions="12" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.001154" >
+      </testcase>
+      <testcase name="test_intentional_acceptance_uses_existing_two_missions_and_is_repeat_safe" assertions="9" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.003196" >
+      </testcase>
+      <testcase name="test_discovery_is_not_scan_and_primary_record_requires_deliberate_scientific_completion" assertions="9" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.001761" >
+      </testcase>
+      <testcase name="test_out_of_order_prior_scan_discovery_and_completed_route_are_credited_on_acceptance" assertions="9" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.003006" >
+      </testcase>
+      <testcase name="test_return_before_scan_and_scan_after_return_never_softlock" assertions="7" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.005284" >
+      </testcase>
+      <testcase name="test_restart_telemetry_does_not_erase_permanent_return_objective_or_records" assertions="5" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.005739" >
+      </testcase>
+      <testcase name="test_optional_geology_is_not_required_for_debrief" assertions="5" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.005726" >
+      </testcase>
+      <testcase name="test_restore_is_silent_and_records_do_not_duplicate_when_loaded_or_reconciled" assertions="9" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.0057" >
+      </testcase>
+      <testcase name="test_invalid_setup_and_failed_write_do_not_claim_or_hide_progress" assertions="7" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.0016" >
+      </testcase>
+      <testcase name="test_same_story_progress_at_30_60_120_simulation_steps" assertions="7" status="pass" classname="tests/unit/test_narrative_service.gd" time="0.01168" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_passive_sonar.gd" tests="11" failures="0" skipped="0" time="0.013443" >
+      <testcase name="test_receives_ambient_classification_and_approximate_strength_without_producing_events" assertions="8" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.001363" >
+      </testcase>
+      <testcase name="test_range_strength_classification_and_active_event_filters_use_acoustic_receiver" assertions="12" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.001888" >
+      </testcase>
+      <testcase name="test_relative_bearings_cover_cardinals_rotation_wrap_and_coincident_source" assertions="13" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.001959" >
+      </testcase>
+      <testcase name="test_quantization_is_configurable_and_unknown_classification_is_preserved_in_api" assertions="5" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.000809" >
+      </testcase>
+      <testcase name="test_duplicate_events_do_not_refresh_contacts_and_expiry_is_exact_simulation_time" assertions="7" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.000815" >
+      </testcase>
+      <testcase name="test_new_events_refresh_one_contact_per_source_and_old_samples_cannot_replace_newer" assertions="6" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.001145" >
+      </testcase>
+      <testcase name="test_bounded_contacts_keep_strongest_with_stable_id_ties_and_snapshot_isolation" assertions="7" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.001904" >
+      </testcase>
+      <testcase name="test_source_unbind_free_and_identity_replacement_remove_contacts_without_clearing_history" assertions="12" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.001193" >
+      </testcase>
+      <testcase name="test_suspend_resume_freezes_expiry_and_ignores_incoming_ambient_events" assertions="5" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.00078" >
+      </testcase>
+      <testcase name="test_invalid_profiles_and_time_preserve_valid_rules_and_contacts" assertions="10" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.00098" >
+      </testcase>
+      <testcase name="test_bus_teardown_detaches_listener_and_clears_contacts" assertions="2" status="pass" classname="tests/unit/test_passive_sonar.gd" time="0.000607" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_playtest_recorder.gd" tests="7" failures="0" skipped="0" time="0.016868" >
+      <testcase name="test_disabled_by_default_and_no_data_before_opt_in" assertions="4" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.000321" >
+      </testcase>
+      <testcase name="test_random_sessions_build_identity_and_valid_lifecycle" assertions="9" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.000764" >
+      </testcase>
+      <testcase name="test_counts_duplicate_ids_and_bounded_history_preserve_totals" assertions="8" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.007316" >
+      </testcase>
+      <testcase name="test_exact_split_timing_completion_and_thirty_sixty_one_twenty_steps" assertions="21" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.001755" >
+      </testcase>
+      <testcase name="test_privacy_allowlist_rejects_arbitrary_keys_text_and_invalid_numbers" assertions="10" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.000412" >
+      </testcase>
+      <testcase name="test_store_roundtrip_text_interrupted_checkpoint_and_corruption_preservation" assertions="9" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.00404" >
+      </testcase>
+      <testcase name="test_authored_creature_hearing_survives_binary_resource_roundtrip" assertions="14" status="pass" classname="tests/unit/test_playtest_recorder.gd" time="0.00226" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_predator_state.gd" tests="10" failures="0" skipped="0" time="0.024097" >
+      <testcase name="test_only_eligible_player_sound_starts_warning_and_passive_listening_is_silent" assertions="11" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000845" >
+      </testcase>
+      <testcase name="test_warning_is_complete_before_pursuit_or_contact_damage_even_at_same_position" assertions="9" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000556" >
+      </testcase>
+      <testcase name="test_duplicate_and_repeated_pings_cannot_restart_warning_or_extend_episode" assertions="11" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000752" >
+      </testcase>
+      <testcase name="test_retreat_outside_habitat_immediately_disengages_and_stops_damage" assertions="7" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000568" >
+      </testcase>
+      <testcase name="test_pursuit_distance_boundary_and_missing_target_force_disengagement" assertions="10" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000612" >
+      </testcase>
+      <testcase name="test_damage_radius_obstruction_and_exact_cooldown_suppress_contact_jitter" assertions="11" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000613" >
+      </testcase>
+      <testcase name="test_unreachable_target_returns_using_base_fsm_and_recovery_ignores_sounds" assertions="8" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000562" >
+      </testcase>
+      <testcase name="test_invalid_profile_and_time_cannot_change_valid_state" assertions="14" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000969" >
+      </testcase>
+      <testcase name="test_restart_clears_aggression_and_requires_new_warning_before_damage" assertions="11" status="pass" classname="tests/unit/test_predator_state.gd" time="0.000716" >
+      </testcase>
+      <testcase name="test_30_60_120_steps_have_identical_phase_deadlines_and_bounded_damage" assertions="538" status="pass" classname="tests/unit/test_predator_state.gd" time="0.017904" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_radio_playback.gd" tests="3" failures="0" skipped="0" time="0.001279" >
+      <testcase name="test_transmission_types_then_holds_before_expiring" assertions="6" status="pass" classname="tests/unit/test_radio_playback.gd" time="0.000305" >
+      </testcase>
+      <testcase name="test_static_accessible_transmission_still_gets_reading_time" assertions="5" status="pass" classname="tests/unit/test_radio_playback.gd" time="0.000261" >
+      </testcase>
+      <testcase name="test_clock_is_consistent_at_30_60_120_steps" assertions="6" status="pass" classname="tests/unit/test_radio_playback.gd" time="0.000713" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_research_experience.gd" tests="7" failures="0" skipped="0" time="0.012906" >
+      <testcase name="test_authored_awards_thresholds_and_cap_are_derived_not_stacked" assertions="9" status="pass" classname="tests/unit/test_research_experience.gd" time="0.000964" >
+      </testcase>
+      <testcase name="test_imported_and_prototype_records_never_gain_retroactive_xp" assertions="4" status="pass" classname="tests/unit/test_research_experience.gd" time="0.00063" >
+      </testcase>
+      <testcase name="test_unknown_duplicate_malformed_or_orphan_awards_are_rejected" assertions="9" status="pass" classname="tests/unit/test_research_experience.gd" time="0.00043" >
+      </testcase>
+      <testcase name="test_backup_merges_earned_once_and_keeps_allocations_intentional" assertions="4" status="pass" classname="tests/unit/test_research_experience.gd" time="0.000849" >
+      </testcase>
+      <testcase name="test_version_six_migrates_records_without_xp_or_loss_of_prior_state" assertions="11" status="pass" classname="tests/unit/test_research_experience.gd" time="0.004033" >
+      </testcase>
+      <testcase name="test_xp_configuration_rejects_invalid_or_duplicate_authored_rules" assertions="3" status="pass" classname="tests/unit/test_research_experience.gd" time="0.000188" >
+      </testcase>
+      <testcase name="test_malformed_legacy_progress_is_rejected_before_migration_reads_nested_fields" assertions="6" status="pass" classname="tests/unit/test_research_experience.gd" time="0.005812" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_research_pricing.gd" tests="7" failures="0" skipped="0" time="0.008034" >
+      <testcase name="test_starting_budget_purchases_one_rank_and_complete_chapter_at_most_two" assertions="7" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.000357" >
+      </testcase>
+      <testcase name="test_refunding_and_reassigning_cannot_multiply_points" assertions="23" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.000577" >
+      </testcase>
+      <testcase name="test_old_fits_keep_their_effects_and_original_paid_cost" assertions="6" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.000286" >
+      </testcase>
+      <testcase name="test_every_branch_has_valid_authored_values_and_a_unique_icon" assertions="16" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.000222" >
+      </testcase>
+      <testcase name="test_version_seven_migrates_all_existing_progress_and_paid_allocations_without_mutation" assertions="11" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.004494" >
+      </testcase>
+      <testcase name="test_new_blast_size_is_valid_only_in_new_save_version_and_unknown_ranks_are_rejected" assertions="2" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.001642" >
+      </testcase>
+      <testcase name="test_authored_engine_ranks_keep_one_second_response_consistent_across_physics_rates" assertions="8" status="pass" classname="tests/unit/test_research_pricing.gd" time="0.000456" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_research_store.gd" tests="7" failures="0" skipped="0" time="0.013561" >
+      <testcase name="test_missing_file_roundtrip_atomic_replace_and_last_valid_backup" assertions="10" status="pass" classname="tests/unit/test_research_store.gd" time="0.001809" >
+      </testcase>
+      <testcase name="test_corrupt_unknown_ids_duplicates_and_wrong_types_never_partially_load_or_overwrite" assertions="42" status="pass" classname="tests/unit/test_research_store.gd" time="0.004114" >
+      </testcase>
+      <testcase name="test_incompatible_version_and_oversize_are_preserved" assertions="5" status="pass" classname="tests/unit/test_research_store.gd" time="0.001328" >
+      </testcase>
+      <testcase name="test_external_corruption_blocks_save_without_destroying_valid_backup" assertions="7" status="pass" classname="tests/unit/test_research_store.gd" time="0.001596" >
+      </testcase>
+      <testcase name="test_explicit_backup_recovery_preserves_rejected_file_and_unsaved_records" assertions="7" status="pass" classname="tests/unit/test_research_store.gd" time="0.001778" >
+      </testcase>
+      <testcase name="test_invalid_or_missing_backup_and_failed_write_preserve_memory" assertions="6" status="pass" classname="tests/unit/test_research_store.gd" time="0.001091" >
+      </testcase>
+      <testcase name="test_retry_after_manual_file_repair_merges_and_saves_pending_records" assertions="6" status="pass" classname="tests/unit/test_research_store.gd" time="0.001845" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_scientific_scanner.gd" tests="12" failures="0" skipped="0" time="0.017015" >
+      <testcase name="test_hidden_targets_are_ineligible_and_never_show_scientific_metadata" assertions="7" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000771" >
+      </testcase>
+      <testcase name="test_inclusive_range_boundary_and_outside_rejection" assertions="11" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000826" >
+      </testcase>
+      <testcase name="test_completion_and_repeated_attempts_emit_exactly_once" assertions="11" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.001236" >
+      </testcase>
+      <testcase name="test_intentional_second_activation_cancels_and_resets_progress" assertions="10" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.00081" >
+      </testcase>
+      <testcase name="test_leaving_range_interrupts_without_banking_partial_progress" assertions="8" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000695" >
+      </testcase>
+      <testcase name="test_removed_target_interrupts_safely" assertions="6" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.00064" >
+      </testcase>
+      <testcase name="test_pause_preserves_progress_rejects_activation_and_invalid_time_preserves_state" assertions="11" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000753" >
+      </testcase>
+      <testcase name="test_30_60_120_steps_complete_at_same_simulation_deadline" assertions="19" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.007845" >
+      </testcase>
+      <testcase name="test_nearest_selection_and_lexical_id_tie_are_deterministic" assertions="7" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000857" >
+      </testcase>
+      <testcase name="test_invalid_catalogs_and_bindings_are_rejected_without_reconfiguring" assertions="9" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000763" >
+      </testcase>
+      <testcase name="test_restore_is_atomic_merges_and_never_replays_completion_events" assertions="10" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.00117" >
+      </testcase>
+      <testcase name="test_restart_cancels_partial_scan_and_preserves_completed_records" assertions="7" status="pass" classname="tests/unit/test_scientific_scanner.gd" time="0.000649" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_settings_store.gd" tests="6" failures="0" skipped="0" time="0.110289" >
+      <testcase name="test_save_reload_round_trip_and_overwrite" assertions="8" status="pass" classname="tests/unit/test_settings_store.gd" time="0.007834" >
+      </testcase>
+      <testcase name="test_missing_and_corrupt_files_preserve_current_settings" assertions="5" status="pass" classname="tests/unit/test_settings_store.gd" time="0.00519" >
+      </testcase>
+      <testcase name="test_invalid_documents_are_rejected_without_partial_application" assertions="67" status="pass" classname="tests/unit/test_settings_store.gd" time="0.089441" >
+      </testcase>
+      <testcase name="test_oversized_file_and_write_failure_are_reported" assertions="2" status="pass" classname="tests/unit/test_settings_store.gd" time="0.00093" >
+      </testcase>
+      <testcase name="test_invalid_deadzone_and_snapshot_mutation_do_not_change_state" assertions="7" status="pass" classname="tests/unit/test_settings_store.gd" time="0.006313" >
+      </testcase>
+      <testcase name="test_per_frame_accessors_match_snapshot_and_follow_changes" assertions="7" status="pass" classname="tests/unit/test_settings_store.gd" time="0.000581" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_soundscape.gd" tests="12" failures="0" skipped="0" time="0.092226" >
+      <testcase name="test_buses_routes_and_original_loop_imports" assertions="37" status="pass" classname="tests/unit/test_soundscape.gd" time="0.004639" >
+      </testcase>
+      <testcase name="test_settings_roundtrip_and_legacy_input_only_file" assertions="7" status="pass" classname="tests/unit/test_soundscape.gd" time="0.009192" >
+      </testcase>
+      <testcase name="test_invalid_audio_is_rejected_without_partial_application" assertions="23" status="pass" classname="tests/unit/test_soundscape.gd" time="0.033736" >
+      </testcase>
+      <testcase name="test_missing_sounds_and_invalid_cues_fail_safely" assertions="6" status="pass" classname="tests/unit/test_soundscape.gd" time="0.004399" >
+      </testcase>
+      <testcase name="test_cue_and_global_concurrency_caps_and_expiry" assertions="15" status="pass" classname="tests/unit/test_soundscape.gd" time="0.004392" >
+      </testcase>
+      <testcase name="test_mute_and_category_zero_stop_or_suppress_requests" assertions="8" status="pass" classname="tests/unit/test_soundscape.gd" time="0.003537" >
+      </testcase>
+      <testcase name="test_settings_binding_updates_levels_live_without_changing_input" assertions="2" status="pass" classname="tests/unit/test_soundscape.gd" time="0.007711" >
+      </testcase>
+      <testcase name="test_mix_fades_and_crossfades_consistently_at_30_60_120_steps" assertions="14" status="pass" classname="tests/unit/test_soundscape.gd" time="0.007292" >
+      </testcase>
+      <testcase name="test_contact_classifications_do_not_add_directional_precision" assertions="4" status="pass" classname="tests/unit/test_soundscape.gd" time="0.004026" >
+      </testcase>
+      <testcase name="test_corrupt_audio_file_preserves_input_and_current_mix_settings" assertions="3" status="pass" classname="tests/unit/test_soundscape.gd" time="0.007604" >
+      </testcase>
+      <testcase name="test_echo_duck_is_restrained_and_recovers_smoothly" assertions="4" status="pass" classname="tests/unit/test_soundscape.gd" time="0.002978" >
+      </testcase>
+      <testcase name="test_resource_and_predator_alarms_never_overlap_or_queue_stale_warnings" assertions="8" status="pass" classname="tests/unit/test_soundscape.gd" time="0.00272" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_station_services.gd" tests="10" failures="0" skipped="0" time="0.008572" >
+      <testcase name="test_docking_radius_is_inclusive_speed_limited_and_world_position_based" assertions="5" status="pass" classname="tests/unit/test_station_services.gd" time="0.00079" >
+      </testcase>
+      <testcase name="test_arrival_and_opening_interaction_never_restore_resources" assertions="6" status="pass" classname="tests/unit/test_station_services.gd" time="0.000569" >
+      </testcase>
+      <testcase name="test_explicit_free_service_restores_using_domain_apis_and_reports_before_after" assertions="11" status="pass" classname="tests/unit/test_station_services.gd" time="0.000924" >
+      </testcase>
+      <testcase name="test_individual_services_and_limits_clamp_without_changing_other_resources" assertions="8" status="pass" classname="tests/unit/test_station_services.gd" time="0.000671" >
+      </testcase>
+      <testcase name="test_ineligible_missing_session_unpaused_out_of_range_offline_and_unknown_service_fail_without_mutation" assertions="8" status="pass" classname="tests/unit/test_station_services.gd" time="0.000511" >
+      </testcase>
+      <testcase name="test_reentrant_resource_or_service_callbacks_cannot_duplicate_operation" assertions="4" status="pass" classname="tests/unit/test_station_services.gd" time="0.001195" >
+      </testcase>
+      <testcase name="test_invalid_profiles_and_duplicate_notices_preserve_valid_configuration" assertions="8" status="pass" classname="tests/unit/test_station_services.gd" time="0.001456" >
+      </testcase>
+      <testcase name="test_runtime_tuning_and_notice_snapshots_are_copied_and_board_has_no_progression_state" assertions="5" status="pass" classname="tests/unit/test_station_services.gd" time="0.000897" >
+      </testcase>
+      <testcase name="test_depleted_resources_can_be_restored_without_resetting_component_identity" assertions="6" status="pass" classname="tests/unit/test_station_services.gd" time="0.00091" >
+      </testcase>
+      <testcase name="test_departed_or_removed_vessel_cannot_use_stale_session" assertions="4" status="pass" classname="tests/unit/test_station_services.gd" time="0.000649" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_story_state.gd" tests="14" failures="0" skipped="0" time="0.017632" >
+      <testcase name="test_fresh_state_is_zero_neutral_and_has_no_flags_or_decisions" assertions="4" status="pass" classname="tests/unit/test_story_state.gd" time="0.000619" >
+      </testcase>
+      <testcase name="test_all_provisional_tier_boundaries" assertions="11" status="pass" classname="tests/unit/test_story_state.gd" time="0.000345" >
+      </testcase>
+      <testcase name="test_authored_bloom_choices_are_valid_and_mutually_exclusive" assertions="11" status="pass" classname="tests/unit/test_story_state.gd" time="0.001309" >
+      </testcase>
+      <testcase name="test_negative_outcome_has_one_negative_effect" assertions="5" status="pass" classname="tests/unit/test_story_state.gd" time="0.00048" >
+      </testcase>
+      <testcase name="test_clamping_and_meaningful_tier_signals_with_distinct_choices" assertions="30" status="pass" classname="tests/unit/test_story_state.gd" time="0.007875" >
+      </testcase>
+      <testcase name="test_provisional_exceptional_weight_is_supported_without_future_zone_content" assertions="5" status="pass" classname="tests/unit/test_story_state.gd" time="0.000444" >
+      </testcase>
+      <testcase name="test_invalid_authored_ids_and_duplicate_catalog_entries_reject" assertions="5" status="pass" classname="tests/unit/test_story_state.gd" time="0.000333" >
+      </testcase>
+      <testcase name="test_failed_persistence_does_not_mutate_or_emit_rewards" assertions="6" status="pass" classname="tests/unit/test_story_state.gd" time="0.001045" >
+      </testcase>
+      <testcase name="test_port_receives_candidate_before_exposure_and_reentrancy_is_rejected" assertions="6" status="pass" classname="tests/unit/test_story_state.gd" time="0.0005" >
+      </testcase>
+      <testcase name="test_restore_is_validated_and_completely_silent" assertions="9" status="pass" classname="tests/unit/test_story_state.gd" time="0.001183" >
+      </testcase>
+      <testcase name="test_malformed_inconsistent_duplicate_or_conflicting_snapshots_reject" assertions="10" status="pass" classname="tests/unit/test_story_state.gd" time="0.000981" >
+      </testcase>
+      <testcase name="test_validated_extra_flag_api_does_not_change_resonance_or_repeat" assertions="6" status="pass" classname="tests/unit/test_story_state.gd" time="0.000442" >
+      </testcase>
+      <testcase name="test_history_merge_preserves_decisions_and_refuses_opposite_branches" assertions="5" status="pass" classname="tests/unit/test_story_state.gd" time="0.0012" >
+      </testcase>
+      <testcase name="test_live_restore_cannot_erase_an_applied_decision_to_replay_it" assertions="5" status="pass" classname="tests/unit/test_story_state.gd" time="0.000876" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_submarine_damage.gd" tests="10" failures="0" skipped="0" time="0.009667" >
+      <testcase name="test_warning_threshold_boundaries_and_transition_notifications" assertions="8" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000802" >
+      </testcase>
+      <testcase name="test_pressure_grace_split_steps_and_return_to_safe_water" assertions="9" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000799" >
+      </testcase>
+      <testcase name="test_long_pressure_steps_are_bounded_and_only_charge_time_after_grace" assertions="4" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000472" >
+      </testcase>
+      <testcase name="test_zero_pressure_rate_retains_depth_warning_without_hull_loss" assertions="5" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000604" >
+      </testcase>
+      <testcase name="test_effective_maximum_depth_interface_updates_rules_without_an_upgrade_system" assertions="11" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000794" >
+      </testcase>
+      <testcase name="test_impact_threshold_damage_cap_and_hull_clamping" assertions="7" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000841" >
+      </testcase>
+      <testcase name="test_contact_episode_latch_prevents_continuous_or_corner_repeated_damage" assertions="3" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000506" >
+      </testcase>
+      <testcase name="test_cooldown_suppresses_a_new_episode_without_queuing_a_delayed_hit" assertions="2" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.00025" >
+      </testcase>
+      <testcase name="test_pressure_and_cooldown_are_consistent_at_30_60_and_120_steps" assertions="6" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.003751" >
+      </testcase>
+      <testcase name="test_invalid_inputs_and_profiles_preserve_active_state" assertions="30" status="pass" classname="tests/unit/test_submarine_damage.gd" time="0.000848" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_submarine_hud.gd" tests="10" failures="0" skipped="0" time="0.256667" >
+      <testcase name="test_initial_snapshot_includes_changes_before_the_hud_was_bound" assertions="8" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.036772" >
+      </testcase>
+      <testcase name="test_domain_changes_update_numbers_and_bars_without_a_process_tick" assertions="5" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.02002" >
+      </testcase>
+      <testcase name="test_non_default_capacity_is_normalized_and_keeps_numeric_units" assertions="4" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.024372" >
+      </testcase>
+      <testcase name="test_warning_boundaries_and_rating_changes_update_immediately" assertions="9" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.027281" >
+      </testcase>
+      <testcase name="test_pressure_grace_is_sampled_from_simulation_and_not_hud_time" assertions="4" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.021787" >
+      </testcase>
+      <testcase name="test_disabled_pressure_profile_is_not_presented_as_active_damage" assertions="4" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.021131" >
+      </testcase>
+      <testcase name="test_all_depletions_persist_and_positive_refill_clears_each_warning" assertions="15" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.021475" >
+      </testcase>
+      <testcase name="test_damage_feedback_uses_actual_damage_and_independent_bounded_lifetimes" assertions="7" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.028175" >
+      </testcase>
+      <testcase name="test_rebinding_disconnects_old_sources_and_never_duplicates_listeners" assertions="6" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.028374" >
+      </testcase>
+      <testcase name="test_unbound_or_destroyed_sources_show_disconnected_not_stale_healthy_values" assertions="7" status="pass" classname="tests/unit/test_submarine_hud.gd" time="0.02728" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_submarine_hull.gd" tests="4" failures="0" skipped="0" time="0.003119" >
+      <testcase name="test_damage_repair_and_source_are_explicit_and_clamped" assertions="9" status="pass" classname="tests/unit/test_submarine_hull.gd" time="0.000999" >
+      </testcase>
+      <testcase name="test_destroyed_emits_once_until_positive_repair" assertions="9" status="pass" classname="tests/unit/test_submarine_hull.gd" time="0.000757" >
+      </testcase>
+      <testcase name="test_invalid_damage_repairs_and_profiles_leave_state_and_signals_intact" assertions="17" status="pass" classname="tests/unit/test_submarine_hull.gd" time="0.000935" >
+      </testcase>
+      <testcase name="test_independent_hulls_and_reconfiguration_start_full" assertions="7" status="pass" classname="tests/unit/test_submarine_hull.gd" time="0.000428" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_submarine_motion.gd" tests="7" failures="0" skipped="0" time="0.001826" >
+      <testcase name="test_acceleration_and_reversal_do_not_instantly_change_velocity" assertions="3" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.000242" >
+      </testcase>
+      <testcase name="test_neutral_damping_coasts_then_stops_without_reversing" assertions="4" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.000353" >
+      </testcase>
+      <testcase name="test_speed_limit_includes_diagonal_and_oversized_input" assertions="4" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.000259" >
+      </testcase>
+      <testcase name="test_partial_analog_input_sets_a_proportional_target_speed" assertions="1" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.00015" >
+      </testcase>
+      <testcase name="test_acceleration_and_drag_match_at_30_60_and_120_steps_per_second" assertions="6" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.000328" >
+      </testcase>
+      <testcase name="test_parameters_are_configurable_without_mutating_authored_data" assertions="5" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.000311" >
+      </testcase>
+      <testcase name="test_zero_time_and_rest_are_stable" assertions="2" status="pass" classname="tests/unit/test_submarine_motion.gd" time="0.000183" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_submarine_resources.gd" tests="8" failures="0" skipped="0" time="0.058599" >
+      <testcase name="test_configurable_capacities_and_transfer_interfaces" assertions="12" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.000477" >
+      </testcase>
+      <testcase name="test_idle_thrust_and_oxygen_drains_use_elapsed_seconds" assertions="9" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.000415" >
+      </testcase>
+      <testcase name="test_change_signals_include_current_and_maximum_and_noops_are_silent" assertions="7" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.001133" >
+      </testcase>
+      <testcase name="test_depletion_signals_once_per_emptying_and_refills_rearm" assertions="7" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.000844" >
+      </testcase>
+      <testcase name="test_invalid_amounts_steps_and_profiles_preserve_valid_state" assertions="55" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.001359" >
+      </testcase>
+      <testcase name="test_zero_rates_and_extreme_finite_duration_are_safe" assertions="9" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.000448" >
+      </testcase>
+      <testcase name="test_drain_and_depletion_match_at_30_60_and_120_steps_per_second" assertions="21" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.053069" >
+      </testcase>
+      <testcase name="test_vessels_share_authoring_data_but_not_current_values" assertions="9" status="pass" classname="tests/unit/test_submarine_resources.gd" time="0.000854" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_thermal_vent.gd" tests="6" failures="0" skipped="0" time="0.017975" >
+      <testcase name="test_profile_rejects_invalid_damage_durations_and_unsafe_plumes" assertions="9" status="pass" classname="tests/unit/test_thermal_vent.gd" time="0.000189" >
+      </testcase>
+      <testcase name="test_exact_phase_boundaries_and_no_pre_warning_damage" assertions="27" status="pass" classname="tests/unit/test_thermal_vent.gd" time="0.000797" >
+      </testcase>
+      <testcase name="test_frame_rate_consistency_and_damage_bound_per_cycle" assertions="6" status="pass" classname="tests/unit/test_thermal_vent.gd" time="0.015192" >
+      </testcase>
+      <testcase name="test_crossing_eruption_edge_only_charges_overlapping_time" assertions="1" status="pass" classname="tests/unit/test_thermal_vent.gd" time="0.000282" >
+      </testcase>
+      <testcase name="test_outside_jet_never_damages_and_reset_provides_quiet_arrival" assertions="42" status="pass" classname="tests/unit/test_thermal_vent.gd" time="0.001206" >
+      </testcase>
+      <testcase name="test_invalid_advance_does_not_change_clock_or_charge_damage" assertions="5" status="pass" classname="tests/unit/test_thermal_vent.gd" time="0.000309" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_twilight_chapter_data.gd" tests="5" failures="0" skipped="0" time="0.058905" >
+      <testcase name="test_catalogue_addition_preserves_each_old_record_and_stable_id" assertions="8" status="pass" classname="tests/unit/test_twilight_chapter_data.gd" time="0.002813" >
+      </testcase>
+      <testcase name="test_required_objectives_exclude_optional_loggers_and_use_domain_kinds" assertions="14" status="pass" classname="tests/unit/test_twilight_chapter_data.gd" time="0.000766" >
+      </testcase>
+      <testcase name="test_choices_are_exclusive_with_provisional_weight_and_explicit_failure" assertions="6" status="pass" classname="tests/unit/test_twilight_chapter_data.gd" time="0.000601" >
+      </testcase>
+      <testcase name="test_optional_science_reuses_existing_lifetime_cap_and_does_not_double_credit" assertions="3" status="pass" classname="tests/unit/test_twilight_chapter_data.gd" time="0.000492" >
+      </testcase>
+      <testcase name="test_profile_rates_are_finite_and_budget_scales_at_30_60_120_steps" assertions="7" status="pass" classname="tests/unit/test_twilight_chapter_data.gd" time="0.054233" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_twilight_survey_data.gd" tests="2" failures="0" skipped="0" time="0.003042" >
+      <testcase name="test_optional_records_are_valid_unique_and_not_new_mission_gates" assertions="32" status="pass" classname="tests/unit/test_twilight_survey_data.gd" time="0.0026" >
+      </testcase>
+      <testcase name="test_subject_images_distinguish_living_contact_wood_instruments_and_thermal_material" assertions="9" status="pass" classname="tests/unit/test_twilight_survey_data.gd" time="0.000442" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_twilight_visibility.gd" tests="3" failures="0" skipped="0" time="0.00245" >
+      <testcase name="test_wavefront_arrival_range_and_fade" assertions="8" status="pass" classname="tests/unit/test_twilight_visibility.gd" time="0.000378" >
+      </testcase>
+      <testcase name="test_quiet_navigation_and_invalid_configuration" assertions="4" status="pass" classname="tests/unit/test_twilight_visibility.gd" time="0.000205" >
+      </testcase>
+      <testcase name="test_darkness_preference_roundtrip_and_legacy_defaults" assertions="6" status="pass" classname="tests/unit/test_twilight_visibility.gd" time="0.001867" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_ui_typography.gd" tests="4" failures="0" skipped="0" time="0.019742" >
+      <testcase name="test_semantic_hierarchy_and_distinct_scales" assertions="17" status="pass" classname="tests/unit/test_ui_typography.gd" time="0.000382" >
+      </testcase>
+      <testcase name="test_scaling_does_not_accumulate_and_popup_matches_button" assertions="18" status="pass" classname="tests/unit/test_ui_typography.gd" time="0.001896" >
+      </testcase>
+      <testcase name="test_wrapped_footer_actions_retain_real_width" assertions="2" status="pass" classname="tests/unit/test_ui_typography.gd" time="0.016644" >
+      </testcase>
+      <testcase name="test_dialog_bounds_preserve_margins_at_each_resolution" assertions="12" status="pass" classname="tests/unit/test_ui_typography.gd" time="0.00082" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/unit/test_upgrade_store.gd" tests="8" failures="0" skipped="0" time="0.011261" >
+      <testcase name="test_catalog_has_precisely_two_unique_stable_absolute_upgrades" assertions="9" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.000672" >
+      </testcase>
+      <testcase name="test_invalid_authored_definitions_and_baselines_rejected" assertions="10" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.000542" >
+      </testcase>
+      <testcase name="test_missing_roundtrip_last_good_backup_and_no_runtime_values_saved" assertions="10" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.00152" >
+      </testcase>
+      <testcase name="test_strict_invalid_documents_block_install_without_partial_state_or_overwrite" assertions="42" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.004014" >
+      </testcase>
+      <testcase name="test_incompatible_schema_fractional_boolean_and_oversize_rejected" assertions="14" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.001876" >
+      </testcase>
+      <testcase name="test_external_corruption_retains_backup_and_blocks_subsequent_write" assertions="5" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.000996" >
+      </testcase>
+      <testcase name="test_explicit_recovery_preserves_rejected_and_never_overwrites_it" assertions="7" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.001139" >
+      </testcase>
+      <testcase name="test_missing_bad_backup_and_failed_write_are_safe" assertions="5" status="pass" classname="tests/unit/test_upgrade_store.gd" time="0.000502" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_accelerating_torpedoes.gd" tests="4" failures="0" skipped="0" time="0.007725" >
+      <testcase name="test_accelerated_distance_and_cruise_cap_match_30_60_120_steps" assertions="9" status="pass" classname="tests/integration/test_accelerating_torpedoes.gd" time="0.001141" >
+      </testcase>
+      <testcase name="test_launch_is_slow_before_it_reaches_cruise_speed" assertions="2" status="pass" classname="tests/integration/test_accelerating_torpedoes.gd" time="0.00016" >
+      </testcase>
+      <testcase name="test_trail_remains_bounded_fades_and_survives_impact_until_expiry" assertions="5" status="pass" classname="tests/integration/test_accelerating_torpedoes.gd" time="0.005431" >
+      </testcase>
+      <testcase name="test_distortion_is_local_and_comfort_mode_suppresses_lens_and_flash" assertions="4" status="pass" classname="tests/integration/test_accelerating_torpedoes.gd" time="0.000993" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_accessibility.gd" tests="10" failures="0" skipped="0" time="7.636808" >
+      <testcase name="test_accessibility_panel_controller_preview_save_cancel_and_scoped_defaults" assertions="9" status="pass" classname="tests/integration/test_accessibility.gd" time="0.788806" >
+      </testcase>
+      <testcase name="test_remapped_pause_confirm_and_map_confirm_preserve_menu_accept_and_fixed_cancel" assertions="3" status="pass" classname="tests/integration/test_accessibility.gd" time="0.700793" >
+      </testcase>
+      <testcase name="test_disconnect_pauses_piloting_releases_thrust_and_keeps_confirmation_modal" assertions="5" status="pass" classname="tests/integration/test_accessibility.gd" time="0.379186" >
+      </testcase>
+      <testcase name="test_disconnect_cancels_remap_capture_and_keyboard_can_exit_embedded_settings" assertions="4" status="pass" classname="tests/integration/test_accessibility.gd" time="0.414606" >
+      </testcase>
+      <testcase name="test_prompts_track_remaps_and_last_deliberate_device" assertions="4" status="pass" classname="tests/integration/test_accessibility.gd" time="0.512087" >
+      </testcase>
+      <testcase name="test_reduced_effects_change_presentation_only_and_new_pulses_inherit_preferences" assertions="9" status="pass" classname="tests/integration/test_accessibility.gd" time="0.538425" >
+      </testcase>
+      <testcase name="test_large_hud_and_all_menu_controls_fit_or_scroll_at_supported_resolutions" assertions="40" status="pass" classname="tests/integration/test_accessibility.gd" time="1.957554" >
+      </testcase>
+      <testcase name="test_research_and_notice_text_have_controller_reachable_scroll_controls" assertions="4" status="pass" classname="tests/integration/test_accessibility.gd" time="0.422861" >
+      </testcase>
+      <testcase name="test_muted_large_controller_debrief_and_checkpoint_reload_keep_accessibility_separate" assertions="12" status="pass" classname="tests/integration/test_accessibility.gd" time="1.062674" >
+      </testcase>
+      <testcase name="test_compact_font_floor_and_high_contrast_focus_restore_without_accumulation" assertions="5" status="pass" classname="tests/integration/test_accessibility.gd" time="0.859816" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_acoustic_creature.gd" tests="10" failures="0" skipped="0" time="7.825855" >
+      <testcase name="test_player_ping_drives_existing_receiver_without_creature_emission_or_damage" assertions="10" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.416189" >
+      </testcase>
+      <testcase name="test_passive_listening_produces_no_reaction_and_optional_ambient_event_can_investigate" assertions="5" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="3.473877" >
+      </testcase>
+      <testcase name="test_dispatch_filters_duplicates_and_restart_retains_bounded_bus_history" assertions="17" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.383967" >
+      </testcase>
+      <testcase name="test_all_existing_modal_and_debug_pauses_freeze_creature_and_ignore_sounds" assertions="20" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="1.166501" >
+      </testcase>
+      <testcase name="test_navigation_routes_around_pillar_and_checks_every_edge_against_terrain" assertions="38" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.37936" >
+      </testcase>
+      <testcase name="test_unreachable_solid_sound_destination_returns_without_wall_penetration" assertions="65" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.365531" >
+      </testcase>
+      <testcase name="test_controller_motion_and_state_are_equivalent_at_30_60_120_steps" assertions="3368" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.410833" >
+      </testcase>
+      <testcase name="test_receiver_lifecycle_cleanup_does_not_change_history" assertions="2" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.39084" >
+      </testcase>
+      <testcase name="test_actual_motion_routes_around_pillar_and_recovers_patrol_without_position_jumps" assertions="4324" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.453653" >
+      </testcase>
+      <testcase name="test_new_thin_obstacle_cannot_be_tunnelled_through_and_causes_safe_recovery" assertions="965" status="pass" classname="tests/integration/test_acoustic_creature.gd" time="0.385104" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_acoustic_lifecycle.gd" tests="8" failures="0" skipped="0" time="0.019841" >
+      <testcase name="test_example_delivers_to_eligible_receivers_once_and_excludes_far_and_filtered" assertions="4" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.001372" >
+      </testcase>
+      <testcase name="test_freed_queued_and_exited_receivers_are_cleaned_without_stale_delivery" assertions="13" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.003122" >
+      </testcase>
+      <testcase name="test_emitter_exit_clears_registration_and_requires_explicit_rebind" assertions="8" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.001186" >
+      </testcase>
+      <testcase name="test_bus_exit_detaches_live_endpoints_and_keeps_session_history_until_destroyed" assertions="11" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.000959" >
+      </testcase>
+      <testcase name="test_removal_and_reregistration_during_callback_cannot_deliver_a_stale_snapshot" assertions="7" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.001221" >
+      </testcase>
+      <testcase name="test_queue_free_and_immediate_free_during_callbacks_cancel_later_deliveries" assertions="7" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.001474" >
+      </testcase>
+      <testcase name="test_queued_bus_stops_remaining_deliveries_and_detaches_everyone" assertions="7" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.009199" >
+      </testcase>
+      <testcase name="test_event_metadata_uses_emitter_world_position_and_caller_simulation_time" assertions="9" status="pass" classname="tests/integration/test_acoustic_lifecycle.gd" time="0.001308" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_active_sonar_prototype.gd" tests="8" failures="0" skipped="0" time="15.459778" >
+      <testcase name="test_initial_readiness_hidden_targets_and_keyboard_wavefront_reveal" assertions="16" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="1.707503" >
+      </testcase>
+      <testcase name="test_gamepad_ping_uses_the_same_action_and_wave_origin_does_not_follow_vessel" assertions="5" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="0.775333" >
+      </testcase>
+      <testcase name="test_route_settings_and_debug_pauses_freeze_wave_cooldown_and_reveal_clocks" assertions="9" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="2.645464" >
+      </testcase>
+      <testcase name="test_route_restart_clears_sonar_state_preserves_history_and_can_ping_again" assertions="12" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="1.062918" >
+      </testcase>
+      <testcase name="test_low_energy_hud_and_removed_targets_do_not_break_a_ping" assertions="7" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="1.711174" >
+      </testcase>
+      <testcase name="test_actual_30_60_and_120_render_caps_keep_fixed_physics_sonar_consistent" assertions="27" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="6.12342" >
+      </testcase>
+      <testcase name="test_sonar_hud_states_fit_the_minimum_window" assertions="7" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="0.737175" >
+      </testcase>
+      <testcase name="test_saved_sonar_remapping_survives_route_restart" assertions="6" status="pass" classname="tests/integration/test_active_sonar_prototype.gd" time="0.696791" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_art_presentation.gd" tests="2" failures="0" skipped="0" time="0.089075" >
+      <testcase name="test_presentation_preserves_vessel_collision_and_only_flips_visual_facing" assertions="8" status="pass" classname="tests/integration/test_art_presentation.gd" time="0.001809" >
+      </testcase>
+      <testcase name="test_shelf_layers_are_decorative_and_solid_silhouettes_still_match_boundaries" assertions="33" status="pass" classname="tests/integration/test_art_presentation.gd" time="0.087266" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_chapter_journey.gd" tests="17" failures="0" skipped="0" time="18.710245" >
+      <testcase name="test_fresh_and_v8_migration_preserve_progress_and_do_not_commission" assertions="5" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.014339" >
+      </testcase>
+      <testcase name="test_journey_validation_rejects_unknown_phase_types_and_unearned_commissioning" assertions="7" status="pass" classname="tests/integration/test_chapter_journey.gd" time="0.903614" >
+      </testcase>
+      <testcase name="test_finish_requires_all_evidence_then_commits_once_without_physics_return" assertions="13" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.059386" >
+      </testcase>
+      <testcase name="test_failed_finish_preserves_pose_records_and_emits_no_reward" assertions="6" status="pass" classname="tests/integration/test_chapter_journey.gd" time="0.963618" >
+      </testcase>
+      <testcase name="test_keep_exploring_does_not_complete_and_log_has_same_explicit_finish_action" assertions="8" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.016217" >
+      </testcase>
+      <testcase name="test_deployment_is_full_350m_and_suitable_pressure_without_erasing_old_progress" assertions="17" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.22277" >
+      </testcase>
+      <testcase name="test_continue_preserves_actual_pose_supplies_and_does_not_recommission_or_reset_history" assertions="31" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.242143" >
+      </testcase>
+      <testcase name="test_tether_boundary_explicit_service_refit_and_resume_preserve_records" assertions="18" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.240864" >
+      </testcase>
+      <testcase name="test_failed_transfer_keeps_original_region_resources_and_checkpoint" assertions="7" status="pass" classname="tests/integration/test_chapter_journey.gd" time="0.983185" >
+      </testcase>
+      <testcase name="test_both_hull_width_loops_and_all_contours_have_clearance" assertions="37" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.136858" >
+      </testcase>
+      <testcase name="test_map_and_tracker_use_deep_bounds_without_old_halcyon_or_buoy_markers" assertions="12" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.110544" >
+      </testcase>
+      <testcase name="test_backup_recovery_preserves_commissioning_and_does_not_replay_acknowledgement" assertions="11" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.14384" >
+      </testcase>
+      <testcase name="test_commission_preserves_paid_hull_margin_and_displays_actual_comparison" assertions="9" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.139163" >
+      </testcase>
+      <testcase name="test_legacy_prototype_selection_preserves_records_and_uses_its_original_spawn" assertions="12" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.210863" >
+      </testcase>
+      <testcase name="test_stale_writer_cannot_uninstall_commissioning" assertions="7" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.266838" >
+      </testcase>
+      <testcase name="test_offscreen_service_obeys_existing_limits_and_offline_eligibility" assertions="11" status="pass" classname="tests/integration/test_chapter_journey.gd" time="1.202032" >
+      </testcase>
+      <testcase name="test_queued_decorative_region_rebuild_can_be_freed_during_camera_settle" assertions="1" status="pass" classname="tests/integration/test_chapter_journey.gd" time="0.853971" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_cinematic_title.gd" tests="7" failures="0" skipped="0" time="6.471231" >
+      <testcase name="test_title_animation_is_isolated_from_gameplay_and_progress" assertions="8" status="pass" classname="tests/integration/test_cinematic_title.gd" time="0.400509" >
+      </testcase>
+      <testcase name="test_reduced_motion_freezes_all_title_animation_and_hidden_title_stops_processing" assertions="8" status="pass" classname="tests/integration/test_cinematic_title.gd" time="0.690274" >
+      </testcase>
+      <testcase name="test_title_and_playable_vessel_share_master_without_changing_footprint_or_collisions" assertions="10" status="pass" classname="tests/integration/test_cinematic_title.gd" time="0.466472" >
+      </testcase>
+      <testcase name="test_keyboard_and_controller_reach_options_and_return_without_starting_or_changing_state" assertions="10" status="pass" classname="tests/integration/test_cinematic_title.gd" time="0.875751" >
+      </testcase>
+      <testcase name="test_mouse_options_and_intentional_begin_keep_existing_briefing_contract" assertions="6" status="pass" classname="tests/integration/test_cinematic_title.gd" time="0.72876" >
+      </testcase>
+      <testcase name="test_all_sizes_large_text_contrast_and_legacy_recovery_controls_remain_reachable" assertions="64" status="pass" classname="tests/integration/test_cinematic_title.gd" time="2.334509" >
+      </testcase>
+      <testcase name="test_accessibility_cancel_from_title_keeps_focus_on_visible_title_controls" assertions="9" status="pass" classname="tests/integration/test_cinematic_title.gd" time="0.974956" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_compact_interface.gd" tests="15" failures="0" skipped="0" time="10.162307" >
+      <testcase name="test_percentages_use_authoritative_capacity_and_exact_thirds_before_rounding" assertions="17" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.411963" >
+      </testcase>
+      <testcase name="test_invalid_readings_fail_closed_and_clamp_without_nan" assertions="14" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.425307" >
+      </testcase>
+      <testcase name="test_radio_arrival_and_expansion_leave_movement_and_initial_focus_untouched" assertions="7" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.634344" >
+      </testcase>
+      <testcase name="test_radio_queue_deferral_ack_duplicate_and_continue_preserve_authorities" assertions="10" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.478641" >
+      </testcase>
+      <testcase name="test_unread_badge_remains_after_preview_without_acknowledging" assertions="6" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.658734" >
+      </testcase>
+      <testcase name="test_tracker_follows_bloom_recording_return_and_claim" assertions="8" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.623335" >
+      </testcase>
+      <testcase name="test_old_custom_bindings_gain_collision_free_radio_and_retain_existing_keys" assertions="12" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.425979" >
+      </testcase>
+      <testcase name="test_production_layout_fits_and_separates_top_instruments_at_all_sizes" assertions="72" status="pass" classname="tests/integration/test_compact_interface.gd" time="2.129725" >
+      </testcase>
+      <testcase name="test_docking_upgrades_reload_and_non_default_capacity_update_the_compact_readings" assertions="13" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.541394" >
+      </testcase>
+      <testcase name="test_observed_bloom_and_tracker_restore_without_replaying_choice_or_exposing_later_objectives" assertions="6" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.57139" >
+      </testcase>
+      <testcase name="test_radio_failed_writes_leave_message_unread_and_do_not_accept_mission" assertions="5" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.384583" >
+      </testcase>
+      <testcase name="test_keyboard_and_controller_can_open_defer_scroll_cycle_and_accept_while_simulation_runs" assertions="9" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.484478" >
+      </testcase>
+      <testcase name="test_radio_and_danger_warning_never_overlap_at_minimum_large_text_size" assertions="10" status="pass" classname="tests/integration/test_compact_interface.gd" time="1.162768" >
+      </testcase>
+      <testcase name="test_legacy_tracker_never_exposes_available_missions_and_preserves_optional_records" assertions="5" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.412607" >
+      </testcase>
+      <testcase name="test_radio_consumes_remapped_confirm_navigation_commands_without_losing_later_pings" assertions="7" status="pass" classname="tests/integration/test_compact_interface.gd" time="0.817059" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_continental_shelf.gd" tests="12" failures="0" skipped="0" time="56.367776" >
+      <testcase name="test_default_scene_spawn_and_fixture_remain_valid" assertions="13" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.423784" >
+      </testcase>
+      <testcase name="test_required_loop_and_optional_branches_have_continuous_hull_clearance" assertions="42" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.369144" >
+      </testcase>
+      <testcase name="test_terrain_visuals_and_collision_layers_are_exact_and_zones_are_not_solid" assertions="45" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.398845" >
+      </testcase>
+      <testcase name="test_outer_boundaries_and_spires_block_swept_motion_without_penetration" assertions="18" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.444648" >
+      </testcase>
+      <testcase name="test_authored_depth_datum_thresholds_and_region_transform_are_consistent" assertions="8" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.395337" >
+      </testcase>
+      <testcase name="test_real_input_flight_completes_the_outbound_and_lower_return_with_reserves" assertions="30" status="pass" classname="tests/integration/test_continental_shelf.gd" time="48.386262" >
+      </testcase>
+      <testcase name="test_camera_bounds_follow_the_region_and_smoothing_tracks_interior_movement" assertions="7" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.584977" >
+      </testcase>
+      <testcase name="test_pressure_hazard_pause_and_restart_restore_a_clean_test_session" assertions="17" status="pass" classname="tests/integration/test_continental_shelf.gd" time="3.133443" >
+      </testcase>
+      <testcase name="test_keyboard_and_controller_can_resume_restart_and_open_existing_settings" assertions="16" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.631405" >
+      </testcase>
+      <testcase name="test_restart_preserves_saved_input_settings_and_camera_returns_to_base" assertions="7" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.516211" >
+      </testcase>
+      <testcase name="test_camera_clamps_at_the_station_east_boundary_and_deep_trench" assertions="6" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.383148" >
+      </testcase>
+      <testcase name="test_route_menu_fits_the_minimum_window_without_hiding_any_action" assertions="34" status="pass" classname="tests/integration/test_continental_shelf.gd" time="0.700572" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_depth_damage_prototype.gd" tests="6" failures="0" skipped="0" time="15.905266" >
+      <testcase name="test_authored_depth_warnings_and_exact_limit_keep_the_hull_safe" assertions="5" status="pass" classname="tests/integration/test_depth_damage_prototype.gd" time="1.543709" >
+      </testcase>
+      <testcase name="test_deep_shaft_can_be_reached_by_piloting_and_pressure_uses_hull_api" assertions="9" status="pass" classname="tests/integration/test_depth_damage_prototype.gd" time="5.995757" >
+      </testcase>
+      <testcase name="test_settings_and_resource_checks_freeze_pressure_grace_and_damage" assertions="5" status="pass" classname="tests/integration/test_depth_damage_prototype.gd" time="1.666033" >
+      </testcase>
+      <testcase name="test_grazing_and_insignificant_contacts_do_not_damage_hull" assertions="4" status="pass" classname="tests/integration/test_depth_damage_prototype.gd" time="2.499982" >
+      </testcase>
+      <testcase name="test_corner_contacts_are_aggregated_to_one_bounded_hit" assertions="3" status="pass" classname="tests/integration/test_depth_damage_prototype.gd" time="1.001233" >
+      </testcase>
+      <testcase name="test_pressure_matches_at_actual_30_60_and_120_render_caps" assertions="3" status="pass" classname="tests/integration/test_depth_damage_prototype.gd" time="3.198552" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_discovery_map.gd" tests="9" failures="0" skipped="0" time="8.69252" >
+      <testcase name="test_only_wavefront_arrival_discovers_and_permanence_outlives_echo" assertions="13" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.35508" >
+      </testcase>
+      <testcase name="test_passive_contacts_and_route_telemetry_do_not_discover" assertions="4" status="pass" classname="tests/integration/test_discovery_map.gd" time="3.372644" >
+      </testcase>
+      <testcase name="test_restart_and_reload_preserve_discoveries_without_revealing_temporary_targets" assertions="6" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.708379" >
+      </testcase>
+      <testcase name="test_map_shows_only_discovered_points_and_player_without_passive_or_secret_geometry" assertions="9" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.331666" >
+      </testcase>
+      <testcase name="test_keyboard_remapping_open_close_and_map_pause_restore_previous_mode" assertions="12" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.959503" >
+      </testcase>
+      <testcase name="test_controller_can_open_navigate_select_and_close_without_mouse" assertions="7" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.576221" >
+      </testcase>
+      <testcase name="test_discovery_consistent_at_30_60_120_steps_and_removed_target_cannot_discover" assertions="1693" status="pass" classname="tests/integration/test_discovery_map.gd" time="1.157424" >
+      </testcase>
+      <testcase name="test_map_fits_reference_compact_and_large_windows" assertions="24" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.926572" >
+      </testcase>
+      <testcase name="test_corrupt_file_is_visible_and_explicit_ui_recovery_preserves_pending_state" assertions="9" status="pass" classname="tests/integration/test_discovery_map.gd" time="0.305031" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_expanded_expedition.gd" tests="18" failures="0" skipped="0" time="9.939262" >
+      <testcase name="test_production_region_is_expanded_and_legacy_route_instructions_are_hidden" assertions="6" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.315771" >
+      </testcase>
+      <testcase name="test_starting_accepts_orders_and_tutorial_can_be_disabled_and_reloaded" assertions="9" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.283404" >
+      </testcase>
+      <testcase name="test_station_opens_graphical_overview_and_services_do_not_apply_on_arrival" assertions="7" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.320591" >
+      </testcase>
+      <testcase name="test_old_short_survey_no_longer_concludes_fresh_extended_chapter" assertions="2" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.394965" >
+      </testcase>
+      <testcase name="test_blast_damage_is_radial_bounded_and_suppressed_for_duplicate_ids" assertions="8" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.264787" >
+      </testcase>
+      <testcase name="test_fire_requires_energy_and_pause_freezes_projectiles" assertions="6" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.267827" >
+      </testcase>
+      <testcase name="test_excavation_persists_through_save_continue_and_new_expedition" assertions="7" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.314906" >
+      </testcase>
+      <testcase name="test_cooldown_cost_and_pause_are_consistent_at_30_60_120_steps" assertions="12" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.34287" >
+      </testcase>
+      <testcase name="test_invalid_aim_does_not_charge_and_duplicate_impact_is_idempotent" assertions="5" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.359498" >
+      </testcase>
+      <testcase name="test_killed_wildlife_cannot_be_scanned_and_passive_listening_has_no_blast" assertions="4" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.363431" >
+      </testcase>
+      <testcase name="test_clearance_uses_excavated_shapes_and_rejects_protected_bedrock" assertions="4" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.441464" >
+      </testcase>
+      <testcase name="test_station_keyboard_and_controller_focus_stays_on_the_current_page" assertions="12" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.36394" >
+      </testcase>
+      <testcase name="test_legacy_conclusion_is_preserved_without_requiring_new_outer_objectives" assertions="4" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.484229" >
+      </testcase>
+      <testcase name="test_tutorial_and_context_fit_without_covering_instruments" assertions="3" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.529422" >
+      </testcase>
+      <testcase name="test_ui_confirm_held_during_resume_cannot_fire_until_released" assertions="2" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.356693" >
+      </testcase>
+      <testcase name="test_blast_uses_existing_acoustic_bus_and_history_identity_contract" assertions="4" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.341579" >
+      </testcase>
+      <testcase name="test_two_real_projectiles_open_a_collision_accurate_passage" assertions="5" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="3.598031" >
+      </testcase>
+      <testcase name="test_pre_checkpoint_legacy_profile_retains_earned_chapter_ending" assertions="6" status="pass" classname="tests/integration/test_expanded_expedition.gd" time="0.595854" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_expanded_sunlit.gd" tests="18" failures="0" skipped="0" time="22.259693" >
+      <testcase name="test_authored_main_route_is_shallow_and_whole_hull_clear_after_three_blasts" assertions="69" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="1.011681" >
+      </testcase>
+      <testcase name="test_small_cut_or_blocked_shot_cannot_claim_traversal_but_off_center_hull_opening_counts" assertions="5" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.87566" >
+      </testcase>
+      <testcase name="test_three_real_projectiles_open_passage_without_harming_wildlife_or_protected_objects" assertions="15" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="5.453273" >
+      </testcase>
+      <testcase name="test_empty_ammunition_preserves_a_clear_return_and_deliberate_station_rearms" assertions="7" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.879095" >
+      </testcase>
+      <testcase name="test_hidden_buoy_has_no_sprite_prompt_map_marker_or_collision_until_wavefront" assertions="11" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.768574" >
+      </testcase>
+      <testcase name="test_failed_sonar_energy_cost_never_reveals_or_starts_cooldown" assertions="4" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.7833" >
+      </testcase>
+      <testcase name="test_first_science_scan_commits_xp_and_record_atomically_and_repeat_only_reviews" assertions="12" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.845982" >
+      </testcase>
+      <testcase name="test_failed_scan_write_has_no_record_xp_signal_or_popup" assertions="8" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.820927" >
+      </testcase>
+      <testcase name="test_clearance_xp_and_hidden_buoy_discovery_survive_restart_reload_and_no_signal_replay" assertions="14" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="2.0993" >
+      </testcase>
+      <testcase name="test_real_depth_mapping_warns_then_damages_and_ascent_stops_damage_at_all_rates" assertions="35" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="1.049549" >
+      </testcase>
+      <testcase name="test_school_habitats_avoid_solids_and_use_one_batch_per_population" assertions="33" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="1.142809" >
+      </testcase>
+      <testcase name="test_popup_is_nonblocking_bounded_and_yields_to_pressure_radio_and_pause" assertions="12" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.841748" >
+      </testcase>
+      <testcase name="test_map_has_charted_unknown_and_reported_layers_and_focusable_zoom_controls" assertions="14" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.942546" >
+      </testcase>
+      <testcase name="test_small_large_text_ui_fits_and_muting_never_hides_field_information" assertions="12" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="1.227501" >
+      </testcase>
+      <testcase name="test_pressure_radio_takes_priority_once_and_pause_does_not_advance_it" assertions="4" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.84298" >
+      </testcase>
+      <testcase name="test_primary_write_failure_recovers_record_and_xp_together_without_completion_replay" assertions="19" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.940702" >
+      </testcase>
+      <testcase name="test_depleted_hull_cannot_replace_safe_checkpoint_and_continue_preserves_science" assertions="12" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.944233" >
+      </testcase>
+      <testcase name="test_passive_ambient_contacts_cannot_reveal_buoy_startle_schools_or_award_xp" assertions="9" status="pass" classname="tests/integration/test_expanded_sunlit.gd" time="0.789833" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_expedition_resume.gd" tests="13" failures="0" skipped="0" time="8.54718" >
+      <testcase name="test_save_restore_position_orientation_resources_cooldown_and_route_without_motion" assertions="11" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.385506" >
+      </testcase>
+      <testcase name="test_reload_canonical_progress_preserves_claims_and_redirects_legacy_writes" assertions="18" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.811758" >
+      </testcase>
+      <testcase name="test_legacy_import_preserves_files_and_all_records_then_uses_single_checkpoint" assertions="5" status="pass" classname="tests/integration/test_expedition_resume.gd" time="1.014486" >
+      </testcase>
+      <testcase name="test_safe_position_recovery_preserves_supplies_and_resets_ephemeral_route" assertions="6" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.668566" >
+      </testcase>
+      <testcase name="test_corruption_blocks_save_and_explicit_backup_recovery_retains_claims" assertions="12" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.688492" >
+      </testcase>
+      <testcase name="test_manual_save_rejects_running_pressure_danger_and_threat_and_guards_reentry" assertions="5" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.362207" >
+      </testcase>
+      <testcase name="test_new_expedition_requires_ui_confirmation_and_retains_permanent_records" assertions="12" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.53849" >
+      </testcase>
+      <testcase name="test_repeated_save_continue_reset_transients_without_resetting_history_or_awards" assertions="20" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.451456" >
+      </testcase>
+      <testcase name="test_legacy_corruption_blocks_migration_until_validated_backup_recovery" assertions="6" status="pass" classname="tests/integration/test_expedition_resume.gd" time="1.079679" >
+      </testcase>
+      <testcase name="test_station_docking_autosaves_current_values_without_automatic_refill" assertions="7" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.387362" >
+      </testcase>
+      <testcase name="test_invalid_saved_resources_block_start_without_partial_restore" assertions="5" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.750154" >
+      </testcase>
+      <testcase name="test_pause_confirmation_and_save_controls_fit_supported_window_sizes" assertions="45" status="pass" classname="tests/integration/test_expedition_resume.gd" time="1.023741" >
+      </testcase>
+      <testcase name="test_recovery_with_no_files_does_not_create_a_checkpoint_or_change_vessel" assertions="5" status="pass" classname="tests/integration/test_expedition_resume.gd" time="0.385283" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_expedition_revision.gd" tests="21" failures="0" skipped="0" time="10.392244" >
+      <testcase name="test_loading_opens_clean_title_with_paused_world_and_no_accepted_assignment" assertions="5" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.408856" >
+      </testcase>
+      <testcase name="test_title_keyboard_controller_focus_and_options_return_without_piloting" assertions="5" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.609255" >
+      </testcase>
+      <testcase name="test_submarine_accelerates_gradually_and_rates_remain_consistent" assertions="7" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.42677" >
+      </testcase>
+      <testcase name="test_torpedo_follows_visible_horizontal_facing_even_with_vertical_aim" assertions="6" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.47894" >
+      </testcase>
+      <testcase name="test_ammunition_is_limited_and_failure_pause_and_cooldown_do_not_spend" assertions="6" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.420856" >
+      </testcase>
+      <testcase name="test_actual_docking_automatically_refills_and_passing_base_does_not" assertions="8" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.489705" >
+      </testcase>
+      <testcase name="test_assign_refund_and_respec_use_finite_points_and_update_real_capabilities" assertions="14" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.440242" >
+      </testcase>
+      <testcase name="test_accepted_radio_assignment_marks_report_without_discovering_secret" assertions="6" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.495563" >
+      </testcase>
+      <testcase name="test_deferred_radio_does_not_accept_or_spend_and_can_be_reopened" assertions="3" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.449068" >
+      </testcase>
+      <testcase name="test_wreck_scan_retrieves_encrypted_logs_and_docking_decodes_only_once" assertions="10" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.541915" >
+      </testcase>
+      <testcase name="test_survey_completion_awards_one_point_and_repeated_events_do_not_duplicate" assertions="2" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.524082" >
+      </testcase>
+      <testcase name="test_save_continue_preserves_ammo_ranks_and_decoded_records" assertions="6" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.542092" >
+      </testcase>
+      <testcase name="test_failed_research_write_preserves_previous_allocation" assertions="4" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.462079" >
+      </testcase>
+      <testcase name="test_scavenger_flees_on_approach_and_pause_restart_are_safe" assertions="5" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.437246" >
+      </testcase>
+      <testcase name="test_exact_ten_rounds_cannot_be_bypassed_by_effect_reset_or_continue" assertions="16" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.486941" >
+      </testcase>
+      <testcase name="test_paused_launch_never_spends_ammunition_or_energy" assertions="3" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.318414" >
+      </testcase>
+      <testcase name="test_scavenger_flee_state_is_deterministic_at_30_60_120_steps" assertions="11" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.37788" >
+      </testcase>
+      <testcase name="test_new_canonical_file_reloads_allocations_and_record_decoding_silently" assertions="7" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.725184" >
+      </testcase>
+      <testcase name="test_corrupt_profile_blocks_research_and_recovery_preserves_awards" assertions="7" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.469839" >
+      </testcase>
+      <testcase name="test_compact_large_station_has_reachable_fixed_text_scroll_controls" assertions="6" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.644298" >
+      </testcase>
+      <testcase name="test_live_comfort_preferences_suppress_existing_wake_and_refraction" assertions="3" status="pass" classname="tests/integration/test_expedition_revision.gd" time="0.643019" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_gameplay_audio.gd" tests="10" failures="0" skipped="0" time="3.903327" >
+      <testcase name="test_ping_acceptance_and_wavefront_gate_audio_without_recursive_acoustics" assertions="11" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.316488" >
+      </testcase>
+      <testcase name="test_failed_energy_does_not_play_ping_or_modify_acoustics" assertions="3" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.304957" >
+      </testcase>
+      <testcase name="test_passive_contact_audio_is_gated_and_repeated_snapshots_do_not_replay" assertions="6" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.34324" >
+      </testcase>
+      <testcase name="test_scan_activation_progress_and_completion_come_from_real_scanner" assertions="6" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.304279" >
+      </testcase>
+      <testcase name="test_damage_cues_and_low_resources_have_visual_equivalents_and_no_alarm_stack" assertions="14" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.381023" >
+      </testcase>
+      <testcase name="test_real_predator_warns_pursues_and_disengages_once_per_transition" assertions="7" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.404072" >
+      </testcase>
+      <testcase name="test_station_audio_menu_pause_and_services_use_real_operations" assertions="7" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.407839" >
+      </testcase>
+      <testcase name="test_restart_continue_and_mute_preserve_checkpoint_schema_and_progress" assertions="8" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.38429" >
+      </testcase>
+      <testcase name="test_controller_audio_settings_save_and_cancel_without_mouse_or_simulation" assertions="12" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.628658" >
+      </testcase>
+      <testcase name="test_keyboard_audio_preview_cancel_and_failed_save_preserve_preferences" assertions="8" status="pass" classname="tests/integration/test_gameplay_audio.gd" time="0.428481" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_hud_prototype.gd" tests="6" failures="0" skipped="0" time="3.438453" >
+      <testcase name="test_responsive_layout_keeps_text_visible_and_center_clear" assertions="4131" status="pass" classname="tests/integration/test_hud_prototype.gd" time="0.224468" >
+      </testcase>
+      <testcase name="test_main_scene_initializes_hud_and_real_physics_updates_its_values" assertions="7" status="pass" classname="tests/integration/test_hud_prototype.gd" time="0.500943" >
+      </testcase>
+      <testcase name="test_production_hud_has_no_debug_controls_or_focus_and_interact_keeps_piloting" assertions="9" status="pass" classname="tests/integration/test_hud_prototype.gd" time="0.028825" >
+      </testcase>
+      <testcase name="test_debug_controls_update_the_hud_and_resume_without_modifying_production_scene" assertions="10" status="pass" classname="tests/integration/test_hud_prototype.gd" time="0.029831" >
+      </testcase>
+      <testcase name="test_pressure_and_depth_hud_track_existing_simulation_pause_contract" assertions="6" status="pass" classname="tests/integration/test_hud_prototype.gd" time="2.612372" >
+      </testcase>
+      <testcase name="test_development_panel_wraps_inside_the_minimum_window" assertions="11" status="pass" classname="tests/integration/test_hud_prototype.gd" time="0.042014" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_input_menu.gd" tests="11" failures="0" skipped="0" time="0.946524" >
+      <testcase name="test_keyboard_can_cycle_every_control_and_activate_without_mouse" assertions="11" status="pass" classname="tests/integration/test_input_menu.gd" time="0.141701" >
+      </testcase>
+      <testcase name="test_controller_can_navigate_and_activate_without_mouse" assertions="4" status="pass" classname="tests/integration/test_input_menu.gd" time="0.078371" >
+      </testcase>
+      <testcase name="test_controller_can_reach_all_controls_change_deadzone_and_save" assertions="13" status="pass" classname="tests/integration/test_input_menu.gd" time="0.281955" >
+      </testcase>
+      <testcase name="test_controller_can_select_an_action_in_the_popup" assertions="3" status="pass" classname="tests/integration/test_input_menu.gd" time="0.078266" >
+      </testcase>
+      <testcase name="test_analog_stick_can_navigate_with_drift_filtered_out" assertions="2" status="pass" classname="tests/integration/test_input_menu.gd" time="0.035392" >
+      </testcase>
+      <testcase name="test_invalid_reload_is_visible_and_preserves_settings" assertions="3" status="pass" classname="tests/integration/test_input_menu.gd" time="0.036357" >
+      </testcase>
+      <testcase name="test_keyboard_remap_save_and_reload_from_the_menu" assertions="5" status="pass" classname="tests/integration/test_input_menu.gd" time="0.075866" >
+      </testcase>
+      <testcase name="test_controller_remap_and_cancel_capture" assertions="6" status="pass" classname="tests/integration/test_input_menu.gd" time="0.077549" >
+      </testcase>
+      <testcase name="test_conflicting_keyboard_capture_is_rejected_and_can_be_cancelled" assertions="4" status="pass" classname="tests/integration/test_input_menu.gd" time="0.062711" >
+      </testcase>
+      <testcase name="test_new_menu_loads_saved_settings" assertions="3" status="pass" classname="tests/integration/test_input_menu.gd" time="0.031021" >
+      </testcase>
+      <testcase name="test_pause_action_reports_input_without_pausing_the_scene_tree" assertions="3" status="pass" classname="tests/integration/test_input_menu.gd" time="0.047335" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_interface_presentation.gd" tests="2" failures="0" skipped="0" time="3.324033" >
+      <testcase name="test_long_briefing_stays_bounded_and_controller_can_scroll_then_launch" assertions="16" status="pass" classname="tests/integration/test_interface_presentation.gd" time="1.617983" >
+      </testcase>
+      <testcase name="test_logs_settings_and_story_choices_reflow_and_destroy_without_global_callbacks" assertions="13" status="pass" classname="tests/integration/test_interface_presentation.gd" time="1.70605" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_light_bloom.gd" tests="23" failures="0" skipped="0" time="16.977156" >
+      <testcase name="test_fresh_main_and_sonar_discovery_alone_have_no_story_effects" assertions="5" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.837103" >
+      </testcase>
+      <testcase name="test_observation_uses_timed_scanner_and_commits_one_atomic_outcome" assertions="12" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.671521" >
+      </testcase>
+      <testcase name="test_collection_removes_bloom_and_cannot_also_reward_a_scan" assertions="10" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.613855" >
+      </testcase>
+      <testcase name="test_cancel_and_interrupted_scan_leave_both_choices_available" assertions="6" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.781" >
+      </testcase>
+      <testcase name="test_failed_scan_checkpoint_has_no_partial_research_or_story_rewards" assertions="5" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.892663" >
+      </testcase>
+      <testcase name="test_failed_collection_retains_colony_and_existing_progress" assertions="5" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.668719" >
+      </testcase>
+      <testcase name="test_reload_continue_and_repeated_interaction_cannot_farm" assertions="17" status="pass" classname="tests/integration/test_light_bloom.gd" time="1.467527" >
+      </testcase>
+      <testcase name="test_collection_survives_restart_without_reviving_bloom_or_resetting_technology" assertions="7" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.681614" >
+      </testcase>
+      <testcase name="test_mute_and_comfort_modes_keep_explicit_text_and_static_feedback" assertions="13" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.59615" >
+      </testcase>
+      <testcase name="test_old_checkpoint_migrates_with_zero_story_and_preserved_prototype_progress" assertions="4" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.569054" >
+      </testcase>
+      <testcase name="test_schema_rejects_orphan_research_without_its_atomic_story_decision" assertions="1" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.625582" >
+      </testcase>
+      <testcase name="test_existing_technology_ordnance_services_and_acoustic_identity_are_unchanged" assertions="9" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.682643" >
+      </testcase>
+      <testcase name="test_all_previous_checkpoint_versions_migrate_with_zero_story_state" assertions="16" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.569163" >
+      </testcase>
+      <testcase name="test_recovery_merges_a_live_choice_into_an_older_backup_without_replay" assertions="12" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.864375" >
+      </testcase>
+      <testcase name="test_opposite_branch_backup_conflict_preserves_files_and_live_choice" assertions="8" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.657687" >
+      </testcase>
+      <testcase name="test_stale_checkpoint_cannot_erase_a_durable_choice" assertions="6" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.69425" >
+      </testcase>
+      <testcase name="test_small_large_text_choice_has_keyboard_controller_recovery_and_reading_controls" assertions="8" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.806205" >
+      </testcase>
+      <testcase name="test_arrival_spirals_around_vessel_pauses_then_scatters_without_story_effects" assertions="8" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.622981" >
+      </testcase>
+      <testcase name="test_reduced_effects_and_restored_outcomes_never_replay_arrival" assertions="5" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.697957" >
+      </testcase>
+      <testcase name="test_bottled_plankton_is_extinguished_without_a_seabed_stump" assertions="11" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.796845" >
+      </testcase>
+      <testcase name="test_bloom_text_uses_character_roles_and_keeps_the_anomaly_unexplained" assertions="11" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.738524" >
+      </testcase>
+      <testcase name="test_response_reading_layout_is_safe_when_the_viewport_has_no_focus" assertions="6" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.75978" >
+      </testcase>
+      <testcase name="test_pending_reading_reflow_is_disconnected_when_a_panel_is_destroyed" assertions="3" status="pass" classname="tests/integration/test_light_bloom.gd" time="0.681958" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_mission_framework.gd" tests="7" failures="0" skipped="0" time="4.712274" >
+      <testcase name="test_keyboard_controller_accept_status_pause_claim_and_back_navigation" assertions="15" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.811404" >
+      </testcase>
+      <testcase name="test_real_active_wavefront_and_scanner_signals_complete_optional_not_passive_contacts" assertions="9" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.402723" >
+      </testcase>
+      <testcase name="test_services_upgrades_restart_reload_retain_claims_without_replaying_events" assertions="10" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.761934" >
+      </testcase>
+      <testcase name="test_corruption_recovery_restores_claim_without_regrant_or_progress_loss" assertions="8" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.85291" >
+      </testcase>
+      <testcase name="test_station_mission_actions_require_eligible_paused_session" assertions="6" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.450156" >
+      </testcase>
+      <testcase name="test_board_reopening_and_prior_scan_acceptance_never_autoclaim_or_duplicate" assertions="8" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.468049" >
+      </testcase>
+      <testcase name="test_mission_page_buttons_and_expedition_status_fit_reference_and_minimum_windows" assertions="24" status="pass" classname="tests/integration/test_mission_framework.gd" time="0.965098" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_narrative_slice.gd" tests="11" failures="0" skipped="0" time="6.054276" >
+      <testcase name="test_start_page_briefing_and_log_are_skippable_paused_and_spoiler_free" assertions="9" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.340236" >
+      </testcase>
+      <testcase name="test_actual_wavefront_and_scanner_unlock_evidence_without_passive_or_audio_discovery" assertions="9" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.371605" >
+      </testcase>
+      <testcase name="test_full_domain_adapter_debrief_requires_docking_and_is_idempotent" assertions="18" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.468145" >
+      </testcase>
+      <testcase name="test_checkpoint_reload_and_continue_reconstruct_same_log_without_story_events" assertions="14" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.899737" >
+      </testcase>
+      <testcase name="test_restart_and_services_keep_records_and_do_not_repeat_debrief" assertions="11" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.507564" >
+      </testcase>
+      <testcase name="test_prior_v1_checkpoint_records_unlock_without_migration_or_overwrite" assertions="3" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.73254" >
+      </testcase>
+      <testcase name="test_corrupt_checkpoint_preserved_while_briefing_stays_readable_and_actions_block" assertions="4" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.552791" >
+      </testcase>
+      <testcase name="test_keyboard_can_open_accept_scroll_and_close_without_a_mouse" assertions="6" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.374292" >
+      </testcase>
+      <testcase name="test_controller_can_read_station_debrief_and_return_safely_to_piloting" assertions="10" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.48822" >
+      </testcase>
+      <testcase name="test_log_controls_readable_at_reference_and_compact_sizes_with_scroll_actions" assertions="16" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.930272" >
+      </testcase>
+      <testcase name="test_partial_debrief_write_failure_keeps_first_ack_and_retry_cannot_duplicate_it" assertions="14" status="pass" classname="tests/integration/test_narrative_slice.gd" time="0.388874" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_passive_sonar_prototype.gd" tests="6" failures="0" skipped="0" time="23.39306" >
+      <testcase name="test_example_demonstrates_receive_only_contact_and_expiry" assertions="1" status="pass" classname="tests/integration/test_passive_sonar_prototype.gd" time="0.359852" >
+      </testcase>
+      <testcase name="test_real_shelf_receives_ambient_without_ping_energy_or_active_pulses" assertions="10" status="pass" classname="tests/integration/test_passive_sonar_prototype.gd" time="3.583751" >
+      </testcase>
+      <testcase name="test_route_settings_and_debug_pause_freeze_ambient_schedule_contacts_and_expiry" assertions="12" status="pass" classname="tests/integration/test_passive_sonar_prototype.gd" time="4.427431" >
+      </testcase>
+      <testcase name="test_restart_clears_contacts_restarts_ambient_epoch_and_keeps_active_history" assertions="8" status="pass" classname="tests/integration/test_passive_sonar_prototype.gd" time="6.646259" >
+      </testcase>
+      <testcase name="test_source_free_removes_contact_immediately_and_no_passive_world_reveal_occurs" assertions="6" status="pass" classname="tests/integration/test_passive_sonar_prototype.gd" time="3.448052" >
+      </testcase>
+      <testcase name="test_three_contact_hud_fits_reference_and_minimum_window_without_focus" assertions="283" status="pass" classname="tests/integration/test_passive_sonar_prototype.gd" time="4.927715" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_player_guidance.gd" tests="6" failures="0" skipped="0" time="7.048657" >
+      <testcase name="test_full_ready_magazine_is_hidden_and_reappears_when_it_matters" assertions="3" status="pass" classname="tests/integration/test_player_guidance.gd" time="1.133149" >
+      </testcase>
+      <testcase name="test_empty_passive_panel_hides_in_production_layout_and_shows_with_a_contact_rule" assertions="3" status="pass" classname="tests/integration/test_player_guidance.gd" time="1.345894" >
+      </testcase>
+      <testcase name="test_radio_preview_explains_controls_and_escape_dismisses_without_losing_the_message" assertions="6" status="pass" classname="tests/integration/test_player_guidance.gd" time="1.492772" >
+      </testcase>
+      <testcase name="test_dock_pages_name_what_back_does" assertions="2" status="pass" classname="tests/integration/test_player_guidance.gd" time="0.900751" >
+      </testcase>
+      <testcase name="test_cable_and_net_cards_appear_near_their_subjects_once_and_stop_when_scanned" assertions="3" status="pass" classname="tests/integration/test_player_guidance.gd" time="1.153558" >
+      </testcase>
+      <testcase name="test_guidance_cards_stay_silent_outside_twilight_and_when_tutorials_are_off" assertions="2" status="pass" classname="tests/integration/test_player_guidance.gd" time="1.022533" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_playtest_observer.gd" tests="7" failures="0" skipped="0" time="2.141399" >
+      <testcase name="test_normal_mode_has_no_ui_recorder_or_files_and_opt_out_does_not_observe" assertions="4" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.289405" >
+      </testcase>
+      <testcase name="test_opt_in_observes_actual_domain_events_and_idempotent_signals" assertions="11" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.310123" >
+      </testcase>
+      <testcase name="test_continue_and_restart_do_not_replay_progress_damage_or_warnings" assertions="13" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.279876" >
+      </testcase>
+      <testcase name="test_reporting_never_mutates_campaign_acoustic_history_or_supplies" assertions="4" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.245351" >
+      </testcase>
+      <testcase name="test_route_samples_count_repeated_base_returns_without_extra_progression" assertions="3" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.272028" >
+      </testcase>
+      <testcase name="test_resource_episodes_damage_failure_and_disable_are_distinct" assertions="6" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.301119" >
+      </testcase>
+      <testcase name="test_controller_can_decline_opt_in_export_disable_and_leave_modal" assertions="7" status="pass" classname="tests/integration/test_playtest_observer.gd" time="0.443497" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_predator_encounter.gd" tests="11" failures="0" skipped="0" time="14.617796" >
+      <testcase name="test_actual_ping_warns_before_aggression_and_hud_provides_depth_retreat_cue" assertions="10" status="pass" classname="tests/integration/test_predator_encounter.gd" time="0.373964" >
+      </testcase>
+      <testcase name="test_keyboard_retreat_during_warning_is_escapable_without_damage_or_combat" assertions="6" status="pass" classname="tests/integration/test_predator_encounter.gd" time="1.057431" >
+      </testcase>
+      <testcase name="test_modest_hull_damage_is_warning_gated_and_cooldown_limited" assertions="9" status="pass" classname="tests/integration/test_predator_encounter.gd" time="0.433244" >
+      </testcase>
+      <testcase name="test_player_can_retreat_after_pursuit_starts_and_damage_stops_outside_zone" assertions="6" status="pass" classname="tests/integration/test_predator_encounter.gd" time="4.312895" >
+      </testcase>
+      <testcase name="test_passive_listening_and_main_route_pings_do_not_engage_predator" assertions="6" status="pass" classname="tests/integration/test_predator_encounter.gd" time="4.461821" >
+      </testcase>
+      <testcase name="test_all_pauses_freeze_warning_motion_damage_clock_and_receiver" assertions="26" status="pass" classname="tests/integration/test_predator_encounter.gd" time="1.181443" >
+      </testcase>
+      <testcase name="test_restart_preserves_permanent_records_and_acoustic_duplicate_identity" assertions="8" status="pass" classname="tests/integration/test_predator_encounter.gd" time="0.397513" >
+      </testcase>
+      <testcase name="test_obstacle_navigation_blocks_contact_and_never_tunnels_or_traps_player" assertions="1204" status="pass" classname="tests/integration/test_predator_encounter.gd" time="0.403505" >
+      </testcase>
+      <testcase name="test_motion_and_damage_are_consistent_at_30_60_120_steps" assertions="3794" status="pass" classname="tests/integration/test_predator_encounter.gd" time="0.475578" >
+      </testcase>
+      <testcase name="test_threat_indicator_is_legible_and_keeps_central_view_clear_at_all_window_sizes" assertions="30" status="pass" classname="tests/integration/test_predator_encounter.gd" time="1.144905" >
+      </testcase>
+      <testcase name="test_contact_uses_existing_hull_clamping_without_duplicate_depletion_events" assertions="6" status="pass" classname="tests/integration/test_predator_encounter.gd" time="0.375497" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_resource_prototype.gd" tests="5" failures="0" skipped="0" time="5.085834" >
+      <testcase name="test_movement_advances_resources_without_altering_hull_or_motor" assertions="6" status="pass" classname="tests/integration/test_resource_prototype.gd" time="0.497621" >
+      </testcase>
+      <testcase name="test_settings_stop_drains_and_depletion_does_not_disable_movement" assertions="6" status="pass" classname="tests/integration/test_resource_prototype.gd" time="0.704251" >
+      </testcase>
+      <testcase name="test_severe_wall_contact_damages_once_without_changing_resource_interfaces" assertions="5" status="pass" classname="tests/integration/test_resource_prototype.gd" time="3.370086" >
+      </testcase>
+      <testcase name="test_keyboard_can_deplete_refill_and_resume_using_test_controls" assertions="17" status="pass" classname="tests/integration/test_resource_prototype.gd" time="0.360877" >
+      </testcase>
+      <testcase name="test_controller_can_navigate_test_controls_and_trigger_domain_requests" assertions="7" status="pass" classname="tests/integration/test_resource_prototype.gd" time="0.152999" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_scientific_scanning.gd" tests="7" failures="0" skipped="0" time="11.518705" >
+      <testcase name="test_keyboard_scan_progress_completes_once_and_persists_without_extra_energy_cost" assertions="12" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="3.542002" >
+      </testcase>
+      <testcase name="test_controller_activation_cancellation_and_remapped_interact" assertions="10" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="0.703377" >
+      </testcase>
+      <testcase name="test_map_settings_and_route_pause_freeze_scanning_and_resume" assertions="11" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="0.927303" >
+      </testcase>
+      <testcase name="test_research_page_hides_uncompleted_metadata_and_controller_can_read_completed_entry" assertions="14" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="0.74124" >
+      </testcase>
+      <testcase name="test_restart_reload_and_partial_scan_do_not_duplicate_completion_events" assertions="11" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="0.54748" >
+      </testcase>
+      <testcase name="test_movement_sonar_and_passive_listening_remain_independent_of_scanner" assertions="11" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="3.636764" >
+      </testcase>
+      <testcase name="test_geological_target_and_research_log_fit_reference_and_compact_windows" assertions="20" status="pass" classname="tests/integration/test_scientific_scanning.gd" time="1.420539" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_station_interaction.gd" tests="8" failures="0" skipped="0" time="5.296064" >
+      <testcase name="test_keyboard_docking_requires_explicit_service_and_displays_before_after" assertions="13" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.690947" >
+      </testcase>
+      <testcase name="test_controller_can_read_board_and_leave_without_mission_or_service_side_effects" assertions="11" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.629781" >
+      </testcase>
+      <testcase name="test_remapped_interact_prioritizes_station_over_scan_inside_radius_and_scan_outside" assertions="7" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.76473" >
+      </testcase>
+      <testcase name="test_fast_docking_attempt_is_consumed_without_scanning_or_restoration" assertions="5" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.560172" >
+      </testcase>
+      <testcase name="test_station_pause_freezes_all_gameplay_and_services_do_not_reset_clocks_or_records" assertions="18" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.712884" >
+      </testcase>
+      <testcase name="test_restart_is_distinct_from_services_and_closes_station_session" assertions="11" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.403702" >
+      </testcase>
+      <testcase name="test_unavailable_service_states_keep_safe_return_available" assertions="6" status="pass" classname="tests/integration/test_station_interaction.gd" time="0.45416" >
+      </testcase>
+      <testcase name="test_station_and_board_fit_reference_minimum_and_large_windows" assertions="121" status="pass" classname="tests/integration/test_station_interaction.gd" time="1.079688" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_submarine_controller.gd" tests="8" failures="0" skipped="0" time="11.961385" >
+      <testcase name="test_swept_collision_stops_at_a_wall_and_emits_contact" assertions="6" status="pass" classname="tests/integration/test_submarine_controller.gd" time="1.530534" >
+      </testcase>
+      <testcase name="test_diagonal_thrust_slides_along_a_wall_without_penetration" assertions="5" status="pass" classname="tests/integration/test_submarine_controller.gd" time="1.704469" >
+      </testcase>
+      <testcase name="test_thin_wall_is_not_tunnelled_at_high_speed_and_30_physics_ticks" assertions="2" status="pass" classname="tests/integration/test_submarine_controller.gd" time="1.400343" >
+      </testcase>
+      <testcase name="test_corner_blocks_both_axes" assertions="3" status="pass" classname="tests/integration/test_submarine_controller.gd" time="1.855939" >
+      </testcase>
+      <testcase name="test_fixed_physics_movement_matches_across_render_frame_caps" assertions="6" status="pass" classname="tests/integration/test_submarine_controller.gd" time="3.20738" >
+      </testcase>
+      <testcase name="test_authored_cave_spawn_and_boundary_are_collision_safe" assertions="3" status="pass" classname="tests/integration/test_submarine_controller.gd" time="1.701036" >
+      </testcase>
+      <testcase name="test_camera_smoothly_follows_in_the_interior" assertions="3" status="pass" classname="tests/integration/test_submarine_controller.gd" time="0.393804" >
+      </testcase>
+      <testcase name="test_saved_bindings_load_and_embedded_settings_stop_the_motor" assertions="11" status="pass" classname="tests/integration/test_submarine_controller.gd" time="0.16788" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_submarine_upgrades.gd" tests="11" failures="0" skipped="0" time="6.284095" >
+      <testcase name="test_baseline_install_duplicates_invalid_ids_and_copied_catalog" assertions="15" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.397598" >
+      </testcase>
+      <testcase name="test_sonar_range_inclusive_boundaries_wavefront_cost_and_cooldown_remain_real" assertions="36" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.433929" >
+      </testcase>
+      <testcase name="test_in_flight_baseline_pulse_does_not_gain_range_when_installing" assertions="8" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.461303" >
+      </testcase>
+      <testcase name="test_depth_warning_boundaries_and_damage_follow_upgraded_maximum_api" assertions="13" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.552286" >
+      </testcase>
+      <testcase name="test_restart_services_reopen_and_reload_keep_installed_ids_and_records" assertions="14" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.877686" >
+      </testcase>
+      <testcase name="test_corruption_blocks_install_recovery_restores_absolute_ids_and_failed_write_does_not_install" assertions="16" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.818518" >
+      </testcase>
+      <testcase name="test_keyboard_and_controller_upgrade_navigation_pause_and_no_automatic_install" assertions="16" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.839377" >
+      </testcase>
+      <testcase name="test_upgraded_wavefront_and_pressure_damage_match_30_60_120_steps" assertions="645" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.346715" >
+      </testcase>
+      <testcase name="test_station_install_revalidates_range_pause_speed_and_availability" assertions="8" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.33049" >
+      </testcase>
+      <testcase name="test_reentrant_install_is_rejected_and_duplicate_does_not_extend_pressure_grace" assertions="8" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.338586" >
+      </testcase>
+      <testcase name="test_upgrade_page_and_capability_hud_fit_supported_windows" assertions="58" status="pass" classname="tests/integration/test_submarine_upgrades.gd" time="0.887607" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_sunlit_environment.gd" tests="8" failures="0" skipped="0" time="8.43689" >
+      <testcase name="test_art_contains_no_bodies_targets_or_progress_and_clock_cannot_move_player" assertions="10" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="0.899813" >
+      </testcase>
+      <testcase name="test_comfort_preferences_freeze_parallax_plants_and_particles_without_changing_state" assertions="126" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="1.35964" >
+      </testcase>
+      <testcase name="test_clipped_painted_edges_stay_in_actual_stone_and_excavation_removes_old_trim" assertions="5155" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="0.971915" >
+      </testcase>
+      <testcase name="test_hidden_trim_defers_clipping_until_visible_and_reuses_built_pieces" assertions="3" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="0.85328" >
+      </testcase>
+      <testcase name="test_prototype_switch_restores_legacy_materials_and_hides_all_new_dressing" assertions="13" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="0.921475" >
+      </testcase>
+      <testcase name="test_pause_and_restart_preserve_authored_placements_progress_and_particle_bound" assertions="5" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="1.258025" >
+      </testcase>
+      <testcase name="test_each_comfort_flag_is_independent_and_fish_motion_remains_presentation_only" assertions="13" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="1.392188" >
+      </testcase>
+      <testcase name="test_cosmetic_clock_is_equivalent_at_30_60_120_steps" assertions="9" status="pass" classname="tests/integration/test_sunlit_environment.gd" time="0.780554" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_sunlit_review.gd" tests="14" failures="0" skipped="0" time="19.023504" >
+      <testcase name="test_new_game_archives_progress_resets_every_domain_and_preserves_preferences" assertions="17" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.677043" >
+      </testcase>
+      <testcase name="test_failed_new_game_rolls_back_byte_identical_campaign_and_keeps_live_state" assertions="5" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.70066" >
+      </testcase>
+      <testcase name="test_new_game_confirmation_cancel_does_not_change_a_save" assertions="5" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.598895" >
+      </testcase>
+      <testcase name="test_new_game_reload_cannot_reimport_archived_legacy_discoveries" assertions="9" status="pass" classname="tests/integration/test_sunlit_review.gd" time="1.37211" >
+      </testcase>
+      <testcase name="test_upper_dead_end_and_lower_loop_are_clear_but_blind_wall_is_solid" assertions="11" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.939609" >
+      </testcase>
+      <testcase name="test_old_cleared_gate_restores_as_open_without_reward_or_acoustic_replay" assertions="6" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.788178" >
+      </testcase>
+      <testcase name="test_hammerhead_sight_warning_pursuit_head_ram_and_safe_exit" assertions="7" status="pass" classname="tests/integration/test_sunlit_review.gd" time="8.095178" >
+      </testcase>
+      <testcase name="test_hammerhead_pause_and_fauna_restart_preserve_permanent_records" assertions="5" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.663989" >
+      </testcase>
+      <testcase name="test_radio_cue_only_for_new_delivery_respects_mute_and_never_emits_gameplay_sound" assertions="4" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.565606" >
+      </testcase>
+      <testcase name="test_new_fauna_use_existing_blast_deduplication_and_restart_restores_health" assertions="21" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.610999" >
+      </testcase>
+      <testcase name="test_bloom_swims_only_during_simulation_and_remains_removed_after_collection" assertions="4" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.553369" >
+      </testcase>
+      <testcase name="test_underwater_blast_is_bounded_and_comfort_removes_decorations" assertions="5" status="pass" classname="tests/integration/test_sunlit_review.gd" time="0.649283" >
+      </testcase>
+      <testcase name="test_keyboard_can_confirm_new_game_and_reach_fresh_briefing" assertions="6" status="pass" classname="tests/integration/test_sunlit_review.gd" time="1.401571" >
+      </testcase>
+      <testcase name="test_controller_can_confirm_new_game_and_reach_fresh_briefing" assertions="6" status="pass" classname="tests/integration/test_sunlit_review.gd" time="1.407014" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_sunlit_shallows.gd" tests="16" failures="0" skipped="0" time="15.410393" >
+      <testcase name="test_fresh_title_introduces_canon_without_accepting_or_scoring" assertions="8" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.652833" >
+      </testcase>
+      <testcase name="test_peaceful_chapter_uses_existing_mission_research_route_and_station_apis" assertions="27" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.167045" >
+      </testcase>
+      <testcase name="test_aggressive_choice_also_completes_without_combat_or_extra_rewards" assertions="17" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.157571" >
+      </testcase>
+      <testcase name="test_buoy_is_hidden_until_wavefront_and_intentional_scan_then_persists" assertions="14" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.515638" >
+      </testcase>
+      <testcase name="test_old_return_does_not_count_until_message_is_recovered_and_brought_home" assertions="10" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.063316" >
+      </testcase>
+      <testcase name="test_boundaries_camera_and_map_stay_in_zone1_and_prototype_can_be_restored" assertions="9" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.732047" >
+      </testcase>
+      <testcase name="test_version_five_adds_unaccepted_chapter_without_rewriting_legacy_claims" assertions="9" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.503394" >
+      </testcase>
+      <testcase name="test_failed_launch_and_forged_completion_do_not_grant_chapter_progress" assertions="3" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.584829" >
+      </testcase>
+      <testcase name="test_briefing_focus_visits_every_action_and_never_duplicates_footer_controls" assertions="6" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.564004" >
+      </testcase>
+      <testcase name="test_buoy_checkpoint_failure_leaves_no_record_message_or_completion" assertions="8" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.002535" >
+      </testcase>
+      <testcase name="test_pause_freezes_buoy_scanning_and_mute_does_not_hide_its_message" assertions="8" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.20662" >
+      </testcase>
+      <testcase name="test_recovery_and_restart_keep_recorded_choice_message_and_claim_without_replay" assertions="22" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.333571" >
+      </testcase>
+      <testcase name="test_legacy_checkpoint_import_preserves_claims_and_requires_intentional_launch" assertions="13" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.42397" >
+      </testcase>
+      <testcase name="test_zone_boundary_blocks_swept_motion_and_upgrades_do_not_open_zone2" assertions="8" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.845891" >
+      </testcase>
+      <testcase name="test_large_small_window_briefing_keeps_reading_controls_and_all_actions_reachable" assertions="6" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="0.643995" >
+      </testcase>
+      <testcase name="test_prior_bloom_decision_counts_on_accept_and_cannot_be_reversed_for_rewards" assertions="9" status="pass" classname="tests/integration/test_sunlit_shallows.gd" time="1.013134" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_surface_polish.gd" tests="9" failures="0" skipped="0" time="7.815671" >
+      <testcase name="test_surface_departure_is_submerged_and_surface_blocks_full_ascent" assertions="8" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.77452" >
+      </testcase>
+      <testcase name="test_open_water_route_needs_no_blasting_and_optional_tunnels_remain_solid" assertions="40" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.834599" >
+      </testcase>
+      <testcase name="test_visible_bloom_can_be_observed_without_emitting_sonar" assertions="5" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.903519" >
+      </testcase>
+      <testcase name="test_visible_subject_scans_directly_but_wall_and_hidden_buoy_still_gate" assertions="5" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.880179" >
+      </testcase>
+      <testcase name="test_engine_and_torpedo_upgrade_reconstruct_baselines_and_keep_inflight_snapshot" assertions="12" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.832085" >
+      </testcase>
+      <testcase name="test_ammunition_is_in_resource_deck_and_no_world_helper_labels_exist" assertions="3" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.779069" >
+      </testcase>
+      <testcase name="test_radio_types_follows_and_expires_without_accepting_or_erasing_message" assertions="10" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.941878" >
+      </testcase>
+      <testcase name="test_context_prompt_stays_short_at_small_large_text_departure" assertions="1" status="pass" classname="tests/integration/test_surface_polish.gd" time="1.1301" >
+      </testcase>
+      <testcase name="test_visible_wreck_surface_allowance_is_bounded_and_cave_roof_stays_occluding" assertions="6" status="pass" classname="tests/integration/test_surface_polish.gd" time="0.739722" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_surface_review.gd" tests="9" failures="0" skipped="0" time="8.915036" >
+      <testcase name="test_rounded_contours_triangulate_and_main_route_has_continuous_unblasted_hull_clearance" assertions="58" status="pass" classname="tests/integration/test_surface_review.gd" time="0.76674" >
+      </testcase>
+      <testcase name="test_roof_and_baffles_prevent_drive_by_sonar_but_inside_angle_reveals_on_wavefront" assertions="13" status="pass" classname="tests/integration/test_surface_review.gd" time="0.890204" >
+      </testcase>
+      <testcase name="test_prior_buoy_discovery_stays_known_after_new_shelter_and_does_not_replay" assertions="2" status="pass" classname="tests/integration/test_surface_review.gd" time="0.880388" >
+      </testcase>
+      <testcase name="test_old_map_overlook_and_predator_are_hidden_without_erasing_legacy_progress" assertions="6" status="pass" classname="tests/integration/test_surface_review.gd" time="0.847766" >
+      </testcase>
+      <testcase name="test_all_destructible_materials_are_warm_and_protected_geology_keeps_its_material" assertions="6" status="pass" classname="tests/integration/test_surface_review.gd" time="1.032181" >
+      </testcase>
+      <testcase name="test_radio_source_portraits_follow_explicit_speakers_and_keep_text_and_focus" assertions="13" status="pass" classname="tests/integration/test_surface_review.gd" time="1.641405" >
+      </testcase>
+      <testcase name="test_animation_is_propulsion_driven_and_stops_with_pause_and_reduced_motion" assertions="4" status="pass" classname="tests/integration/test_surface_review.gd" time="0.893888" >
+      </testcase>
+      <testcase name="test_larger_hammerhead_has_warning_bounded_pursuit_and_rate_consistent_damage_cooldown" assertions="22" status="pass" classname="tests/integration/test_surface_review.gd" time="0.980861" >
+      </testcase>
+      <testcase name="test_old_obstructed_search_pose_recovers_at_base_without_resetting_resources_or_evidence" assertions="8" status="pass" classname="tests/integration/test_surface_review.gd" time="0.981603" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_torpedo_collision.gd" tests="1" failures="0" skipped="0" time="0.003461" >
+      <testcase name="test_swept_ray_hits_thin_wall_exactly_once_at_every_step_rate" assertions="12" status="pass" classname="tests/integration/test_torpedo_collision.gd" time="0.003461" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_twilight_action_costs.gd" tests="3" failures="0" skipped="0" time="3.959963" >
+      <testcase name="test_selection_preserves_supplies_upgrades_and_shallow_costs" assertions="29" status="pass" classname="tests/integration/test_twilight_action_costs.gd" time="1.04202" >
+      </testcase>
+      <testcase name="test_actions_debit_exactly_and_rejection_preserves_ammo_cooldown_and_events" assertions="14" status="pass" classname="tests/integration/test_twilight_action_costs.gd" time="1.690253" >
+      </testcase>
+      <testcase name="test_empty_battery_tether_refit_and_continue_preserve_actual_supplies" assertions="16" status="pass" classname="tests/integration/test_twilight_action_costs.gd" time="1.22769" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_twilight_expedition.gd" tests="17" failures="0" skipped="0" time="24.242358" >
+      <testcase name="test_catalogs_and_hidden_entries_are_valid_with_unique_stable_ids" assertions="6" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="0.833671" >
+      </testcase>
+      <testcase name="test_deployment_accepts_only_new_mission_and_continue_never_refills" assertions="11" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.213058" >
+      </testcase>
+      <testcase name="test_real_scanner_commits_records_log_and_checkpoint_without_sonar" assertions="12" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.2762" >
+      </testcase>
+      <testcase name="test_west_first_release_and_debrief_reward_commit_once" assertions="30" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="2.081726" >
+      </testcase>
+      <testcase name="test_east_first_live_capture_is_not_paid_until_delivery_and_does_not_stack" assertions="30" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="2.141876" >
+      </testcase>
+      <testcase name="test_return_before_resolution_is_refit_without_completion_or_allowance" assertions="11" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.012506" >
+      </testcase>
+      <testcase name="test_failed_choice_and_debrief_leave_files_and_live_rewards_unchanged" assertions="24" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.525604" >
+      </testcase>
+      <testcase name="test_critical_animal_can_die_without_softlock_or_live_bounty" assertions="23" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.605584" >
+      </testcase>
+      <testcase name="test_post_release_loss_is_permanent_without_repeating_choice_resonance" assertions="15" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.184902" >
+      </testcase>
+      <testcase name="test_pause_cancellation_range_and_step_consistent_choice_timing" assertions="18" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.135405" >
+      </testcase>
+      <testcase name="test_schema9_migrates_without_new_story_rewards_and_rejects_forged_claims" assertions="6" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="0.948426" >
+      </testcase>
+      <testcase name="test_forty_five_minute_resource_budget_leaves_reserve_with_ten_pings" assertions="7" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.215014" >
+      </testcase>
+      <testcase name="test_optional_records_use_existing_capped_xp_once" assertions="12" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.127959" >
+      </testcase>
+      <testcase name="test_mid_expedition_backup_recovery_preserves_evidence_and_decision_silently" assertions="18" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.466045" >
+      </testcase>
+      <testcase name="test_failed_casualty_write_blocks_other_saves_until_explicit_retry" assertions="11" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.025555" >
+      </testcase>
+      <testcase name="test_release_uses_existing_collision_safe_navigation_and_passive_listening_is_silent" assertions="26" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="3.260282" >
+      </testcase>
+      <testcase name="test_passive_sentinel_contact_is_temporary_and_capture_removes_source" assertions="13" status="pass" classname="tests/integration/test_twilight_expedition.gd" time="1.188545" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_twilight_habitat.gd" tests="13" failures="0" skipped="0" time="13.60079" >
+      <testcase name="test_habitat_is_scoped_to_deep_region_and_preserves_existing_records" assertions="16" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.921937" >
+      </testcase>
+      <testcase name="test_hot_plume_applies_bounded_hull_damage_with_clear_feedback_and_pause" assertions="12" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="1.00318" >
+      </testcase>
+      <testcase name="test_proximity_alone_never_damages_and_safe_corridor_stays_clear" assertions="8" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.979882" >
+      </testcase>
+      <testcase name="test_warning_range_boundaries_and_blocked_thermal_checkpoint" assertions="10" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="1.093313" >
+      </testcase>
+      <testcase name="test_wildlife_uses_acoustic_bus_once_and_passive_listening_is_silent" assertions="13" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="1.248659" >
+      </testcase>
+      <testcase name="test_continue_preserves_damage_and_records_but_resets_transient_eruption" assertions="10" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="1.180053" >
+      </testcase>
+      <testcase name="test_comfort_modes_keep_warning_legible_without_motion_or_particles" assertions="13" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="1.515936" >
+      </testcase>
+      <testcase name="test_refit_and_restart_cleanup_do_not_erase_permanent_progress" assertions="14" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.910846" >
+      </testcase>
+      <testcase name="test_jet_boundaries_and_terrain_occlusion_are_conservative" assertions="11" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.925736" >
+      </testcase>
+      <testcase name="test_thermal_depletion_clamps_and_destruction_emits_once" assertions="7" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.878843" >
+      </testcase>
+      <testcase name="test_historical_deep_pose_inside_new_chimney_uses_existing_safe_fallback" assertions="12" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.987812" >
+      </testcase>
+      <testcase name="test_both_canonical_regions_hide_prototype_ridges_and_prototype_restores_them" assertions="11" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.983358" >
+      </testcase>
+      <testcase name="test_only_active_regional_ambience_uses_existing_marine_life_contract" assertions="13" status="pass" classname="tests/integration/test_twilight_habitat.gd" time="0.971235" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_twilight_survey.gd" tests="6" failures="0" skipped="0" time="6.897568" >
+      <testcase name="test_new_passages_pockets_and_old_outer_loops_clear_the_actual_hull" assertions="1353" status="pass" classname="tests/integration/test_twilight_survey.gd" time="1.077488" >
+      </testcase>
+      <testcase name="test_optional_records_persist_without_gating_or_resolving_the_required_encounter" assertions="27" status="pass" classname="tests/integration/test_twilight_survey.gd" time="1.50989" >
+      </testcase>
+      <testcase name="test_sighting_is_transient_silent_paused_and_not_a_second_actor_or_discovery" assertions="10" status="pass" classname="tests/integration/test_twilight_survey.gd" time="1.106656" >
+      </testcase>
+      <testcase name="test_net_prompt_never_offers_a_scan_outside_scanner_radius" assertions="7" status="pass" classname="tests/integration/test_twilight_survey.gd" time="1.021015" >
+      </testcase>
+      <testcase name="test_guidance_respects_the_western_approach_before_eastern_evidence" assertions="8" status="pass" classname="tests/integration/test_twilight_survey.gd" time="0.991268" >
+      </testcase>
+      <testcase name="test_research_log_only_shows_images_for_completed_records_and_keeps_them_scrollable" assertions="13" status="pass" classname="tests/integration/test_twilight_survey.gd" time="1.191251" >
+      </testcase>
+  </testsuite>
+  <testsuite name="tests/integration/test_twilight_visibility.gd" tests="1" failures="0" skipped="0" time="0.989616" >
+      <testcase name="test_visibility_scopes_accepted_pings_pause_and_restore_without_discovering" assertions="13" status="pass" classname="tests/integration/test_twilight_visibility.gd" time="0.989616" >
+      </testcase>
+  </testsuite>
+</testsuites>

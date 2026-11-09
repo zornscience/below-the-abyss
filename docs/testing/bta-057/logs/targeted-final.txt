@@ -1,0 +1,37 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/unit/test_twilight_visibility.gd
+* test_wavefront_arrival_range_and_fade
+* test_quiet_navigation_and_invalid_configuration
+* test_darkness_preference_roundtrip_and_legacy_defaults
+3/3 passed.
+
+
+res://tests/integration/test_twilight_visibility.gd
+* test_visibility_scopes_accepted_pings_pause_and_restore_without_discovering
+1/1 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                 4
+Passing Tests         4
+Asserts              31
+Time              1.859s
+
+
+---- All tests passed! ----
+

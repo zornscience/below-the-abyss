@@ -750,3 +750,9 @@ and both sentinel outcomes remain completable without these optional scans. See
 [verification, layout and pacing protocol](docs/testing/bta-056/README.md).
 Run `python3 tools/verify_twilight_survey.py` for keyboard/controller optional-circuit
 and complete-chapter fresh/Continue verification.
+
+BTA-057 Phase 1 makes Twilight Shelf scenery sonar-visible over time while preserving
+short-range quiet navigation and readable instruments. Standard/Reduced darkness is
+available in Accessibility; Sunlit Shallows remains lit. [Implementation, exact local
+results, native comparisons, performance limitations and manual route](docs/testing/bta-057/README.md).
+No human playtest results or physical-GPU 60 FPS acceptance are claimed.

@@ -1,0 +1,41 @@
+Running followup-0: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_emitter.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_emitter.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-1: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_pulse.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/sonar/sonar_pulse.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-2: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/twilight_visibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/twilight_visibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-3: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/twilight_visibility_profile.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/visuals/twilight_visibility_profile.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-4: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/release_smoke.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://scripts/playtesting/release_smoke.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-5: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_twilight_visibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/fixtures/capture_twilight_visibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-6: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_twilight_visibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/unit/test_twilight_visibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+Running followup-7: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_twilight_visibility.gd']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--check-only', '--script', 'res://tests/integration/test_twilight_visibility.gd']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+
+CURRENT_SOURCE_PARSER_PASS

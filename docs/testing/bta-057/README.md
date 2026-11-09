@@ -57,9 +57,9 @@ python3 tools/verify_twilight_survey.py
 python3 -m unittest discover -s tests/python
 python3 tools/build_playtest.py
 # Use the package path printed by build_playtest.py:
-python3 tools/smoke_playtest.py PACKAGE --log build/standalone.log
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-10d1b003640b.zip --log build/standalone.log
 # This MUST return nonzero; it removes the actual release subscription:
-python3 tools/smoke_playtest.py PACKAGE --log build/negative.log --break-visibility-wiring
+python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-10d1b003640b.zip --log build/negative.log --break-visibility-wiring
 ```
 
 Diagnostic native capture uses a region fixture, not a complete human expedition.
@@ -109,3 +109,66 @@ Known scope limits: visual echo slots are bounded at eight; custom emitter profi
 allowing more concurrent pulses would need an explicitly approved rendering policy.
 No occlusion/reflectivity simulation or permanent revealed-terrain map. Darkness does
 not change gameplay eligibility, scientific scanning or passive-acoustic detection.
+
+## Final local results
+
+Runtime export source: `10d1b003640b9d8fb9fd9f7c7fa66095d0231987`; clean export (`development_dirty: false`).
+Later evidence-only commits do not change gameplay or presentation source.
+
+| Acceptance / check | Evidence |
+| --- | --- |
+| Full GUT after final hardening | 739/739 tests, 44767 assertions, 503.399 s; [raw log](logs/release-gut.txt), [JUnit](logs/unit-tests.xml) |
+| Import / parser / startup | 310 scripts + eight final-source follow-up checks; [log](logs/validation.txt), [follow-up](logs/parser-current.txt) |
+| Existing routes | All eight `verify_*.py` commands passed; [pipeline](logs/pipeline.txt) |
+| Keyboard/controller darkness choice | Native F/X ping, focus navigation, Reduced selection and explicit Save/reload passed at both sizes |
+| Native screenshots | 8 unedited viewport captures; [inventory](screenshots.json) |
+| Settings / falloff / reset / in-flight profile | Final focused 4/4, 31 assertions; [log](logs/targeted-final.txt) |
+| Python and release lint | 10/10 including multiline assertion checks; [tests](logs/python-followup.txt), [lint](logs/release-lint.txt) |
+| Exported positive | [passed](logs/positive-result.txt), actual [wiring/emission/clock marker](logs/positive-export.txt) |
+| Exported deliberately disconnected link | Expected exit 1 with RELEASE_VISIBILITY_WIRING_FAIL; [raw](logs/negative-export.txt), [runner](logs/negative-result.txt). Same packaged binary; diagnostic explicitly disconnects the live subscription before independent checks |
+| Save / map / progression scope | No changes to checkpoint schema, map, research, mission IDs, costs, combat or geometry. Existing complete chapter/recovery routes remain green |
+| Human acceptance | **No human playtest results exist. None claimed.** |
+| Performance target | **60 FPS not achieved on this software-renderer host. Physical baseline-GPU performance is unverified.** |
+
+The first full-suite attempt caught an accessibility focus-order regression from
+placing Darkness before Reduced Flashing. The dropdown now follows the existing
+toggles; the original assertions and all timeouts were preserved. Two full reruns
+passed. Later narrow hardening adds invalid falloff and zero-time reset coverage;
+the final full run above includes these cases. No gameplay side effect is hidden
+in a runtime assert.
+
+### Native comparison and visual inspection
+
+| State | 1280×800 / keyboard | 800×600 / controller |
+| --- | --- | --- |
+| lit | [view](screenshots/1280/lit.png) | [view](screenshots/800/lit.png) |
+| dark | [view](screenshots/1280/dark.png) | [view](screenshots/800/dark.png) |
+| mid-pulse | [view](screenshots/1280/mid-pulse.png) | [view](screenshots/800/mid-pulse.png) |
+| reduced | [view](screenshots/1280/reduced.png) | [view](screenshots/800/reduced.png) |
+
+Agent visual inspection checked vessel/HUD legibility, the shorter cone, expanding
+reveal, terrain contours and brighter Reduced/High Contrast presentation. The
+fixture seeds a presentation state directly; these captures are not a claimed
+complete player expedition or human playtest. Existing route verifiers exercise
+the real chapter flow.
+
+### Measured rendering cost
+
+Software diagnostic only: Intel Xeon Platinum 8573C / llvmpipe, one Mesa worker.
+
+| Resolution | Lit ms/frame | Dark ms/frame | Delta | Draw calls lit → dark | Texture memory lit → dark |
+| --- | --- | --- | --- | --- | --- |
+| 1280×800 | 145.038 | 190.268 | +45.230 ms | 51 → 54 | 173.13 → 178.34 MiB |
+| 800×600 | 30.512 | 52.454 | +21.942 ms | 45 → 47 | 168.98 → 171.42 MiB |
+
+These before/after samples are from the same scene/pose, with warmed shader draws.
+The host was below 60 FPS even lit; the extra pass has a measured cost. This is not
+physical-GPU acceptance and is not evidence that the target is met. A documented
+modest physical desktop GPU must still be profiled before performance approval.
+Do not infer a human usability or accessibility acceptance from these automation
+results. Cross-platform: Compatibility shader source is shared; only Linux export
+was tested here.
+
+[All changed files](changed-files.txt).
+
+The package path above is the actual verified build. Rebuilding after evidence-only commits yields a different build ID; use the printed package path.

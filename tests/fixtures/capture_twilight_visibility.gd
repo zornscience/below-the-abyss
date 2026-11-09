@@ -25,6 +25,7 @@ func run() -> void:
 	root.add_child(game)
 	root.size = Vector2i(800,600) if OS.get_cmdline_user_args().has("--small") else Vector2i(1280,800)
 	await frames(8)
+	game.settings.set_accessibility(SettingsStore.default_accessibility())
 	game.journey.prepare({"phase":"twilight","commissioned":true})
 	game.submarine.damage_system.set_maximum_depth_m(1000)
 	var onboarding: Dictionary = game.settings.snapshot().onboarding
@@ -67,6 +68,25 @@ func run() -> void:
 		quit(1)
 		return
 	await capture("mid-pulse")
+	game.open_accessibility()
+	var panel: AccessibilityPanel = game.accessibility_panel
+	await focus_control(panel.darkness_picker)
+	await tap(KEY_ENTER,JOY_BUTTON_A)
+	await tap(KEY_DOWN,JOY_BUTTON_DPAD_DOWN)
+	await tap(KEY_ENTER,JOY_BUTTON_A)
+	if game.settings.snapshot().accessibility.get("darkness", "standard")!="reduced":
+		push_error("Input could not select Reduced darkness")
+		quit(1)
+		return
+	await focus_control(panel.save_button)
+	await tap(KEY_ENTER,JOY_BUTTON_A)
+	var restored: SettingsStore = SettingsStore.new()
+	if restored.load_settings(game.settings_path)!=OK or restored.snapshot().accessibility.get("darkness")!="reduced":
+		push_error("Input-selected darkness did not persist")
+		quit(1)
+		return
+	await tap(KEY_ESCAPE,JOY_BUTTON_B)
+	game.resume_route()
 	var preferences: Dictionary = game.settings.snapshot().accessibility
 	preferences.darkness = "reduced"
 	preferences.high_contrast = true
@@ -76,3 +96,31 @@ func run() -> void:
 	await capture("reduced")
 	print("BTA057_NATIVE_PASS")
 	quit()
+
+func tap(key: Key, button: JoyButton) -> void:
+	var event: InputEvent
+	if OS.get_cmdline_user_args().has("--controller"):
+		var joy: InputEventJoypadButton = InputEventJoypadButton.new()
+		joy.button_index = button
+		joy.pressed = true
+		event = joy
+	else:
+		var keyboard: InputEventKey = InputEventKey.new()
+		keyboard.keycode = key
+		keyboard.physical_keycode = key
+		keyboard.pressed = true
+		event = keyboard
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+	await frames(3)
+	if event is InputEventKey: (event as InputEventKey).pressed = false
+	else: (event as InputEventJoypadButton).pressed = false
+	Input.parse_input_event(event)
+	Input.flush_buffered_events()
+	await frames(2)
+func focus_control(target: Control) -> void:
+	for index: int in range(30):
+		if root.gui_get_focus_owner()==target: return
+		await tap(KEY_TAB,JOY_BUTTON_RIGHT_SHOULDER)
+	push_error("Could not navigate to "+target.name)
+	quit(1)

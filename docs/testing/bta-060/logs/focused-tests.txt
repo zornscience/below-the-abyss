@@ -1,0 +1,42 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+
+
+res://tests/unit/test_rift_stalker.gd
+* test_filters_threshold_range_passive_and_receipt_clock_do_not_mutate_events
+* test_quiet_sensing_never_attacks_then_sound_warning_pursuit_escape_and_return
+* test_scare_stuns_flees_and_recovers_without_damage_or_repeated_extension
+* test_blast_ambiguity_nearest_eligible_flees_other_hearer_investigates
+4/4 passed.
+
+
+res://tests/integration/test_twilight_hunt.gd
+* test_real_ping_passive_classification_and_no_damage_receiver_or_reward
+* test_actual_blast_emits_once_stuns_without_kill_and_contact_uses_hull_api
+* test_region_and_pause_reset_scope_and_quiet_travel_are_safe
+* test_real_fired_torpedo_hits_invulnerable_actor_once_and_pays_twilight_cost
+4/4 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                 8
+Passing Tests         8
+Asserts              84
+Time              2.847s
+
+
+---- All tests passed! ----
+
+Results saved to res://build/ci-logs/bta060-target.xml

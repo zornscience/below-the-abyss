@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="RiftStalkerProfile" load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/ai/rift_stalker_profile.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_receiver_profile.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_emission_profile.gd" id="3"]
+[sub_resource type="Resource" id="Passive"]
+script = ExtResource("3")
+event_type = &"ambient"
+classification = &"marine_life"
+strength = 1.0
+range_units = 1600.0
+[sub_resource type="Resource" id="Hearing"]
+script = ExtResource("2")
+accepted_event_types = Array[StringName]([&"active_sonar", &"explosion"])
+maximum_range_units = 1800.0
+minimum_strength = 0.2
+[resource]
+script = ExtResource("1")
+hearing = SubResource("Hearing")
+navigation_bounds = Rect2(33300,2700,2200,650)
+patrol_points = PackedVector2Array(33900,3080,34800,3060)
+grid_spacing = 90.0
+body_radius = 24.0
+patrol_speed = 40.0
+investigate_speed = 110.0
+return_speed = 130.0
+investigation_seconds = 18.0
+recovery_seconds = 4.0
+warning_seconds = 2.5
+pursuit_seconds = 6.0
+pursuit_speed = 170.0
+pursuit_distance = 900.0
+target_distance = 700.0
+contact_radius = 50.0
+contact_damage = 5.0
+damage_cooldown = 3.0
+sense_radius = 450.0
+scare_radius = 240.0
+stun_seconds = 1.5
+flee_seconds = 5.0
+flee_speed = 190.0
+contact_interval = 3.0
+passive_emission = SubResource("Passive")

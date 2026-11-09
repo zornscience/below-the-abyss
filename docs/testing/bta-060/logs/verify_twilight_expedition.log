@@ -1,0 +1,51 @@
+Running twilight-story-keyboard-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_STORY_BEGIN outcome=release
+TWILIGHT_RECORD_BEGIN twilight-mara-log-two at=(28054.12, 1871.04)
+TWILIGHT_RECORD_PASS twilight-mara-log-two
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29123.76, 3118.063)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35954.11, 1934.968)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35796.51, 2817.455)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37701.92, 3157.66)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=release input=keyboard deep_simulation_seconds=248.916666666452 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true
+
+Running twilight-story-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-keyboard', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TWILIGHT_EXPEDITION_CONTINUE_PASS outcome=release input=keyboard choices=0 acknowledgements=0
+
+Running twilight-story-controller-fresh: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-controller', '--input=controller', '--outcome=collect', '--sentinel=capture']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-controller', '--input=controller', '--outcome=collect', '--sentinel=capture']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_STORY_BEGIN outcome=capture
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35940.26, 1939.504)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35800.18, 2810.16)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+TWILIGHT_RECORD_BEGIN twilight-mara-log-three at=(38440.26, 1719.985)
+TWILIGHT_RECORD_PASS twilight-mara-log-three
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37702.62, 3094.752)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29095.9, 3091.169)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=capture input=controller deep_simulation_seconds=342.816666666355 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true
+
+Running twilight-story-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-controller', '--input=controller', '--outcome=collect', '--sentinel=capture', '--twilight-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_expedition.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta055-1794250565711120936-controller', '--input=controller', '--outcome=collect', '--sentinel=capture', '--twilight-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TWILIGHT_EXPEDITION_CONTINUE_PASS outcome=capture input=controller choices=0 acknowledgements=0
+
+PASS: Twilight evidence, both orders/choices/input devices, debrief and Continue

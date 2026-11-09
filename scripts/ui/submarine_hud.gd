@@ -198,6 +198,11 @@ func _refresh_pressure_detail() -> void:
 		detail.text = "ASCEND / DAMAGE ACTIVE" if _accessibility_compact else "ASCEND / PRESSURE DAMAGE ACTIVE"
 
 
+func show_threat_notice(text: String) -> void:
+	_impact_remaining = FEEDBACK_SECONDS
+	(%ImpactFeedback as Label).text = text
+
+
 func show_thermal_damage(amount: float) -> void:
 	_impact_remaining = FEEDBACK_SECONDS
 	(%ImpactFeedback as Label).text = "! HEAT" if amount>0 else ""

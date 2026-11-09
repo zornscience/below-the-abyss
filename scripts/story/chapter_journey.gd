@@ -5,6 +5,7 @@ const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twili
 var scene: ShelfPrototype
 var habitat: TwilightHabitat
 var visibility: TwilightVisibility
+var hunt: TwilightHunt
 var depth_gate: TwilightDepthGate
 var expedition: TwilightExpedition
 const ACTION_COSTS: ActionCostProfile = preload("res://resources/balance/twilight_action_costs.tres")
@@ -44,6 +45,9 @@ func setup(game: ShelfPrototype) -> void:
 	depth_gate = TwilightDepthGate.new()
 	add_child(depth_gate)
 	depth_gate.setup(scene)
+	hunt = TwilightHunt.new()
+	add_child(hunt)
+	hunt.setup(scene)
 	state = scene.saves._state.journey.duplicate(true)
 	scene.expedition_log.finish_available = can_finish
 	scene.expedition_log.finish_requested.connect(offer_finish)
@@ -128,6 +132,7 @@ func prepare(value: Dictionary) -> void:
 	scene.chapter._activate(not active() and state.phase!="prototype")
 	layout.set_enabled(active())
 	habitat.set_enabled(active())
+	hunt.set_enabled(active())
 	expedition.set_enabled(active())
 	var pools: SubmarineResourceSystem = scene.submarine.resource_system
 	var profile: SubmarineResourceConfig = preload("res://resources/balance/twilight_resources.tres") if active() else _shallow_resources

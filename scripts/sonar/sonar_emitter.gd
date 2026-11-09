@@ -64,6 +64,13 @@ func setup(bus: AcousticBus, resources: SubmarineResourceSystem, effects: Node2D
 	return OK
 
 
+func is_listening_to(target: SonarRevealTarget) -> bool:
+	for reference: WeakRef in _listeners:
+		if reference.get_ref() == target:
+			return true
+	return false
+
+
 func listen_to(target: SonarRevealTarget) -> Error:
 	if not is_instance_valid(target) or not target.is_inside_tree() \
 		or not AcousticEvent.valid_token(target.target_id) \

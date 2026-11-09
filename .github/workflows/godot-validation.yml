@@ -143,6 +143,18 @@ jobs:
           fi
           grep -q RELEASE_VISIBILITY_WIRING_FAIL build/playtest/visibility-negative.log
 
+      - name: Prove release smoke rejects missing sonar and discovery registration
+        shell: bash
+        run: |
+          set -euo pipefail
+          package=(build/below-the-abyss-playtest-linux-*.zip)
+          test "${#package[@]}" -eq 1
+          if python3 tools/smoke_playtest.py "${package[0]}" --log build/playtest/registration-negative.log --break-registration-wiring; then
+            echo "Missing registration incorrectly passed release smoke"
+            exit 1
+          fi
+          grep -q RELEASE_REGISTRATION_WIRING_FAIL build/playtest/registration-negative.log
+
       - name: Retain package, manifest and export logs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

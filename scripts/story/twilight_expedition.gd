@@ -368,3 +368,7 @@ func record_text(id: StringName) -> String:
 	if id==&"twilight-net-survey" and (scene.story.has_decision(TwilightShelfData.LOST) or scene.story.has_flag(&"zone2-released-sentinel-lost")):
 		return "Tethys drift net / casualty record. The luminous animal was killed by a weapon impact. Net construction and the loss are recorded; no living specimen can be delivered. Other evidence remains recoverable."
 	return TwilightShelfData.record(id).get("text","")
+
+
+func echoes() -> Array[SonarRevealTarget]:
+	return _echoes

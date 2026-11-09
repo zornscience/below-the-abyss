@@ -23,6 +23,7 @@ var preview: Label
 var transcript: Label
 var scroll: ScrollContainer
 var actions: VBoxContainer
+var hint: Label
 var _primary: HBoxContainer
 var _navigation: HBoxContainer
 var _controls: Array[Button] = []
@@ -78,6 +79,12 @@ func setup(value: ExpeditionRevision) -> void:
 	reading.add_child(transcript)
 	actions = VBoxContainer.new()
 	content.add_child(actions)
+	hint = Label.new()
+	UiTypography.style(hint,&"secondary")
+	hint.autowrap_mode = TextServer.AUTOWRAP_OFF
+	hint.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(hint)
 	_primary = HBoxContainer.new()
 	_navigation = HBoxContainer.new()
 	actions.add_child(_primary)
@@ -186,8 +193,19 @@ func refresh() -> void:
 		button.focus_mode = Control.FOCUS_ALL if expanded else Control.FOCUS_NONE
 		button.visible = expanded or button in [accept,later]
 	accept.text = "Accept" if selected=="dispatch" else "Read"
+	hint.text = _hint_text()
 	for button: Button in _buttons():
 		for property: String in ["focus_neighbor_left","focus_neighbor_right","focus_neighbor_top","focus_neighbor_bottom"]: button.set(property,NodePath("."))
+## Says what each key does for the active device, so nothing about the radio has to be guessed.
+func _hint_text() -> String:
+	var context: InputContext = revision.scene.input_context
+	var radio: String = context.describe(&"open_radio").get_slice(" / ",0)
+	var back: String = "B" if context.controller else "Esc"
+	if expanded:
+		return "%s: close · %s: next · %s: scroll" % [back,"D-pad" if context.controller else "Tab","stick" if context.controller else "PgUp/PgDn"]
+	if selected=="dispatch":
+		return "%s: respond · %s: dismiss" % [radio,back]
+	return "%s: open · %s: dismiss" % [radio,back]
 func _buttons() -> Array[Button]:
 	return _controls
 func _focus_controls() -> Array[Control]:
@@ -216,6 +234,11 @@ func _input(event: InputEvent) -> void:
 		_consume_ui_event(event)
 		return
 	if event.is_echo(): return
+	if not expanded and panel.visible and event.is_action_pressed("ui_cancel"):
+		# Dismiss the preview without opening it; the message stays unread in the badge.
+		collapse()
+		_consume_ui_event(event)
+		return
 	if event.is_action_pressed("open_radio"):
 		toggle()
 		_consume_ui_event(event)
@@ -265,7 +288,7 @@ func _process(delta: float) -> void:
 	panel.size = Vector2(width,0)
 	scroll.custom_minimum_size.y = 0
 	var overhead: float = panel.get_combined_minimum_size().y
-	scroll.custom_minimum_size.y = maxf(48,minf(180 if not expanded else 260,target_height-overhead))
+	scroll.custom_minimum_size.y = maxf(48,minf(96 if not expanded else 260,target_height-overhead))
 	panel.size.y = scroll.custom_minimum_size.y+overhead
 	panel.position = Vector2(16,bottom-44-panel.size.y)
 

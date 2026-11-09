@@ -53,6 +53,13 @@ func discover(id: StringName, evidence_id: StringName) -> Error:
 	return OK
 
 
+func is_sonar_bound(target: SonarRevealTarget) -> bool:
+	for reference: WeakRef in _bindings.values():
+		if reference.get_ref() == target:
+			return true
+	return false
+
+
 func connect_sonar_target(target: SonarRevealTarget) -> Error:
 	if target == null or not target.is_inside_tree() or target.is_queued_for_deletion() or _catalog == null:
 		return ERR_INVALID_PARAMETER

@@ -18,6 +18,7 @@ var _buttons: Array[Button] = []
 var _story_back: Callable
 var _dock_tab: String = "home"
 var _scrolls: Dictionary = {}
+var _hints: Dictionary = {}
 func setup(owner_revision: ExpeditionRevision) -> void:
 	revision = owner_revision
 	layer = 80
@@ -34,6 +35,7 @@ func setup(owner_revision: ExpeditionRevision) -> void:
 	_dock_body = _content(dock_page,true)
 	radio_page = _screen()
 	_radio_body = _content(radio_page,true)
+	for page: PanelContainer in [dock_page,radio_page]: _add_hint(page)
 	dock_page.hide()
 	radio_page.hide()
 	UiDialogLayout.bind_panel(dock_page,Vector2(960,580))
@@ -105,8 +107,26 @@ func _button(column: Container, text: String, callback: Callable, disabled: bool
 	column.add_child(button)
 	if not disabled: _buttons.append(button)
 	return button
+func _add_hint(page: PanelContainer) -> void:
+	var label: Label = Label.new()
+	UiTypography.style(label,&"secondary")
+	# One line that trims instead of wrapping: a wrapping label reports a huge minimum height in tight windows.
+	label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	((page.get_child(0) as MarginContainer).get_child(0) as VBoxContainer).add_child(label)
+	_hints[page] = label
+## Footer that names what the back and confirm controls do on this exact page.
+func _refresh_hint() -> void:
+	var page: PanelContainer = radio_page if radio_page.visible else (dock_page if dock_page.visible else null)
+	if page==null: return
+	var controller: bool = revision.scene.input_context.controller
+	var back: String = "go back"
+	if page==dock_page: back = "depart station" if _dock_tab=="home" else "back to operations"
+	(_hints[page] as Label).text = ("B: %s · D-pad: choose · A: confirm · right stick: scroll" if controller else "Esc: %s · Up / Down: choose · Enter: confirm · PgUp / PgDn: scroll") % back
 func _focus() -> void:
 	var panel: Control = radio_page if radio_page.visible else (dock_page if dock_page.visible else title_page)
+	_refresh_hint()
 	var controls: Array[Control] = []
 	controls.assign(_buttons)
 	controls.append(_scrolls[panel] as Control)
@@ -216,7 +236,7 @@ func show_dock(tab: String = "home") -> void:
 	elif tab=="technology":
 		_label(_dock_body,"%d RESEARCH POINTS AVAILABLE  /  %d EARNED" % [CampaignData.available(revision.campaign),CampaignData.earned(revision.campaign)],&"heading")
 		if canonical: _label(_dock_body,"RESEARCH XP %d · BONUS POINTS %d/%d" % [ResearchExperienceData.total(revision.campaign.science),ResearchExperienceData.points(revision.campaign.science),ResearchExperienceData.RULES.maximum_extra_points],&"body")
-		_label(_dock_body,"First new rank: 2 RP · Additional ranks: 3 RP · Free reassignment. This chapter funds one or two new ranks.")
+		_label(_dock_body,"First new rank: %d RP · Additional ranks: %d RP · Free reassignment. This chapter funds one or two new ranks." % [CampaignData.PRICING.first_rank_cost,CampaignData.PRICING.rank_cost])
 		if CampaignData.legacy_count(revision.campaign)>0: _label(_dock_body,"Earlier fits keep their original cost. Refunds return the points actually paid.")
 		var branches: GridContainer = GridContainer.new()
 		branches.columns = 1 if get_viewport().get_visible_rect().size.x<1100 else 2

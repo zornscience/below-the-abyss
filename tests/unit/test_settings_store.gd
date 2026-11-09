@@ -104,3 +104,15 @@ func test_invalid_deadzone_and_snapshot_mutation_do_not_change_state() -> void:
 	_store.set_deadzone(0.5)
 	_store.reset_defaults()
 	assert_eq(_store.snapshot(), previous)
+
+
+func test_per_frame_accessors_match_snapshot_and_follow_changes() -> void:
+	var access: Dictionary = _store.snapshot().accessibility
+	assert_eq(_store.accessibility_flag(&"reduced_motion"), bool(access.reduced_motion))
+	assert_false(_store.accessibility_flag(&"no_such_flag"))
+	access.reduced_motion = not bool(access.reduced_motion)
+	assert_eq(_store.set_accessibility(access), OK)
+	assert_eq(_store.accessibility_flag(&"reduced_motion"), bool(access.reduced_motion), "no stale value after a change")
+	assert_false(_store.onboarding_has_seen("movement"))
+	assert_eq(_store.set_onboarding({"enabled": true, "seen": ["movement"]}), OK)
+	assert_true(_store.onboarding_has_seen("movement"))

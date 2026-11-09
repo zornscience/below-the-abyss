@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ActionCostProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/combat/action_cost_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+ping_battery = 5.0
+torpedo_battery = 5.0

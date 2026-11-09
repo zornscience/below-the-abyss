@@ -92,6 +92,15 @@ func snapshot() -> Dictionary:
 	return _document.duplicate(true)
 
 
+## Allocation-free reads for per-frame callers; snapshot() deep-copies the document.
+func accessibility_flag(key: StringName) -> bool:
+	return bool((_document.get("accessibility", {}) as Dictionary).get(key, false))
+
+
+func onboarding_has_seen(id: String) -> bool:
+	return id in (_document.get("onboarding", {}) as Dictionary).get("seen", [])
+
+
 func reset_defaults() -> void:
 	_document = default_document()
 	settings_changed.emit()

@@ -29,12 +29,12 @@ func setup(body: AcousticCreature,scene: ShelfPrototype,species: int) -> void:
 	game.settings.settings_changed.connect(_preferences)
 	_preferences()
 func _preferences() -> void:
-	var reduced: bool = game.settings.snapshot().accessibility.reduced_motion
+	var reduced: bool = game.settings.accessibility_flag(&"reduced_motion")
 	_swim.set_shader_parameter("amount",0.0 if reduced else 1.0)
 	if reduced: sprite.rotation = 0.0
 func _process(delta: float) -> void:
 	if animal._suspended or animal._destroyed: return
-	var reduced: bool = game.settings.snapshot().accessibility.reduced_motion
+	var reduced: bool = game.settings.accessibility_flag(&"reduced_motion")
 	if not reduced: phase = fmod(phase+delta*(1.4+animal.velocity.length()/70),TAU*20)
 	if absf(animal.velocity.x)>1: sprite.flip_h = animal.velocity.x<0
 	_swim.set_shader_parameter("phase",phase)

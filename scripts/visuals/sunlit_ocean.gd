@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 	if camera==null: return
 	var view: Rect2 = Rect2(camera.get_screen_center_position()-get_viewport_rect().size*0.5,get_viewport_rect().size)
 
-	var quiet: bool = scene.settings.snapshot().accessibility.reduced_motion
+	var quiet: bool = scene.settings.accessibility_flag(&"reduced_motion")
 	var moving: bool = scene.submarine.is_physics_processing() and not quiet
 	if moving: phase = fmod(phase+delta,TAU*100.0)
 	_tick += delta
@@ -40,7 +40,7 @@ func _draw() -> void:
 	var width: float = _last_view.size.x+400.0
 	# Title art contains a baked horizon: never use it as the water column.
 	draw_rect(Rect2(_last_view.position.x-200,-1200,width,1200),Color("030b10"))
-	var reduced: bool = scene.settings.snapshot().accessibility.reduced_flashing
+	var reduced: bool = scene.settings.accessibility_flag(&"reduced_flashing")
 	for layer: int in range(2):
 		var points: PackedVector2Array = []
 		for index: int in range(65):

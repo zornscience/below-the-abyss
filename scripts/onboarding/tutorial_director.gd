@@ -8,6 +8,7 @@ var _clock: float = 0.0
 var _shown: Dictionary[String, bool] = {}
 var _current: String = ""
 var _initial_position: Vector2
+var _cable_at: Vector2 = TwilightShelfData.record(&"twilight-line-anchor").get("at",Vector2.INF)
 const TEXT: Dictionary = {
 	"movement":["Take the helm","Use {move} to thrust. Release to coast; reverse to brake. Pause for controls, help or station orders."],
 	"sonar":["See with sound","{sonar}: send a sonar pulse. Each ping costs 4 battery, much more than ordinary travel. Reveals arrive with the wave."],
@@ -16,6 +17,9 @@ const TEXT: Dictionary = {
 	"station":["Dock and prepare","Near the station cradle, slow down and press {interact}. Repair, refill and upgrades are intentional; arriving alone restores nothing."],
 	"depth":["Respect the pressure rating","Depth is shown beside your hull rating. CAUTION means you are near it; DANGER means ascend. Install the pressure hull before a deep investigation."],
 	"wildlife":["A living acoustic landmark","Grazers investigate nearby sound, then return to feeding. Passive listening is silent. You can study wildlife without harming it."],
+	"passive":["Listen quietly","The panel at lower right is passive sonar. It shows the direction and type of sounds nearby without making any noise of your own: MECH is machinery, GEO is rock or vents, LIFE is animals."],
+	"twilight-cable":["Wick / the sensor line","This cable carried Halcyon's shelf sensors. Follow the line to where it ends and scan the break: how it was cut may explain why the data stopped. Scan with {interact} while close and in line of sight."],
+	"twilight-net":["Wick / living contact","An animal is caught in a drift net. Scan the net to learn what it is, then choose with {interact}: loosen the net to release it, or secure it alive for Crane. Either choice is allowed, and no weapon is needed."],
 	"torpedo":["A tool with consequences","{fire}: fire in your last thrust direction (2 battery; 1.2s rearm). Explosions excavate soft rock and damage nearby wildlife. Hard perimeter bedrock and the station remain solid."]}
 func setup(scene: ShelfPrototype) -> void:
 	_scene = scene
@@ -30,6 +34,8 @@ func setup(scene: ShelfPrototype) -> void:
 	scene.submarine.damage_system.warning_changed.connect(func(state: int) -> void:
 		if state != SubmarineDamageSystem.WarningState.SAFE: show_hint("depth"))
 	scene.torpedoes.fired.connect(func(_id: StringName) -> void: complete("torpedo"))
+	scene.submarine.passive.contacts_changed.connect(func() -> void:
+		if not scene.submarine.passive.contacts_snapshot().is_empty(): show_hint("passive"))
 func _preferences_changed() -> void:
 	if not _scene.settings.snapshot().onboarding.enabled:
 		_current = ""
@@ -64,9 +70,12 @@ func _process(delta: float) -> void:
 	if _scene == null or not _scene.submarine.is_physics_processing(): return
 	_clock += delta
 	if _current != "" and _clock >= _visible_until:
+		var finished: String = _current
 		_current = ""
 		message_changed.emit("","")
-	if _scene.submarine.global_position.distance_to(_initial_position) > 100.0 and "movement" not in _scene.settings.snapshot().onboarding.seen:
+		# Mechanic explanations are remembered once they have been on screen; chapter cards are not.
+		if finished=="passive": complete(finished)
+	if _scene.submarine.global_position.distance_to(_initial_position) > 100.0 and not _scene.settings.onboarding_has_seen("movement"):
 		complete("movement")
 		show_hint("sonar")
 	if _clock > 15.0 and _scene.station.is_in_range(_scene.submarine.global_position):
@@ -76,6 +85,10 @@ func _process(delta: float) -> void:
 	elif _clock > 65.0: show_hint("torpedo")
 	if _scene.submarine.global_position.distance_to(_scene.creature.global_position) < 340.0:
 		show_hint("wildlife")
+	if _scene.journey!=null and _scene.journey.active():
+		var at: Vector2 = _scene.submarine.global_position
+		if at.distance_to(_cable_at)<900.0 and not _scene.research.is_completed(&"twilight-severed-cable"): show_hint("twilight-cable")
+		if at.distance_to(TwilightShelfData.NET)<800.0 and not _scene.research.is_completed(&"twilight-net-survey"): show_hint("twilight-net")
 func toggle() -> Error:
 	var before: Dictionary = _scene.settings.snapshot().onboarding
 	var next: Dictionary = before.duplicate(true)

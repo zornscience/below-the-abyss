@@ -119,7 +119,7 @@ func on_docked() -> Error:
 	var before: Dictionary = scene.station._values(scene.submarine)
 	var service: Dictionary = scene.station.perform(&"all")
 	scene.torpedoes.refill()
-	docking_report = "Docked · Hull %.0f → %.0f · Battery %.0f → %.0f · Oxygen %.0f → %.0f · Torpedoes 10/10" % [before.hull,scene.submarine.hull_system.hull,before.battery,scene.submarine.resource_system.battery,before.oxygen,scene.submarine.resource_system.oxygen]
+	docking_report = "Docked · Hull %.0f → %.0f · Battery %.0f → %.0f · Oxygen %.0f → %.0f · Torpedoes %d/%d" % [before.hull,scene.submarine.hull_system.hull,before.battery,scene.submarine.resource_system.battery,before.oxygen,scene.submarine.resource_system.oxygen,TorpedoLauncher.CAPACITY,TorpedoLauncher.CAPACITY]
 	if service.error not in [OK,ERR_UNAVAILABLE]: docking_report = "Docking services unavailable: "+str(service.reason)
 	if scene.chapter!=null and scene.chapter.active:
 		scene.route_check.sample(scene.region.base_zone.contains_world_position(scene.submarine.global_position),scene.region.point_of_interest_zone.contains_world_position(scene.submarine.global_position),0.0)
@@ -150,7 +150,7 @@ func _refresh_ammo() -> void:
 	if _ammo_label==null: return
 	var state: String = "EMPTY · DOCK TO REARM" if scene.torpedoes.ammunition==0 else ("REARMING %.1fs" % scene.torpedoes._cooldown if scene.torpedoes._cooldown>0 else "READY")
 	if scene.torpedoes.ammunition>0 and scene.submarine.resource_system.battery<scene.torpedoes._rules.battery_cost: state = "LOW BATTERY"
-	_ammo_label.text = "TORPEDOES %d/10 · %s" % [scene.torpedoes.ammunition,state]
+	_ammo_label.text = "TORPEDOES %d/%d · %s" % [scene.torpedoes.ammunition,TorpedoLauncher.CAPACITY,state]
 func _reward_survey_deferred() -> void:
 	_reward_survey.call_deferred()
 func _reward_survey() -> void:

@@ -424,10 +424,10 @@ func begin_new_campaign(replacement: ExpeditionStore = null) -> Error:
 	candidate.region_id = ExpeditionSchema.REGION
 	candidate.legacy_conclusion = false
 	candidate.progress = {"discoveries":[],"research":[],"upgrades":[],"missions":_scene.missions._catalog.initial_records()}
-	candidate.prototype = {"ammunition":10,"campaign":CampaignData.fresh()}
+	candidate.prototype = {"ammunition":TorpedoLauncher.CAPACITY,"campaign":CampaignData.fresh()}
 	candidate.terrain = []
 	candidate.route = {"stage":0,"elapsed_seconds":0.0}
-	candidate.player = {"position":[_scene.region.spawn.global_position.x,_scene.region.spawn.global_position.y],"rotation":0.0,"hull":100.0,"battery":100.0,"oxygen":100.0,"sonar_cooldown":0.0}
+	candidate.player = {"position":[_scene.region.spawn.global_position.x,_scene.region.spawn.global_position.y],"rotation":0.0,"hull":_scene.submarine.hull_system.max_hull,"battery":_scene.submarine.resource_system.max_battery,"oxygen":_scene.submarine.resource_system.max_oxygen,"sonar_cooldown":0.0}
 	if _scene.chapter!=null: candidate.player.position = [SunlitSurveyData.SPAWN.x,SunlitSurveyData.SPAWN.y]
 	if ExpeditionSchema.decode(candidate).error!=OK: return ERR_INVALID_DATA
 	var paths: Array[String] = [store.path]

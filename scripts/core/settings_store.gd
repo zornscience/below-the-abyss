@@ -24,8 +24,10 @@ static func default_accessibility() -> Dictionary:
 
 
 static func valid_accessibility(value: Variant) -> bool:
-	if not value is Dictionary or value.size() != 5 or value.get("ui_scale") not in ["compact", "standard", "large"]:
+	if not value is Dictionary or value.size() not in [5,6] or value.get("ui_scale") not in ["compact", "standard", "large"]:
 		return false
+	if value.size()==6 and not value.has("darkness"): return false
+	if value.has("darkness") and value.darkness not in ["standard","reduced"]: return false
 	for key: String in ["reduced_flashing", "reduced_particles", "reduced_motion", "high_contrast"]:
 		if not value.get(key) is bool:
 			return false

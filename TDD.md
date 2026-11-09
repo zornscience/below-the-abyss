@@ -501,3 +501,10 @@ freezes with simulation and emits no acoustic event/discovery/choice. Continue m
 show this descriptive hint again; it has no reward or persistence. Subject images
 share one static illustrated atlas across world anchors and research UI; living
 contact uses the existing animal. No additional animated actor or dispatcher.
+
+BTA-057 Phase 1 adds a scene-owned TwilightVisibility presentation component. It
+caches collision outlines once, samples SonarEmitter simulation time and holds eight
+bounded transient pulse slots. No terrain reveal is persisted or sent to the map.
+Personal accessibility preferences may include validated darkness Standard/Reduced;
+missing retains Standard without an expedition schema migration. ReleaseSmoke runs
+only when explicitly requested, and verifies real accepted-emission clock wiring.

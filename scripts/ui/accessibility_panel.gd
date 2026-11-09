@@ -5,6 +5,7 @@ signal close_requested
 var settings: SettingsStore
 var settings_path: String
 var _original: Dictionary
+var darkness_picker: OptionButton
 var scale_picker: OptionButton
 var toggles: Dictionary[String, CheckButton] = {}
 var status: Label
@@ -43,6 +44,14 @@ func _ready() -> void:
 		var next: Dictionary = settings.snapshot().accessibility
 		next.ui_scale = ["compact", "standard", "large"][index]
 		settings.set_accessibility(next))
+	darkness_picker = OptionButton.new()
+	darkness_picker.add_item("Twilight darkness / Standard")
+	darkness_picker.add_item("Twilight darkness / Reduced")
+	content.add_child(darkness_picker)
+	darkness_picker.item_selected.connect(func(index: int) -> void:
+		var next: Dictionary = settings.snapshot().accessibility
+		next.darkness = "reduced" if index==1 else "standard"
+		settings.set_accessibility(next))
 	var labels: Dictionary = {"reduced_flashing": "Reduced flashing / softer sonar highlights", "reduced_particles": "Disable decorative particles",
 		"reduced_motion": "Reduced motion / static propeller, motes and parallax", "high_contrast": "High contrast instruments and menus"}
 	for key: String in labels:
@@ -54,6 +63,7 @@ func _ready() -> void:
 			var next: Dictionary = settings.snapshot().accessibility
 			next[key] = value
 			settings.set_accessibility(next))
+	content.move_child(darkness_picker,content.get_child_count()-1)
 	_label(content, "No camera shake or flashing alarm sequence is authored. Sonar timing, warnings and movement stay active with comfort options enabled. Menu recovery controls remain fixed after gameplay remapping.",&"body")
 	save_button = Button.new()
 	save_button.text = "Save accessibility preferences"
@@ -73,6 +83,7 @@ func _ready() -> void:
 	var controls: Array[Control] = [scale_picker]
 	for toggle: CheckButton in toggles.values():
 		controls.append(toggle)
+	controls.append(darkness_picker)
 	controls.append_array([save_button, reset_button, close_button])
 	for index: int in range(controls.size()):
 		for property: String in ["focus_next", "focus_neighbor_bottom"]:
@@ -103,6 +114,7 @@ func present(value: SettingsStore, path: String) -> void:
 
 func _refresh() -> void:
 	var value: Dictionary = settings.snapshot().accessibility
+	darkness_picker.select(1 if value.get("darkness","standard")=="reduced" else 0)
 	scale_picker.select(["compact", "standard", "large"].find(value.ui_scale))
 	for key: String in toggles:
 		toggles[key].set_pressed_no_signal(bool(value[key]))

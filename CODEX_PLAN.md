@@ -320,3 +320,12 @@ actual hull clearance, optionality, persistence and keyboard/controller complete
 routes. Record native screenshots and simulation timings separately from the
 unverified 30–45-minute first-time human pacing target. No later region or artificial
 waiting. Evidence and manual protocol: docs/testing/bta-056/README.md.
+
+## BTA-057 — Twilight sonar visibility / Phase 1
+
+User-approved dim-but-readable Standard darkness plus Reduced preference, Twilight
+only. Scene-owned presentation reuses accepted sonar wavefront timing and actual
+collision contours. Keep close-range quiet navigation, headlight and textual cues.
+No expedition schema/map/story/progression changes. Release assertions must not own
+side effects; verify the actual exported wiring positively and with disconnection.
+Evidence and limitations: docs/testing/bta-057/README.md. No human playtest claims.

@@ -140,3 +140,24 @@ captures have no engine `ERROR:`/`SCRIPT ERROR:` diagnostics.
 
 **Human playtest results do not exist. Every number remains a hypothesis.**
 PR-specific remote CI is separate from these local checks; no merge is requested.
+
+## Publishing result
+
+`git push -u origin bta-061-tunnels` succeeded; implementation commit `241e29d` is
+on the remote branch. PR creation was attempted with the prepared full description:
+
+```sh
+gh pr create --repo zornscience/below-the-abyss --base main --head bta-061-tunnels \
+  --title "BTA-061: add Twilight tunnels and optional torpedo shortcuts" \
+  --body-file docs/testing/bta-061/PR.md
+```
+
+Result: **exit 1**, `Post "https://api.github.com/graphql": Forbidden`.
+Git HTTPS publishing works; GitHub API access is blocked in this environment. No
+browser-control tool is exposed for a web fallback. This session could not create
+the PR or verify its own remote CI. No merge was performed or requested.
+
+[Open the pushed branch's PR form](https://github.com/zornscience/below-the-abyss/pull/new/bta-061-tunnels)
+with [the complete prepared body](PR.md), or enable `api.github.com` access in the
+cloud environment to allow a subsequent API attempt. This is a publishing blocker,
+not a failed local game/test check.

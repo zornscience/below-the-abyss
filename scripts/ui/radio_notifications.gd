@@ -81,7 +81,8 @@ func setup(value: ExpeditionRevision) -> void:
 	content.add_child(actions)
 	hint = Label.new()
 	UiTypography.style(hint,&"secondary")
-	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hint.autowrap_mode = TextServer.AUTOWRAP_OFF
+	hint.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(hint)
 	_primary = HBoxContainer.new()
@@ -201,10 +202,10 @@ func _hint_text() -> String:
 	var radio: String = context.describe(&"open_radio").get_slice(" / ",0)
 	var back: String = "B" if context.controller else "Esc"
 	if expanded:
-		return "%s: close · Tab / D-pad: next control · %s: scroll" % [back,"right stick" if context.controller else "PgUp / PgDn"]
+		return "%s: close · %s: next · %s: scroll" % [back,"D-pad" if context.controller else "Tab","stick" if context.controller else "PgUp/PgDn"]
 	if selected=="dispatch":
-		return "%s: respond · %s: dismiss for now" % [radio,back]
-	return "%s: open full message · %s: dismiss" % [radio,back]
+		return "%s: respond · %s: dismiss" % [radio,back]
+	return "%s: open · %s: dismiss" % [radio,back]
 func _buttons() -> Array[Button]:
 	return _controls
 func _focus_controls() -> Array[Control]:

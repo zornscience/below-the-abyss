@@ -110,7 +110,9 @@ func _button(column: Container, text: String, callback: Callable, disabled: bool
 func _add_hint(page: PanelContainer) -> void:
 	var label: Label = Label.new()
 	UiTypography.style(label,&"secondary")
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# One line that trims instead of wrapping: a wrapping label reports a huge minimum height in tight windows.
+	label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	((page.get_child(0) as MarginContainer).get_child(0) as VBoxContainer).add_child(label)
 	_hints[page] = label

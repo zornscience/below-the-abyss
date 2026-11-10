@@ -118,7 +118,20 @@ schema change and migration** and the earlier deferral stays until you approve t
    Stalker is, why it hunts, what each ending means) needs the designer's Story Bible approval.
 4. **Test box:** approved to proceed (designer delegated).
 
-## 12. Open questions
+## 12. Market-informed requirements (2026-11-10)
+
+From the reviewed research (`docs/market/market-review-2026-11-10.md`; figures provisional):
+1. **Control feel is a gate.** The combat test box and every playtest measure input responsiveness
+   and offer a handling option (water-like inertia vs. tighter control).
+2. **Music reacts to proximity and awareness**, with real dynamic range; "sparse" must never mean
+   "repetitive".
+3. **Ability-gated routes are genuinely non-linear** (at least two valid routes to each gate).
+4. **Enemy variety** is planned per slice, not reused with larger health pools.
+5. **AI-asset provenance** records originals, prompts, revision history and dated tool terms;
+   identity assets are hand-finished; store disclosure is specific and bounded.
+6. **Plan for the low commercial case** and set wishlist decision gates before production scope grows.
+
+## 13. Open questions
 
 1. Boss concept for the slice: the Stalker itself or a separate guardian?
 2. The darker ending: what does the player lose or gain, and is it reversible before the end?

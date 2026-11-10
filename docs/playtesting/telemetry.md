@@ -81,3 +81,37 @@ JSON and text may be inspected and voluntarily shared. To delete them remove onl
 the playtests subdirectory. Campaign saves/preferences remain separate. Do not
 share the entire Godot user data directory. Invalid input analysis fails explicitly,
 retains source files, and invents no missing values.
+
+## Disposable combat test box: local report version 2
+
+The playtest export's existing Playtest page offers Developer / Open combat test
+box. Entering it creates a separate observer with recording OFF; it does not carry
+campaign consent across. The box requires its own explicit opt-in. The same local
+store, quotas, event cap, checkpoints, validation and stop/quit behavior apply.
+Campaign reports remain exactly version 1. This report version is unrelated to
+the unchanged expedition save schema 10.
+
+Only combat reports use version 2, adding one allowlisted `combat` object:
+first_engage_active_seconds (null until engagement); deaths; deaths_by_collision;
+collisions; pings; torpedoes; stun_uses; swarm_destroyed; swarm_stunned;
+stalker_scared; profile (weighty/responsive); profile_active_seconds for each of
+those two profiles; and rating (unrated/weighty/about_right/sluggish/twitchy).
+See CombatMetrics.DETAILS for the fixed event categories. A stun use counts an
+accepted ping affecting at least one swarmer; swarm_stunned counts affected
+animals, including repeat stuns. Torpedoes count actual launches, not button presses.
+Collisions count new contact episodes, not every continuous physics contact frame.
+Deaths by collision use the existing hull API's final damage source. Enemy outcomes
+give no rewards. First engagement includes hearing, a direct stun or a destruction.
+
+The readable summary calculates collisions/minute and pings/minute from totals
+and active_seconds; aggregate counters and profile time survive the timeline cap.
+Choosing Finish / [rating] records that fixed choice and disables/exports the
+session. No free text, positions, hardware identity, raw inputs or network calls
+are collected. The existing campaign analysis tool intentionally accepts only
+version 1: inspect combat JSON and readable summaries separately rather than mixing
+arena sessions with chapter-completion statistics.
+
+Timing remains monotonic **wall time**. Accelerated scripted fixtures measure
+handling in simulation time separately; their report timestamps and synthetic
+ratings are not human pacing or preference results. For the three-person protocol,
+see [the facilitator sheet](../testing/combat-testbox/FACILITATOR.md).

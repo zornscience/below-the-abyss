@@ -8,6 +8,11 @@ var revised: bool = false
 signal detonated(event_id: StringName, origin: Vector2)
 @export var configuration: BlastProfile = preload("res://resources/balance/torpedo_profile.tres")
 var _scene: ShelfPrototype
+var _player: SubmarineController
+var _world_effects: Node2D
+var _settings: SettingsStore
+var _excavation: ExcavationSystem
+var _audio_request: Callable
 var _rules: BlastProfile
 var _projectiles: Array[TorpedoProjectile] = []
 var _effects: Array[BlastEffect] = []
@@ -24,8 +29,24 @@ func setup(scene: ShelfPrototype) -> Error:
 	if configuration == null or not configuration.is_valid():
 		return ERR_INVALID_PARAMETER
 	_scene = scene
-	revised = scene.revised_expedition
-	scene.submarine.simulation_enabled_changed.connect(func(_enabled: bool) -> void: _armed = false)
+	var initialized: Error = setup_ports(scene.submarine,scene.get_node("WorldRoot/WorldEffects") as Node2D,scene.get_node("AcousticBus") as AcousticBus,scene.settings,scene.audio.request,scene.excavation,scene.revised_expedition)
+	if initialized!=OK: return initialized
+	for creature: AcousticCreature in [scene.creature, scene.predator]+scene.extension.wildlife:
+		var receiver: BlastReceiver = BlastReceiver.new()
+		creature.add_child(receiver)
+		receiver.setup(creature)
+		_receivers.append(receiver)
+	return OK
+
+func setup_ports(player: SubmarineController,effects: Node2D,bus: AcousticBus,preferences: SettingsStore,audio_request: Callable = Callable(),excavation: ExcavationSystem = null,modern: bool = true) -> Error:
+	if player==null or effects==null or bus==null or preferences==null or configuration==null or not configuration.is_valid(): return ERR_INVALID_PARAMETER
+	_player = player
+	_world_effects = effects
+	_settings = preferences
+	_audio_request = audio_request
+	_excavation = excavation
+	revised = modern
+	_player.simulation_enabled_changed.connect(func(_enabled: bool) -> void: _armed = false)
 	_rules = configuration.duplicate(true) as BlastProfile
 	_emitter = AcousticEmitter.new()
 	_emitter.source_id = &"neris-01/torpedo"
@@ -33,14 +54,9 @@ func setup(scene: ShelfPrototype) -> Error:
 	_emitter.profile.event_type = &"explosion"
 	_emitter.profile.classification = &"mechanical"
 	_emitter.profile.range_units = 1800.0
-	scene.get_node("WorldRoot/WorldEffects").add_child(_emitter)
-	if _emitter.bind_bus(scene.get_node("AcousticBus") as AcousticBus) != OK: return ERR_INVALID_PARAMETER
+	_world_effects.add_child(_emitter)
+	if _emitter.bind_bus(bus) != OK: return ERR_INVALID_PARAMETER
 	_epoch = Crypto.new().generate_random_bytes(8).hex_encode()
-	for creature: AcousticCreature in [scene.creature, scene.predator]+scene.extension.wildlife:
-		var receiver: BlastReceiver = BlastReceiver.new()
-		creature.add_child(receiver)
-		receiver.setup(creature)
-		_receivers.append(receiver)
 	return OK
 func battery_cost() -> float:
 	return _rules.battery_cost
@@ -52,12 +68,12 @@ func set_battery_cost(cost: float) -> Error:
 
 func request_fire() -> Error:
 	if revised:
-		aim = _scene.submarine.facing_direction()
+		aim = _player.facing_direction()
 		if ammunition <= 0: return ERR_UNAVAILABLE
 	if not aim.is_finite() or aim.length_squared() < 0.000001: return ERR_INVALID_PARAMETER
-	if _scene == null or not _scene.submarine.is_physics_processing() or _cooldown > 0.000000001 or _projectiles.size() >= 8:
+	if _player == null or not _player.is_physics_processing() or _cooldown > 0.000000001 or _projectiles.size() >= 8:
 		return ERR_BUSY
-	if not _scene.submarine.resource_system.try_consume_battery(_rules.battery_cost):
+	if not _player.resource_system.try_consume_battery(_rules.battery_cost):
 		return ERR_UNAVAILABLE
 	_sequence += 1
 	var projectile: TorpedoProjectile = TorpedoProjectile.new()
@@ -74,13 +90,13 @@ func request_fire() -> Error:
 		ammunition -= 1
 		ammunition_changed.emit(ammunition,CAPACITY)
 	projectile.event_id = StringName("torpedo/" + _epoch + "/" + str(_sequence))
-	projectile.ignore = [_scene.submarine.get_rid()]
-	_scene.get_node("WorldRoot/WorldEffects").add_child(projectile)
-	projectile.global_position = _scene.submarine.global_position + (aim*48.0 if revised else Vector2.ZERO)
+	projectile.ignore = [_player.get_rid()]
+	_world_effects.add_child(projectile)
+	projectile.global_position = _player.global_position + (aim*48.0 if revised else Vector2.ZERO)
 	if revised:
 		var trail: TorpedoTrail = TorpedoTrail.new()
-		trail.reduced = _scene.settings.snapshot().accessibility.reduced_particles or _scene.settings.snapshot().accessibility.reduced_motion
-		_scene.get_node("WorldRoot/WorldEffects").add_child(trail)
+		trail.reduced = _settings.snapshot().accessibility.reduced_particles or _settings.snapshot().accessibility.reduced_motion
+		_world_effects.add_child(trail)
 		projectile.trail = trail
 		_trails.append(trail)
 	projectile.impact.connect(_impact)
@@ -89,7 +105,7 @@ func request_fire() -> Error:
 	fired.emit(projectile.event_id)
 	return OK
 func _physics_process(delta: float) -> void:
-	if _scene == null or not _scene.submarine.is_physics_processing():
+	if _player == null or not _player.is_physics_processing():
 		return
 	_clock += delta
 	var movement: Vector2 = Input.get_vector("move_left","move_right","move_up","move_down")
@@ -118,19 +134,19 @@ func _impact(projectile: TorpedoProjectile, at: Vector2) -> void:
 	for receiver: BlastReceiver in _receivers:
 		if is_instance_valid(receiver):
 			receiver.apply_blast(projectile.event_id, at, projectile.blast_radius, projectile.blast_damage)
-	if _scene.excavation != null:
-		_scene.excavation.excavate(at, projectile.blast_radius)
+	if _excavation != null:
+		_excavation.excavate(at, projectile.blast_radius)
 	var effect: BlastEffect = BlastEffect.new()
 	effect.radius = projectile.blast_radius
-	var comfort: Dictionary = _scene.settings.snapshot().accessibility
+	var comfort: Dictionary = _settings.snapshot().accessibility
 	effect.reduced_effects = comfort.reduced_flashing or comfort.reduced_particles or comfort.reduced_motion
 	effect.refractive = revised
-	_scene.get_node("WorldRoot/WorldEffects").add_child(effect)
+	_world_effects.add_child(effect)
 	effect.global_position = at
 	_effects.append(effect)
 	_emitter.global_position = at
 	_emitter.emit_event(StringName(String(projectile.event_id)+"/blast"), _clock)
-	_scene.audio.request(&"underwater_blast")
+	if _audio_request.is_valid(): _audio_request.call(&"underwater_blast")
 	detonated.emit(projectile.event_id, at)
 func reset_session() -> void:
 	for trail: TorpedoTrail in _trails:

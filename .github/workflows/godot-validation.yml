@@ -58,6 +58,9 @@ jobs:
       - name: Run GDScript unit tests
         run: python3 tools/run_tests.py
 
+      - name: Verify combat test box with keyboard and controller input
+        run: python3 tools/verify_combat_box.py
+
       - name: Verify expanded expedition with controller input
         run: python3 tools/verify_expanded_expedition.py
 
@@ -171,7 +174,7 @@ jobs:
         run: |
           set -euo pipefail
           package=(build/below-the-abyss-playtest-linux-*.zip)
-          for wiring in depth-rating depth-section failure stalker-registration stalker-passive stalker-hearing stalker-scare tunnel-geometry tunnel-gates tunnel-vents; do
+          for wiring in depth-rating depth-section failure stalker-registration stalker-passive stalker-hearing stalker-scare tunnel-geometry tunnel-gates tunnel-vents combat-entry combat-registration combat-stun combat-handling combat-stalker-registration combat-weighty-handling; do
             if python3 tools/smoke_playtest.py "${package[0]}" --log "build/playtest/$wiring-negative.log" "--break-$wiring-wiring"; then
               exit 1
             fi

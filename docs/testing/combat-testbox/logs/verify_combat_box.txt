@@ -1,0 +1,23 @@
+Running combat-keyboard: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_combat_box.gd', '--quit-after', '90000', '--']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_combat_box.gd', '--quit-after', '90000', '--']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+COMBAT_HANDLING_INPUT weighty to90=1.8 coast=197.588195800781 reverse90=3.79999999999999 facing=2.11666666666666 top=240.0
+COMBAT_COURSE_PASS weighty input=keyboard
+COMBAT_HANDLING_INPUT responsive to90=0.45 coast=264.115661621094 reverse90=0.95 facing=0.53333333333333 top=240.0
+COMBAT_COURSE_PASS responsive input=keyboard
+COMBAT_ONE_TORPEDO_PASS
+COMBAT_INPUT_PASS input=keyboard hull=100.0 metrics={"collisions":0,"deaths":0,"deaths_by_collision":0,"first_engage_active_seconds":2.69945300000001,"pings":1,"profile":"responsive","profile_active_seconds":{"responsive":1.438904,"weighty":1.574536},"rating":"about_right","stalker_scared":0,"stun_uses":1,"swarm_destroyed":1,"swarm_stunned":1,"torpedoes":1}
+
+Running combat-controller: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_combat_box.gd', '--quit-after', '90000', '--', '--controller']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_combat_box.gd', '--quit-after', '90000', '--', '--controller']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+COMBAT_HANDLING_INPUT weighty to90=1.8 coast=197.588195800781 reverse90=3.79999999999999 facing=2.11666666666666 top=240.0
+COMBAT_COURSE_PASS weighty input=controller
+COMBAT_HANDLING_INPUT responsive to90=0.45 coast=264.115661621094 reverse90=0.95 facing=0.53333333333333 top=240.0
+COMBAT_COURSE_PASS responsive input=controller
+COMBAT_ONE_TORPEDO_PASS
+COMBAT_INPUT_PASS input=controller hull=100.0 metrics={"collisions":0,"deaths":0,"deaths_by_collision":0,"first_engage_active_seconds":3.55400700000001,"pings":1,"profile":"responsive","profile_active_seconds":{"responsive":2.21282199999999,"weighty":1.767743},"rating":"about_right","stalker_scared":0,"stun_uses":1,"swarm_destroyed":1,"swarm_stunned":1,"torpedoes":1}
+
+PASS: both devices, handling measurements/courses, sonar stun, one-shot swarmer, Stalker escape and local opt-in rating

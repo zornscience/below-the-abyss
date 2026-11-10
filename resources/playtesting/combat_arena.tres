@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CombatArenaProfile" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/playtesting/combat_arena_profile.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/creatures/twilight_stalker.tres" id="2"]
+[resource]
+script = ExtResource("1")
+bounds = Rect2(0,0,3200,2000)
+refit = Vector2(320,1000)
+refit_radius = 150.0
+solids = Array[Rect2]([Rect2(0,0,3200,60),Rect2(0,1940,3200,60),Rect2(0,0,60,2000),Rect2(3140,0,60,2000),Rect2(1250,500,180,450),Rect2(2050,1000,200,450),Rect2(780,60,800,420),Rect2(2100,1520,900,420)])
+mouths = Array[Rect2]([Rect2(980,220,220,320),Rect2(2350,1480,240,330)])
+course = PackedVector2Array(320,1000,750,1000,750,650,1100,650,1100,1050,1650,1050,1650,1350,750,1350,320,1350,320,1000)
+swarm_spawns = PackedVector2Array(1000,1100,1800,650,2650,1250,2800,700)
+measurement_start = Vector2(400,650)
+swarmer_probe = Vector2(800,1100)
+stun_probe = Vector2(850,1100)
+chase_probe = Vector2(1750,1100)
+escape = Vector2(600,1100)
+stalker_base = ExtResource("2")
+stalker_bounds = Rect2(800,180,2200,1500)
+stalker_patrol = PackedVector2Array(1750,1200,2750,1200)

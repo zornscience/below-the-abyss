@@ -1,0 +1,62 @@
+[
+  {
+    "file": "arena-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "sha256": "567294f10a4a1b9312337cefb79981bb98cd5233473a7033ebaaaadcecac8846"
+  },
+  {
+    "file": "arena-800x600.png",
+    "width": 800,
+    "height": 600,
+    "sha256": "f7c278da82e25af34c780e4ccc8767bf7c5ad9a64704cd098addf7e2fe8d2d07"
+  },
+  {
+    "file": "dash-telegraph-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "sha256": "c160c6567975b8ba2326384b58920bc1cac18bc484c76e763564cc86782620cf"
+  },
+  {
+    "file": "dash-telegraph-800x600.png",
+    "width": 800,
+    "height": 600,
+    "sha256": "cfebf003b66f0ab1ecefee6cf45d53676cf50fdf62ab7c04ff88bf146f5e5b03"
+  },
+  {
+    "file": "developer-options-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "sha256": "18f11326cd6a39486de13e710b308fcb7326fe16c4651213db969e2fffad19ca"
+  },
+  {
+    "file": "developer-options-800x600.png",
+    "width": 800,
+    "height": 600,
+    "sha256": "272bdc332bf5d1236e2b929ccf83ef31b73081cf6812c636d8f2908a7dba482c"
+  },
+  {
+    "file": "sonar-stun-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "sha256": "f97461d43ac56fc1529d8fde3f184de1b9b8fbbb9056929af67d22df5699ad30"
+  },
+  {
+    "file": "sonar-stun-800x600.png",
+    "width": 800,
+    "height": 600,
+    "sha256": "e3d6d98c52ebf78fd0c8c526caf04a0f7e020426b6deea3d11fc042f6f948956"
+  },
+  {
+    "file": "stalker-chase-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "sha256": "488ff153241b0dbeb142fa5ab5007c69d7241971449921e9f3d49f3fc6398b1a"
+  },
+  {
+    "file": "stalker-chase-800x600.png",
+    "width": 800,
+    "height": 600,
+    "sha256": "ab756221165d7db452f94c228d8af7f69d033f81288af5d76306d6a4284b4116"
+  }
+]

@@ -7,6 +7,7 @@ var start_button: Button
 var stop_button: Button
 var export_button: Button
 var close_button: Button
+var combat_button: Button
 
 
 func _ready() -> void:
@@ -32,6 +33,8 @@ func _ready() -> void:
 	_label(content, "PLAYTEST / Optional local reports",&"heading")
 	var buttons: Array[Button] = []
 	close_button = _button(content, "Return / Keep current recording choice", buttons, _close)
+	if OS.has_feature("playtest"):
+		combat_button = _button(content,"Developer / Open combat test box",buttons,_open_combat_box)
 	_label(content, "Recording starts OFF each launch. If you choose to record, this game saves a random session ID, build version, gameplay/menu durations, counts of sonar, scans, discoveries, missions, station returns, warnings, hull damage and chapter progress. Only authored event labels and relative times are saved. No names, input recordings, device identifiers, precise location or unrelated files. Nothing is sent online.",&"body")
 	_label(content, "You can play without recording, disable it at any time, and decide whether to share the JSON/text report with your facilitator. Existing reports remain locally until you delete them. No recording before you opt in; chapter times cover this session only.",&"body")
 	start_button = _button(content, "I agree / Start local recording", buttons, func() -> void: observer.start(); _refresh())
@@ -94,3 +97,8 @@ func _input(event: InputEvent) -> void:
 	if visible and not event.is_echo() and InputBindings.is_menu_back(event):
 		get_viewport().set_input_as_handled()
 		_close()
+
+func _open_combat_box() -> void:
+	if not OS.has_feature("playtest") or not visible: return
+	var result: Error = get_tree().change_scene_to_file("res://scenes/playtesting/combat_box.tscn")
+	if result!=OK: status_label.text = "Combat box could not open: "+error_string(result)

@@ -1,0 +1,37 @@
+Running tunnels-keyboard: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-keyboard-1794281293850879607', '--input=keyboard']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-keyboard-1794281293850879607', '--input=keyboard']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TUNNEL_INPUT_BEGIN twilight-west-tunnel
+TUNNEL_DAMAGE_SOURCE collision at=(32329.98, 3729.16)
+TUNNEL_RECKLESS_IMPACT twilight-west-tunnel hull_cost=9.0
+TUNNEL_INPUT_BEGIN twilight-east-tunnel
+TUNNEL_RECKLESS_IMPACT twilight-east-tunnel hull_cost=8.76431274414062
+TUNNEL_DAMAGE_TOTALS {"collision":17.7643127441406}
+TUNNEL_INPUT_PASS device=keyboard cuts=4 hull=82.2356872558594 battery=53.6355500017831
+
+Running tunnels-keyboard-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-keyboard-1794281293850879607', '--input=keyboard', '--tunnel-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-keyboard-1794281293850879607', '--input=keyboard', '--tunnel-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TUNNEL_CONTINUE_INPUT_PASS device=keyboard cuts=4
+
+Running tunnels-controller: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-controller-1794281434972591016', '--input=controller']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-controller-1794281434972591016', '--input=controller']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TUNNEL_INPUT_BEGIN twilight-west-tunnel
+TUNNEL_DAMAGE_SOURCE collision at=(32329.99, 3743.151)
+TUNNEL_RECKLESS_IMPACT twilight-west-tunnel hull_cost=9.0
+TUNNEL_INPUT_BEGIN twilight-east-tunnel
+TUNNEL_RECKLESS_IMPACT twilight-east-tunnel hull_cost=8.54464569091797
+TUNNEL_DAMAGE_TOTALS {"collision":17.544645690918}
+TUNNEL_INPUT_PASS device=controller cuts=4 hull=82.455354309082 battery=55.6045447267263
+
+Running tunnels-controller-continue: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-controller-1794281434972591016', '--input=controller', '--tunnel-resume']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_tunnels.gd', '--quit-after', '180000', '--', '--profile=bta061-controller-1794281434972591016', '--input=controller', '--tunnel-resume']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TUNNEL_CONTINUE_INPUT_PASS device=controller cuts=4
+
+PASS: both devices, both squeezes/dead ends/gates, impacts and fresh-process Continue

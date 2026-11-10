@@ -122,7 +122,9 @@ func _verify_depth_gate(game: ShelfPrototype) -> void:
 		get_tree().quit(1)
 		return
 	print("RELEASE_DEPTH_GATE_PASS")
-	get_tree().quit()
+	var proof: CombatBoxReleaseProof = CombatBoxReleaseProof.new()
+	get_tree().root.add_child(proof)
+	proof.start(game)
 
 func _verify_stalker(game: ShelfPrototype) -> bool:
 	var args: PackedStringArray = OS.get_cmdline_user_args()

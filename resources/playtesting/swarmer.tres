@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SwarmerProfile" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/ai/swarmer_profile.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/sonar/acoustic_receiver_profile.gd" id="2"]
+[sub_resource type="Resource" id="Hearing"]
+script = ExtResource("2")
+accepted_event_types = Array[StringName]([&"active_sonar",&"explosion"])
+maximum_range_units = 1000.0
+minimum_strength = 0.2
+[resource]
+script = ExtResource("1")
+hearing = SubResource("Hearing")
+patrol_speed = 35.0
+investigate_speed = 140.0
+return_speed = 70.0
+navigation_bounds = Rect2(650,100,2300,1700)
+patrol_points = PackedVector2Array(1000,1100,1800,1100)
+body_radius = 18.0
+grid_spacing = 100.0
+investigation_seconds = 12.0

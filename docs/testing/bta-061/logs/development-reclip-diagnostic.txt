@@ -1,0 +1,5 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+twilight-west-shortcut reclip remnant area=0.00007891654968 verts=3
+twilight-east-shortcut reclip remnant area=0.00108337402344 verts=3
+twilight-east-shortcut reclip remnant area=0.0003490447998 verts=3

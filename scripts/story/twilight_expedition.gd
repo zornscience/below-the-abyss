@@ -43,10 +43,11 @@ func setup(game: ShelfPrototype,owner_journey: ChapterJourney) -> void:
 	set_enabled(false)
 
 func _build_subjects() -> void:
-	for item: Dictionary in TwilightShelfData.RECORDS:
+	for item: Dictionary in TwilightShelfData.all_records():
 		var echo: SonarRevealTarget = preload("res://scenes/props/sonar_reveal_target.tscn").instantiate() as SonarRevealTarget
 		echo.target_id = StringName(item.id+"-echo")
 		echo.caption = item.title
+		echo.requires_clear_path = item.get("clear_path",false)
 		echo.position = item.at
 		echo.revealed_for_ping.connect(func(_event: StringName) -> void: (echo.get_node("Caption") as Label).hide())
 		props.add_child(echo)
@@ -130,7 +131,7 @@ func _build_sentinel() -> void:
 func set_enabled(value: bool) -> void:
 	enabled = value
 	props.visible = value
-	for item: Dictionary in TwilightShelfData.RECORDS:
+	for item: Dictionary in TwilightShelfData.all_records():
 		(scene.region.get_node(String(item.id)) as ScientificScanTarget).scan_enabled = value
 	for echo: SonarRevealTarget in _echoes: echo.receiver.enabled = value
 	if not value: cancel_action()
@@ -312,7 +313,7 @@ func entries() -> Array[NarrativeEntry]:
 	opening.title = "Twilight Shelf / the severed line"
 	opening.text = "Lantern-2 / 350 m. Trace the broken eastern sensor cable and investigate the western wreck gallery in either order. Recover evidence, record without translating and return through the ascent tether. Two central chimneys join a cross-gallery with blind cargo pockets. Optional observations and detached loggers do not block the expedition. Halcyon services and research refitting remain available."
 	result.append(opening)
-	for item: Dictionary in TwilightShelfData.RECORDS:
+	for item: Dictionary in TwilightShelfData.all_records():
 		if not scene.research.is_completed(StringName(item.id)): continue
 		var entry: NarrativeEntry = NarrativeEntry.new()
 		entry.stable_id = StringName(item.id)

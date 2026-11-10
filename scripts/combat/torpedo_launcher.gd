@@ -155,6 +155,7 @@ func restore_ammunition(value: int) -> void:
 
 func configure_capabilities(propulsion: float,blast_radius: float) -> Error:
 	var profile: BlastProfile = configuration.duplicate(true) as BlastProfile
+	profile.battery_cost = battery_cost() # Capability reapplication must preserve the selected regional cost.
 	profile.propulsion_acceleration = propulsion
 	profile.radius = blast_radius
 	if not profile.is_valid(): return ERR_INVALID_PARAMETER

@@ -70,6 +70,8 @@ func _compose() -> void:
 		plant.z_index = 1
 	for at: Vector2 in TwilightHabitat.VENT_SITES:
 		_sprite(0,at,230,Color(0.70,0.78,0.81)).z_index = 1
+	for profile: TunnelProfile in TwilightTunnelCatalog.DATA.systems:
+		if not profile.vent_id.is_empty(): _sprite(0,profile.origin+profile.vent_at,230,Color(0.70,0.78,0.81)).z_index = 1
 	# Sparse interrupted human cable, no perfect route line or hidden marker.
 	for points: PackedVector2Array in [PackedVector2Array([Vector2(33150,1520),Vector2(33800,1610),Vector2(34600,1620),Vector2(35300,1630)]),PackedVector2Array([Vector2(35800,1800),Vector2(36050,2010),Vector2(36300,2030)])]:
 		var cable: Line2D = Line2D.new()

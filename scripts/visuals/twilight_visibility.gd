@@ -46,16 +46,8 @@ func setup(game: ShelfPrototype) -> Error:
 	add_child(edges)
 	contours = Node2D.new()
 	edges.add_child(contours)
-	for candidate: Node in scene.journey.layout.find_children("*","CollisionPolygon2D",true,false):
-		var boundary: CollisionPolygon2D = candidate as CollisionPolygon2D
-		if not boundary.get_parent() is StaticBody2D: continue
-		var line: Line2D = Line2D.new()
-		line.points = boundary.polygon
-		line.transform = scene.journey.layout.global_transform.affine_inverse()*boundary.global_transform
-		line.closed = true
-		line.width = 2.0
-		line.material = edge_material
-		contours.add_child(line)
+	rebuild_contours()
+	scene.excavation.geometry_changed.connect(rebuild_contours)
 	var hud_layer: CanvasLayer = CanvasLayer.new()
 	hud_layer.layer = 3
 	add_child(hud_layer)
@@ -133,3 +125,18 @@ func _process(delta: float) -> void:
 		# Only the safety cue is shown; sonar state already lives in the main HUD and the vision setting in Accessibility.
 		status.text = "CLOSE TERRAIN %.0f units" % _distance if is_finite(_distance) else ""
 		status.visible = not status.text.is_empty()
+
+func rebuild_contours() -> void:
+	for child: Node in contours.get_children():
+		contours.remove_child(child)
+		child.free()
+	for candidate: Node in scene.journey.layout.find_children("*","CollisionPolygon2D",true,false):
+		var boundary: CollisionPolygon2D = candidate as CollisionPolygon2D
+		if not boundary.get_parent() is StaticBody2D: continue
+		var line: Line2D = Line2D.new()
+		line.points = boundary.polygon
+		line.transform = scene.journey.layout.global_transform.affine_inverse()*boundary.global_transform
+		line.closed = true
+		line.width = 2.0
+		line.material = edge_material
+		contours.add_child(line)

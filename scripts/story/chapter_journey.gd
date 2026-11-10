@@ -3,6 +3,7 @@ extends Node
 ## Scene-owned explicit transfers; existing mission/checkpoint/resource APIs own state.
 const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twilight_pressure_fit.tres")
 var scene: ShelfPrototype
+var tunnels: TwilightTunnels
 var habitat: TwilightHabitat
 var visibility: TwilightVisibility
 var hunt: TwilightHunt
@@ -32,6 +33,9 @@ func setup(game: ShelfPrototype) -> void:
 	layout = TwilightShelfLayout.new()
 	scene.region.add_child(layout)
 	layout.configure(scene.chapter.dressing.rocks._paint)
+	tunnels = TwilightTunnels.new()
+	layout.add_child(tunnels)
+	tunnels.setup(scene)
 	habitat = TwilightHabitat.new()
 	add_child(habitat)
 	habitat.setup(scene,layout)
@@ -132,6 +136,7 @@ func prepare(value: Dictionary) -> void:
 	scene.chapter._activate(not active() and state.phase!="prototype")
 	layout.set_enabled(active())
 	habitat.set_enabled(active())
+	tunnels.set_enabled(active())
 	hunt.set_enabled(active())
 	expedition.set_enabled(active())
 	var pools: SubmarineResourceSystem = scene.submarine.resource_system
@@ -213,3 +218,9 @@ func _physics_process(_delta: float) -> void:
 	(scene.get_node("WorldRoot") as Node2D).visible = _settle_world_visible
 	transitioning = false
 	camera_settled.emit()
+
+func hazard_prompt() -> String:
+	var text: String = tunnels.hazard_prompt() if tunnels!=null else ""
+	return text if not text.is_empty() else (habitat.hazard_prompt() if habitat!=null else "")
+func unsafe_at(at: Vector2) -> bool:
+	return (habitat!=null and habitat.unsafe_at(at)) or (tunnels!=null and tunnels.unsafe_at(at))

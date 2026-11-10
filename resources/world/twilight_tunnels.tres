@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TunnelSetProfile" load_steps=4 format=3]
+[ext_resource type="Script" path="res://scripts/world/tunnel_set_profile.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/world/twilight_west_tunnel.tres" id="3"]
+[ext_resource type="Resource" path="res://resources/world/twilight_east_tunnel.tres" id="4"]
+[resource]
+script = ExtResource("1")
+systems = Array[Resource]([ExtResource("3"),ExtResource("4")])

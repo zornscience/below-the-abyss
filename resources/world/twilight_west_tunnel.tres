@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="TunnelProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/tunnel_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"twilight-west-tunnel"
+origin = Vector2(30500,3300)
+replace_index = 5
+seed = 186
+outer = PackedVector2Array(0,0,2000,0,2000,840,0,840)
+main = PackedVector2Array(-100,180,300,180,300,220,300,510,300,550,1500,550,1500,450,1500,180,2100,180)
+branch = PackedVector2Array(1500,450,1800,450)
+shortcut = PackedVector2Array(300,180,1500,180)
+squeeze = PackedVector2Array(300,220,300,510)
+normal_width = 192.0
+squeeze_width = 124.0
+normal_probe = Vector2(900,550)
+gate_id = "twilight-west-shortcut"
+gate_bounds = Rect2(450,80,280,200)
+fire_from = Vector2(300,180)
+payoff_id = &"twilight-tunnel-layers"
+payoff_title = "Tunnel layers / optional observation"
+payoff_text = "Fine mineral layers line this blind recess. Record the undisturbed surface; no sample is required. The passage continues behind you."
+approach = PackedVector2Array(33000,1400,30600,1400,29000,1400,29000,1800,29000,2900,30000,2900,30000,3480,30400,3480)
+return_path = PackedVector2Array(32600,3480,33100,3480,33100,2900,35800,2900,35800,1400,33000,1400)
+vent_id = &"twilight-tunnel-vent"
+vent_at = Vector2(345,845)

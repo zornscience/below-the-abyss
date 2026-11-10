@@ -1,0 +1,52 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/workspace/.local/share/godot/app_userdata/Below the Abyss] for temporary output.
+Godot version:  4.6.3
+GUT version:  9.6.1
+[4m
+
+res://tests/unit/test_twilight_tunnels.gd
+[0m* test_data_compiles_two_branched_systems_scaled_to_actual_vessel
+TUNNEL_DATA twilight-west-tunnel pieces=3 long=1940.0 shortcut=1200.0
+TUNNEL_DATA twilight-east-tunnel pieces=3 long=1500.0 shortcut=700.0
+* test_cut_validation_limits_twilight_coordinates_by_stable_gate_without_changing_old_bounds
+* test_optional_payoffs_are_registered_but_do_not_change_research_economy
+* test_one_gate_is_always_inside_and_one_always_outside_stalker_hearing
+TUNNEL_HEARING twilight-west-shortcut nearest=2094.69604492188 farthest=4606.236328125
+TUNNEL_HEARING twilight-east-shortcut nearest=324.0 farthest=1777.99096679688
+[1m4/4 passed.
+[0m[4m
+
+res://tests/integration/test_twilight_tunnels.gd
+[0m* test_authored_reachability_and_widths_with_closed_gates_and_real_collision
+TUNNEL_WIDTH twilight-west-tunnel squeeze=125.080078125 normal=193.9609375
+TUNNEL_WIDTH twilight-east-tunnel squeeze=115.32421875 normal=197.03271484375
+* test_two_shot_shortcuts_replay_preserve_long_routes_and_refresh_visibility
+* test_tunnel_vent_times_the_squeeze_and_keeps_existing_damage_and_pause_rules
+* test_shared_journal_survives_continue_and_both_region_transfers_with_actual_supplies
+* test_shared_cut_cap_leaves_both_long_routes_retreats_and_tether_available
+* test_optional_scans_reach_radio_and_map_without_xp_or_required_objectives
+* test_real_gate_detonations_are_heard_only_for_the_in_range_system
+* test_repeated_cuts_decrease_rock_area_keep_every_return_clear_and_tether_safe_through_vent_cycle
+* test_tunnel_echoes_require_an_open_sightline_without_changing_older_subjects
+[1m9/9 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               2
+Tests                13
+Passing Tests        13
+Asserts             385
+Time              10.299s
+
+
+[32m---- All tests passed! ----
+[0m

@@ -1,0 +1,14 @@
+positive PASS 0
+registration PASS 1
+visibility PASS 1
+resource PASS 1
+depth-rating PASS 1
+depth-section PASS 1
+failure PASS 1
+stalker-registration PASS 1
+stalker-passive PASS 1
+stalker-hearing PASS 1
+stalker-scare PASS 1
+tunnel-geometry PASS 1
+tunnel-gates PASS 1
+tunnel-vents PASS 1

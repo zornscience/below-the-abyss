@@ -11,6 +11,7 @@ const INNER_LOOP: Array[Vector2] = [SPAWN,Vector2(31950,1400),Vector2(31950,2300
 const WEST_POCKET: Vector2 = Vector2(31100,2300)
 const EAST_POCKET: Vector2 = Vector2(34100,2300)
 var bodies: Array[GrayboxRock] = []
+var tunnel_bodies: Array[GrayboxRock] = []
 func configure(paint: ShaderMaterial) -> void:
 	var water: Polygon2D = Polygon2D.new()
 	water.polygon = SunlitSurveyData._rect(Rect2(CAMERA))
@@ -21,13 +22,15 @@ func configure(paint: ShaderMaterial) -> void:
 	water.color = Color(0.5,0.62,0.7,1)
 	water.z_index = -20
 	add_child(water)
-	for polygon: PackedVector2Array in contours():
+	var original: Array[PackedVector2Array] = base_contours()
+	for polygon: PackedVector2Array in TwilightTunnelCatalog.contours(original):
 		var body: GrayboxRock = preload("res://scenes/props/graybox_rock.tscn").instantiate() as GrayboxRock
 		body.outline = polygon
 		body.draw_outline = false
 		add_child(body)
 		(body.get_node("Silhouette") as Polygon2D).material = paint
 		bodies.append(body)
+		if polygon not in original: tunnel_bodies.append(body)
 	var tether: Sprite2D = Sprite2D.new()
 	tether.texture = preload("res://assets/art/sunlit/service_cradle.png")
 	tether.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
@@ -36,6 +39,8 @@ func configure(paint: ShaderMaterial) -> void:
 	add_child(tether)
 	set_enabled(false)
 static func contours() -> Array[PackedVector2Array]:
+	return TwilightTunnelCatalog.contours(base_contours())
+static func base_contours() -> Array[PackedVector2Array]:
 	# Original exterior bodies retain their authored noise seeds; only the central
 	# solid mass is carved. Joined concave outlines avoid seams between rock tiles.
 	var shapes: Array[Rect2] = [Rect2(27000,700,12000,200),Rect2(27000,DEPTH_GATE.floor_y,12000,200),Rect2(26900,700,200,4600),Rect2(38900,700,200,4600),

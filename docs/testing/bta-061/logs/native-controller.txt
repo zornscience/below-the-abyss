@@ -1,0 +1,12 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+TUNNEL_INPUT_BEGIN twilight-west-tunnel
+TUNNEL_DAMAGE_SOURCE collision at=(32330.0, 3743.151)
+TUNNEL_RECKLESS_IMPACT twilight-west-tunnel hull_cost=9.0
+TUNNEL_INPUT_BEGIN twilight-east-tunnel
+TUNNEL_RECKLESS_IMPACT twilight-east-tunnel hull_cost=8.54464569091797
+TUNNEL_DAMAGE_TOTALS {"collision":17.544645690918}
+TUNNEL_INPUT_PASS device=controller cuts=4 hull=82.455354309082 battery=55.4159217925425

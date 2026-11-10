@@ -2,6 +2,7 @@
 docs/playtesting/telemetry.md
 docs/testing/combat-testbox/FACILITATOR.md
 docs/testing/combat-testbox/PR.md
+docs/testing/combat-testbox/PR_STATUS.md
 docs/testing/combat-testbox/README.md
 docs/testing/combat-testbox/VALIDATION.md
 docs/testing/combat-testbox/changed-files.txt

@@ -129,3 +129,6 @@ cases. Negative engine ERROR lines are intentional injected-failure evidence.
 The CI workflow runs the new real-input route and adds all six combat cases to
 the existing negative loop, checking the corresponding token. Local passes do
 not replace the eventual PR's own CI. No merge is requested.
+
+The branch was successfully pushed; PR creation was blocked by GitHub API
+`Forbidden`. [Exact publication command/error and creation link](PR_STATUS.md).

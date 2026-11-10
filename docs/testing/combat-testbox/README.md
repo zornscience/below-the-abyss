@@ -127,6 +127,7 @@ input events, not physical gamepad hardware or human handling judgments.
 
 [Exact commands and results](VALIDATION.md), [changed files](changed-files.txt),
 [three-person facilitator sheet](FACILITATOR.md) and [ready PR body](PR.md).
+[Branch publication and PR API blocker](PR_STATUS.md).
 
 | Native capture | 1280 × 800 | 800 × 600 |
 | --- | --- | --- |

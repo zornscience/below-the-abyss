@@ -107,11 +107,17 @@ func _button(text: String,callback: Callable,id: String) -> Button:
 	_controls.append(button)
 	button.focus_entered.connect(func() -> void: _choice = _controls.find(button))
 	return button
+## Ids are lowercase words joined by hyphens, at most 64 characters. Producers do not need to
+## register ids: an allow-list here once silently dropped nearly every Twilight message.
+static func valid_id(id: String) -> bool:
+	if id.is_empty() or id.length()>64: return false
+	var pattern: RegEx = RegEx.new()
+	pattern.compile("^[a-z0-9]+(-[a-z0-9]+)*$")
+	return pattern.search(id)!=null
 func enqueue(id: String,body: String,source: String = "Shelf Base",urgent: bool = false) -> void:
 	if texts.has(id): return
-	if id not in ExpeditionRevision.TRANSMISSIONS and id!="sunlit-buoy-recovered" and id not in SunlitFieldGuide.RADIO_IDS and id not in TwilightHunt.RADIO_IDS and id not in TwilightTunnelCatalog.payoff_ids():
-		# A silently dropped message once hid a required warning; make the rejection visible.
-		push_warning("Radio message rejected, id not registered: "+id)
+	if not valid_id(id) or body.is_empty():
+		push_warning("Radio message rejected, malformed id or empty body: "+id)
 		return
 	texts[id] = body
 	sources[id] = source

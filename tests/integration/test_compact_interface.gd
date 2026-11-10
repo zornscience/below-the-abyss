@@ -72,9 +72,11 @@ func test_radio_queue_deferral_ack_duplicate_and_continue_preserve_authorities()
 	game.revision.show_transmission("dispatch",true)
 	game.revision.show_transmission("dispatch",true)
 	game.revision.show_transmission("relay")
-	radio.replay("unknown-message","Invalid replay","Unknown")
+	# The radio validates id SHAPE (it once silently dropped real messages via an allow-list),
+	# so the invalid-input case is a malformed id; well-formed ids are deliberately accepted.
+	radio.replay("Unknown Message!","Invalid replay","Unknown")
 	assert_eq(radio.pending,["dispatch","relay"])
-	assert_false(radio.texts.has("unknown-message"))
+	assert_false(radio.texts.has("Unknown Message!"))
 	assert_false(radio.expanded)
 	game.revision.defer_transmission()
 	assert_eq(game.revision.campaign.messages,[])

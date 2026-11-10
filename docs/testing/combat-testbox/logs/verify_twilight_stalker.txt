@@ -1,0 +1,37 @@
+Running stalker-keyboard-quiet: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794281118334543387-stalker-keyboard-quiet', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--quiet-stalker']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794281118334543387-stalker-keyboard-quiet', '--input=keyboard', '--outcome=observe', '--sentinel=release', '--quiet-stalker']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+TWILIGHT_STORY_BEGIN outcome=release
+TWILIGHT_RECORD_BEGIN twilight-mara-log-two at=(27984.16, 1871.041)
+TWILIGHT_RECORD_PASS twilight-mara-log-two
+TWILIGHT_RECORD_BEGIN twilight-whaler-marking at=(29123.5, 3116.041)
+TWILIGHT_RECORD_PASS twilight-whaler-marking
+TWILIGHT_RECORD_BEGIN twilight-severed-cable at=(35951.82, 1938.613)
+TWILIGHT_RECORD_PASS twilight-severed-cable
+TWILIGHT_RECORD_BEGIN twilight-mara-log-one at=(35796.38, 2817.792)
+TWILIGHT_RECORD_PASS twilight-mara-log-one
+TWILIGHT_RECORD_BEGIN twilight-net-survey at=(37702.11, 3157.26)
+TWILIGHT_RECORD_PASS twilight-net-survey
+TWILIGHT_EXPEDITION_INPUT_PASS outcome=release input=keyboard deep_simulation_seconds=254.633333333113 choices=2 acknowledgements=2 shots=0 optional_logs_not_required=true
+STALKER_QUIET_CHAPTER_PASS no_pings=true no_encounter=true
+
+Running stalker-keyboard-hunted: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794281118334543387-stalker-keyboard-hunted', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794281118334543387-stalker-keyboard-hunted', '--input=keyboard', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+STALKER_ESCAPE_PASS input=keyboard hull=95.0
+
+Running stalker-controller-hunted: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794281118334543387-stalker-controller-hunted', '--input=controller', '--outcome=observe', '--sentinel=release']
+Command: ['godot', '--headless', '--path', '/workspace/below-the-abyss', '--fixed-fps', '60', '--script', 'res://tests/fixtures/drive_twilight_stalker.gd', '--quit-after', '180000', '--', '--comfort', '--no-excavation', '--profile=bta060-1794281118334543387-stalker-controller-hunted', '--input=controller', '--outcome=observe', '--sentinel=release']
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUNLIT_ROUTE_SCAN sunlit-silver-shoal shots=0
+SUNLIT_ROUTE_SCAN sunlit-mineral-terrace shots=0
+STALKER_ESCAPE_PASS input=controller hull=95.0
+
+PASS: quiet complete chapter and both-device ping/pursuit/escape

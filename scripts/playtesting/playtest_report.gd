@@ -41,10 +41,17 @@ static func hex_id(value: Variant, size: int) -> bool:
 	return true
 
 
+static func details(version: int) -> Dictionary:
+	return DETAILS.merged(CombatMetrics.DETAILS) if version==2 else DETAILS
+
 static func valid(value: Variant) -> bool:
-	if not exact(value, ["schema_version", "session_id", "game_version", "build_id", "status", "active_seconds", "menu_seconds", "completed", "completion_seconds", "completion_active_seconds", "counts", "damage_total", "events", "omitted_events"]):
+	if not value is Dictionary: return false
+	var version: Variant = value.get("schema_version")
+	var keys: Array = ["schema_version", "session_id", "game_version", "build_id", "status", "active_seconds", "menu_seconds", "completed", "completion_seconds", "completion_active_seconds", "counts", "damage_total", "events", "omitted_events"]
+	if version==2: keys.append("combat")
+	if not exact(value,keys):
 		return false
-	if value.schema_version != 1 or not InputBindings.is_integer(value.schema_version) or not hex_id(value.session_id, 32) \
+	if (value.schema_version!=1 and value.schema_version!=2) or not InputBindings.is_integer(value.schema_version) or not hex_id(value.session_id, 32) \
 		or value.game_version != "0.1.0-playtest" or (value.build_id != "source" and not hex_id(value.build_id, 40)) \
 		or value.status not in ["active", "disabled", "quit"] or not value.completed is bool:
 		return false
@@ -56,10 +63,12 @@ static func valid(value: Variant) -> bool:
 			return false
 	elif value.completion_seconds != null or value.completion_active_seconds != null:
 		return false
-	if not exact(value.counts, DETAILS.keys()) or not number(value.damage_total) or not InputBindings.is_integer(value.omitted_events) or not number(value.omitted_events):
+	var allowed: Dictionary = details(value.schema_version)
+	if value.schema_version==2 and not CombatMetrics.valid(value.get("combat"),value.active_seconds): return false
+	if not exact(value.counts, allowed.keys()) or not number(value.damage_total) or not InputBindings.is_integer(value.omitted_events) or not number(value.omitted_events):
 		return false
 	var total: int = 0
-	for kind: String in DETAILS:
+	for kind: String in allowed:
 		if not InputBindings.is_integer(value.counts[kind]) or not number(value.counts[kind]):
 			return false
 		total += int(value.counts[kind])
@@ -69,7 +78,7 @@ static func valid(value: Variant) -> bool:
 		return false
 	var previous: float = 0.0
 	for event: Variant in value.events:
-		if not exact(event, ["kind", "detail", "seconds", "amount"]) or not event.kind is String or not DETAILS.has(event.kind) or event.detail not in DETAILS[event.kind] \
+		if not exact(event, ["kind", "detail", "seconds", "amount"]) or not event.kind is String or not allowed.has(event.kind) or event.detail not in allowed[event.kind] \
 			or not number(event.seconds, MAX_SECONDS) or event.seconds < previous or event.seconds > value.active_seconds + value.menu_seconds + 0.001 or not number(event.amount):
 			return false
 		previous = float(event.seconds)
@@ -83,6 +92,7 @@ static func summary(value: Dictionary) -> String:
 	for kind: String in DETAILS:
 		text += "%s: %d\n" % [kind, value.counts[kind]]
 	text += "Hull damage total: %.3f\nEvents omitted after bounded history filled: %d\n" % [value.damage_total, value.omitted_events]
+	if value.schema_version==2: text += CombatMetrics.summary(value.combat,value.active_seconds)
 	for event: Dictionary in value.events:
 		text += "%.3fs / %s / %s / %.3f\n" % [event.seconds, event.kind, event.detail, event.amount]
 	return text

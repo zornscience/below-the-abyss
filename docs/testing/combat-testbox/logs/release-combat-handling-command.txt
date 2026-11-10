@@ -1,0 +1,1 @@
+Standalone smoke failed: see /workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-handling.txt

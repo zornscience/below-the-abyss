@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SonarStunProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/playtesting/sonar_stun_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+range_units = 220.0
+seconds = 2.0
+requires_clear_path = true

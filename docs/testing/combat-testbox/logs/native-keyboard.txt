@@ -1,0 +1,15 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+COMBAT_HANDLING_INPUT weighty to90=1.8 coast=197.588195800781 reverse90=3.79999999999999 top=240.0
+COMBAT_COURSE_PASS weighty input=keyboard
+COMBAT_HANDLING_INPUT responsive to90=0.45 coast=264.115661621094 reverse90=0.95 top=240.0
+COMBAT_COURSE_PASS responsive input=keyboard
+COMBAT_ONE_TORPEDO_PASS
+COMBAT_INPUT_PASS input=keyboard hull=100.0 metrics={"collisions":0,"deaths":0,"deaths_by_collision":0,"first_engage_active_seconds":4.073014,"pings":1,"profile":"responsive","profile_active_seconds":{"responsive":2.50180200000001,"weighty":2.261578},"rating":"about_right","stalker_scared":0,"stun_uses":1,"swarm_destroyed":1,"swarm_stunned":1,"torpedoes":1}
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2663)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)

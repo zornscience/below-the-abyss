@@ -1,0 +1,281 @@
+[
+  {
+    "case": "positive",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-positive.txt"
+    ],
+    "exit": 0,
+    "expected_token": null,
+    "pass": true
+  },
+  {
+    "case": "resource",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-resource.txt",
+      "--break-resource-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_RESOURCE_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "visibility",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-visibility.txt",
+      "--break-visibility-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_VISIBILITY_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "registration",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-registration.txt",
+      "--break-registration-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_REGISTRATION_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "depth-rating",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-depth-rating.txt",
+      "--break-depth-rating-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_DEPTH_RATING_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "depth-section",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-depth-section.txt",
+      "--break-depth-section-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_DEPTH_SECTION_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "failure",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-failure.txt",
+      "--break-failure-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_FAILURE_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "stalker-registration",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-stalker-registration.txt",
+      "--break-stalker-registration-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_STALKER_REGISTRATION_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "stalker-passive",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-stalker-passive.txt",
+      "--break-stalker-passive-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_STALKER_PASSIVE_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "stalker-hearing",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-stalker-hearing.txt",
+      "--break-stalker-hearing-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_STALKER_HEARING_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "stalker-scare",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-stalker-scare.txt",
+      "--break-stalker-scare-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_STALKER_SCARE_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "tunnel-geometry",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-tunnel-geometry.txt",
+      "--break-tunnel-geometry-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_TUNNEL_GEOMETRY_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "tunnel-gates",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-tunnel-gates.txt",
+      "--break-tunnel-gates-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_TUNNEL_GATES_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "tunnel-vents",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-tunnel-vents.txt",
+      "--break-tunnel-vents-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_TUNNEL_VENTS_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "combat-entry",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-entry.txt",
+      "--break-combat-entry-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_COMBAT_ENTRY_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "combat-registration",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-registration.txt",
+      "--break-combat-registration-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_COMBAT_REGISTRATION_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "combat-stalker-registration",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-stalker-registration.txt",
+      "--break-combat-stalker-registration-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_COMBAT_STALKER_REGISTRATION_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "combat-stun",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-stun.txt",
+      "--break-combat-stun-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_COMBAT_STUN_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "combat-handling",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-handling.txt",
+      "--break-combat-handling-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_COMBAT_HANDLING_WIRING_FAIL",
+    "pass": true
+  },
+  {
+    "case": "combat-weighty-handling",
+    "command": [
+      "python3",
+      "tools/smoke_playtest.py",
+      "/workspace/below-the-abyss/build/below-the-abyss-playtest-linux-14378dcc249f.zip",
+      "--log",
+      "/workspace/below-the-abyss/docs/testing/combat-testbox/logs/release-combat-weighty-handling.txt",
+      "--break-combat-weighty-handling-wiring"
+    ],
+    "exit": 1,
+    "expected_token": "RELEASE_COMBAT_WEIGHTY_HANDLING_WIRING_FAIL",
+    "pass": true
+  }
+]

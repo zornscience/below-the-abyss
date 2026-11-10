@@ -116,13 +116,20 @@ func test_guidance_cards_stay_silent_outside_twilight_and_when_tutorials_are_off
 	assert_false("Wick / living contact" in titles, "the saved tutorial switch is respected")
 
 
-func test_every_registered_radio_id_is_accepted_and_unknown_ids_are_rejected() -> void:
+func test_every_production_radio_message_is_delivered_and_only_malformed_ids_are_rejected() -> void:
 	var radio: RadioNotifications = game.revision.ui.notifications
-	for id: String in TwilightHunt.RADIO_IDS:
-		radio.enqueue(id, "Wick: registered message.", "Wick")
-		assert_true(radio.contains_message(id), "registered radio id must queue: " + id)
-	radio.enqueue("not-a-registered-radio-id", "Wick: unregistered.", "Wick")
-	assert_false(radio.contains_message("not-a-registered-radio-id"))
+	var ids: Array[String] = ["twilight-arrival", "twilight-first-light", "twilight-released-casualty", "twilight-choice-save-failed", "twilight-stalker-warning"]
+	ids.append_array(TwilightHunt.RADIO_IDS)
+	ids.append_array(TwilightTunnelCatalog.payoff_ids())
+	for item: Dictionary in TwilightShelfData.RECORDS: ids.append(String(item.id))
+	for id: String in ids:
+		radio.enqueue(id, "Wick: production message.", "Wick")
+		assert_true(radio.contains_message(id), "production radio id must be delivered: " + id)
+	for bad: String in ["", "Bad Id!", "UPPER", "has space", "x".repeat(65)]:
+		radio.enqueue(bad, "Wick: malformed.", "Wick")
+		assert_false(radio.contains_message(bad), "malformed id rejected: " + bad)
+	radio.enqueue("twilight-empty-body", "", "Wick")
+	assert_false(radio.contains_message("twilight-empty-body"))
 
 
 func test_stalker_warning_phase_queues_the_wick_line() -> void:

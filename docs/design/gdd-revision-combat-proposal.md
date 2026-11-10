@@ -103,10 +103,23 @@ schema change and migration** and the earlier deferral stays until you approve t
 4. Rework the Twilight slice around the Stalker arc and the first alien technology.
 5. **Five external playtests** (`docs/playtesting/`) before any new region.
 
-## 11. Open questions
+## 11. Decisions recorded (designer, 2026-11-10)
 
-1. Drops: resupply only (default) or none?
-2. Which of the five technologies (or others) belong in the first slice?
-3. Should the Stalker become defeatable, or only ever avoidable and driven off?
-4. Boss concept for the slice: the Stalker itself or a separate guardian?
-5. Tone and story canon for alien technology: needs the designer's Story Bible approval.
+1. **Drops:** battery and torpedo resupply only; no currency, no experience from kills, no farming
+   (designer delegated; default adopted).
+2. **First-slice technologies:** Resonant pulse and Silent running (pure mechanics, no story canon
+   needed, both give Stalker counterplay) plus the existing Pressure shell depth gate. Glyph key and
+   Breaker torpedo wait for story approval and the later arc.
+3. **Stalker ending (designer):** defeating the Stalker is an OPTION that leads to a specific, darker
+   ending, an alternative to the peaceful research and listening resolution. It must be a player
+   choice, never forced. Scope note: the existing hidden Resonance state (BTA-046: Listener / Neutral
+   / Hostile bands, provisional thresholds +/-40) is the natural carrier for this fork. Two endings
+   double the content of the final act only, so branch late, not early. Story canon (what the
+   Stalker is, why it hunts, what each ending means) needs the designer's Story Bible approval.
+4. **Test box:** approved to proceed (designer delegated).
+
+## 12. Open questions
+
+1. Boss concept for the slice: the Stalker itself or a separate guardian?
+2. The darker ending: what does the player lose or gain, and is it reversible before the end?
+3. Story canon for alien technology and the Stalker's nature (Story Bible approval).

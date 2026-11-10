@@ -30,10 +30,26 @@ elements beyond the existing hull and battery gauges and threat notices.
 - Deliver the PR template, native screenshots at 1280×800 and 800×600, a keyboard and a gamepad
   route, and state plainly that no human playtest exists.
 
+## Control feel (market-driven requirement)
+
+Market research on comparable games names clunky controls as the most common reason small-team
+Metroidvanias are punished. Our water-like inertia was an earlier designer request, so it must be
+measured, not assumed.
+
+- Provide TWO handling profiles for the box only, as Resources: **Weighty** (the current campaign
+  motion profile, unchanged) and **Responsive** (higher acceleration, lower drag, faster turn). A
+  developer option switches between them in the box, with a visible text label of the active profile.
+- Report a table for each profile: time to 90 % top speed from rest, stopping distance from top
+  speed, time for a 180 degree turn, and top speed.
+- Log per session which profile was used, collisions per minute, deaths by collision, and a
+  post-session rating question (weighty / about right / sluggish / twitchy).
+- Campaign motion Resources and Sunlit/Twilight values do NOT change in this issue.
+
 ## How we judge it (the point of the box)
 
 Run it with at least three people who have not seen the game, ten minutes each. Record, per person:
-- time to first engage, deaths, pings per minute, torpedoes fired;
+- time to first engage, deaths, pings per minute, torpedoes fired, handling profile used,
+  collisions per minute;
 - the first moment they said or showed excitement, and the first moment they were bored;
 - whether they used the stun, the tunnels, or ran;
 - "Would you play another ten minutes?" (yes / no / why).

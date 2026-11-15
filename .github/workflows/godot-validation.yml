@@ -90,12 +90,14 @@ jobs:
 
       - name: Retain validation logs
         if: always()
+        # Best effort: a storage quota problem must never fail a green build.
+        continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: godot-validation-${{ github.run_id }}-${{ github.run_attempt }}
           path: build/ci-logs/
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 3
 
   playtest-linux:
     name: Linux standalone playtest package
@@ -182,14 +184,16 @@ jobs:
             grep -q "RELEASE_${token}_WIRING_FAIL" "build/playtest/$wiring-negative.log"
           done
 
-      - name: Retain package, manifest and export logs
+      - name: Retain compact manifest and smoke logs
         if: always()
+        # Best effort: a storage quota problem must never fail a green build.
+        # The ~70 MB package zip is deliberately NOT uploaded.
+        continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: linux-playtest-${{ github.sha }}
+          name: linux-playtest-logs-${{ github.sha }}
           path: |
-            build/below-the-abyss-playtest-linux-*.zip
             build/playtest/manifest.json
             build/playtest/*.log
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 3

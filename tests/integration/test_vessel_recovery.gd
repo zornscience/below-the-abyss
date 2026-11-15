@@ -125,6 +125,15 @@ func _run_until_recovery(limit: int) -> int:
 	return limit
 
 
+## The card ignores accept until its fade has finished plus the accept delay.
+func _wait_card_ready() -> void:
+	for frame: int in range(600):
+		if flow.accept_ready(): return
+		if not flow.pending: break
+		await get_tree().process_frame
+	fail_test("recovery card never became ready for accept")
+
+
 func _key(code: Key) -> InputEventKey:
 	var event: InputEventKey = InputEventKey.new()
 	event.keycode = code
@@ -443,6 +452,7 @@ func test_recovery_card_keyboard_and_gamepad_back_stays_and_accept_continues() -
 		assert_true(flow.panel.visible)
 		assert_false(game.route_layer.visible,"Esc / B does not open the pause menu behind the card")
 		assert_false(game.submarine.is_physics_processing())
+		await _wait_card_ready()
 		await _send(_button(JOY_BUTTON_A) if controller else _key(KEY_ENTER))
 		assert_false(flow.pending,"Enter / A continues, controller=%s" % controller)
 		assert_true(game.journey.at_station())
@@ -460,6 +470,7 @@ func test_sunlit_hull_card_keyboard_and_gamepad_routes() -> void:
 		assert_true(flow.pending)
 		await _send(_button(JOY_BUTTON_B) if controller else _key(KEY_ESCAPE))
 		assert_true(flow.pending)
+		await _wait_card_ready()
 		await _send(_button(JOY_BUTTON_A) if controller else _key(KEY_ENTER))
 		assert_false(flow.pending,"controller=%s" % controller)
 		assert_true(game.submarine.is_physics_processing(),"piloting resumes at the Halcyon berth")

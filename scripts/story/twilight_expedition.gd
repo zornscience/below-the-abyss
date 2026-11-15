@@ -258,6 +258,13 @@ func prompt() -> String:
 		return binding+" · Scan the net and living contact"
 	return binding+" · "+("Review encounter record" if scene.story.resolved(TwilightShelfData.ENCOUNTER) else "Release or collect the trapped animal")
 
+## Retries a casualty record whose checkpoint write failed. Returns true when no casualty
+## is pending afterwards. Used before Halcyon recovery, which cannot save past it.
+func retry_casualty_record() -> bool:
+	if pending_loss:
+		_killed()
+	return not pending_loss
+
 func _killed() -> void:
 	if not enabled or scene.story.has_decision(TwilightShelfData.CAPTURE) or scene.story.has_decision(TwilightShelfData.LOST) or scene.story.has_flag(&"zone2-released-sentinel-lost"): return
 	pending_loss = true

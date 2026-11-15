@@ -9,6 +9,10 @@ signal recovery_completed
 
 const PROFILE: VesselRecoveryProfile = preload("res://resources/balance/vessel_recovery.tres")
 const FADE_SECONDS: float = 0.5
+## Accept input is ignored until the fade has finished plus this long, so a press meant
+## for piloting or a held button cannot dismiss the card before it can be read.
+const ACCEPT_DELAY_SECONDS: float = 0.5
+const FOOTER_TEXT: String = "Enter / A: continue"
 const CAUSE_OXYGEN: StringName = &"oxygen"
 const SHARED_TEXT: String = "Wick sent a distress beacon and Halcyon’s crew recovered Lantern-2. Hull, battery, oxygen and torpedoes are restored. The unfinished scan was cancelled. All records, discoveries and choices are kept."
 const OXYGEN_TEXT: String = "LIFE SUPPORT FAILED. Oxygen ran out. " + SHARED_TEXT
@@ -28,6 +32,8 @@ var confirm: Button
 var footer: Label
 var alarms_requested: int = 0
 var _fade: float = 0.0
+var _shown_seconds: float = 0.0
+var _card_text: String = ""
 
 
 func setup(game: ShelfPrototype) -> void:
@@ -69,7 +75,7 @@ func setup(game: ShelfPrototype) -> void:
 	column.add_child(confirm)
 	confirm.pressed.connect(acknowledge)
 	footer = Label.new()
-	footer.text = "Enter / A: continue   ·   Esc / B: stay on this card"
+	footer.text = FOOTER_TEXT
 	footer.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	column.add_child(footer)
 	UiTypography.style(footer, &"body")
@@ -82,6 +88,11 @@ func setup(game: ShelfPrototype) -> void:
 	scene.saves.checkpoint_restored.connect(_restored)
 	# Freeze the pulse the moment the simulation pauses, not on the next physics step.
 	scene.submarine.simulation_enabled_changed.connect(func(enabled: bool) -> void: warning.animating = enabled)
+
+
+## True once the card has faded in and the accept delay has passed.
+func accept_ready() -> bool:
+	return pending and _shown_seconds >= FADE_SECONDS + ACCEPT_DELAY_SECONDS
 
 
 ## Sunlit chapter or the Twilight expedition. Legacy prototype modes keep no failure flow.
@@ -168,8 +179,10 @@ func trigger(failure: StringName) -> void:
 	if scene.playtest_observer != null:
 		scene.playtest_observer.record_failure(kind)
 	recovery_started.emit(kind)
-	body.text = card_text(failure)
+	_card_text = card_text(failure)
+	body.text = _card_text
 	_fade = 0.0
+	_shown_seconds = 0.0
 	backdrop.color = Color(0, 0, 0, 0)
 	backdrop.show()
 	_center()
@@ -180,12 +193,15 @@ func trigger(failure: StringName) -> void:
 
 func _commit() -> void:
 	# A casualty record that failed to save blocks every other checkpoint. Retry it first.
-	if scene.journey.expedition != null and scene.journey.expedition.pending_loss:
-		scene.journey.expedition._killed()
+	if scene.journey.expedition != null:
+		scene.journey.expedition.retry_casualty_record()
 	var result: Error = scene.saves.recover_vessel()
 	committed = result == OK
 	scene.submarine.set_simulation_enabled(false)
-	if not committed and not body.text.ends_with(RETRY_TEXT):
+	if committed:
+		# A successful retry clears the retry line.
+		body.text = _card_text
+	elif not body.text.ends_with(RETRY_TEXT):
 		body.text += "\n" + RETRY_TEXT
 
 
@@ -216,7 +232,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouse:
 		return
-	if event.is_action_pressed("ui_accept"):
+	# Echoes come from a held key. A fresh press is required once the card is ready.
+	if event.is_action_pressed("ui_accept") and not event.is_echo() and accept_ready():
 		acknowledge()
 	get_viewport().set_input_as_handled()
 
@@ -224,6 +241,7 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if not pending:
 		return
+	_shown_seconds += delta
 	_fade = minf(1.0, _fade + delta / FADE_SECONDS)
 	backdrop.color = Color(0, 0, 0, _fade)
 	_center()

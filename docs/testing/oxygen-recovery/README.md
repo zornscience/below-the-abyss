@@ -13,6 +13,7 @@ container with no GPU (headless debug binary, software GL for screenshots).
 | During the countdown | Red screen border and the line `OXYGEN DEPLETED, LIFE SUPPORT 0:42`. The last 10 s read `LIFE SUPPORT CRITICAL`. The existing oxygen alarm cue sounds at 0 and at 10 s left. |
 | Oxygen rises above 0 (Halcyon dock service or Twilight tether refit) | The countdown cancels and the border clears. |
 | Countdown expires, or hull is destroyed (either chapter) | Fade to black and a text card. The recovery checkpoint is written at once through the atomic checkpoint path. |
+| Card input | Accept (Enter, Space or A) is ignored until the 0.5 s fade has finished plus 0.5 s. A held key or button, and key-repeat echoes, never confirm it. A fresh press is needed. The footer reads `Enter / A: continue`. Escape and B do nothing. |
 | Card confirmed (Enter or A) | Sunlit: piloting resumes at the Halcyon berth. Twilight: the Halcyon refit page opens, via the same refit transfer as a voluntary tether return. |
 | Recovery restock | Free and full: hull, battery, oxygen and torpedoes return to maximum. Records, discoveries and choices are kept. The unfinished scan is cancelled. In Twilight the mission completes exactly as on a voluntary tether return. |
 | Continue from a checkpoint with oxygen 0 | No instant failure. The full 60 s countdown restarts when piloting resumes. |
@@ -118,7 +119,8 @@ at normal speed.
    border must stop pulsing. Resume and confirm it continues.
 4. Dock at Halcyon with E or A before 0:00. The border must clear and no recovery may follow.
 5. Let it reach 0:00 again. Confirm the alarm at 0:10, the CRITICAL wording, the fade and the card.
-   Press Escape or B (nothing happens), then Enter or A. You are at the Halcyon berth, full supplies.
+   Press Enter or A at once (ignored for about a second), then Escape or B (nothing happens), then
+   Enter or A again. You are at the Halcyon berth, full supplies.
 6. Repeat 2 to 5 in Twilight. The card leads to the Halcyon refit page. Resume the expedition.
 7. Repeat with Reduced flashing (static border that thickens) and High contrast (brighter border,
    white inner edge). Check 1280x800 and 800x600.

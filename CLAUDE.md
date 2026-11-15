@@ -20,7 +20,7 @@ python3 tools/validate_godot.py         # import, parser, startup (~300+ scripts
 python3 tools/run_tests.py              # full GUT suite, ~10 min; do not run two Godot jobs at once
 python3 tools/verify_*.py               # scripted input routes (see CI workflow for the list)
 python3 tools/install_export_templates.py   # ~1.2 GB, once
-python3 tools/build_playtest.py             # real Linux export (--allow-dirty for local edits)
+python3 tools/build_playtest.py             # real Linux + Windows export (--allow-dirty for local edits)
 python3 tools/smoke_playtest.py build/below-the-abyss-playtest-linux-*.zip --log /tmp/x.log
 python3 tools/smoke_playtest.py <zip> --log /tmp/x.log --break-<name>-wiring   # must FAIL
 ```

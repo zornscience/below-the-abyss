@@ -73,12 +73,15 @@ pull request. A draft does not create the tag until someone publishes it.
 
 ## Downloading and sharing a build
 
-The repository is private, so **testers cannot download from GitHub**: release
-assets of a private repository (draft or published) require a GitHub account with
-access to it. Do not add testers as collaborators to give them a download.
+The repository is now **public**, but the `publish-playtest-prerelease` job always
+creates a **draft**. A draft's assets stay visible only to accounts with write
+access to the repository, regardless of repository visibility — so a draft never
+hands testers a working link by itself. Two ways to get a build to testers:
 
-1. On GitHub open the repository → Releases. Drafts are visible only to people with
-   write access. Open the "Playtest <tag>" draft and expand Assets.
+### A. Keep it a draft, reshare the file yourself (no GitHub account needed by testers)
+
+1. On GitHub open the repository → Releases. Open the "Playtest <tag>" draft and
+   expand Assets.
 2. Download `below-the-abyss-playtest-windows-<build-id>.zip` (and/or the Linux zip)
    and `SHA256SUMS.txt`.
 3. Upload the zip to a file-sharing service you control (any service that gives a
@@ -89,6 +92,15 @@ access to it. Do not add testers as collaborators to give them a download.
    (or `certutil -hashfile <zip> SHA256`); Linux: `sha256sum <zip>`.
 5. Delete the draft (or leave it unpublished) when the round ends. The draft is
    only a private hand-off point, never a public release.
+
+### B. Publish the release (anyone with the link can download directly from GitHub)
+
+Because the repository is public, publishing the draft (Releases → the draft →
+Edit → Publish release) makes its assets downloadable by anyone with the link, no
+GitHub account required — and discoverable by anyone browsing the repo's Releases
+page. Only do this once you're fine with the build being public. Send testers the
+release page URL; they can download the zip and verify it against the
+`SHA256SUMS.txt` asset on the same page, same commands as above.
 
 ## Windows "unknown publisher" warning (unsigned build)
 

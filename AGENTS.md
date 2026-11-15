@@ -1,4 +1,4 @@
-# Codex repository instructions — Below the Abyss
+# Claude Code repository instructions — Below the Abyss
 Read GDD.md, TDD.md and CODEX_PLAN.md before modifying code. Work on one issue at a time. Never implement future milestones opportunistically.
 
 - Use pinned Godot 4.x stable and typed GDScript.

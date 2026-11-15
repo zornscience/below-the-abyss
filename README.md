@@ -2,19 +2,42 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: **BTA-055 — The Twilight Shelf: The Severed Line**,
-following **The Sunlit Shallows**, the canonical first expedition.
+Current build: `main` through **BTA-061** (Twilight tunnels and optional torpedo
+shortcuts) plus an export-only **combat test box**. The playable campaign is
+**The Sunlit Shallows**, the canonical first expedition, followed by **The Twilight
+Shelf: The Severed Line** (BTA-055), extended by BTA-056–061 (see below).
+No human playtest results exist for any of it; tuning numbers are hypotheses.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
 recover missing acoustician Mara Voss's emergency buoy. Finish the chapter at the
 buoy or bring the recording home for a debrief, then deploy to the branching
 Twilight Shelf investigation. Trace severed cables, recover Mara's field log and
 resolve the trapped sentinel encounter before returning for debrief.
 
+Twilight Shelf additions since BTA-055, each documented in `docs/testing/bta-0xx/README.md`:
+
+- **BTA-056:** central chimneys, blind cargo pockets and four optional observations.
+- **BTA-057:** sonar-driven darkness. Terrain outlines and distant surfaces appear when a
+  ping's wavefront arrives; Pause → Accessibility sets Twilight darkness to Standard or Reduced.
+- **BTA-058:** Twilight-only action costs: ping and torpedo each cost 5 battery
+  (Sunlit: 4 and 2). Too little battery rejects the action; thrust is never gated.
+- **BTA-059:** optional deep section behind a rank 2 gate (1120 m crossing), seven optional
+  studies, and a pause-and-respawn flow when hull reaches zero.
+- **BTA-060:** the **Rift Stalker**, an unkillable predator that investigates pings and torpedo
+  explosions. A torpedo hit scares and briefly stuns it; it is never destroyed.
+- **BTA-061:** two tunnel loops with squeezes, branches and a vent, each with a shortcut
+  blocked by rock that two torpedoes open. Shortcuts are optional; two geological studies are added.
+
+**Combat test box (export-only).** A disposable arena with four swarmers, a sonar stun, the
+Stalker and two handling profiles (Weighty = campaign motion, Responsive). It has no story,
+saves or progression. The entry button, *Developer / Open combat test box*, exists only in a
+playtest export (`playtest` feature) in the Playtest panel; source runs and the title menu do
+not offer it. See [combat test box](docs/testing/combat-testbox/README.md).
+
 - **Start:** Begin/Continue The Sunlit Shallows, Options and Quit on the illustrated
   title. **New Game** confirms and archives the current campaign before starting fresh;
   control/audio/accessibility preferences stay. Accept a short briefing; asking Okafor about the anomalies is optional.
-- **Pilot:** WASD/arrows or left stick; F/X sonar, E/A interact/scan/dock,
-  M/Back map/research, P/Start pause. Bindings are remappable. Optional Wick tutorial
+- **Pilot:** WASD/arrows or left stick/D-pad; F/X sonar, E/A interact/scan/dock,
+  L/Y lights, M/Back map/research, Esc or P/Start pause. Bindings are remappable. Optional Wick tutorial
   cards can be disabled under Pause → Help & tutorials.
 - **Investigate:** follow Halcyon's pylons east, study the bloom, then consult the map, clear the fractured passage and search the reported area. Sonar identifies subjects; deliberate scans recover records. Read
   the recovered message in the expedition log. Return through the cleared shallow route
@@ -22,8 +45,9 @@ resolve the trapped sentinel encounter before returning for debrief.
 - **Choose:** scan the bloom unharmed or bottle a specimen for Crane. Its visual
   outcome and Wick/Okafor/Crane dialogue persist without a numeric morality score.
   Neither branch blocks completion or can be repeated for rewards.
-- **Instruments:** compact HULL / POWER / OXYGEN percentages at upper left; depth
-  centered above the environment, accepted objectives at upper right. Low/empty
+- **Instruments:** compact HULL / POWER / OXYGEN gauges at upper left, plus depth,
+  objectives and passive-contact panels (exact positions: see
+  [BTA-048](docs/testing/bta-048/README.md); not re-verified here). Low/empty
   resources and danger warnings use text/symbols as well as color.
 - **Radio:** R / left shoulder opens queued messages. Tab/right shoulder cycles
   actions, Enter/A selects and Escape/B closes. Previews and transcripts leave
@@ -31,9 +55,9 @@ resolve the trapped sentinel encounter before returning for debrief.
 - **Dock:** slow down and deliberately use E/A. Station services repair/refill/rearm;
   passing through base does not. Submit **First expedition debrief** after returning
   with evidence. Research technology and free reassignment remain accessible.
-- **Optional tools:** ten facing-fired torpedoes (Space/right trigger/right-stick
-  click), accelerating wakes and comfort-aware blasts remain available. Combat is
-  not required. Sonar pings cost substantially more battery than normal cruising.
+- **Optional tools:** ten torpedoes (Space/right trigger/right-stick click), fired in the
+  facing direction. Combat is not required to finish either chapter; torpedoes only open
+  the optional Twilight shortcuts and scare the Stalker. Costs are in the BTA-058 line above.
 
 [BTA-050 environment: asset inventory, native comparisons, performance and manual review](docs/testing/bta-050/README.md).
 
@@ -67,8 +91,9 @@ The existing soundscape, station services, upgrades, map/research and optional
 creatures remain available. Art/audio/narrative are prototype studies for review.
 
 The supplied [Story Bible and prototype alignment](docs/story/README.md) define
-the geometric plankton encounter and character roles. The normal game presents the first canonical chapter; the other seven zones are
-not playable.
+the geometric plankton encounter and character roles. The normal game presents the Sunlit
+Shallows and the Twilight Shelf; other zones of the eight-zone plot (per the Story Bible) are
+not implemented.
 
 ## Requirements
 
@@ -161,7 +186,7 @@ keeping all permanent progress. Cancel leaves the checkpoint alone. **Restart Te
 Route** remains a separate development action. Keyboard and controller navigation
 work in pause/confirmation/station menus.
 
-The normal game now uses `user://saves/expedition.json` (version 7; migrates versions 1–6) with a recoverable
+The normal game now uses `user://saves/expedition.json` (schema version 10; see `scripts/persistence/expedition_schema.gd`; older versions are migrated) with a recoverable
 checkpoint backup. Existing narrow save files are validated/imported and preserved;
 their store APIs then delegate writes to the coordinator. Standalone component
 fixtures still use their original stores. Custom isolated settings scenes inject
@@ -677,7 +702,7 @@ adds one research point, capped at two additional points in this chapter. The
 technology page and research log show this separately from legacy finite rewards
 and hidden Resonance. Old scans retain their records without retroactive XP.
 Repeat Interact can review nearby completed subjects without an award. The existing
-atomic expedition checkpoint is now version 7, migrating versions 1–6; there is
+atomic expedition checkpoint is now schema version 10 (older versions are migrated); there is
 no separate XP save. If the vessel is depleted, use Pause → Continue for the last
 safe checkpoint, or Restart Test Route; permanent records and cleared terrain remain.
 

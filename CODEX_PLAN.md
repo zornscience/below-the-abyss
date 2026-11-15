@@ -1,8 +1,8 @@
-# Below the Abyss — Codex Implementation Plan
+# Below the Abyss — Claude Code Implementation Plan
 Version 0.1 | 2026-10-25
 
 ## 1. Working agreement
-Codex is an implementation partner, not autonomous game director. Every task has scope, dependencies, acceptance criteria, tests and review. One issue per feature, one branch per issue, pull request before merge. No major architecture changes, unapproved dependencies, generated art commitments, or changes to game design without human approval.
+Claude Code is an implementation partner, not autonomous game director. Every task has scope, dependencies, acceptance criteria, tests and review. One issue per feature, one branch per issue, pull request before merge. No major architecture changes, unapproved dependencies, generated art commitments, or changes to game design without human approval.
 
 ## 2. Definition of done for every issue
 - Behavior meets acceptance criteria and can be demonstrated in an example scene.
@@ -58,7 +58,7 @@ Add authored Twilight Reef, Graveyard, Thermal Rift and Abyss content incrementa
 ### M6 — Steam demo and launch
 Create Steamworks adapter, cloud-save policy, achievement tests, store art/trailer, localization-ready strings, platform signing/notarization as needed, QA matrix, build provenance, privacy and license notices. Verify current Steam requirements before submission. Ship no platform that has not passed native testing.
 
-## 4. First six Codex prompts (ready to paste)
+## 4. First six Claude Code prompts (ready to paste)
 ### Prompt 1 — Scaffold
 "Read GDD.md, TDD.md, CODEX_PLAN.md and AGENTS.md. Implement BTA-001 only. Create a minimal Godot 4.x project with a bootable main scene, prescribed directories, .gitignore and README. Do not add gameplay, dependencies or assets. Report changed files, exact launch commands, and manual verification steps."
 
@@ -96,14 +96,14 @@ Create Steamworks adapter, cloud-save policy, achievement tests, store art/trail
 **Gate E (pre-Steam):** native smoke test for every advertised OS, full controller flow, accessibility checklist, crash-free extended playtest and verified store assets/licenses.
 
 ## 7. Time and risk assumptions
-M0–M2 may take 2–4 months part-time; M3–M4 another 3–6 months; full production 9–20+ months total or longer. These are illustrative and heavily depend on available weekly hours, art production, iteration and testing. Codex accelerates coding but cannot substitute for design judgment or real playtests.
+M0–M2 may take 2–4 months part-time; M3–M4 another 3–6 months; full production 9–20+ months total or longer. These are illustrative and heavily depend on available weekly hours, art production, iteration and testing. Claude Code accelerates coding but cannot substitute for design judgment or real playtests.
 
 ## 8. First action checklist
 1. Create private GitHub repository `below-the-abyss`.
 2. Pin exact Godot 4.x stable release after verifying installed toolchain.
 3. Commit GDD, TDD, CODEX_PLAN and AGENTS.md.
 4. Open BTA-001 through BTA-004 as GitHub issues.
-5. Ask Codex to implement BTA-001 in a branch; review and merge only after clean clone test.
+5. Ask Claude Code to implement BTA-001 in a branch; review and merge only after clean clone test.
 6. Keep an `art-provenance.csv` with asset source, author, license and permissions.
 
 ## Authorized post-BTA-044 playtest iteration

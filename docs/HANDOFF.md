@@ -59,16 +59,15 @@ python3 tools/smoke_playtest.py <zip> --log /tmp/x.log --break-<name>-wiring   #
 
 ## 4. State of the code (verify before relying)
 
-`main` is at merge of **PR #48** (`73ba321`). Merged and CI-green: BTA-057 sonar-driven Twilight visibility,
-058 resource tension, 059 depth gate + respawn flow + research economy, 060 Rift Stalker, 061 tunnels and
-excavation gates, step-1 UX (quiet HUD, radio dismiss and hints, guidance cards), radio id-shape fix,
-audio audit, combat-direction drafts, and **PR #48 combat test box**.
+`main` is at merge of **PR #50** (`ce69fc6`, CI artifact logs). Merged: BTA-057 sonar-driven Twilight
+visibility, 058 resource tension, 059 depth gate + respawn flow + research economy, 060 Rift Stalker, 061
+tunnels and excavation gates, step-1 UX (quiet HUD, radio dismiss and hints, guidance cards), radio id-shape
+fix, audio audit, combat-direction drafts, **PR #48 combat test box**, and **PR #49** (the documentation
+branch `ccr-faf5a894-y8zz7k`: market review, control-feel requirement, market requirements, this file).
 - Last full verification by Claude: `main` at `c773f4d` (after PR #46): 781/781 tests, release smoke
-  positive and 13/13 negatives. **PR #48 (795/795 and 19 negatives per its own report) has NOT been reviewed or
-  re-run by Claude.** Do that first (see §7).
-- **Unmerged documentation** on branch `ccr-faf5a894-y8zz7k`: `docs/market/market-review-2026-11-10.md`,
-  the control-feel requirement in `docs/design/combat-testbox-brief.md`, the market requirements in
-  `docs/design/gdd-revision-combat-proposal.md`, and this file. It needs a PR. Docs only.
+  positive and 13/13 negatives. PR #48 (795/795 and 19 negatives per its own report) was merged without
+  re-verification by Claude; no later full local re-run is recorded here.
+- No human playtest of the combat test box exists.
 
 ## 5. Design direction and decisions (designer-approved unless marked)
 
@@ -101,18 +100,15 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
 
 ## 7. Recommended next steps, in order
 
-1. Review PR #48 yourself: run the full suite, build the export, run the positive smoke and every
-   `--break-*-wiring` negative, read `docs/testing/combat-testbox/README.md`, and look at the screenshots.
-   Probe for silent failures (as with radio ids). Check Weighty truly references the campaign motion Resource.
-2. Have the designer open a PR from `ccr-faf5a894-y8zz7k` (docs only) and merge it after CI is green.
-3. Designer runs the combat test box with strangers; apply the go/change/stop criteria. Do not build
-   more combat until that result exists.
-4. If go: update `GDD.md` from the proposal; then issues for Resonant pulse + Silent running, Stalker arc,
+1. Designer runs the combat test box (playtest export only; see `docs/testing/combat-testbox/README.md`
+   and `docs/design/combat-testbox-brief.md`) with at least three people who have not seen the game; apply
+   the go/change/stop criteria. Do not build more combat until that result exists.
+2. If go: update `GDD.md` from the proposal; then issues for Resonant pulse + Silent running, Stalker arc,
    reactive music, BTA-062 (local darkness and pacing; still not built), the terrain-map schema issue
    (needs approval), a Stalker-defeat ending prototype.
-5. Audio: license or CC0 sound effects, curated Gemini music, then an engine issue (region beds, bus
+3. Audio: license or CC0 sound effects, curated Gemini music, then an engine issue (region beds, bus
    effects, spatial emitters, music layers). Proposed BTA-063/064 in `docs/audio_audit.md`.
-6. Later: five external playtests, README refresh, screenshot storage, structural refactors (with approval).
+4. Later: five external playtests, README refresh, screenshot storage, structural refactors (with approval).
 
 ## 8. Prompting Claude Code (what has worked)
 

@@ -45,7 +45,7 @@ not offer it. See [combat test box](docs/testing/combat-testbox/README.md).
 - **Choose:** scan the bloom unharmed or bottle a specimen for Crane. Its visual
   outcome and Wick/Okafor/Crane dialogue persist without a numeric morality score.
   Neither branch blocks completion or can be repeated for rewards.
-- **Instruments:** compact HULL / POWER / OXYGEN gauges stacked at upper left, plus depth,
+- **Instruments:** compact HULL / POWER / OXYGEN gauges at upper left, plus depth,
   objectives and passive-contact panels (exact positions: see
   [BTA-048](docs/testing/bta-048/README.md); not re-verified here). Low/empty
   resources and danger warnings use text/symbols as well as color.
@@ -702,7 +702,7 @@ adds one research point, capped at two additional points in this chapter. The
 technology page and research log show this separately from legacy finite rewards
 and hidden Resonance. Old scans retain their records without retroactive XP.
 Repeat Interact can review nearby completed subjects without an award. The existing
-atomic expedition checkpoint is now version 7, migrating versions 1–6; there is
+atomic expedition checkpoint is now schema version 10 (older versions are migrated); there is
 no separate XP save. If the vessel is depleted, use Pause → Continue for the last
 safe checkpoint, or Restart Test Route; permanent records and cleared terrain remain.
 

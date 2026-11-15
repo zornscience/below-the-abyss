@@ -102,6 +102,15 @@ func _run_until_recovery(limit: int) -> int:
 	return limit
 
 
+## The card ignores accept until its fade has finished plus the accept delay.
+func _wait_card_ready() -> void:
+	for frame: int in range(600):
+		if flow.accept_ready(): return
+		if not flow.pending: break
+		await get_tree().process_frame
+	fail_test("recovery card never became ready for accept")
+
+
 func _oxygen_gauge_state() -> String:
 	return (game.hud.oxygen_gauge.get_node("%State") as Label).text
 
@@ -203,6 +212,7 @@ func test_probe1_sunlit_open_water_zero_oxygen_counts_down_then_recovers_at_halc
 	_place(SunlitSurveyData.MAIN_ROUTE[0])
 	await _assert_open_water_zero_starts_countdown(&"move_right","Sunlit")
 	assert_eq(game.saves._state.journey.phase,"sunlit","Sunlit recovery stays in the Sunlit chapter")
+	await _wait_card_ready()
 	await _press(&"ui_accept")
 	assert_false(flow.pending,"Enter / A continues")
 	assert_false(flow.panel.visible)
@@ -216,6 +226,7 @@ func test_probe1_twilight_open_water_zero_oxygen_counts_down_then_recovers_at_ha
 	await _assert_open_water_zero_starts_countdown(&"move_left","Twilight")
 	assert_eq(game.saves._state.journey.phase,"refit","Twilight recovery reuses the Halcyon refit transfer")
 	assert_true(game.journey.at_station())
+	await _wait_card_ready()
 	await _press(&"ui_accept")
 	assert_false(flow.pending)
 	assert_true(game.revision.ui.dock_page.visible,"Twilight: the Halcyon refit page is shown")
@@ -285,6 +296,7 @@ func test_probe2_twilight_zero_oxygen_hull_death_recovers_at_halcyon_with_full_r
 	assert_false(flow.warning.visible)
 	_assert_recovered_checkpoint("Twilight hull",progress)
 	assert_eq(game.saves._state.journey.phase,"refit")
+	await _wait_card_ready()
 	await _press(&"ui_accept")
 	assert_false(flow.pending,"recovery confirmed")
 	assert_true(game.journey.at_station(),"recovered to the Halcyon refit, not the ascent tether")
@@ -327,6 +339,7 @@ func test_probe2_sunlit_hull_death_recovers_at_halcyon_berth_with_full_restock()
 	assert_eq(game.missions.snapshot()[String(SunlitShallowsData.MISSION)],sunlit_mission,"Sunlit mission state is not advanced by recovery")
 	for id: String in ["sunlit-recovery-guidance"]:
 		assert_false(id in game.revision.ui.notifications.pending,"the old Continue-the-checkpoint guidance is gone")
+	await _wait_card_ready()
 	await _press(&"ui_accept")
 	assert_false(flow.pending)
 	assert_true(game.submarine.is_physics_processing(),"piloting resumes at the Halcyon berth")

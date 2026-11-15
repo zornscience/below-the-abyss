@@ -115,6 +115,11 @@ func test_failure_keyboard_and_gamepad_cancel_stays_and_confirm_continues_at_hal
 		await get_tree().process_frame
 		await get_tree().process_frame
 		assert_true(flow.pending)
+		# The card ignores accept until its fade has finished plus the accept delay.
+		for frame: int in range(600):
+			if flow.accept_ready() or not flow.pending: break
+			await get_tree().process_frame
+		assert_true(flow.accept_ready())
 		Input.parse_input_event(accept)
 		Input.flush_buffered_events()
 		await get_tree().process_frame

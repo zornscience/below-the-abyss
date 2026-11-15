@@ -139,6 +139,14 @@ func _simulation_changed(enabled: bool) -> void:
 		mixer.stop_cues()
 
 
+## Life-support countdown: the existing oxygen alarm cue, requested at depletion and
+## at the critical threshold. No new audio. The mixer's mute and overlap rules apply.
+func life_support_alarm() -> bool:
+	if not is_instance_valid(mixer):
+		return false
+	return mixer.request(&"oxygen")
+
+
 func reset_session() -> void:
 	mixer.reset_session()
 	_passive_ids.clear()

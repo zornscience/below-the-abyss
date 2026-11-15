@@ -65,8 +65,12 @@ until saved. It does not reset audio, bindings or progression.
   passive strength bars make room for instruments. Detailed objectives remain on
   the board/log. Navigation around the vessel stays visible.
 - **Reduced flashing:** lowers the existing sonar ring's opacity and softens echo
-  highlights. It preserves range, travel time, reveals and warning text. There is
-  no authored flashing alarm sequence.
+  highlights. It preserves range, travel time, reveals and warning text. The
+  life-support border (below) becomes a static border that thickens as time falls.
+  By default that border pulses slowly: 0.5 pulses per second, rising to 1.5 per
+  second over the last 20 seconds, with a hard cap of 2 per second. Its opacity
+  moves between 60% and 100% and never reaches zero, so it is not a strobe. The
+  pulse freezes whenever the simulation is paused.
 - **Disable decorative particles:** hides motes and stops their update callback.
 - **Reduced motion:** freezes decorative motes, propeller animation and background
   parallax. Actual vessel motion, camera following, sonar propagation and creature
@@ -74,7 +78,8 @@ until saved. It does not reset audio, bindings or progression.
   is offered.
 - **High contrast:** opaque dark instrument/menu panels, white text and light
   borders; focus also has a thicker outline, so it differs by shape as well as hue.
-  Bar fills, icons, numeric values and state words retain their roles.
+  Bar fills, icons, numeric values and state words retain their roles. The
+  life-support border is a brighter red, 4 px thicker, with a white inner edge.
 
 Resizing/settings trigger coalesced layout updates; there is no per-frame scene
 walk. New sonar pulses inherit preferences without modifying acoustic dispatch.
@@ -91,6 +96,8 @@ and all comfort options enabled. Critical cues have visible equivalents:
 | Passive contact | Bearing arrow/degrees, classification, approximate strength and expiry |
 | Predator | WARNING/PURSUIT text, countdown and retreat direction |
 | Low/depleted resources | Named numeric gauge, bar and LOW/DEPLETED state |
+| Oxygen alarm at zero and at 10 s left (existing oxygen cue) | Red screen border and the text line `OXYGEN DEPLETED, LIFE SUPPORT 0:42`. The last 10 seconds read `LIFE SUPPORT CRITICAL` |
+| Halcyon recovery | Fade to black and a text card that waits for Enter or A |
 | Hull impact / pressure | Distinct IMPACT/PRESSURE hull-loss text, depth state and ascent instruction |
 | Discovery / completed scan | Persistent map entry; scan progress/completion and research record |
 | Mission / story | Objective counts, board state, rereadable text briefing and debrief |

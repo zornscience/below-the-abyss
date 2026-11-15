@@ -37,4 +37,5 @@ func test_profile_rates_are_finite_and_budget_scales_at_30_60_120_steps() -> voi
 		pools.configure(profile)
 		for index: int in range(steps*45): pools.advance(1.0/steps,1.0)
 		assert_almost_eq(pools.battery,99.46,0.000001)
-		assert_almost_eq(pools.oxygen,99.1,0.000001)
+		# Approved oxygen retune (Twilight 0.03/s): 45 s costs exactly 1.35 at every step size.
+		assert_almost_eq(pools.oxygen,98.65,0.000001)

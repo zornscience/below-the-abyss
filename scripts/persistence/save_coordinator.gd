@@ -4,6 +4,7 @@ extends Node
 
 signal status_changed
 signal checkpoint_restored
+const OXYGEN_SAVE_REFUSAL: String = "Not saved: oxygen depleted. Refill oxygen at Halcyon or the ascent tether, then save."
 var last_campaign_archive: String = ""
 var status: String = "No expedition save loaded."
 var store: ExpeditionStore = ExpeditionStore.new()
@@ -165,6 +166,8 @@ func save_current() -> Error:
 		if result != OK:
 			return result
 	if not safe_to_save():
+		if _scene.submarine.resource_system.oxygen<=0.0:
+			return _report(OXYGEN_SAVE_REFUSAL, ERR_UNAVAILABLE)
 		return _report("Not saved: pause in clear terrain, outside pressure/thermal danger and predator alert/pursuit.", ERR_UNAVAILABLE)
 	return _write(snapshot(), "Expedition saved: position, supplies and progress committed.")
 
@@ -513,21 +516,61 @@ func transfer_chapter(phase: String,restock: bool) -> Error:
 	if not _scene.chapter.concluded(): return ERR_UNAVAILABLE
 	var service: Dictionary = _scene.station.quote_arrival_service(_scene.submarine) if phase=="refit" else {}
 	if phase=="refit" and not service.has("after"): return service.error
+	var candidate: Dictionary
+	if phase=="refit":
+		candidate = _refit_candidate()
+		for kind: String in ["hull","battery","oxygen"]: candidate.player[kind] = service.after[kind]
+	else:
+		candidate = snapshot()
+		candidate.journey = {"phase":phase,"commissioned":true}
+		var twilight_record: Dictionary = candidate.progress.missions[String(TwilightShelfData.MISSION)]
+		if twilight_record.state=="available": twilight_record.state = "accepted"
+		candidate.region_id = ExpeditionJourneyState.region(candidate.journey)
+		_transfer_player(candidate,TwilightShelfLayout.SPAWN,restock)
+	var completed_now: bool = phase=="refit" and _refit_completes(candidate)
+	var result: Error = _write(candidate,"Chapter transfer committed; expedition progress preserved.")
+	if result!=OK: return result
+	result = continue_expedition()
+	if result==OK and completed_now: _scene.missions.mission_completed.emit(TwilightShelfData.MISSION)
+	return result
+
+## The Twilight -> Halcyon refit checkpoint shared by the voluntary ascent-tether return
+## and vessel recovery: refit phase, scripted mission return, Halcyon berth, full restock.
+## Callers own the guards. The voluntary return then applies the dock-service quote.
+func _refit_candidate() -> Dictionary:
 	var candidate: Dictionary = snapshot()
-	candidate.journey = {"phase":phase,"commissioned":true}
+	candidate.journey = {"phase":"refit","commissioned":true}
 	var twilight_record: Dictionary = candidate.progress.missions[String(TwilightShelfData.MISSION)]
-	if phase=="twilight" and twilight_record.state=="available": twilight_record.state = "accepted"
-	if phase=="refit" and twilight_record.state in ["accepted","completed"]:
+	if twilight_record.state in ["accepted","completed"]:
 		var plan: Dictionary = _scene.missions.plan_scripted_return(TwilightShelfData.MISSION)
 		if plan.error==OK:
 			candidate.progress.missions = plan.records
 			candidate.progress.missions[String(TwilightShelfData.MISSION)].state = "completed"
 	candidate.region_id = ExpeditionJourneyState.region(candidate.journey)
-	_transfer_player(candidate,TwilightShelfLayout.SPAWN if phase=="twilight" else SunlitSurveyData.SPAWN,restock)
-	if phase=="refit":
-		for kind: String in ["hull","battery","oxygen"]: candidate.player[kind] = service.after[kind]
-	var completed_now: bool = phase=="refit" and _scene.missions.snapshot()[String(TwilightShelfData.MISSION)].state=="accepted" and candidate.progress.missions[String(TwilightShelfData.MISSION)].state=="completed"
-	var result: Error = _write(candidate,"Chapter transfer committed; expedition progress preserved.")
+	_transfer_player(candidate,SunlitSurveyData.SPAWN,true)
+	return candidate
+
+func _refit_completes(candidate: Dictionary) -> bool:
+	return _scene.missions.snapshot()[String(TwilightShelfData.MISSION)].state=="accepted" and candidate.progress.missions[String(TwilightShelfData.MISSION)].state=="completed"
+
+## Halcyon recovery after hull destruction or life-support expiry. A free full restock:
+## hull, battery, oxygen and torpedoes return to maximum. Permanent records, discoveries
+## and choices are kept (the checkpoint merge is monotonic). Twilight reuses the refit
+## transfer without the tether-distance or dock-service conditions. Sunlit returns the
+## vessel to the Halcyon berth. Written through the atomic checkpoint path, then applied.
+func recover_vessel() -> Error:
+	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing(): return ERR_UNAVAILABLE
+	var twilight: bool = _scene.journey.active()
+	if not twilight and (_scene.chapter==null or not _scene.chapter.active): return ERR_UNAVAILABLE
+	var candidate: Dictionary
+	var completed_now: bool = false
+	if twilight:
+		candidate = _refit_candidate()
+		completed_now = _refit_completes(candidate)
+	else:
+		candidate = snapshot()
+		_transfer_player(candidate,SunlitSurveyData.SPAWN,true)
+	var result: Error = _write(candidate,"Halcyon recovery saved. Permanent progress retained.")
 	if result!=OK: return result
 	result = continue_expedition()
 	if result==OK and completed_now: _scene.missions.mission_completed.emit(TwilightShelfData.MISSION)

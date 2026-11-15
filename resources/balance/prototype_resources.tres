@@ -9,4 +9,4 @@ max_battery = 100.0
 max_oxygen = 100.0
 battery_idle_drain_per_second = 0.005
 battery_thrust_drain_per_second = 0.025
-oxygen_drain_per_second = 0.03
+oxygen_drain_per_second = 0.048

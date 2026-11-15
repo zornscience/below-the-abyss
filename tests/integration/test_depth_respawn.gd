@@ -25,28 +25,43 @@ func before_each() -> void:
 	game.route_layer.hide()
 	game.submarine.global_position = TwilightShelfLayout.SPAWN
 	game.submarine.set_simulation_enabled(false)
-func test_failure_saves_zero_hull_and_continue_derives_panel_then_respawns_without_refill() -> void:
+## Rewritten on purpose (designer decision 3): hull failure no longer writes a zero-hull
+## checkpoint and respawns at the tether with supplies kept. It recovers the vessel at
+## Halcyon through the refit transfer with a free full restock. Old zero-hull checkpoints
+## are recovered on Continue (test_vessel_recovery.gd).
+func test_failure_recovers_at_halcyon_with_full_restock_and_continue_does_not_loop() -> void:
 	var pools: SubmarineResourceSystem = game.submarine.resource_system
 	pools.consume_battery(50)
 	pools.consume_oxygen(20)
+	game.torpedoes.ammunition = 4
 	var progress: Dictionary = game.saves.progress_snapshot()
 	game.submarine.hull_system.apply_damage(100,&"pressure")
 	await wait_physics_frames(3)
-	assert_true(game.journey.depth_gate.pending)
-	assert_true(game.journey.depth_gate.panel.visible)
+	var flow: VesselRecoveryFlow = game.journey.recovery
+	assert_true(flow.pending)
+	assert_true(flow.panel.visible)
 	assert_false(game.submarine.is_physics_processing())
-	assert_eq(game.saves._state.player.hull,0.0)
-	assert_eq(game.saves.continue_expedition(),OK)
-	await wait_physics_frames(3)
-	assert_true(game.journey.depth_gate.pending)
-	game.journey.depth_gate.respawn()
-	assert_false(game.journey.depth_gate.pending)
+	assert_true(flow.committed)
+	assert_eq(game.saves._state.player.hull,100.0,"no zero-hull checkpoint is written")
+	assert_eq(game.saves._state.player.battery,100.0)
+	assert_eq(game.saves._state.player.oxygen,100.0)
+	assert_eq(game.saves._state.prototype.ammunition,TorpedoLauncher.CAPACITY)
+	assert_eq(game.saves._state.journey.phase,"refit")
+	flow.acknowledge()
+	assert_false(flow.pending)
 	assert_eq(game.submarine.hull_system.hull,100.0)
-	assert_eq(pools.battery,50.0)
-	assert_eq(pools.oxygen,80.0)
-	assert_eq(game.submarine.global_position,TwilightShelfLayout.SPAWN)
+	assert_eq(pools.battery,100.0)
+	assert_eq(pools.oxygen,100.0)
+	assert_eq(game.submarine.global_position,SunlitSurveyData.SPAWN)
+	assert_true(game.journey.at_station())
 	assert_eq(game.saves.progress_snapshot(),progress)
 	assert_eq(game.saves._state.size(),12)
+	game.revision.ui.dock_page.hide()
+	game.station.end_interaction()
+	game.station_menu.hide()
+	assert_eq(game.saves.continue_expedition(),OK)
+	await wait_physics_frames(3)
+	assert_false(flow.pending,"Continue from the recovery checkpoint does not fail again")
 func test_deep_route_and_subjects_are_registered_without_required_evidence() -> void:
 	var gate: DepthGateProfile = TwilightShelfLayout.DEPTH_GATE
 	for point: Vector2 in gate.crossing():
@@ -57,10 +72,19 @@ func test_deep_route_and_subjects_are_registered_without_required_evidence() -> 
 		assert_true(game.saves.position_clear(record.at,0))
 		for objective: MissionObjective in TwilightShelfData.missions().definition(TwilightShelfData.MISSION).objectives: assert_ne(objective.target_id,id)
 	assert_true(game.submarine.scanner._known(&"twilight-deep-crust"))
-	assert_true(game.submarine.hull_system.vessel_destroyed.is_connected(game.journey.depth_gate._destroyed))
+	assert_true(game.submarine.hull_system.vessel_destroyed.is_connected(game.journey.recovery._destroyed))
 
-func test_failure_keyboard_and_gamepad_cancel_stays_and_confirm_respawns() -> void:
+## Rewritten on purpose (designer decision 3): the same keys now drive the recovery card.
+func test_failure_keyboard_and_gamepad_cancel_stays_and_confirm_continues_at_halcyon() -> void:
+	var flow: VesselRecoveryFlow = game.journey.recovery
 	for controller: bool in [false,true]:
+		if game.journey.at_station():
+			game.revision.ui.dock_page.hide()
+			game.station.end_interaction()
+			game.station_menu.hide()
+			assert_eq(game.saves.transfer_chapter("twilight",false),OK)
+			game.revision.ui.radio_page.hide()
+			game.route_layer.hide()
 		game.submarine.set_simulation_enabled(false)
 		game.submarine.hull_system.apply_damage(100,&"pressure")
 		await wait_physics_frames(3)
@@ -90,10 +114,11 @@ func test_failure_keyboard_and_gamepad_cancel_stays_and_confirm_respawns() -> vo
 		Input.flush_buffered_events()
 		await get_tree().process_frame
 		await get_tree().process_frame
-		assert_true(game.journey.depth_gate.pending)
+		assert_true(flow.pending)
 		Input.parse_input_event(accept)
 		Input.flush_buffered_events()
 		await get_tree().process_frame
 		await get_tree().process_frame
-		assert_false(game.journey.depth_gate.pending,"controller="+str(controller))
+		assert_false(flow.pending,"controller="+str(controller))
 		assert_eq(game.submarine.hull_system.hull,100.0)
+		assert_true(game.journey.at_station(),"controller="+str(controller))

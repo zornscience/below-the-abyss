@@ -113,6 +113,9 @@ func _apply_node(node: Node) -> void:
 		UiTypography.apply(node,String(_preferences.ui_scale))
 	if node is SonarPulse:
 		(node as SonarPulse).reduced_flashing = bool(_preferences.reduced_flashing)
+	if node is LifeSupportWarning:
+		(node as LifeSupportWarning).reduced_flashing = bool(_preferences.reduced_flashing)
+		(node as LifeSupportWarning).high_contrast = bool(_preferences.high_contrast)
 	if node is SonarRevealTarget:
 		(node as SonarRevealTarget).reduced_flashing = bool(_preferences.reduced_flashing)
 		node.queue_redraw()

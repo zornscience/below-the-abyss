@@ -113,7 +113,10 @@ func test_resource_episodes_damage_failure_and_disable_are_distinct() -> void:
 	var data: Dictionary = observer.recorder.snapshot()
 	assert_eq(data.counts.damage, 1)
 	assert_eq(data.damage_total, 100.0)
-	assert_eq(data.counts.failure, 1, "Threshold crossing, not a newly implemented game-over system")
+	# Rewritten on purpose (designer decision 6): failure fires on the real Halcyon
+	# recovery trigger, which the legacy prototype fixture does not have. A depleted
+	# hull here is a resource warning only. Campaign coverage: test_vessel_recovery.gd.
+	assert_eq(int(data.counts.get("failure", 0)), 0, "Depletion alone is not a failure event")
 	assert_eq(data.counts.resource_warning, 3)
 	assert_eq(observer.stop(), OK)
 	assert_eq(observer.recorder.snapshot().status, "disabled")

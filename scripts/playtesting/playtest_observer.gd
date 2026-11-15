@@ -123,6 +123,11 @@ func _process(_delta: float) -> void:
 			status_changed.emit()
 
 
+## Called by VesselRecoveryFlow when Halcyon recovery actually begins.
+func record_failure(cause: StringName) -> void:
+	_record("failure", "life_support_expired" if cause == &"oxygen" else "hull_destroyed")
+
+
 func _record(kind: String, detail: String, amount: float = 0.0, identity: String = "") -> void:
 	if not recorder.recording or _restoring():
 		return
@@ -172,9 +177,8 @@ func _resource(kind: String, value: float, maximum: float) -> void:
 	if low and not _low.get(kind, false):
 		_record("resource_warning", kind + "_low")
 	if value <= 0.0 and not _low.get(kind + "_depleted", false):
+		# Depletion is a warning only. The failure event fires on the real recovery trigger.
 		_record("resource_warning", kind + "_depleted")
-		if kind in ["hull", "oxygen"]:
-			_record("failure", "hull_destroyed" if kind == "hull" else "oxygen_depleted")
 	_low[kind] = low
 	_low[kind + "_depleted"] = value <= 0.0
 

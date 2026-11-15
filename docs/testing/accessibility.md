@@ -29,7 +29,7 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gdisabl
 
 The unchanged PR/main workflow installs checksum-pinned Godot/GUT, rejects import,
 parser and smoke errors, and runs the whole GUT suite. It retains stdout, JUnit and
-summaries in `godot-validation-<run>-<attempt>` for 14 days. The PR records its exact
+summaries in `godot-validation-<run>-<attempt>` for 3 days. The PR records its exact
 hosted run, head SHA and result. No old test is removed, skipped or weakened.
 
 New automated coverage (16 cases):

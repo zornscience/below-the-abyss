@@ -23,7 +23,7 @@ godot --headless --path . --script res://addons/gut/gut_cmdln.gd -gconfig= -gtes
 
 GitHub Actions retains the unchanged pinned installer, import/parser/startup checks
 and full GUT suite on PRs into main/pushes to main. Logs and JUnit remain in the
-14-day `godot-validation-<run>-<attempt>` artifact. The PR records the actual final
+3-day `godot-validation-<run>-<attempt>` artifact. The PR records the actual final
 run/head/status and complete test totals. No old test is disabled or weakened.
 
 ## Recorded automated results

@@ -10,8 +10,9 @@ Everything here is checked against the repo or marked as unverified.
   Repo `zornscience/below-the-abyss`, default branch `main`.
 - **The designer (user)** makes all design decisions and tests by playing. Prefers blunt, critical
   review: state flaws first, no flattery, challenge weak premises.
-- **Codex (GPT-6.1)** implements issues as PRs. **Claude** has done review, verification, briefs and
-  prompts. Codex PRs are written by the designer's hand-off of a prompt; the designer merges them.
+- **Claude Code** implements issues as PRs (earlier PRs, up to #48, were written by a different agent,
+  Codex/GPT-6.1). Separate Claude sessions have done review, verification, briefs and prompts. PRs are
+  written from a prompt the designer hands off; the designer merges them.
 - No budget for a human composer, sound designer or artist. Available: Gemini (music), ChatGPT
   (images), free human-made libraries (CC0 preferred). See §6 for the legal and market cautions.
 
@@ -30,7 +31,7 @@ Everything here is checked against the repo or marked as unverified.
 - **Wait for the PR's own CI to be green before merging.** PR #43 merged 30 s after a failed run.
 - **Verify claims with the real code, not by reading.** Examples: a subagent's "drift" finding was false;
   a PR's "radio line" never reached the player. Write a probe or a test that fails without the fix.
-- **Base branch discipline.** Prompts have repeatedly told Codex to extend files that only existed on an
+- **Base branch discipline.** Prompts have repeatedly told the implementing agent to extend files that only existed on an
   unmerged branch. State the base explicitly and confirm `main` contains it first.
 - Report outcomes faithfully: failing tests with output, skipped steps said as skipped.
 
@@ -63,7 +64,7 @@ python3 tools/smoke_playtest.py <zip> --log /tmp/x.log --break-<name>-wiring   #
 excavation gates, step-1 UX (quiet HUD, radio dismiss and hints, guidance cards), radio id-shape fix,
 audio audit, combat-direction drafts, and **PR #48 combat test box**.
 - Last full verification by Claude: `main` at `c773f4d` (after PR #46): 781/781 tests, release smoke
-  positive and 13/13 negatives. **PR #48 (795/795 and 19 negatives per Codex) has NOT been reviewed or
+  positive and 13/13 negatives. **PR #48 (795/795 and 19 negatives per its own report) has NOT been reviewed or
   re-run by Claude.** Do that first (see §7).
 - **Unmerged documentation** on branch `ccr-faf5a894-y8zz7k`: `docs/market/market-review-2026-11-10.md`,
   the control-feel requirement in `docs/design/combat-testbox-brief.md`, the market requirements in
@@ -113,12 +114,12 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
    effects, spatial emitters, music layers). Proposed BTA-063/064 in `docs/audio_audit.md`.
 6. Later: five external playtests, README refresh, screenshot storage, structural refactors (with approval).
 
-## 8. Prompting Codex (what has worked)
+## 8. Prompting Claude Code (what has worked)
 
 Prompt skeleton: read-list (AGENTS/GDD/TDD/CODEX_PLAN + the relevant brief); ONE issue; **base branch**;
 approved decisions; what the code already does (verified, "re-verify"); problem with measured numbers;
 numbered requirements; out of scope; release-build safety (assert lint, ReleaseSmoke + negatives, real
 export); tests as rules not coordinates; deliverables (PR template, numbers table, screenshots at
 1280x800 and 800x600, keyboard + gamepad route, "no human playtest results exist"); "do not merge, wait
-for the PR's own CI". Use GPT-6.1 at high effort for cross-system issues, medium for data/tuning.
+for the PR's own CI". Use the most capable available model at high effort for cross-system issues, medium for data/tuning.
 Ground every prompt in a fresh read of the code; two earlier prompts rested on wrong assumptions.

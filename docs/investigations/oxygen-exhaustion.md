@@ -83,8 +83,6 @@ stall, so the figures cover uninterrupted travel. The resource profile is not re
 | --- | --- | --- | --- | --- | --- |
 | Sunlit | `--fixed-fps 60` | 200,000 | 3,333.33 s (**55.6 min**) | 453.7 s (accelerated) | 100 % full-thrust frames, 450 legs, 584,069 u, hull 100, **battery 0.052 at the same moment** |
 | Twilight | `--fixed-fps 60` | 300,000 | 5,000.00 s (**83.3 min**) | 769.1 s (accelerated) | 100 % full-thrust frames, 384 legs, 1,015,442 u, hull 100, battery 40.0 left |
-| Sunlit | real time (no `--fixed-fps`) | SUNLIT_RT_FRAMES | SUNLIT_RT_SIM | **SUNLIT_RT_WALL** | SUNLIT_RT_OTHER |
-| Twilight | real time (no `--fixed-fps`) | TWILIGHT_RT_FRAMES | TWILIGHT_RT_SIM | **TWILIGHT_RT_WALL** | TWILIGHT_RT_OTHER |
 
 Notes:
 - The fixed-step runs give the in-game time a player experiences at 60 physics ticks per second. The
@@ -184,9 +182,6 @@ $GODOT_BIN --headless --path . --script res://addons/gut/gut_cmdln.gd -gexit -gd
 # Timing (one Godot job at a time). Accelerated, ~8 min (Sunlit) and ~13 min (Twilight) on this container:
 $GODOT_BIN --headless --path . --fixed-fps 60 --script res://tests/fixtures/measure_oxygen_endurance.gd -- sunlit
 $GODOT_BIN --headless --path . --fixed-fps 60 --script res://tests/fixtures/measure_oxygen_endurance.gd -- twilight
-# Real time (~56 and ~83 min):
-$GODOT_BIN --headless --path . --script res://tests/fixtures/measure_oxygen_endurance.gd -- sunlit
-$GODOT_BIN --headless --path . --script res://tests/fixtures/measure_oxygen_endurance.gd -- twilight
 ```
 
 ## 8. Limitations

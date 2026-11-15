@@ -22,9 +22,9 @@ DOCS = ["START_HERE.md", "FEEDBACK.md", "LOCAL_REPORTS.md", "GODOT_LICENSE.txt",
 
 
 def run(args, log=None):
-    result = subprocess.run(args, cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+    result = subprocess.run(args, cwd=ROOT, text=True, encoding="utf-8", errors="replace", stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
     if log:
-        log.write_text(result.stdout)
+        log.write_text(result.stdout, encoding="utf-8")
     if result.returncode or re.search(r"^\s*(ERROR:|SCRIPT ERROR:|Parse Error:)", result.stdout, re.M):
         raise RuntimeError(f"Build command failed; see {log or result.stdout}")
     return result.stdout.strip()

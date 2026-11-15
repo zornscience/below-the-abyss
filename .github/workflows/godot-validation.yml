@@ -136,7 +136,8 @@ jobs:
       - name: Install checksum-verified export templates
         run: python3 tools/install_export_templates.py
       - name: Export and package release
-        run: python3 tools/build_playtest.py
+        # Windows is exported and smoked on Windows in playtest-windows.
+        run: python3 tools/build_playtest.py --platform linux
       - name: Smoke test extracted standalone package
         shell: bash
         run: |
@@ -192,16 +193,6 @@ jobs:
             grep -q "RELEASE_${token}_WIRING_FAIL" "build/playtest/$wiring-negative.log"
           done
 
-      - name: Hand the Windows package to the Windows smoke job
-        # Required, not best effort: the Windows job smokes exactly this zip.
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: windows-playtest-package-${{ github.run_id }}
-          path: build/below-the-abyss-playtest-windows-*.zip
-          if-no-files-found: error
-          overwrite: true
-          retention-days: 1
-
       - name: Hand the Linux package to the manual publish job
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -215,7 +206,7 @@ jobs:
       - name: Retain compact manifest and smoke logs
         if: always()
         # Best effort: a storage quota problem must never fail a green build.
-        # Package zips are only handed between jobs above (1-day retention).
+        # Package zips are only handed to the manual publish job (1-day retention).
         continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
@@ -223,19 +214,14 @@ jobs:
           path: |
             build/playtest/manifest.json
             build/playtest/*.log
-            build/playtest-windows/manifest.json
-            build/playtest-windows/*.log
           if-no-files-found: warn
           retention-days: 3
 
   playtest-windows:
-    name: Windows standalone playtest smoke
-    needs: playtest-linux
+    name: Windows standalone playtest package and smoke
+    needs: validate
     runs-on: windows-latest
-    timeout-minutes: 20
-    permissions:
-      contents: read
-      actions: read # only to fetch this run's Windows package
+    timeout-minutes: 30
     defaults:
       run:
         shell: bash
@@ -244,15 +230,26 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.3.1
         with:
           persist-credentials: false
-      - name: Fetch the Windows package built and packaged by playtest-linux
-        # gh is preinstalled on GitHub-hosted runners; no extra action is used.
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Install checksum-verified Godot 4.6.3 (Windows)
         run: |
           set -euo pipefail
-          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" \
-            --name "windows-playtest-package-$GITHUB_RUN_ID" --dir build
-          ls -l build
+          dir="$RUNNER_TEMP/godot"
+          mkdir -p "$dir"
+          cd "$dir"
+          archive=Godot_v4.6.3-stable_win64.exe.zip
+          curl --fail --location --retry 3 --connect-timeout 15 --max-time 180 \
+            "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/$archive" --output "$archive"
+          # Official 4.6.3-stable SHA512-SUMS.txt, pinned rather than fetched at runtime.
+          printf '%s  %s\n' \
+            'd44ea7ef5bab754cacd49d581b6062836b2eea12a82e1d183aebfad9cd8c7db2bd82513337bd657d6d2d5c04d46239c0570b029faf1343e81e8a2fa7b85dd83b' \
+            "$archive" | sha512sum --check --strict
+          python -m zipfile -e "$archive" .
+          # The console build writes to piped stdout, which build_playtest.py reads.
+          printf 'GODOT_BIN=%s\n' "$dir/Godot_v4.6.3-stable_win64_console.exe" >> "$GITHUB_ENV"
+      - name: Install checksum-verified export templates
+        run: python tools/install_export_templates.py
+      - name: Export and package Windows release
+        run: python tools/build_playtest.py --platform windows
       - name: Smoke test extracted Windows standalone package
         run: |
           set -euo pipefail
@@ -275,14 +272,25 @@ jobs:
             token=$(echo "$wiring" | tr '[:lower:]-' '[:upper:]_')
             grep -q "RELEASE_${token}_WIRING_FAIL" "build/playtest-windows/$wiring-negative.log"
           done
-      - name: Retain Windows smoke logs
+      - name: Hand the smoked Windows package to the manual publish job
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: windows-playtest-package-${{ github.run_id }}
+          path: build/below-the-abyss-playtest-windows-*.zip
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
+      - name: Retain Windows manifest and smoke logs
         if: always()
         # Best effort: a storage quota problem must never fail a green build.
         continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: windows-playtest-logs-${{ github.sha }}
-          path: build/playtest-windows/*.log
+          path: |
+            build/playtest-windows/manifest.json
+            build/playtest-windows/*.log
           if-no-files-found: warn
           retention-days: 3
 

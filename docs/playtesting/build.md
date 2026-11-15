@@ -26,7 +26,7 @@ Template/hash failures are errors, never a claimed successful package.
 The export uses Linux Playtest and Windows Playtest in export_presets.cfg, which share
 the same settings: release, x86_64, Compatibility renderer, embedded PCK, playtest
 feature and exclusions (tests/python/test_playtest_packaging.py enforces the match).
-Windows is exported from Linux; it is unsigned, has no console wrapper and keeps the
+The Windows preset also exports from Linux; it is unsigned, has no console wrapper and keeps the
 stock Godot icon/version resource (application/modify_resources=false, so no rcedit). Required runtime resources, including
 dynamically selected audio, are exported. Tests/GUT/docs/tools/example scenes and
 the development movement fixture are excluded. The normal main scene opens; the
@@ -45,7 +45,7 @@ By default both platforms are built (`--platform linux|windows|all`). Output:
 build/playtest/below-the-abyss.x86_64, build/playtest-windows/below-the-abyss.exe,
 build/below-the-abyss-playtest-linux-<build-id>.zip and
 build/below-the-abyss-playtest-windows-<build-id>.zip. These outputs are gitignored.
-The dependent CI jobs retain manifests and smoke logs for 3 days; package zips are only passed between jobs (1 day). No build is automatically published publicly or sent to participants. Unzip a copy elsewhere
+The dependent CI jobs retain manifests and smoke logs for 3 days (best effort). Package zips are uploaded only on a manual publish run (1 day), so a full artifact quota cannot fail ordinary PR or push CI. No build is automatically published publicly or sent to participants. Unzip a copy elsewhere
 and launch its executable without Godot installed. Keep manifest/checksum alongside
 any voluntarily distributed artifact. See verification.md for recorded smoke/native
 evidence and unverified platforms/performance.
@@ -54,8 +54,9 @@ evidence and unverified platforms/performance.
 
 `tools/smoke_playtest.py` recognises the package from its inventory and refuses to
 run a Windows zip on Linux (or the reverse). The `playtest-windows` CI job runs on
-`windows-latest`, fetches the zip that `playtest-linux` built in the same run, and
-runs the full release smoke (every `RELEASE_*_PASS` token, including
+`windows-latest`: it installs the checksum-pinned Windows Godot 4.6.3 editor and the
+templates from the same pinned archive (under %APPDATA%/Godot), exports and packages
+with `build_playtest.py --platform windows`, then runs the full release smoke (every `RELEASE_*_PASS` token, including
 RELEASE_OXYGEN_WIRING_PASS) plus every `--break-*-wiring` negative. On Windows the
 smoke isolates user data with APPDATA/LOCALAPPDATA and also reads Godot's
 `--log-file`, because the exe is a GUI-subsystem program whose piped stdout is not

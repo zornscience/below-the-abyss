@@ -2,6 +2,7 @@
 """Install only the Linux and Windows x86_64 templates from the checksum-pinned official Godot archive."""
 import hashlib
 import os
+import sys
 from pathlib import Path
 import tempfile
 import urllib.request
@@ -20,8 +21,15 @@ TEMPLATES = [
 ]
 
 
+def template_root():
+    # Where the Godot editor looks for templates: %APPDATA%/Godot on Windows, XDG data elsewhere.
+    if sys.platform == "win32":
+        return Path(os.environ["APPDATA"]) / "Godot/export_templates/4.6.3.stable"
+    return Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share")) / "godot/export_templates/4.6.3.stable"
+
+
 def main():
-    root = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share")) / "godot/export_templates/4.6.3.stable"
+    root = template_root()
     # Reuse only after checking an installation's manifest, never just its filename.
     marker = root / "bta-official-sha512.txt"
     if marker.exists() and marker.read_text().strip() == SHA512 and all((root / f).is_file() for f in TEMPLATES):

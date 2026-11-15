@@ -154,8 +154,6 @@ func _physics_process(delta: float) -> void:
 		_announce("sunlit-search-guidance","We've reached the last reported coordinates, but the damaged reflector is sheltered by rock. Explore beneath the overhang and change your depth; a sweep above the ridge cannot reach it. From inside a clear channel, try an active sonar ping ("+scene.input_context.describe(&"sonar_ping")+"). The buoy's acoustic reflector may still respond. The circle is approximate: move within it if the first pulse misses.","Wick")
 	if SunlitSurveyData.VENT.has_point(at) and scene.submarine.damage_system.warning_state!=SubmarineDamageSystem.WarningState.SAFE:
 		_announce("sunlit-pressure-guidance","Caution. We're approaching Lantern-2's current rated operating depth. Check the rating beside your depth readout. I recommend ascending. This shaft is optional; follow the same open passage upward. Pressure damage begins only below the fitted rating, after the existing grace period.","Wick")
-	if scene.submarine.hull_system.hull<=0:
-		_announce("sunlit-recovery-guidance","Hull integrity is depleted. Pause and Continue the last safe expedition checkpoint, or Restart Test Route. Permanent science, story choices and cleared terrain remain archived. This prototype does not add a death penalty or erase records.","Wick")
 	for effect: ExcavationSediment in _dust:
 		if is_instance_valid(effect): effect.advance(delta)
 	_dust = _dust.filter(func(effect: ExcavationSediment) -> bool: return is_instance_valid(effect) and not effect.is_queued_for_deletion())

@@ -1,0 +1,124 @@
+{
+	"format": "bta-expedition",
+	"journey": {
+		"commissioned": true,
+		"phase": "refit"
+	},
+	"legacy_conclusion": false,
+	"legacy_imported": true,
+	"player": {
+		"battery": 100.0,
+		"hull": 100.0,
+		"oxygen": 100.0,
+		"position": [
+			420.0,
+			80.0
+		],
+		"rotation": 0.0,
+		"sonar_cooldown": 0.0
+	},
+	"progress": {
+		"discoveries": [
+			"sunlit-lantern1-buoy",
+			"twilight-mara-log-one-poi",
+			"twilight-net-survey-poi",
+			"twilight-severed-cable-poi",
+			"twilight-whaler-marking-poi"
+		],
+		"missions": {
+			"shelf-calibration-study": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-expedition": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-outer-search": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-wildlife-study": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-wreck-recovery": {
+				"objectives": [],
+				"state": "available"
+			},
+			"sunlit-shallows-expedition": {
+				"objectives": [
+					"recover-maras-message",
+					"return-message-to-halcyon",
+					"study-light-bloom"
+				],
+				"state": "claimed"
+			},
+			"twilight-severed-line": {
+				"objectives": [
+					"record-twilight-mara-log-one",
+					"record-twilight-net-survey",
+					"record-twilight-severed-cable",
+					"record-twilight-whaler-marking",
+					"record-zone2-net-sentinel",
+					"twilight-return-to-halcyon"
+				],
+				"state": "completed"
+			}
+		},
+		"research": [
+			"sunlit-lantern1-buoy-record",
+			"twilight-mara-log-one",
+			"twilight-net-survey",
+			"twilight-severed-cable",
+			"twilight-whaler-marking"
+		],
+		"upgrades": []
+	},
+	"prototype": {
+		"ammunition": 10,
+		"campaign": {
+			"awards": [
+				"commission"
+			],
+			"decoded": false,
+			"legacy_ranks": {
+				"hull": 0,
+				"sonar": 0
+			},
+			"messages": [],
+			"ranks": {
+				"engine": 0,
+				"hull": 0,
+				"sonar": 0,
+				"torpedo_acceleration": 0,
+				"torpedo_area": 0
+			},
+			"science": {
+				"credited": [
+					"sunlit-lantern1-buoy-record"
+				],
+				"imported": []
+			}
+		}
+	},
+	"region_id": "continental_shelf",
+	"route": {
+		"elapsed_seconds": 0.0,
+		"stage": 0
+	},
+	"schema_version": 10,
+	"story": {
+		"decisions": [
+			"zone1-light-bloom-collect",
+			"zone2-sentinel-release"
+		],
+		"flags": [
+			"zone1-light-bloom-collected",
+			"zone2-future-guide",
+			"zone2-sentinel-freed"
+		],
+		"resonance": 0
+	},
+	"terrain": []
+}

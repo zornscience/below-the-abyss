@@ -8,7 +8,9 @@ var habitat: TwilightHabitat
 var visibility: TwilightVisibility
 var hunt: TwilightHunt
 var depth_gate: TwilightDepthGate
+var recovery: VesselRecoveryFlow
 var expedition: TwilightExpedition
+const FINISH_OXYGEN_REFUSAL: String = "Return not saved: oxygen depleted. Evidence retained. Refill oxygen at Halcyon, then retry."
 const ACTION_COSTS: ActionCostProfile = preload("res://resources/balance/twilight_action_costs.tres")
 var _shallow_ping_cost: float
 var _shallow_torpedo_cost: float
@@ -49,6 +51,10 @@ func setup(game: ShelfPrototype) -> void:
 	depth_gate = TwilightDepthGate.new()
 	add_child(depth_gate)
 	depth_gate.setup(scene)
+	recovery = VesselRecoveryFlow.new()
+	recovery.name = "VesselRecovery"
+	add_child(recovery)
+	recovery.setup(scene)
 	hunt = TwilightHunt.new()
 	add_child(hunt)
 	hunt.setup(scene)
@@ -89,7 +95,7 @@ func _finish() -> void:
 	if transitioning: return
 	var result: Error = scene.saves.finish_sunlit_return()
 	if result!=OK:
-		scene.revision.ui.add_story_notice("Return not saved. Evidence retained; retry after checkpoint recovery.")
+		scene.revision.ui.add_story_notice(FINISH_OXYGEN_REFUSAL if scene.submarine.resource_system.oxygen<=0.0 else "Return not saved. Evidence retained; retry after checkpoint recovery.")
 		return
 	await settle_camera()
 	_prompt_open = false

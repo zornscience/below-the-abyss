@@ -1,6 +1,12 @@
 # Investigation: what happens when oxygen reaches zero (Sunlit Shallows and Twilight)
 
 Status: **findings and probes only. No gameplay change is made by this branch.**
+
+> **Superseded fix.** The §6 proposal below was not implemented. The designer approved a different
+> design on 2026-11-15: a 60 s life-support countdown, then Halcyon recovery with a free full restock in
+> both chapters, also used for hull destruction. Probes 1 and 2 were flipped to that behaviour. See
+> `docs/testing/oxygen-recovery/README.md`. The findings in §1 to §5 describe `main` before that change.
+
 Base: `main` at `9713ec7` (merge of PR #51). Measured 2026-11-15 on Godot 4.6.3 headless (debug editor
 binary, Linux container, no GPU). Human playtest results do not exist; none are claimed.
 

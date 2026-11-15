@@ -79,7 +79,10 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
 - Stalker: unbeatable early; **defeating it is an optional path to a darker ending**, a player choice,
   branching late. Story canon (what it is, what the endings mean) needs the designer's approval.
 - Rejected/deferred: terrain on the map (needs a schema change), Glyph key and Breaker torpedo (need story approval).
-- Failure: respawn at the Twilight ascent tether, hull restored, supplies kept (BTA-059, awaiting formal approval of penalty).
+- Failure (approved 2026-11-15, supersedes the BTA-059 tether respawn): zero oxygen starts a 60 s
+  life-support countdown on simulation time. A Halcyon dock or tether refit cancels it. Expiry or hull
+  destruction in either chapter recovers the vessel at Halcyon with a free full restock. Records and
+  choices are kept. See `docs/testing/oxygen-recovery/README.md`.
 - Decisions the designer owns and has NOT made: boss concept for the slice; what the darker ending costs;
   Story Bible canon for alien technology; whether the combat direction survives the playtest.
 
@@ -93,7 +96,8 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
   and dated tool terms. Hand-finish identity assets; use CC0/libraries for effects. Get legal advice.
 - **Market:** nearest comparable (Depths of Sanity) has 72 reviews. Plan for the low case. Controls and
   dynamic music are the named reasons small Metroidvanias are punished. Figures are provisional.
-- Gaps: oxygen depletion has no failure flow; no GPU/Steam Deck performance data (only software GL);
+- Recovery after oxygen or hull failure has no penalty beyond the vessel's position (by design).
+- Gaps: no GPU/Steam Deck performance data (only software GL);
   `ShelfPrototype` is a god object with ~1,100 outside references; legacy prototype modes and four
   legacy save stores remain (removal needs approval); tunnel profiles replace rock shapes by list index
   (fragile); README still says BTA-055; `.git` is ~500 MB from committed screenshots.

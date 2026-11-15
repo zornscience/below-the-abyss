@@ -2,6 +2,7 @@ class_name ScientificScanner
 extends Node2D
 ## Toggle to start/cancel. Simulation owner advances exactly once per physics step.
 
+const OXYGEN_REFUSAL: String = "NOT RECORDED / Oxygen depleted. No outcome committed. Refill oxygen at Halcyon or the ascent tether, then scan again."
 signal state_changed
 var _research: ResearchRegistry
 var _discoveries: DiscoveryRegistry
@@ -136,9 +137,15 @@ func advance(delta: float) -> Error:
 				_feedback_seconds = 3.0
 				_feedback = "COMPLETE / " + _definitions[completed].title + " · Map → Research log"
 				var result: Error = _research.complete_scan(completed)
-				if result!=OK: _feedback = "NOT RECORDED / Save unavailable; no outcome committed. Try again after recovery."
+				if result!=OK: _feedback = OXYGEN_REFUSAL if _oxygen_depleted() else "NOT RECORDED / Save unavailable; no outcome committed. Try again after recovery."
 	state_changed.emit()
 	return OK
+
+
+## The checkpoint refuses at zero oxygen. Say so instead of the generic refusal.
+func _oxygen_depleted() -> bool:
+	var vessel: SubmarineController = get_parent() as SubmarineController
+	return vessel != null and vessel.resource_system != null and vessel.resource_system.oxygen <= 0.0
 
 
 func snapshot() -> Dictionary:

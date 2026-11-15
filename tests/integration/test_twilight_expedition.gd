@@ -206,7 +206,11 @@ func test_forty_five_minute_resource_budget_leaves_reserve_with_ten_pings() -> v
 	game.submarine.resource_system.advance(2700,1.0)
 	game.submarine.resource_system.consume_battery(10*game.submarine.sonar.configuration.battery_cost)
 	assert_gte(game.submarine.resource_system.battery,25.0)
-	assert_gte(game.submarine.resource_system.oxygen,25.0)
+	# Rewritten on purpose: the approved retune (Twilight 0.03/s, designer decision 5) leaves
+	# exactly 19 oxygen after 45 minutes. This replaces the BTA-058 reserve of at least 25,
+	# which the new rate cannot meet. Oxygen still lasts beyond 45 minutes.
+	assert_gt(game.submarine.resource_system.oxygen,0.0,"a 45-minute run does not exhaust oxygen")
+	assert_almost_eq(game.submarine.resource_system.oxygen,19.0,0.0001)
 func test_optional_records_use_existing_capped_xp_once() -> void:
 	_deploy()
 	var before: int = ResearchExperienceData.total(game.revision.campaign.science)

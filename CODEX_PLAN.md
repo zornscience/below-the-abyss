@@ -329,3 +329,14 @@ collision contours. Keep close-range quiet navigation, headlight and textual cue
 No expedition schema/map/story/progression changes. Release assertions must not own
 side effects; verify the actual exported wiring positively and with disconnection.
 Evidence and limitations: docs/testing/bta-057/README.md. No human playtest claims.
+
+## Oxygen exhaustion and Halcyon recovery (no BTA number assigned)
+
+Designer-approved on 2026-11-15. It supersedes the investigation's §6 proposal and the
+BTA-059 tether respawn. Zero oxygen starts a 60 s life-support countdown on simulation
+time, and a Halcyon dock or tether refit cancels it. Expiry or hull destruction in either
+chapter shows a fade and a text card, then recovers the vessel at Halcyon with a free full
+restock. Records, discoveries and choices are kept. Schema 10 is unchanged and the
+countdown is session-only. Drain is retuned in Resources only. Release wiring is proven
+positively and with `--break-oxygen-wiring`. Evidence: docs/testing/oxygen-recovery/README.md.
+No human playtest claims.

@@ -27,7 +27,8 @@ func test_battery_travel_window_and_sonar_relative_cost_are_authored() -> void:
 	assert_almost_eq(pools.battery,98.2,0.0001)
 	assert_gt(4.0,profile.battery_idle_drain_per_second+profile.battery_thrust_drain_per_second)
 	assert_eq((load("res://resources/balance/prototype_sonar.tres") as ActiveSonarProfile).battery_cost,4.0)
-	assert_gt(pools.oxygen,98.0)
+	# Approved oxygen retune (Sunlit 0.048/s): one minute of travel costs exactly 2.88 oxygen.
+	assert_almost_eq(pools.oxygen,97.12,0.0001)
 func test_legacy_bindings_migrate_without_overwriting_custom_controls() -> void:
 	var old: Dictionary = InputBindings.defaults()
 	old.erase("fire_torpedo")

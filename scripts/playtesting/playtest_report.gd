@@ -15,7 +15,7 @@ const DETAILS: Dictionary = {
 	"milestone": ["outbound", "twin_spires", "returned_to_base", "route_restart", "continue", "new_expedition"],
 	"station_return": ["route_return"], "resource_warning": ["hull_low", "battery_low", "oxygen_low", "hull_depleted", "battery_depleted", "oxygen_depleted", "depth_caution", "depth_danger"],
 	"damage": ["impact", "pressure", "creature", "other"],
-	"failure": ["hull_destroyed", "oxygen_depleted"],
+	"failure": ["hull_destroyed", "life_support_expired", "oxygen_depleted"],
 	"chapter_completed": ["the_quiet_run", "the_sunlit_shallows"], "error": ["checkpoint_blocked", "write_failed"]}
 
 

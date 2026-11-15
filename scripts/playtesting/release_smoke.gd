@@ -108,7 +108,11 @@ func _verify_depth_gate(game: ShelfPrototype) -> void:
 		push_error("RELEASE_DEPTH_SECTION_WIRING_FAIL")
 		get_tree().quit(1)
 		return
-	var flow: TwilightDepthGate = game.journey.depth_gate
+	if not await _verify_oxygen_recovery(game):
+		get_tree().quit(1)
+		return
+	# Hull destruction uses the same Halcyon recovery (supersedes the BTA-059 respawn).
+	var flow: VesselRecoveryFlow = game.journey.recovery
 	if args.has("--break-failure-wiring"): game.submarine.hull_system.vessel_destroyed.disconnect(flow._destroyed)
 	if not game.submarine.hull_system.vessel_destroyed.is_connected(flow._destroyed):
 		push_error("RELEASE_FAILURE_WIRING_FAIL")
@@ -119,6 +123,10 @@ func _verify_depth_gate(game: ShelfPrototype) -> void:
 	await get_tree().process_frame
 	if not flow.pending or not flow.panel.visible or game.submarine.is_physics_processing():
 		push_error("RELEASE_FAILURE_WIRING_FAIL presentation")
+		get_tree().quit(1)
+		return
+	if not flow.committed or game.submarine.hull_system.hull!=game.submarine.hull_system.max_hull or not game.journey.at_station():
+		push_error("RELEASE_FAILURE_WIRING_FAIL recovery save_status="+game.saves.status)
 		get_tree().quit(1)
 		return
 	print("RELEASE_DEPTH_GATE_PASS")
@@ -235,3 +243,84 @@ func _verify_tunnels(game: ShelfPrototype) -> bool:
 	print("RELEASE_TUNNEL_GATES_WIRING_PASS")
 	print("RELEASE_TUNNEL_VENTS_WIRING_PASS")
 	return true
+
+## Oxygen exhaustion in this exact binary: a real physics step at zero oxygen starts the
+## life-support countdown and shows the border, expiry recovers the vessel at Halcyon with
+## a full restock, and the recovery card shows the approved text.
+func _verify_oxygen_recovery(game: ShelfPrototype) -> bool:
+	var flow: VesselRecoveryFlow = game.journey.recovery if game.journey!=null else null
+	if flow==null or flow.countdown==null or flow.warning==null:
+		push_error("RELEASE_OXYGEN_WIRING_FAIL flow")
+		return false
+	if OS.get_cmdline_user_args().has("--break-oxygen-wiring"): flow.set_physics_process(false)
+	var vessel: SubmarineController = game.submarine
+	vessel.set_simulation_enabled(false)
+	# Recovery writes a real refit checkpoint, which the schema accepts only for a genuinely
+	# commissioned deployment. Commission Twilight through the real chapter path first.
+	if not _commission_twilight(game):
+		push_error("RELEASE_OXYGEN_WIRING_FAIL commissioning save_status="+game.saves.status)
+		return false
+	vessel.set_simulation_enabled(false)
+	vessel.global_position = TwilightShelfLayout.SPAWN
+	vessel.velocity = Vector2.ZERO
+	var restored: Error = vessel.resource_system.restore_snapshot(vessel.resource_system.battery,0.0)
+	if restored!=OK:
+		push_error("RELEASE_OXYGEN_WIRING_FAIL setup")
+		return false
+	vessel.set_simulation_enabled(true)
+	for frame: int in range(2): await get_tree().physics_frame
+	if not flow.countdown.running or not flow.warning.visible or not flow.warning.label.text.begins_with("OXYGEN DEPLETED, LIFE SUPPORT") or flow.alarms_requested<1:
+		push_error("RELEASE_OXYGEN_WIRING_FAIL countdown")
+		return false
+	if not vessel.is_physics_processing() or flow.pending:
+		push_error("RELEASE_OXYGEN_WIRING_FAIL premature recovery")
+		return false
+	# Expire through the real countdown signal. Recovery presents synchronously.
+	flow.countdown.advance(flow.countdown.remaining,0.0)
+	if not flow.pending or not flow.panel.visible or flow.body.text!=VesselRecoveryFlow.OXYGEN_TEXT or vessel.is_physics_processing():
+		push_error("RELEASE_OXYGEN_WIRING_FAIL presentation pending=%s committed=%s save_status=%s" % [flow.pending,flow.committed,game.saves.status])
+		return false
+	if not flow.committed or vessel.resource_system.oxygen!=vessel.resource_system.max_oxygen or vessel.hull_system.hull!=vessel.hull_system.max_hull or game.torpedoes.ammunition!=TorpedoLauncher.CAPACITY or not game.journey.at_station():
+		push_error("RELEASE_OXYGEN_WIRING_FAIL recovery save_status="+game.saves.status)
+		return false
+	flow.acknowledge()
+	if flow.pending:
+		push_error("RELEASE_OXYGEN_WIRING_FAIL acknowledge")
+		return false
+	print("RELEASE_OXYGEN_WIRING_PASS")
+	# Back to the shelf for the hull-failure check that follows.
+	game.revision.ui.dock_page.hide()
+	game.station.end_interaction()
+	game.station_menu.hide()
+	game.journey.prepare({"phase":"twilight","commissioned":true})
+	vessel.global_position = TwilightShelfLayout.SPAWN
+	vessel.velocity = Vector2.ZERO
+	vessel.set_simulation_enabled(true)
+	return true
+
+## The same commissioning path the integration tests use: buoy evidence, the off-screen
+## Sunlit return and the real Twilight transfer. Returns false if any step is refused.
+func _commission_twilight(game: ShelfPrototype) -> bool:
+	game.journey.prepare(ExpeditionJourneyState.fresh())
+	game.chapter.start()
+	game.chapter.launch()
+	game.submarine.set_simulation_enabled(false)
+	game.submarine.global_position = SunlitSurveyData.BUOY
+	game.submarine.velocity = Vector2.ZERO
+	game.submarine.hull_system.restore_snapshot(game.submarine.hull_system.max_hull)
+	var pools: SubmarineResourceSystem = game.submarine.resource_system
+	if pools.restore_snapshot(pools.max_battery,pools.max_oxygen)!=OK: return false
+	if game.story.apply_choice(LightBloomEncounter.COLLECT)!=OK: return false
+	game.bloom.reset_session()
+	if game.discoveries.discover(SunlitShallowsData.POI,&"smoke/buoy")!=OK: return false
+	var records: Array[StringName] = game.research.completed_ids()
+	records.append(SunlitShallowsData.BUOY)
+	if game.saves.commit_research_checkpoint(records)!=OK: return false
+	game.research.restore_completed(records)
+	game.missions.reconcile()
+	if game.saves.finish_sunlit_return()!=OK: return false
+	if game.saves.transfer_chapter("twilight",true)!=OK: return false
+	game.revision.ui.title_page.hide()
+	game.revision.ui.radio_page.hide()
+	game.route_layer.hide()
+	return game.journey.active()

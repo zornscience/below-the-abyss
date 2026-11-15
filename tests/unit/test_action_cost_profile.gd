@@ -12,7 +12,8 @@ func test_resource_budget_is_computed_with_slow_travel_unchanged() -> void:
 	assert_lte(pings,15)
 	assert_eq(travel.battery_idle_drain_per_second,0.003)
 	assert_eq(travel.battery_thrust_drain_per_second,0.009)
-	assert_eq(travel.oxygen_drain_per_second,0.02)
+	# Approved oxygen-exhaustion retune (designer decision 5): Twilight travel drain 0.03/s.
+	assert_eq(travel.oxygen_drain_per_second,0.03)
 
 func test_profile_rejects_invalid_costs() -> void:
 	var profile: ActionCostProfile = ActionCostProfile.new()

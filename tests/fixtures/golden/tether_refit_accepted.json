@@ -1,0 +1,106 @@
+{
+	"format": "bta-expedition",
+	"journey": {
+		"commissioned": true,
+		"phase": "refit"
+	},
+	"legacy_conclusion": false,
+	"legacy_imported": true,
+	"player": {
+		"battery": 100.0,
+		"hull": 100.0,
+		"oxygen": 100.0,
+		"position": [
+			420.0,
+			80.0
+		],
+		"rotation": 0.0,
+		"sonar_cooldown": 0.0
+	},
+	"progress": {
+		"discoveries": [
+			"sunlit-lantern1-buoy"
+		],
+		"missions": {
+			"shelf-calibration-study": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-expedition": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-outer-search": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-wildlife-study": {
+				"objectives": [],
+				"state": "available"
+			},
+			"shelf-wreck-recovery": {
+				"objectives": [],
+				"state": "available"
+			},
+			"sunlit-shallows-expedition": {
+				"objectives": [
+					"recover-maras-message",
+					"return-message-to-halcyon",
+					"study-light-bloom"
+				],
+				"state": "claimed"
+			},
+			"twilight-severed-line": {
+				"objectives": [],
+				"state": "accepted"
+			}
+		},
+		"research": [
+			"sunlit-lantern1-buoy-record"
+		],
+		"upgrades": []
+	},
+	"prototype": {
+		"ammunition": 10,
+		"campaign": {
+			"awards": [
+				"commission"
+			],
+			"decoded": false,
+			"legacy_ranks": {
+				"hull": 0,
+				"sonar": 0
+			},
+			"messages": [],
+			"ranks": {
+				"engine": 0,
+				"hull": 0,
+				"sonar": 0,
+				"torpedo_acceleration": 0,
+				"torpedo_area": 0
+			},
+			"science": {
+				"credited": [
+					"sunlit-lantern1-buoy-record"
+				],
+				"imported": []
+			}
+		}
+	},
+	"region_id": "continental_shelf",
+	"route": {
+		"elapsed_seconds": 0.0,
+		"stage": 0
+	},
+	"schema_version": 10,
+	"story": {
+		"decisions": [
+			"zone1-light-bloom-collect"
+		],
+		"flags": [
+			"zone1-light-bloom-collected"
+		],
+		"resonance": -15
+	},
+	"terrain": []
+}

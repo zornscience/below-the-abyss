@@ -78,21 +78,22 @@ func run() -> void:
 	game.submarine.hull_system.restore_snapshot(100)
 	game.submarine.global_position = gate.lower_left
 	game.submarine.velocity = Vector2.ZERO
+	# Hull failure now recovers the vessel at Halcyon (supersedes the BTA-059 tether respawn).
+	var recovery: VesselRecoveryFlow = game.journey.recovery
 	for tick: int in range(1800):
 		await physics_frame
-		if game.journey.depth_gate.pending: break
-	if not game.journey.depth_gate.pending or game.saves._state.player.hull!=0.0:
-		push_error("Lingering did not produce a durable hull failure")
+		if recovery.pending: break
+	if not recovery.pending or not recovery.committed or game.saves._state.player.hull!=100.0 or game.saves._state.journey.phase!="refit":
+		push_error("Lingering did not produce a durable Halcyon recovery")
 		quit(1)
 		return
-	var battery: float = game.submarine.resource_system.battery
-	var oxygen: float = game.submarine.resource_system.oxygen
-	game.journey.depth_gate.respawn()
-	if game.journey.depth_gate.pending or game.submarine.resource_system.battery!=battery or game.submarine.resource_system.oxygen!=oxygen:
-		push_error("Respawn did not preserve supplies")
+	var pools: SubmarineResourceSystem = game.submarine.resource_system
+	recovery.acknowledge()
+	if recovery.pending or pools.battery!=pools.max_battery or pools.oxygen!=pools.max_oxygen or not game.journey.at_station():
+		push_error("Recovery did not restock at Halcyon")
 		quit(1)
 		return
 	game.submarine.set_simulation_enabled(false)
-	print("DEPTH_LINGER_RESPAWN_PASS")
+	print("DEPTH_LINGER_RECOVERY_PASS")
 	print("DEPTH_ROUTE_PASS")
 	quit()

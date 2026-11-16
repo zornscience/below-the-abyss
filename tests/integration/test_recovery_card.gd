@@ -364,6 +364,7 @@ func test_unsaved_casualty_then_hull_destruction_recovers_in_one_checkpoint_with
 	assert_true(game.story.has_decision(TwilightShelfData.LOST),"the live story state matches the checkpoint")
 	assert_false(game.journey.expedition.pending_loss,"the pending casualty is cleared")
 	assert_eq(saved.data.keys().size(),12,"schema still has twelve top-level fields")
+	assert_false(game.revision.ui.notifications.texts.has("twilight-released-casualty"),"the LOST decision has no released-animal notice, as on the normal path")
 	assert_true(flow.pending,"the retry press saves. The next press continues.")
 	await _press_enter()
 	assert_false(flow.pending)
@@ -394,6 +395,8 @@ func test_released_sentinel_casualty_with_a_failing_story_writer_records_the_fla
 	assert_true("zone2-released-sentinel-lost" in saved.data.story.flags,"the casualty flag is in the recovery checkpoint")
 	assert_false(String(TwilightShelfData.LOST) in saved.data.story.decisions,"a released animal does not get the LOST decision")
 	assert_false(game.journey.expedition.pending_loss)
+	assert_true(game.revision.ui.notifications.texts.has("twilight-released-casualty"),"the player is told, as on the normal casualty path")
+	assert_true(String(game.revision.ui.notifications.texts["twilight-released-casualty"]).begins_with("The released sentinel has been killed."))
 
 
 ## The normal path is unchanged: a casualty that saves is written by the story writer on its
@@ -428,3 +431,4 @@ func test_recovery_without_a_pending_casualty_does_not_touch_the_story() -> void
 	var saved: Dictionary = game.saves.store.read_file(game.saves.store.path)
 	assert_eq(saved.error,OK)
 	assert_eq(saved.data.story,story_before)
+	assert_false(game.revision.ui.notifications.texts.has("twilight-released-casualty"),"no casualty, no casualty notice")

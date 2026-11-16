@@ -564,6 +564,7 @@ func recover_vessel() -> Error:
 	if not twilight and (_scene.chapter==null or not _scene.chapter.active): return ERR_UNAVAILABLE
 	var candidate: Dictionary
 	var completed_now: bool = false
+	var released_casualty: bool = false
 	if twilight:
 		candidate = _refit_candidate()
 		completed_now = _refit_completes(candidate)
@@ -574,12 +575,15 @@ func recover_vessel() -> Error:
 			var casualty: Dictionary = _scene.journey.expedition.pending_casualty_story()
 			if casualty.error!=OK: return _report("Casualty record could not be prepared (%s). Recovery not saved." % error_string(casualty.error),casualty.error)
 			candidate.story = casualty.data
+			released_casualty = "zone2-released-sentinel-lost" in casualty.data.flags
 	else:
 		candidate = snapshot()
 		_transfer_player(candidate,SunlitSurveyData.SPAWN,true)
 	var result: Error = _write(candidate,"Halcyon recovery saved. Permanent progress retained.")
 	if result!=OK: return result
 	result = continue_expedition()
+	# The restore above is silent, so tell the player what the normal casualty path would have.
+	if result==OK and released_casualty: _scene.journey.expedition.announce_released_casualty()
 	if result==OK and completed_now: _scene.missions.mission_completed.emit(TwilightShelfData.MISSION)
 	return result
 

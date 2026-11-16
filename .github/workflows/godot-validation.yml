@@ -5,6 +5,14 @@ on:
     branches: [main]
   push:
     branches: [main]
+  # Manual only. Runs every check below, then the publish job (which alone may
+  # write) attaches the smoked zips to a draft pre-release on the given tag.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "New tag for the draft pre-release, e.g. playtest-2026-11-15 (must not exist yet)"
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -128,7 +136,8 @@ jobs:
       - name: Install checksum-verified export templates
         run: python3 tools/install_export_templates.py
       - name: Export and package release
-        run: python3 tools/build_playtest.py
+        # Windows is exported and smoked on Windows in playtest-windows.
+        run: python3 tools/build_playtest.py --platform linux
       - name: Smoke test extracted standalone package
         shell: bash
         run: |
@@ -184,10 +193,20 @@ jobs:
             grep -q "RELEASE_${token}_WIRING_FAIL" "build/playtest/$wiring-negative.log"
           done
 
+      - name: Hand the Linux package to the manual publish job
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: linux-playtest-package-${{ github.run_id }}
+          path: build/below-the-abyss-playtest-linux-*.zip
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
+
       - name: Retain compact manifest and smoke logs
         if: always()
         # Best effort: a storage quota problem must never fail a green build.
-        # The ~70 MB package zip is deliberately NOT uploaded.
+        # Package zips are only handed to the manual publish job (1-day retention).
         continue-on-error: true
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
@@ -197,3 +216,133 @@ jobs:
             build/playtest/*.log
           if-no-files-found: warn
           retention-days: 3
+
+  playtest-windows:
+    name: Windows standalone playtest package and smoke
+    needs: validate
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out project
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.3.1
+        with:
+          persist-credentials: false
+      - name: Install checksum-verified Godot 4.6.3 (Windows)
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/godot"
+          mkdir -p "$dir"
+          cd "$dir"
+          archive=Godot_v4.6.3-stable_win64.exe.zip
+          curl --fail --location --retry 3 --connect-timeout 15 --max-time 180 \
+            "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/$archive" --output "$archive"
+          # Official 4.6.3-stable SHA512-SUMS.txt, pinned rather than fetched at runtime.
+          printf '%s  %s\n' \
+            'd44ea7ef5bab754cacd49d581b6062836b2eea12a82e1d183aebfad9cd8c7db2bd82513337bd657d6d2d5c04d46239c0570b029faf1343e81e8a2fa7b85dd83b' \
+            "$archive" | sha512sum --check --strict
+          python -m zipfile -e "$archive" .
+          # The console build writes to piped stdout, which build_playtest.py reads.
+          printf 'GODOT_BIN=%s\n' "$dir/Godot_v4.6.3-stable_win64_console.exe" >> "$GITHUB_ENV"
+      - name: Install checksum-verified export templates
+        run: python tools/install_export_templates.py
+      - name: Export and package Windows release
+        run: python tools/build_playtest.py --platform windows
+      - name: Smoke test extracted Windows standalone package
+        run: |
+          set -euo pipefail
+          package=(build/below-the-abyss-playtest-windows-*.zip)
+          test "${#package[@]}" -eq 1
+          python tools/smoke_playtest.py "${package[0]}" --log build/playtest-windows/standalone-smoke.log
+          for token in VISIBILITY_WIRING REGISTRATION_WIRING RESOURCE_WIRING DEPTH_GATE STALKER_WIRING OXYGEN_WIRING TUNNEL_GEOMETRY_WIRING TUNNEL_GATES_WIRING TUNNEL_VENTS_WIRING COMBAT_ENTRY_WIRING COMBAT_REGISTRATION_WIRING COMBAT_STALKER_REGISTRATION_WIRING COMBAT_STUN_WIRING COMBAT_HANDLING_WIRING COMBAT_WEIGHTY_HANDLING_WIRING; do
+            grep -q "RELEASE_${token}_PASS" build/playtest-windows/standalone-smoke.log
+          done
+      - name: Prove Windows release smoke rejects every broken wiring
+        run: |
+          set -euo pipefail
+          package=(build/below-the-abyss-playtest-windows-*.zip)
+          test "${#package[@]}" -eq 1
+          for wiring in visibility registration resource depth-rating depth-section failure stalker-registration stalker-passive stalker-hearing stalker-scare tunnel-geometry tunnel-gates tunnel-vents combat-entry combat-registration combat-stun combat-handling combat-stalker-registration combat-weighty-handling oxygen; do
+            if python tools/smoke_playtest.py "${package[0]}" --log "build/playtest-windows/$wiring-negative.log" "--break-$wiring-wiring"; then
+              echo "--break-$wiring-wiring incorrectly passed Windows release smoke"
+              exit 1
+            fi
+            token=$(echo "$wiring" | tr '[:lower:]-' '[:upper:]_')
+            grep -q "RELEASE_${token}_WIRING_FAIL" "build/playtest-windows/$wiring-negative.log"
+          done
+      - name: Hand the smoked Windows package to the manual publish job
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: windows-playtest-package-${{ github.run_id }}
+          path: build/below-the-abyss-playtest-windows-*.zip
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
+      - name: Retain Windows manifest and smoke logs
+        if: always()
+        # Best effort: a storage quota problem must never fail a green build.
+        continue-on-error: true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: windows-playtest-logs-${{ github.sha }}
+          path: |
+            build/playtest-windows/manifest.json
+            build/playtest-windows/*.log
+          if-no-files-found: warn
+          retention-days: 3
+
+  publish-playtest-prerelease:
+    name: Publish draft playtest pre-release (manual only)
+    # Never on push or pull_request: only a person dispatching this workflow.
+    if: github.event_name == 'workflow_dispatch'
+    needs: [playtest-linux, playtest-windows]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write # create the draft release; this job only
+      actions: read # fetch this run's smoked packages
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+    steps:
+      - name: Check the tag and branch
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "Publish only from main; this run is on $GITHUB_REF"
+            exit 1
+          fi
+          if ! [[ "$TAG" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$ ]]; then
+            echo "Tag must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$"
+            exit 1
+          fi
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists; supply a new one"
+            exit 1
+          fi
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "A release named by tag $TAG already exists (possibly a draft); supply a new tag"
+            exit 1
+          fi
+      - name: Fetch both smoked packages from this run
+        run: |
+          set -euo pipefail
+          for platform in linux windows; do
+            gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+              --name "$platform-playtest-package-$GITHUB_RUN_ID" --dir dist
+          done
+          linux=(dist/below-the-abyss-playtest-linux-*.zip)
+          windows=(dist/below-the-abyss-playtest-windows-*.zip)
+          test "${#linux[@]}" -eq 1
+          test "${#windows[@]}" -eq 1
+          (cd dist && sha256sum ./*.zip | sed 's# \./# #' > SHA256SUMS.txt && cat SHA256SUMS.txt)
+      - name: Create draft pre-release with both zips
+        run: |
+          set -euo pipefail
+          gh release create "$TAG" dist/*.zip dist/SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" --draft --prerelease --target "$GITHUB_SHA" \
+            --title "Playtest $TAG" \
+            --notes "Unsigned playtest build of $GITHUB_SHA (workflow run $GITHUB_RUN_ID). Both zips passed release smoke on their own OS in this run. Distribute privately; see docs/playtesting/build.md."

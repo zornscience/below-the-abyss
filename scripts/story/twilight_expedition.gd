@@ -265,6 +265,14 @@ func retry_casualty_record() -> bool:
 		_killed()
 	return not pending_loss
 
+## The story snapshot that records the pending casualty, without committing it: {"error", "data"}.
+## Same choice as _killed(): a released animal sets the casualty flag, otherwise the LOST decision.
+## Halcyon recovery writes this inside its own checkpoint when the hull is already destroyed.
+func pending_casualty_story() -> Dictionary:
+	if not pending_loss: return {"error": ERR_DOES_NOT_EXIST}
+	if scene.story.has_decision(TwilightShelfData.RELEASE): return scene.story.preview_flag(&"zone2-released-sentinel-lost")
+	return scene.story.preview_choice(TwilightShelfData.LOST)
+
 func _killed() -> void:
 	if not enabled or scene.story.has_decision(TwilightShelfData.CAPTURE) or scene.story.has_decision(TwilightShelfData.LOST) or scene.story.has_flag(&"zone2-released-sentinel-lost"): return
 	pending_loss = true
@@ -272,8 +280,12 @@ func _killed() -> void:
 	var result: Error = scene.story.set_flag(&"zone2-released-sentinel-lost") if scene.story.has_decision(TwilightShelfData.RELEASE) else scene.story.apply_choice(TwilightShelfData.LOST)
 	if result==OK:
 		pending_loss = false
-		if scene.story.has_flag(&"zone2-released-sentinel-lost"): scene.revision.ui.notifications.enqueue("twilight-released-casualty","The released sentinel has been killed. The loss is recorded; that animal cannot guide a future expedition. No further research allowance is due.","Wick")
+		if scene.story.has_flag(&"zone2-released-sentinel-lost"): announce_released_casualty()
 	refresh()
+
+## The notice for a released animal's recorded death. Also used after Halcyon recovery records it.
+func announce_released_casualty() -> void:
+	scene.revision.ui.notifications.enqueue("twilight-released-casualty","The released sentinel has been killed. The loss is recorded; that animal cannot guide a future expedition. No further research allowance is due.","Wick")
 
 func _scan_gate(id: StringName) -> Error:
 	if not TwilightShelfData.knows(id): return _previous_gate.call(id) if _previous_gate.is_valid() else OK

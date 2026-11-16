@@ -567,6 +567,13 @@ func recover_vessel() -> Error:
 	if twilight:
 		candidate = _refit_candidate()
 		completed_now = _refit_completes(candidate)
+		# A casualty whose own save failed cannot be retried once the hull is gone (the story
+		# writer refuses at zero hull) and _write refuses everything else while it is pending.
+		# Carry the casualty decision in this same candidate: one atomic write, no new state.
+		if _scene.journey.expedition.pending_loss:
+			var casualty: Dictionary = _scene.journey.expedition.pending_casualty_story()
+			if casualty.error!=OK: return _report("Casualty record could not be prepared (%s). Recovery not saved." % error_string(casualty.error),casualty.error)
+			candidate.story = casualty.data
 	else:
 		candidate = snapshot()
 		_transfer_player(candidate,SunlitSurveyData.SPAWN,true)

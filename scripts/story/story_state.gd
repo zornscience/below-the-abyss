@@ -76,25 +76,35 @@ func restore(value: Dictionary) -> Error:
 	_data.flags.sort()
 	# Restoration is intentionally silent: no rewards, dialogue, reaction or domain signal.
 	return OK
-func apply_choice(id: StringName) -> Error:
-	if _busy: return ERR_BUSY
+## The snapshot apply_choice would commit, without committing it: {"error", "data"}.
+func preview_choice(id: StringName) -> Dictionary:
 	var choice: ChoiceData = definition(id)
-	if choice == null: return ERR_INVALID_PARAMETER
-	if resolved(choice.encounter_id): return ERR_ALREADY_EXISTS
+	if choice == null: return {"error": ERR_INVALID_PARAMETER}
+	if resolved(choice.encounter_id): return {"error": ERR_ALREADY_EXISTS}
 	var next: Dictionary = snapshot()
 	next.decisions.append(String(id))
 	next.resonance = clampi(resonance() + choice.resonance_delta, -100, 100)
 	for flag: StringName in choice.flags: next.flags.append(String(flag))
 	next.flags.sort()
-	return _commit(next, id)
-func set_flag(id: StringName) -> Error:
+	return {"error": OK, "data": next}
+func apply_choice(id: StringName) -> Error:
 	if _busy: return ERR_BUSY
-	if _catalog == null or id not in _catalog.extra_flags: return ERR_INVALID_PARAMETER
-	if has_flag(id): return ERR_ALREADY_EXISTS
+	var preview: Dictionary = preview_choice(id)
+	if preview.error != OK: return preview.error
+	return _commit(preview.data, id)
+## The snapshot set_flag would commit, without committing it: {"error", "data"}.
+func preview_flag(id: StringName) -> Dictionary:
+	if _catalog == null or id not in _catalog.extra_flags: return {"error": ERR_INVALID_PARAMETER}
+	if has_flag(id): return {"error": ERR_ALREADY_EXISTS}
 	var next: Dictionary = snapshot()
 	next.flags.append(String(id))
 	next.flags.sort()
-	return _commit(next, &"")
+	return {"error": OK, "data": next}
+func set_flag(id: StringName) -> Error:
+	if _busy: return ERR_BUSY
+	var preview: Dictionary = preview_flag(id)
+	if preview.error != OK: return preview.error
+	return _commit(preview.data, &"")
 func _commit(next: Dictionary, choice_id: StringName) -> Error:
 	if not valid_snapshot(next, _catalog): return ERR_INVALID_DATA
 	if persistence_required and not checkpoint_writer.is_valid(): return ERR_UNAVAILABLE

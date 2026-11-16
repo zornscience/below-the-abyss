@@ -265,6 +265,14 @@ func retry_casualty_record() -> bool:
 		_killed()
 	return not pending_loss
 
+## The story snapshot that records the pending casualty, without committing it: {"error", "data"}.
+## Same choice as _killed(): a released animal sets the casualty flag, otherwise the LOST decision.
+## Halcyon recovery writes this inside its own checkpoint when the hull is already destroyed.
+func pending_casualty_story() -> Dictionary:
+	if not pending_loss: return {"error": ERR_DOES_NOT_EXIST}
+	if scene.story.has_decision(TwilightShelfData.RELEASE): return scene.story.preview_flag(&"zone2-released-sentinel-lost")
+	return scene.story.preview_choice(TwilightShelfData.LOST)
+
 func _killed() -> void:
 	if not enabled or scene.story.has_decision(TwilightShelfData.CAPTURE) or scene.story.has_decision(TwilightShelfData.LOST) or scene.story.has_flag(&"zone2-released-sentinel-lost"): return
 	pending_loss = true

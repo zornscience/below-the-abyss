@@ -272,3 +272,159 @@ func test_recovery_write_failure_shows_retry_text_then_retry_records_casualty_an
 	await _send(enter)
 	assert_false(flow.pending)
 	assert_true(game.journey.at_station())
+
+
+# ---------------------------------------------------------------- casualty pending when the hull is destroyed
+
+## Hull destruction in Twilight through the real damage path, with the card shown.
+func _twilight_hull_failure() -> void:
+	_hide_pages()
+	game.resume_route()
+	await wait_physics_frames(2)
+	game.submarine.hull_system.apply_damage(game.submarine.hull_system.hull,&"collision")
+	for frame: int in range(10):
+		await get_tree().process_frame
+		if flow.pending: break
+	assert_true(flow.pending,"hull failure shows the recovery card")
+
+
+func _block_storage() -> String:
+	var saved_path: String = game.saves.store.path
+	_blocker = "user://recovery-block-%d" % Time.get_ticks_usec()
+	var file: FileAccess = FileAccess.open(_blocker,FileAccess.WRITE)
+	file.store_string("blocks a directory")
+	file.close()
+	game.saves.store.path = _blocker+"/expedition.json"
+	return saved_path
+
+
+func _press_enter() -> void:
+	var enter: InputEventKey = InputEventKey.new()
+	enter.keycode = KEY_ENTER
+	enter.physical_keycode = KEY_ENTER
+	enter.pressed = true
+	await _send(enter)
+	enter.pressed = false
+	await _send(enter)
+
+
+## Status lines of every checkpoint attempt, in order.
+func _record_statuses() -> Array[String]:
+	var statuses: Array[String] = []
+	game.saves.status_changed.connect(func() -> void: statuses.append(game.saves.status))
+	return statuses
+
+
+func _count_prefix(statuses: Array[String],prefix: String) -> int:
+	var count: int = 0
+	for line: String in statuses:
+		if line.begins_with(prefix): count += 1
+	return count
+
+
+## The deadlock this fixes: with the hull at zero the story writer refuses the casualty
+## record, and the coordinator refuses every other write while the casualty is pending.
+func test_unsaved_casualty_then_hull_destruction_recovers_in_one_checkpoint_with_the_casualty() -> void:
+	_deploy_twilight_at_net()
+	var original: Callable = game.story.checkpoint_writer
+	_failed_casualty(original)
+	var story_writes: Array[String] = []
+	game.story.checkpoint_writer = func(value: Dictionary,choice: StringName) -> Error:
+		story_writes.append("story")
+		return original.call(value,choice)
+	var statuses: Array[String] = _record_statuses()
+	var saved_path: String = _block_storage()
+	await _twilight_hull_failure()
+	assert_eq(game.submarine.hull_system.hull,0.0,"the hull is destroyed and stays so while recovery cannot be saved")
+	assert_false(flow.committed,"storage is down, so nothing is recorded")
+	assert_true(flow.body.text.ends_with(VesselRecoveryFlow.RETRY_TEXT),"retry text shown: "+flow.body.text)
+	assert_true(game.journey.expedition.pending_loss,"the casualty is still pending")
+	assert_false(game.story.has_decision(TwilightShelfData.LOST))
+	assert_eq(_count_prefix(statuses,"Halcyon recovery saved"),0)
+	# Storage recovers. Enter after the accept delay saves once.
+	game.saves.store.path = saved_path
+	var before: Dictionary = game.saves.store.read_file(saved_path)
+	var already_lost: bool = before.error==OK and String(TwilightShelfData.LOST) in before.data.story.decisions
+	assert_false(already_lost,"precondition: no checkpoint holds the casualty yet")
+	assert_true(await _until_ready(),"card becomes ready for accept")
+	statuses.clear()
+	story_writes.clear()
+	await _press_enter()
+	assert_true(flow.committed,"the retry press saved the recovery")
+	assert_eq(_count_prefix(statuses,"Halcyon recovery saved"),1,"exactly one recovery checkpoint: %s" % str(statuses))
+	assert_eq(_count_prefix(statuses,"Not saved"),0,"no failed write on the retry: %s" % str(statuses))
+	assert_eq(_count_prefix(statuses,"Story decision saved"),0,"the casualty is not written on its own: %s" % str(statuses))
+	assert_false(flow.body.text.contains(VesselRecoveryFlow.RETRY_TEXT),"retry line cleared after success")
+	var saved: Dictionary = game.saves.store.read_file(game.saves.store.path)
+	assert_eq(saved.error,OK)
+	assert_true(String(TwilightShelfData.LOST) in saved.data.story.decisions,"the one checkpoint contains the casualty decision")
+	assert_eq(saved.data.journey.phase,"refit","recovered at the Halcyon refit")
+	assert_eq(saved.data.player.hull,game.submarine.hull_system.max_hull,"hull restocked")
+	assert_eq(saved.data.player.oxygen,pools.max_oxygen)
+	assert_true(game.story.has_decision(TwilightShelfData.LOST),"the live story state matches the checkpoint")
+	assert_false(game.journey.expedition.pending_loss,"the pending casualty is cleared")
+	assert_eq(saved.data.keys().size(),12,"schema still has twelve top-level fields")
+	assert_true(flow.pending,"the retry press saves. The next press continues.")
+	await _press_enter()
+	assert_false(flow.pending)
+	assert_true(game.journey.at_station())
+
+
+## A released animal's casualty is a flag, not the LOST decision. A flag write carries no
+## choice id, so the story writer does not refuse it at zero hull: it deadlocks only when the
+## writer itself keeps failing while storage is fine. The recovery must still carry the flag.
+func test_released_sentinel_casualty_with_a_failing_story_writer_records_the_flag_in_the_recovery() -> void:
+	_deploy_twilight_at_net()
+	var original: Callable = game.story.checkpoint_writer
+	# The release itself is not under test: apply it without its position and survey gates.
+	game.story.checkpoint_writer = func(_value: Dictionary,_choice: StringName) -> Error: return OK
+	assert_eq(game.story.apply_choice(TwilightShelfData.RELEASE),OK)
+	game.story.checkpoint_writer = original
+	_failed_casualty(original)
+	# The story writer keeps failing (the retry before recovery cannot record the casualty).
+	game.story.checkpoint_writer = func(_value: Dictionary,_choice: StringName) -> Error: return ERR_CANT_CREATE
+	assert_false(game.story.has_flag(&"zone2-released-sentinel-lost"))
+	var statuses: Array[String] = _record_statuses()
+	await _twilight_hull_failure()
+	assert_true(flow.committed,"recovery saves with the casualty inside it")
+	assert_eq(_count_prefix(statuses,"Halcyon recovery saved"),1,str(statuses))
+	assert_eq(_count_prefix(statuses,"Not saved"),0,str(statuses))
+	var saved: Dictionary = game.saves.store.read_file(game.saves.store.path)
+	assert_eq(saved.error,OK)
+	assert_true("zone2-released-sentinel-lost" in saved.data.story.flags,"the casualty flag is in the recovery checkpoint")
+	assert_false(String(TwilightShelfData.LOST) in saved.data.story.decisions,"a released animal does not get the LOST decision")
+	assert_false(game.journey.expedition.pending_loss)
+
+
+## The normal path is unchanged: a casualty that saves is written by the story writer on its
+## own, and a later hull failure recovers without adding or duplicating it.
+func test_saved_casualty_then_hull_destruction_writes_the_casualty_and_the_recovery_separately() -> void:
+	_deploy_twilight_at_net()
+	var statuses: Array[String] = _record_statuses()
+	game.journey.expedition.health.apply_blast(&"test/saved-casualty",TwilightShelfData.NET,200,100)
+	assert_false(game.journey.expedition.pending_loss,"the casualty saved immediately")
+	assert_true(game.story.has_decision(TwilightShelfData.LOST))
+	assert_eq(_count_prefix(statuses,"Story decision saved"),1,"the casualty is its own checkpoint: %s" % str(statuses))
+	var decisions: Array = game.story.snapshot().decisions.duplicate()
+	statuses.clear()
+	await _twilight_hull_failure()
+	assert_true(flow.committed)
+	assert_eq(_count_prefix(statuses,"Halcyon recovery saved"),1,str(statuses))
+	assert_eq(_count_prefix(statuses,"Story decision saved"),0,"recovery does not write the casualty again")
+	var saved: Dictionary = game.saves.store.read_file(game.saves.store.path)
+	assert_eq(saved.error,OK)
+	assert_eq(saved.data.story.decisions,decisions,"decisions are unchanged, no duplicate casualty")
+	assert_eq(saved.data.journey.phase,"refit")
+
+
+## Recovery with nothing pending leaves the story snapshot exactly as it was.
+func test_recovery_without_a_pending_casualty_does_not_touch_the_story() -> void:
+	_deploy_twilight_at_net()
+	var story_before: Dictionary = game.story.snapshot()
+	assert_false(game.journey.expedition.pending_loss)
+	assert_eq(game.journey.expedition.pending_casualty_story().error,ERR_DOES_NOT_EXIST,"nothing pending, nothing to prepare")
+	await _twilight_hull_failure()
+	assert_true(flow.committed)
+	var saved: Dictionary = game.saves.store.read_file(game.saves.store.path)
+	assert_eq(saved.error,OK)
+	assert_eq(saved.data.story,story_before)

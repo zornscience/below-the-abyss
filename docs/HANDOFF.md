@@ -1,4 +1,4 @@
-# Handoff brief — Below the Abyss (written 2026-11-10)
+# Handoff brief: Below the Abyss (written 2026-11-10, state refreshed 2026-11-20)
 
 For a model taking over. Read this first, then `AGENTS.md`, `GDD.md`, `TDD.md`, `CODEX_PLAN.md`.
 Everything here is checked against the repo or marked as unverified.
@@ -59,15 +59,28 @@ python3 tools/smoke_playtest.py <zip> --log /tmp/x.log --break-<name>-wiring   #
 
 ## 4. State of the code (verify before relying)
 
-`main` is at merge of **PR #50** (`ce69fc6`, CI artifact logs). Merged: BTA-057 sonar-driven Twilight
+`main` is at the merge of **PR #57** (`eb83d8c`). Merged before PR #50: BTA-057 sonar-driven Twilight
 visibility, 058 resource tension, 059 depth gate + respawn flow + research economy, 060 Rift Stalker, 061
 tunnels and excavation gates, step-1 UX (quiet HUD, radio dismiss and hints, guidance cards), radio id-shape
 fix, audio audit, combat-direction drafts, **PR #48 combat test box**, and **PR #49** (the documentation
 branch `ccr-faf5a894-y8zz7k`: market review, control-feel requirement, market requirements, this file).
-- Last full verification by Claude: `main` at `c773f4d` (after PR #46): 781/781 tests, release smoke
-  positive and 13/13 negatives. PR #48 (795/795 and 19 negatives per its own report) was merged without
-  re-verification by Claude; no later full local re-run is recorded here.
-- No human playtest of the combat test box exists.
+Merged since:
+- **#50** CI: compact log artifacts, 3-day retention, non-fatal upload.
+- **#51** Docs: added `CLAUDE.md`, renamed Codex to Claude Code in the docs, refreshed the README current build.
+- **#52** Investigation of oxygen exhaustion in Sunlit and Twilight (probes and findings, no gameplay change).
+- **#53** Oxygen exhaustion: 60 s life-support countdown, then Halcyon recovery (supersedes the BTA-059 respawn).
+- **#54** Recovery card polish: accept delay, simpler footer, tested casualty retry.
+- **#55** Windows playtest package, Windows release smoke job and the manual draft pre-release workflow.
+- **#56** Recovery card test: wall-clock slack bounded by the measured frame instead of 50 ms (test only).
+- **#57** Fix casualty deadlock when the hull is destroyed during recovery (a pending Twilight casualty is
+  now carried inside the recovery checkpoint, and a released sentinel's death is announced).
+- Latest full CI verification: GitHub Actions run 43795056128 on `df3025d` (PR #57 head, green in all four jobs).
+  `eb83d8c` has the identical tree (`git diff df3025d eb83d8c` is empty). That run's GUT step reports
+  **837 of 837 tests passing in 102 scripts**. The `workflow_dispatch` run 128 on `eb83d8c` was still
+  in progress when this was written, so its result is not recorded here. Release smoke counts are
+  not re-verified here.
+- No local full run was made while updating this file. Claude's last own full verification is older (`c773f4d`) and is superseded by the CI run above.
+- No human playtest of the combat test box exists. No human has played the oxygen recovery flow.
 
 ## 5. Design direction and decisions (designer-approved unless marked)
 
@@ -79,10 +92,14 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
 - Stalker: unbeatable early; **defeating it is an optional path to a darker ending**, a player choice,
   branching late. Story canon (what it is, what the endings mean) needs the designer's approval.
 - Rejected/deferred: terrain on the map (needs a schema change), Glyph key and Breaker torpedo (need story approval).
-- Failure (approved 2026-11-15, supersedes the BTA-059 tether respawn): zero oxygen starts a 60 s
-  life-support countdown on simulation time. A Halcyon dock or tether refit cancels it. Expiry or hull
-  destruction in either chapter recovers the vessel at Halcyon with a free full restock. Records and
-  choices are kept. See `docs/testing/oxygen-recovery/README.md`.
+- Failure (approved 2026-11-15, **implemented in PRs #53, #54 and #57**, supersedes the BTA-059 tether
+  respawn): zero oxygen starts a 60 s life-support countdown (`resources/balance/vessel_recovery.tres`,
+  `grace_seconds = 60.0`) on simulation time. A Halcyon dock or tether refit cancels it. Expiry or hull
+  destruction in either chapter recovers the vessel at Halcyon with a free full restock (no restore fraction,
+  per `scripts/player/vessel_recovery_profile.gd`). Records and choices are kept. Oxygen drain is 0.048 per
+  second in Sunlit (`prototype_resources.tres`) and 0.03 per second in Twilight (`twilight_resources.tres`).
+  The save schema stays at 10 with twelve top-level fields (`ExpeditionSchema.VERSION`, size check in
+  `expedition_schema.gd`). Evidence and limits: `docs/testing/oxygen-recovery/README.md`.
 - Decisions the designer owns and has NOT made: boss concept for the slice; what the darker ending costs;
   Story Bible canon for alien technology; whether the combat direction survives the playtest.
 
@@ -97,22 +114,35 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
 - **Market:** nearest comparable (Depths of Sanity) has 72 reviews. Plan for the low case. Controls and
   dynamic music are the named reasons small Metroidvanias are punished. Figures are provisional.
 - Recovery after oxygen or hull failure has no penalty beyond the vessel's position (by design).
+- Open items owned by the designer (not decisions):
+  - The repo is public and has no `LICENSE` file (the README says the license decision is pending).
+    License choice and repo visibility are the designer's call.
+  - The Windows exe was only run on a CI runner (`windows-latest`). Windows 11 Smart App Control may block
+    unsigned builds. It is unverified on a real machine.
+  - A free full restock means suffocation works as a refuel shortcut. The designer has not decided whether
+    that needs a cost.
+  - The tow cutscene was deferred until the designer has seen the recovery card in play. Any new Wick or
+    Okafor lines are proposals needing approval.
+  - No human has played the recovery flow.
 - Gaps: no GPU/Steam Deck performance data (only software GL);
   `ShelfPrototype` is a god object with ~1,100 outside references; legacy prototype modes and four
   legacy save stores remain (removal needs approval); tunnel profiles replace rock shapes by list index
-  (fragile); README still says BTA-055; `.git` is ~500 MB from committed screenshots.
+  (fragile); `.git` is ~500 MB from committed screenshots.
 
 ## 7. Recommended next steps, in order
 
-1. Designer runs the combat test box (playtest export only; see `docs/testing/combat-testbox/README.md`
+1. Publish a draft pre-release from the manual workflow (`docs/playtesting/build.md`, "Publishing a draft
+   pre-release"), then the designer plays the oxygen flow on Windows (steps in
+   `docs/testing/oxygen-recovery/README.md`).
+2. Designer runs the combat test box (playtest export only; see `docs/testing/combat-testbox/README.md`
    and `docs/design/combat-testbox-brief.md`) with at least three people who have not seen the game; apply
    the go/change/stop criteria. Do not build more combat until that result exists.
-2. If go: update `GDD.md` from the proposal; then issues for Resonant pulse + Silent running, Stalker arc,
+3. If go: update `GDD.md` from the proposal; then issues for Resonant pulse + Silent running, Stalker arc,
    reactive music, BTA-062 (local darkness and pacing; still not built), the terrain-map schema issue
    (needs approval), a Stalker-defeat ending prototype.
-3. Audio: license or CC0 sound effects, curated Gemini music, then an engine issue (region beds, bus
+4. Audio: license or CC0 sound effects, curated Gemini music, then an engine issue (region beds, bus
    effects, spatial emitters, music layers). Proposed BTA-063/064 in `docs/audio_audit.md`.
-4. Later: five external playtests, README refresh, screenshot storage, structural refactors (with approval).
+5. Later: five external playtests, screenshot storage, structural refactors (with approval).
 
 ## 8. Prompting Claude Code (what has worked)
 

@@ -2,10 +2,18 @@
 
 A 2D underwater exploration and adventure game built with Godot 4.
 
-Current build: `main` through **BTA-061** (Twilight tunnels and optional torpedo
-shortcuts) plus an export-only **combat test box**. The playable campaign is
+Current build: `main` through PR #57, which includes **BTA-061** (Twilight tunnels and
+optional torpedo shortcuts), an export-only **combat test box**, the **oxygen failure
+and Halcyon recovery flow** and a **Windows playtest package**. The playable campaign is
 **The Sunlit Shallows**, the canonical first expedition, followed by **The Twilight
 Shelf: The Severed Line** (BTA-055), extended by BTA-056–061 (see below).
+Oxygen failure: at zero oxygen a 60 s life-support countdown starts. A Halcyon dock or
+tether refit cancels it. If it expires, or the hull is destroyed, the vessel is recovered
+at Halcyon with a free full restock and all records kept. See
+[oxygen recovery evidence](docs/testing/oxygen-recovery/README.md).
+Playtest builds: Linux and Windows packages are made by CI. A maintainer publishes a draft
+pre-release from the manual workflow, see [docs/playtesting/build.md](docs/playtesting/build.md).
+The Windows build is unsigned and has only been run on a CI runner.
 No human playtest results exist for any of it; tuning numbers are hypotheses.
 Pilot **Lantern-2** from **Halcyon Station** to study a geometric light bloom and
 recover missing acoustician Mara Voss's emergency buoy. Finish the chapter at the

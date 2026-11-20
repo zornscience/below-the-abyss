@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone3-crystal-take"
+encounter_id = &"zone3-memory-crystal"
+resonance_delta = -15
+flags = Array[StringName]([&"zone3-archive-taken"])
+action_text = "Remove the crystal for the Tethys retrofit"
+response_text = "The archive goes dark. Limestone breaks behind the cradle, sealing a side chamber but not the return corridor. Wick: I can extract a sonar calibration from the crystal. The new range is real. The missing memory cannot be restored. Crane: Bring the specimen home. Okafor does not answer."

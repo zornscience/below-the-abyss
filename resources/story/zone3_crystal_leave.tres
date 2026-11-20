@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone3-crystal-leave"
+encounter_id = &"zone3-memory-crystal"
+resonance_delta = 15
+flags = Array[StringName]([&"zone3-shrine-respected"])
+action_text = "Leave the crystal in its living cradle"
+response_text = "The archive brightens but does not follow Lantern-2. Wick: The light is answering us. There is no translation for gratitude yet. Okafor: Then let the record show we listened and left what wasn't ours. A pattern of guide lights marks the return passage."

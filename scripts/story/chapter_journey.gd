@@ -21,6 +21,7 @@ var _shallow_resources: SubmarineResourceConfig
 var layout: TwilightShelfLayout
 var caves_layout: DrownedCavesLayout
 var caves_tunnels: TwilightTunnels
+var caves_guide: DrownedCavesGuide
 ## DC-1 foundation: the Drowned Caves hold only an entry chamber, so the descent is offered
 ## only when a developer launches with --drowned-caves (tests and release smoke set it directly).
 var caves_entry_enabled: bool = OS.get_cmdline_user_args().has("--drowned-caves")
@@ -50,6 +51,11 @@ func setup(game: ShelfPrototype) -> void:
 	caves_tunnels.systems = DrownedCavesLayout.TUNNELS
 	caves_layout.add_child(caves_tunnels)
 	caves_tunnels.setup(scene)
+	caves_guide = DrownedCavesGuide.new()
+	caves_layout.add_child(caves_guide)
+	caves_guide.setup(scene)
+	# Continue restores the story after prepare(), so the guide is refreshed once the checkpoint is back.
+	scene.saves.checkpoint_restored.connect(refresh_caves_guide)
 	tunnels = TwilightTunnels.new()
 	layout.add_child(tunnels)
 	tunnels.setup(scene)
@@ -97,7 +103,10 @@ func caves_unlocked() -> bool:
 	return scene.missions.snapshot().get(String(TwilightShelfData.MISSION),{}).get("state")=="claimed"
 func caves_entry_available() -> bool:
 	return caves_entry_enabled and at_station() and caves_unlocked()
+func refresh_caves_guide() -> void:
+	caves_guide.set_enabled(caves() and DrownedCavesGuide.available(scene.story))
 func caves_guidance() -> String:
+	if DrownedCavesGuide.available(scene.story): return "◇ Follow the freed animal's lights east, or not · squeeze through or blast the shortcut · watch oxygen · no objectives yet"
 	return "◇ Follow the passage east · squeeze through or blast the shortcut · watch oxygen · no objectives yet"
 func can_finish() -> bool:
 	return scene.chapter.active and not scene.chapter.concluded() and scene.chapter.state() in ["accepted","completed"] \
@@ -154,7 +163,11 @@ func resume_expedition() -> void:
 	if not at_station(): return
 	await _transfer("twilight",false)
 func _arrival_notice(phase: String) -> void:
-	if phase=="caves": scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. This foundation build has a chamber, a flooded squeeze with a gated shortcut and a sealed far chamber. Oxygen is the clock here. Nothing is required; the anchor returns to Halcyon.","Wick")
+	if phase!="caves": return
+	scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. This foundation build has a chamber, a flooded squeeze with a gated shortcut and a sealed far chamber. Oxygen is the clock here. Nothing is required; the anchor returns to Halcyon.","Wick")
+	# One text-only line for how the Twilight sentinel choice reads here (DC-3). No variant is hostile.
+	var reaction: String = DrownedCavesGuide.reaction(scene.story)
+	if not reaction.is_empty(): scene.revision.ui.notifications.enqueue("caves-sentinel",reaction,"Wick")
 func _transfer(phase: String,restock: bool) -> void:
 	if transitioning: return
 	var first_deployment: bool = phase=="twilight" and not state.commissioned
@@ -183,6 +196,7 @@ func prepare(value: Dictionary) -> void:
 	layout.set_enabled(active())
 	caves_layout.set_enabled(caves())
 	caves_tunnels.set_enabled(caves())
+	refresh_caves_guide()
 	habitat.set_enabled(active())
 	tunnels.set_enabled(active())
 	hunt.set_enabled(active())

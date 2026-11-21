@@ -85,7 +85,7 @@ Merged since:
   2026-11-21) splits the chapter into DC-1…DC-6. **DC-1 (region foundation, PR #60)** adds journey phase
   `caves`, a 2,000 m pressure fit, a graybox chamber with one sealed passage, entry from Halcyon after the
   Twilight debrief is claimed, anchor return and recovery. It is **hidden behind `--drowned-caves`** and has no
-  objectives or story; evidence in `docs/testing/dc-1/README.md`. **DC-2 (cave navigation and oxygen, PR pending)** adds a flooded squeeze with a torpedo-gated shortcut, a far chamber and a 0.3/s oxygen rate (`docs/testing/dc-2/README.md`). DC-3 to DC-6 are not started. Known hazard:
+  objectives or story; evidence in `docs/testing/dc-1/README.md`. **DC-2 (cave navigation and oxygen, PR pending)** adds a flooded squeeze with a torpedo-gated shortcut, a far chamber and a 0.3/s oxygen rate (`docs/testing/dc-2/README.md`). **DC-3 (sentinel payoff, PR pending)** adds optional guide lights for a living released sentinel and one text-only line for every outcome, derived from story flags with no save change (`docs/testing/dc-3/README.md`). DC-4 to DC-6 are not started. Known hazard:
   a release export segfaults if a scene change lands in the same frame as a simulation toggle (deferred
   `_layout_tutorial` / `gui_get_focus_owner` reach a null viewport); only the release smoke reaches it.
 

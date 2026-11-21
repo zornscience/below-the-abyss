@@ -31,7 +31,8 @@ func world_path(path: PackedVector2Array) -> PackedVector2Array:
 func world_gate() -> Rect2:
 	return Rect2(origin+gate_bounds.position,gate_bounds.size)
 func is_valid(vessel_span: float) -> bool:
-	if not PointOfInterest.valid_id(stable_id) or not PointOfInterest.valid_id(StringName(gate_id)) or not PointOfInterest.valid_id(payoff_id): return false
+	# A payoff record is optional: a region without scan records (the Drowned Caves, DC-2) leaves it empty.
+	if not PointOfInterest.valid_id(stable_id) or not PointOfInterest.valid_id(StringName(gate_id)) or (not payoff_id.is_empty() and not PointOfInterest.valid_id(payoff_id)): return false
 	if outer.size()<4 or main.size()<6 or branch.size()<2 or shortcut.size()!=2 or squeeze.size()!=2: return false
 	if not origin.is_finite() or replace_index<0 or not is_finite(normal_width) or not is_finite(squeeze_width): return false
 	if not vent_id.is_empty() and (not PointOfInterest.valid_id(vent_id) or not vent_at.is_finite()): return false

@@ -22,6 +22,8 @@ const TEXT: Dictionary = {
 	"twilight-depth":["Wick / pressure margin","The optional basin reaches {basin_depth} m. Compare that with your hull rating. Hull rank {gate_rank} is rated for it; lower ranks have only a brief pressure grace before damage. The upper shelf remains open. No required evidence lies below."],
 	"twilight-cable":["Wick / the sensor line","This cable carried Halcyon's shelf sensors. Follow the line to where it ends and scan the break: how it was cut may explain why the data stopped. Scan with {interact} while close and in line of sight."],
 	"twilight-net":["Wick / living contact","An animal is caught in a drift net. Scan the net to learn what it is, then choose with {interact}: loosen the net to release it, or secure it alive for Crane. Either choice is allowed, and no weapon is needed."],
+	"caves-squeeze":["Wick / the squeeze","The passage ahead narrows to about twice your hull width. Thrust gently and let the vessel coast through. The long way round is always open; the rock beside it can be opened with two torpedoes for a shorter route."],
+	"caves-oxygen":["Wick / oxygen is the clock","Oxygen drains much faster in the caves: a full tank lasts about {tank_minutes} minutes. The cave anchor returns you to Halcyon for a full refill. At zero, life support gives you 60 seconds before Halcyon recovers the vessel."],
 	"torpedo":["A tool with consequences","{fire}: fire in your last thrust direction (2 battery; 1.2s rearm). Explosions excavate soft rock and damage nearby wildlife. Hard perimeter bedrock and the station remain solid."]}
 func setup(scene: ShelfPrototype) -> void:
 	_scene = scene
@@ -44,6 +46,7 @@ func _preferences_changed() -> void:
 		message_changed.emit("","")
 func _body(id: String) -> String:
 	var text: String = TEXT[id][1]
+	if id=="caves-oxygen": text = text.replace("{tank_minutes}","%.0f" % (ChapterJourney.CAVES_RESOURCES.max_oxygen/ChapterJourney.CAVES_RESOURCES.oxygen_drain_per_second/60.0))
 	if id=="twilight-depth": text = text.replace("{basin_depth}","%.0f" % TwilightShelfLayout.DEPTH_GATE.depth_m).replace("{gate_rank}",str(TwilightShelfLayout.DEPTH_GATE.gate_rank))
 	if _scene.revision!=null and id=="station": text = "Near the station cradle, slow down and press {interact}. Docking automatically repairs, refills and rearms. Spend or freely reassign your finite research points in Research technology."
 	if _scene.revision!=null and id=="torpedo": text = "{fire}: launch one of ten torpedoes in the direction NERIS faces. The torpedo accelerates and leaves a fading wake. Explosions excavate soft rock and damage wildlife. Dock to rearm."
@@ -88,6 +91,10 @@ func _process(delta: float) -> void:
 	elif _clock > 65.0: show_hint("torpedo")
 	if _scene.submarine.global_position.distance_to(_scene.creature.global_position) < 340.0:
 		show_hint("wildlife")
+	if _scene.journey!=null and _scene.journey.caves():
+		var here: Vector2 = _scene.submarine.global_position
+		if here.distance_to(DrownedCavesLayout.PASSAGE_END)<900.0: show_hint("caves-squeeze")
+		elif _scene.submarine.resource_system.oxygen<ChapterJourney.CAVES_RESOURCES.max_oxygen*0.8: show_hint("caves-oxygen")
 	if _scene.journey!=null and _scene.journey.active():
 		var at: Vector2 = _scene.submarine.global_position
 		if at.distance_to(_cable_at)<900.0 and not _scene.research.is_completed(&"twilight-severed-cable"): show_hint("twilight-cable")

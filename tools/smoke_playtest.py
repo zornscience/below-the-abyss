@@ -26,7 +26,7 @@ def main():
     parser.add_argument('--break-resource-wiring',action='store_true')
     parser.add_argument('--break-visibility-wiring',action='store_true')
     parser.add_argument('--break-registration-wiring',action='store_true')
-    for flag in ['depth-rating','depth-section','failure','stalker-registration','stalker-passive','stalker-hearing','stalker-scare','tunnel-geometry','tunnel-gates','tunnel-vents','combat-entry','combat-registration','combat-stun','combat-handling','combat-stalker-registration','combat-weighty-handling','oxygen','caves']:
+    for flag in ['depth-rating','depth-section','failure','stalker-registration','stalker-passive','stalker-hearing','stalker-scare','tunnel-geometry','tunnel-gates','tunnel-vents','combat-entry','combat-registration','combat-stun','combat-handling','combat-stalker-registration','combat-weighty-handling','oxygen','caves','caves-gate']:
         parser.add_argument('--break-'+flag+'-wiring',action='store_true')
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix='bta-standalone-') as tmp:
@@ -61,7 +61,7 @@ def main():
         # guaranteed channel; Godot's own log file carries the same output there.
         engine_log = root/'engine-smoke.log'
         log_args = ['--log-file',str(engine_log)] if platform == 'windows' else []
-        result = subprocess.run([str(binary),'--headless']+log_args+['--quit-after','60','--','--release-smoke']+(['--break-visibility-wiring'] if args.break_visibility_wiring else [])+(['--break-registration-wiring'] if args.break_registration_wiring else [])+(['--break-resource-wiring'] if args.break_resource_wiring else [])+['--break-'+flag+'-wiring' for flag in ['depth-rating','depth-section','failure','stalker-registration','stalker-passive','stalker-hearing','stalker-scare','tunnel-geometry','tunnel-gates','tunnel-vents','combat-entry','combat-registration','combat-stun','combat-handling','combat-stalker-registration','combat-weighty-handling','oxygen','caves'] if getattr(args,'break_'+flag.replace('-','_')+'_wiring')],cwd=binary.parent,env=env,text=True,encoding='utf-8',errors='replace',stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=60)
+        result = subprocess.run([str(binary),'--headless']+log_args+['--quit-after','60','--','--release-smoke']+(['--break-visibility-wiring'] if args.break_visibility_wiring else [])+(['--break-registration-wiring'] if args.break_registration_wiring else [])+(['--break-resource-wiring'] if args.break_resource_wiring else [])+['--break-'+flag+'-wiring' for flag in ['depth-rating','depth-section','failure','stalker-registration','stalker-passive','stalker-hearing','stalker-scare','tunnel-geometry','tunnel-gates','tunnel-vents','combat-entry','combat-registration','combat-stun','combat-handling','combat-stalker-registration','combat-weighty-handling','oxygen','caves','caves-gate'] if getattr(args,'break_'+flag.replace('-','_')+'_wiring')],cwd=binary.parent,env=env,text=True,encoding='utf-8',errors='replace',stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=60)
         output = result.stdout
         if engine_log.is_file():
             output += '\n--- engine log file ---\n' + engine_log.read_text(encoding='utf-8',errors='replace')
@@ -83,6 +83,8 @@ def main():
             raise SystemExit('Missing exported oxygen recovery wiring proof')
         if 'RELEASE_CAVES_WIRING_PASS' not in output:
             raise SystemExit('Missing exported Drowned Caves foundation wiring proof')
+        if 'RELEASE_CAVES_GATE_WIRING_PASS' not in output:
+            raise SystemExit('Missing exported Drowned Caves squeeze gate and oxygen wiring proof')
         if 'RELEASE_DEPTH_GATE_PASS' not in output:
             raise SystemExit('Missing depth gate export proof')
         if 'RELEASE_RESOURCE_WIRING_PASS' not in output:

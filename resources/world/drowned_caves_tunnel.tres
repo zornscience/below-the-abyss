@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TunnelProfile" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/world/tunnel_profile.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"caves-flooded-squeeze"
+origin = Vector2(49800,4000)
+replace_index = 5
+seed = 320
+outer = PackedVector2Array(0,0,2000,0,2000,2400,0,2400)
+main = PackedVector2Array(-100,1250,300,1250,300,1290,300,1580,300,1620,1500,1620,1500,1520,1500,1250,2100,1250)
+branch = PackedVector2Array(1500,1520,1800,1520)
+shortcut = PackedVector2Array(300,1250,1500,1250)
+squeeze = PackedVector2Array(300,1290,300,1580)
+normal_width = 192.0
+squeeze_width = 124.0
+normal_probe = Vector2(900,1620)
+gate_id = "caves-squeeze-shortcut"
+gate_bounds = Rect2(450,1150,280,200)
+fire_from = Vector2(300,1250)
+approach = PackedVector2Array(43600,4800,43600,5250,49700,5250)
+return_path = PackedVector2Array(51900,5250,51300,5250,51300,5520,51300,5620,50100,5620,50100,5580,50100,5290,50100,5250,49700,5250,43600,5250,43600,4800)

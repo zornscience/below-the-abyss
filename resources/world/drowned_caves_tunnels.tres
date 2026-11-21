@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="TunnelSetProfile" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/world/tunnel_set_profile.gd" id="1"]
+[ext_resource type="Resource" path="res://resources/world/drowned_caves_tunnel.tres" id="2"]
+[resource]
+script = ExtResource("1")
+systems = Array[Resource]([ExtResource("2")])

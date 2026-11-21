@@ -3,6 +3,8 @@ extends Node
 ## Scene-owned explicit transfers; existing mission/checkpoint/resource APIs own state.
 const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twilight_pressure_fit.tres")
 const CAVES_PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/drowned_caves_pressure_fit.tres")
+## Oxygen is the main pressure in the caves (brief §2, DC-2): their own rate, authored in a Resource.
+const CAVES_RESOURCES: SubmarineResourceConfig = preload("res://resources/balance/drowned_caves_resources.tres")
 var scene: ShelfPrototype
 var tunnels: TwilightTunnels
 var habitat: TwilightHabitat
@@ -18,6 +20,7 @@ var _shallow_torpedo_cost: float
 var _shallow_resources: SubmarineResourceConfig
 var layout: TwilightShelfLayout
 var caves_layout: DrownedCavesLayout
+var caves_tunnels: TwilightTunnels
 ## DC-1 foundation: the Drowned Caves hold only an entry chamber, so the descent is offered
 ## only when a developer launches with --drowned-caves (tests and release smoke set it directly).
 var caves_entry_enabled: bool = OS.get_cmdline_user_args().has("--drowned-caves")
@@ -36,13 +39,17 @@ func setup(game: ShelfPrototype) -> void:
 	set_physics_process(false)
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
 	_pause_title = title.text if title!=null else "EXPEDITION / PAUSED"
-	assert(PRESSURE_FIT.is_valid() and CAVES_PRESSURE_FIT.is_valid())
+	assert(PRESSURE_FIT.is_valid() and CAVES_PRESSURE_FIT.is_valid() and CAVES_RESOURCES.is_valid())
 	layout = TwilightShelfLayout.new()
 	scene.region.add_child(layout)
 	layout.configure(scene.chapter.dressing.rocks._paint)
 	caves_layout = DrownedCavesLayout.new()
 	scene.region.add_child(caves_layout)
 	caves_layout.configure(scene.chapter.dressing.rocks._paint)
+	caves_tunnels = TwilightTunnels.new()
+	caves_tunnels.systems = DrownedCavesLayout.TUNNELS
+	caves_layout.add_child(caves_tunnels)
+	caves_tunnels.setup(scene)
 	tunnels = TwilightTunnels.new()
 	layout.add_child(tunnels)
 	tunnels.setup(scene)
@@ -91,7 +98,7 @@ func caves_unlocked() -> bool:
 func caves_entry_available() -> bool:
 	return caves_entry_enabled and at_station() and caves_unlocked()
 func caves_guidance() -> String:
-	return "◇ Foundation build · entry chamber only · no objectives yet · cave anchor returns to Halcyon"
+	return "◇ Follow the passage east · squeeze through or blast the shortcut · watch oxygen · no objectives yet"
 func can_finish() -> bool:
 	return scene.chapter.active and not scene.chapter.concluded() and scene.chapter.state() in ["accepted","completed"] \
 		and scene.research.is_completed(SunlitShallowsData.BUOY) and scene.story.resolved(LightBloomEncounter.ENCOUNTER)
@@ -130,7 +137,7 @@ func deploy() -> void:
 	await _transfer("twilight",not state.commissioned)
 func offer_caves() -> void:
 	if not caves_entry_available(): return
-	_show("THE DROWNED CAVES / FOUNDATION BUILD","Lantern-2 will be serviced and refitted with a 2,000 m pressure baseline, then lowered to the cave anchor at about 1,200 m. This build contains only the entry chamber and one sealed passage: there are no objectives, records or story yet. The cave anchor returns you to Halcyon.","Descend (foundation build)",descend_caves,&"BeginCaves")
+	_show("THE DROWNED CAVES / FOUNDATION BUILD","Lantern-2 will be serviced and refitted with a 2,000 m pressure baseline, then lowered to the cave anchor at about 1,200 m. This build has an entry chamber, a flooded squeeze with a gated shortcut and a far chamber that ends in a sealed wall: there are no objectives, records or story yet. Oxygen drains much faster here. The cave anchor returns you to Halcyon.","Descend (foundation build)",descend_caves,&"BeginCaves")
 	(scene.revision.ui.find_child("StoryBack",true,false) as Button).text = "Stay at Halcyon"
 func descend_caves() -> void:
 	if not caves_entry_available(): return
@@ -147,7 +154,7 @@ func resume_expedition() -> void:
 	if not at_station(): return
 	await _transfer("twilight",false)
 func _arrival_notice(phase: String) -> void:
-	if phase=="caves": scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. This foundation build has only the entry chamber and a sealed passage. Nothing here is required; the anchor returns to Halcyon.","Wick")
+	if phase=="caves": scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. This foundation build has a chamber, a flooded squeeze with a gated shortcut and a sealed far chamber. Oxygen is the clock here. Nothing is required; the anchor returns to Halcyon.","Wick")
 func _transfer(phase: String,restock: bool) -> void:
 	if transitioning: return
 	var first_deployment: bool = phase=="twilight" and not state.commissioned
@@ -175,12 +182,13 @@ func prepare(value: Dictionary) -> void:
 	scene.chapter._activate(not in_field() and state.phase!="prototype")
 	layout.set_enabled(active())
 	caves_layout.set_enabled(caves())
+	caves_tunnels.set_enabled(caves())
 	habitat.set_enabled(active())
 	tunnels.set_enabled(active())
 	hunt.set_enabled(active())
 	expedition.set_enabled(active())
 	var pools: SubmarineResourceSystem = scene.submarine.resource_system
-	var profile: SubmarineResourceConfig = preload("res://resources/balance/twilight_resources.tres") if in_field() else _shallow_resources
+	var profile: SubmarineResourceConfig = CAVES_RESOURCES if caves() else (preload("res://resources/balance/twilight_resources.tres") if active() else _shallow_resources)
 	if pools.configuration!=profile:
 		var battery: float = pools.battery
 		var oxygen: float = pools.oxygen
@@ -199,7 +207,7 @@ func prepare(value: Dictionary) -> void:
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
 	if title!=null: title.text = "TWILIGHT SHELF / PAUSED" if active() else ("DROWNED CAVES / PAUSED" if caves() else _pause_title)
 	if caves():
-		(scene.route_menu.get_node("%Brief") as Label).text = "Foundation build: the entry chamber and one sealed passage only. Nothing here is required. Return through the cave anchor for Halcyon."
+		(scene.route_menu.get_node("%Brief") as Label).text = "Foundation build: a chamber, a flooded squeeze with a gated shortcut and a sealed far chamber. Nothing here is required. Oxygen drains much faster here. Return through the cave anchor for Halcyon."
 		(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2"
 		scene.region.spawn.position = DrownedCavesLayout.SPAWN
 		scene.region.camera_bounds = DrownedCavesLayout.CAMERA

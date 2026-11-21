@@ -377,6 +377,8 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 		return false
 	if not _verify_caves_gate(game):
 		return false
+	if not _verify_caves_guide(game):
+		return false
 	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
 	if not stored is Dictionary or stored.get("region_id")!=ExpeditionJourneyState.CAVES:
 		push_error("RELEASE_CAVES_WIRING_FAIL checkpoint region")
@@ -423,4 +425,25 @@ func _verify_caves_gate(game: ShelfPrototype) -> bool:
 		push_error("RELEASE_CAVES_GATE_WIRING_FAIL cut carved=%d valid=%s restored=%s" % [carved,valid,error_string(restored)])
 		return false
 	print("RELEASE_CAVES_GATE_WIRING_PASS")
+	return true
+
+## DC-3 in this exact binary: a released, living sentinel lights the long route and the arrival text says
+## so. The smoke released the sentinel above, so the guide must be on, in the caves, with every light of
+## the authored trail. Plain statements only: assert() is stripped from exports.
+func _verify_caves_guide(game: ShelfPrototype) -> bool:
+	if OS.get_cmdline_user_args().has("--break-caves-guide-wiring"): game.journey.caves_guide.set_enabled(false)
+	var guide: DrownedCavesGuide = game.journey.caves_guide
+	var expected: PackedVector2Array = DrownedCavesGuide.waypoints()
+	var text: String = String(game.revision.ui.notifications.texts.get("caves-sentinel",""))
+	if not DrownedCavesGuide.available(game.story) or guide==null or not guide.visible or expected.size()<6 or guide.lights()!=expected or guide.get_parent()!=game.journey.caves_layout:
+		push_error("RELEASE_CAVES_GUIDE_WIRING_FAIL guide visible=%s lights=%d" % [guide!=null and guide.visible,expected.size()])
+		return false
+	if text!=String(DrownedCavesGuide.TEXT[&"guide"]):
+		push_error("RELEASE_CAVES_GUIDE_WIRING_FAIL arrival text")
+		return false
+	for light: Vector2 in expected:
+		if not game.saves.position_clear(light,0.0):
+			push_error("RELEASE_CAVES_GUIDE_WIRING_FAIL light in rock "+str(light))
+			return false
+	print("RELEASE_CAVES_GUIDE_WIRING_PASS")
 	return true

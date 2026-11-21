@@ -5,13 +5,15 @@ var scene: ShelfPrototype
 var gates: Array[DestructibleRock] = []
 var vents: Array[ThermalVent] = []
 var enabled: bool = false
+## Which authored set this node builds. Set before setup(); the Drowned Caves use their own.
+var systems: TunnelSetProfile = TwilightTunnelCatalog.DATA
 func setup(game: ShelfPrototype) -> void:
 	scene = game
 	var hull: CapsuleShape2D = (scene.submarine.get_node("CollisionShape2D") as CollisionShape2D).shape as CapsuleShape2D
-	if not TwilightTunnelCatalog.is_valid(hull.height):
-		push_error("Invalid authored Twilight tunnels")
+	if not TwilightTunnelCatalog.is_valid(hull.height,systems,1 if systems!=TwilightTunnelCatalog.DATA else 2):
+		push_error("Invalid authored tunnels")
 		return
-	for profile: TunnelProfile in TwilightTunnelCatalog.DATA.systems:
+	for profile: TunnelProfile in systems.systems:
 		var rock: DestructibleRock = DestructibleRock.new()
 		add_child(rock)
 		rock.configure(profile.gate_id,profile.world_path(SunlitSurveyData.plug_contour(profile.gate_bounds,profile.seed)),Color("476573"))

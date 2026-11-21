@@ -375,6 +375,8 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 	if not game.journey.caves() or game.journey.active() or vessel.damage_system.get_maximum_depth_m()!=expected_rating or not solid or not open:
 		push_error("RELEASE_CAVES_WIRING_FAIL region caves=%s rating=%s solid=%s open=%s" % [game.journey.caves(),vessel.damage_system.get_maximum_depth_m(),solid,open])
 		return false
+	if not _verify_caves_gate(game):
+		return false
 	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
 	if not stored is Dictionary or stored.get("region_id")!=ExpeditionJourneyState.CAVES:
 		push_error("RELEASE_CAVES_WIRING_FAIL checkpoint region")
@@ -395,4 +397,30 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 	# viewport (a segfault in a release export, a script error in a debug one).
 	for frame: int in range(2): await get_tree().process_frame
 	print("RELEASE_CAVES_WIRING_PASS")
+	return true
+
+## DC-2 in this exact binary: the flooded squeeze's gate is registered with the real excavation
+## system and solid in the caves, real blasts cut it and the cuts are a valid saved journal, and the
+## caves run on their own oxygen rate. Plain statements only: assert() is stripped from exports.
+func _verify_caves_gate(game: ShelfPrototype) -> bool:
+	var profile: TunnelProfile = DrownedCavesLayout.TUNNELS.systems[0] as TunnelProfile
+	if OS.get_cmdline_user_args().has("--break-caves-gate-wiring"): game.excavation._rocks.erase(profile.gate_id)
+	var rock: DestructibleRock = game.excavation._rocks.get(profile.gate_id) as DestructibleRock
+	if rock==null or rock not in game.journey.caves_tunnels.gates or rock.collision_layer!=1 or rock.get_parent()!=game.journey.caves_tunnels or not game.journey.caves_tunnels.enabled:
+		push_error("RELEASE_CAVES_GATE_WIRING_FAIL gate")
+		return false
+	var pools: SubmarineResourceSystem = game.submarine.resource_system
+	if pools.configuration!=ChapterJourney.CAVES_RESOURCES or not is_equal_approx(pools.configuration.oxygen_drain_per_second,0.3):
+		push_error("RELEASE_CAVES_GATE_WIRING_FAIL oxygen")
+		return false
+	var before: Array[Dictionary] = game.excavation.snapshot()
+	var centre: Vector2 = profile.world_gate().get_center()
+	var carved: int = game.excavation.excavate(centre,game.torpedoes._rules.radius)
+	var cuts: Array[Dictionary] = game.excavation.snapshot()
+	var valid: bool = ExcavationState.valid(cuts) and cuts.size()==before.size()+1 and cuts[-1].rock==profile.gate_id
+	var restored: Error = game.excavation.restore(before)
+	if carved!=1 or not valid or restored!=OK or game.excavation.snapshot().size()!=before.size():
+		push_error("RELEASE_CAVES_GATE_WIRING_FAIL cut carved=%d valid=%s restored=%s" % [carved,valid,error_string(restored)])
+		return false
+	print("RELEASE_CAVES_GATE_WIRING_PASS")
 	return true

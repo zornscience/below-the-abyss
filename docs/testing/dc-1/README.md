@@ -1,5 +1,9 @@
 # DC-1 — Drowned Caves region foundation: evidence
 
+> DC-2 (`docs/testing/dc-2/README.md`) replaced the sealed wall described below with a squeeze, a gated
+> shortcut and a far chamber, and gave the caves their own oxygen rate. Read this file for the journey
+> phase, save validation and entry, which DC-2 did not change.
+
 Approved by the designer on 2026-11-21 (decisions A–D at the brief's recommended defaults, see
 `docs/design/drowned-caves-brief.md`). **No human playtest exists.** This is a foundation: one
 entry chamber, one passage that ends against a sealed wall, and the plumbing around it. It is not a

@@ -1,12 +1,23 @@
 class_name DrownedCavesLayout
 extends Node2D
-## Zone 3 foundation (DC-1): graybox entry chamber, one passage and a sealed end. Owns geometry
-## only, never campaign progress. Depth is the shared world mapping (0.25 m per unit), so the
-## chamber reads about 1,000 to 1,500 m. Later issues extend the cave; nothing here is a level.
+## Zone 3 graybox (DC-1 foundation, DC-2 navigation): an entry chamber, a passage, one flooded
+## squeeze with a gated shortcut, and a far chamber that ends against a sealed wall. Owns geometry
+## only, never campaign progress. Depth is the shared world mapping (0.25 m per unit), so the cave
+## reads about 1,000 to 1,600 m. Later issues add the first-contact site; nothing here is a level.
 const SPAWN: Vector2 = Vector2(43600,4800)
-const CAMERA: Rect2i = Rect2i(42000,4000,8000,2400)
-## The one passage leaves the chamber eastward and ends against a sealed wall (DC-2 extends it).
-const PASSAGE_END: Vector2 = Vector2(49500,5200)
+const CAMERA: Rect2i = Rect2i(42000,4000,13800,2400)
+## Where the passage meets the squeeze system (the tunnel's local entrance, in world space).
+const PASSAGE_END: Vector2 = Vector2(49700,5250)
+## The far chamber's open water, past the squeeze. DC-4 places the first-contact site here.
+const FAR_CHAMBER: Vector2 = Vector2(54000,5250)
+const TUNNELS: TunnelSetProfile = preload("res://resources/world/drowned_caves_tunnels.tres")
+# Rock masses, in order. Index 5 is the squeeze mass: the tunnel profile replaces it by index.
+const SHAPES: Array[Rect2] = [
+	Rect2(41800,3800,14400,200),Rect2(41800,6400,14400,200),Rect2(41800,3800,200,2800),Rect2(55600,3800,300,2800),
+	Rect2(44800,4000,300,1100),
+	Rect2(49800,4000,2000,2400),
+	Rect2(47000,4000,2800,1000),Rect2(47000,5500,2800,900),
+	Rect2(53400,4000,300,1100)]
 var bodies: Array[GrayboxRock] = []
 func configure(paint: ShaderMaterial) -> void:
 	var water: Polygon2D = Polygon2D.new()
@@ -32,18 +43,33 @@ func configure(paint: ShaderMaterial) -> void:
 	anchor.scale = Vector2.ONE*220.0/anchor.texture.get_width()
 	add_child(anchor)
 	set_enabled(false)
-static func contours() -> Array[PackedVector2Array]:
-	# Outer shell: ceiling, floor, west wall and the sealed east wall. The chamber is open
-	# water from x 42200 to 47000. A stalactite column (the navigational landmark) hangs
-	# from the ceiling. The east passage is cut between an upper and a lower block.
-	var shapes: Array[Rect2] = [
-		Rect2(41800,3800,8400,200),Rect2(41800,6400,8400,200),Rect2(41800,3800,200,2800),Rect2(49900,3800,300,2800),
-		Rect2(44800,4000,300,1100),
-		Rect2(47000,4000,2900,1000),Rect2(47000,5500,2900,900)]
+static func base_contours() -> Array[PackedVector2Array]:
 	var result: Array[PackedVector2Array] = []
-	for index: int in range(shapes.size()):
-		result.append(SunlitSurveyData.rough_contour(SunlitSurveyData._rect(shapes[index]),index+300))
+	for index: int in range(SHAPES.size()):
+		result.append(SunlitSurveyData.rough_contour(SunlitSurveyData._rect(SHAPES[index]),index+300))
 	return result
+## Every solid outline, with the squeeze mass carved to its authored tunnel system.
+static func contours() -> Array[PackedVector2Array]:
+	return TwilightTunnelCatalog.contours(base_contours(),TUNNELS)
+## The authored route length between two world points along a path of points.
+static func path_length(path: PackedVector2Array) -> float:
+	return TunnelProfile.length(path)
+## Anchor to the far chamber by the always-open long route (down the squeeze), in world space.
+static func long_route() -> PackedVector2Array:
+	var profile: TunnelProfile = TUNNELS.systems[0] as TunnelProfile
+	var route: PackedVector2Array = profile.approach.duplicate()
+	route.append_array(profile.world_path(profile.main))
+	route.append(FAR_CHAMBER)
+	return route
+## Anchor to the far chamber through the gated shortcut, in world space.
+static func shortcut_route() -> PackedVector2Array:
+	var profile: TunnelProfile = TUNNELS.systems[0] as TunnelProfile
+	var route: PackedVector2Array = profile.approach.duplicate()
+	route.append(profile.origin+profile.main[0])
+	route.append_array(profile.world_path(profile.shortcut))
+	route.append(profile.origin+profile.main[-1])
+	route.append(FAR_CHAMBER)
+	return route
 func set_enabled(value: bool) -> void:
 	visible = value
 	for body: GrayboxRock in bodies: body.collision_layer = 1 if value else 0

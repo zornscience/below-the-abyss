@@ -12,7 +12,7 @@ func configure(game: ShelfPrototype) -> void:
 	scene.excavation.geometry_changed.connect(func() -> void: _dirty = true)
 func _physics_process(delta: float) -> void:
 	if scene==null or scene.chapter==null: return
-	if not scene.chapter.active and (scene.journey==null or not scene.journey.active()): return
+	if not scene.chapter.active and (scene.journey==null or not scene.journey.in_field()): return
 	_elapsed += delta
 	if _elapsed<0.05: return
 	_elapsed = 0.0

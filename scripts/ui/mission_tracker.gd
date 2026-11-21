@@ -26,6 +26,11 @@ func setup(value: ShelfPrototype) -> void:
 	refresh()
 func refresh() -> void:
 	if scene==null: return
+	if scene.journey!=null and scene.journey.caves():
+		title.text = "◇ THE DROWNED CAVES"
+		detail.text = scene.journey.caves_guidance()
+		_reflow()
+		return
 	if scene.journey!=null and scene.journey.active():
 		title.text = "◇ THE TWILIGHT SHELF"
 		detail.text = scene.journey.expedition.guidance()

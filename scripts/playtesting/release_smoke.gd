@@ -130,6 +130,10 @@ func _verify_depth_gate(game: ShelfPrototype) -> void:
 		get_tree().quit(1)
 		return
 	print("RELEASE_DEPTH_GATE_PASS")
+	flow.acknowledge()
+	if not await _verify_caves(game):
+		get_tree().quit(1)
+		return
 	var proof: CombatBoxReleaseProof = CombatBoxReleaseProof.new()
 	get_tree().root.add_child(proof)
 	proof.start(game)
@@ -324,3 +328,71 @@ func _commission_twilight(game: ShelfPrototype) -> bool:
 	game.revision.ui.radio_page.hide()
 	game.route_layer.hide()
 	return game.journey.active()
+
+## DC-1: the Drowned Caves foundation in this exact binary. Claims the Twilight debrief through
+## the real evidence, choice, tether and claim path, descends through the real journey call, then
+## checks the phase, region, pressure rating, geometry and anchor return. assert() is stripped
+## from exports, so every check is a plain statement and a push_error.
+func _verify_caves(game: ShelfPrototype) -> bool:
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	var vessel: SubmarineController = game.submarine
+	vessel.set_simulation_enabled(false)
+	if game.saves.transfer_chapter("twilight",false)!=OK or not game.journey.active():
+		push_error("RELEASE_CAVES_WIRING_FAIL twilight resume save_status="+game.saves.status)
+		return false
+	for id: StringName in [&"twilight-severed-cable",&"twilight-mara-log-one",&"twilight-whaler-marking",&"twilight-net-survey"]:
+		vessel.global_position = game.research.definition(id).position-Vector2(90,0)
+		vessel.velocity = Vector2.ZERO
+		vessel.set_simulation_enabled(true)
+		await get_tree().physics_frame
+		var requested: Error = vessel.scanner.request_scan(id)
+		var advanced: Error = vessel.scanner.advance(5.0)
+		vessel.set_simulation_enabled(false)
+		if requested!=OK or advanced!=OK or not game.research.is_completed(id):
+			push_error("RELEASE_CAVES_WIRING_FAIL evidence "+String(id))
+			return false
+	vessel.global_position = TwilightShelfData.NET-Vector2(90,0)
+	if game.story.apply_choice(TwilightShelfData.RELEASE)!=OK:
+		push_error("RELEASE_CAVES_WIRING_FAIL sentinel choice")
+		return false
+	game.revision.ui.radio_page.hide()
+	vessel.global_position = TwilightShelfLayout.SPAWN
+	if game.saves.transfer_chapter("refit",true)!=OK or game.missions.claim(TwilightShelfData.MISSION)!=OK or not game.journey.caves_unlocked():
+		push_error("RELEASE_CAVES_WIRING_FAIL debrief claim save_status="+game.saves.status)
+		return false
+	game.journey.caves_entry_enabled = true
+	if not game.journey.caves_entry_available():
+		push_error("RELEASE_CAVES_WIRING_FAIL entry offer")
+		return false
+	await game.journey.descend_caves()
+	if args.has("--break-caves-wiring"): game.journey.caves_layout.set_enabled(false)
+	var expected_rating: float = game.revision.tree.hull_ratings[int(game.revision.campaign.ranks.hull)]+ChapterJourney.CAVES_PRESSURE_FIT.baseline_safe_depth_m-game.revision.tree.hull_ratings[0]
+	var solid: bool = game.journey.caves_layout.visible and not game.journey.caves_layout.bodies.is_empty()
+	for rock: GrayboxRock in game.journey.caves_layout.bodies:
+		solid = solid and rock.collision_layer==1
+	var sealed: Vector2 = Vector2(float(DrownedCavesLayout.CAMERA.end.x)-50.0,DrownedCavesLayout.PASSAGE_END.y)
+	var open: bool = game.saves.position_clear(DrownedCavesLayout.SPAWN,0.0) and game.saves.position_clear(DrownedCavesLayout.PASSAGE_END,0.0) and not game.saves.position_clear(sealed,0.0)
+	if not game.journey.caves() or game.journey.active() or vessel.damage_system.get_maximum_depth_m()!=expected_rating or not solid or not open:
+		push_error("RELEASE_CAVES_WIRING_FAIL region caves=%s rating=%s solid=%s open=%s" % [game.journey.caves(),vessel.damage_system.get_maximum_depth_m(),solid,open])
+		return false
+	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
+	if not stored is Dictionary or stored.get("region_id")!=ExpeditionJourneyState.CAVES:
+		push_error("RELEASE_CAVES_WIRING_FAIL checkpoint region")
+		return false
+	vessel.global_position = DrownedCavesLayout.SPAWN
+	vessel.set_simulation_enabled(false)
+	await game.journey.return_to_station()
+	if not game.journey.at_station() or game.journey.caves():
+		push_error("RELEASE_CAVES_WIRING_FAIL anchor return save_status="+game.saves.status)
+		return false
+	# Leave Halcyon exactly as the oxygen check does, so the scene change that follows
+	# does not free a scene with an open dock interaction.
+	game.revision.ui.dock_page.hide()
+	game.station.end_interaction()
+	game.station_menu.hide()
+	# Flush deferred UI calls queued by the toggles above: the combat-box proof that follows
+	# changes scene, and a call that lands after the scene left the tree dereferences a null
+	# viewport (a segfault in a release export, a script error in a debug one).
+	for frame: int in range(2): await get_tree().process_frame
+	print("RELEASE_CAVES_WIRING_PASS")
+	return true

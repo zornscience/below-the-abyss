@@ -2,6 +2,7 @@ class_name ChapterJourney
 extends Node
 ## Scene-owned explicit transfers; existing mission/checkpoint/resource APIs own state.
 const PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/twilight_pressure_fit.tres")
+const CAVES_PRESSURE_FIT: ExpeditionPressureFit = preload("res://resources/story/drowned_caves_pressure_fit.tres")
 var scene: ShelfPrototype
 var tunnels: TwilightTunnels
 var habitat: TwilightHabitat
@@ -16,6 +17,10 @@ var _shallow_ping_cost: float
 var _shallow_torpedo_cost: float
 var _shallow_resources: SubmarineResourceConfig
 var layout: TwilightShelfLayout
+var caves_layout: DrownedCavesLayout
+## DC-1 foundation: the Drowned Caves hold only an entry chamber, so the descent is offered
+## only when a developer launches with --drowned-caves (tests and release smoke set it directly).
+var caves_entry_enabled: bool = OS.get_cmdline_user_args().has("--drowned-caves")
 var state: Dictionary = ExpeditionJourneyState.fresh()
 signal camera_settled
 var transitioning: bool = false
@@ -31,10 +36,13 @@ func setup(game: ShelfPrototype) -> void:
 	set_physics_process(false)
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
 	_pause_title = title.text if title!=null else "EXPEDITION / PAUSED"
-	assert(PRESSURE_FIT.is_valid())
+	assert(PRESSURE_FIT.is_valid() and CAVES_PRESSURE_FIT.is_valid())
 	layout = TwilightShelfLayout.new()
 	scene.region.add_child(layout)
 	layout.configure(scene.chapter.dressing.rocks._paint)
+	caves_layout = DrownedCavesLayout.new()
+	scene.region.add_child(caves_layout)
+	caves_layout.configure(scene.chapter.dressing.rocks._paint)
 	tunnels = TwilightTunnels.new()
 	layout.add_child(tunnels)
 	tunnels.setup(scene)
@@ -68,8 +76,22 @@ func active() -> bool:
 	return state.phase=="twilight"
 func at_station() -> bool:
 	return state.phase=="refit"
+func caves() -> bool:
+	return state.phase=="caves"
+## A deep chapter is being flown: the Twilight Shelf or the Drowned Caves.
+func in_field() -> bool:
+	return active() or caves()
+func pressure_fit() -> ExpeditionPressureFit:
+	return CAVES_PRESSURE_FIT if caves() else PRESSURE_FIT
 func near_tether() -> bool:
+	if caves(): return scene.submarine.global_position.distance_to(DrownedCavesLayout.SPAWN)<=180
 	return active() and scene.submarine.global_position.distance_to(TwilightShelfLayout.SPAWN)<=180
+func caves_unlocked() -> bool:
+	return scene.missions.snapshot().get(String(TwilightShelfData.MISSION),{}).get("state")=="claimed"
+func caves_entry_available() -> bool:
+	return caves_entry_enabled and at_station() and caves_unlocked()
+func caves_guidance() -> String:
+	return "◇ Foundation build · entry chamber only · no objectives yet · cave anchor returns to Halcyon"
 func can_finish() -> bool:
 	return scene.chapter.active and not scene.chapter.concluded() and scene.chapter.state() in ["accepted","completed"] \
 		and scene.research.is_completed(SunlitShallowsData.BUOY) and scene.story.resolved(LightBloomEncounter.ENCOUNTER)
@@ -106,9 +128,17 @@ func offer_deploy() -> void:
 func deploy() -> void:
 	if not scene.chapter.concluded(): return
 	await _transfer("twilight",not state.commissioned)
+func offer_caves() -> void:
+	if not caves_entry_available(): return
+	_show("THE DROWNED CAVES / FOUNDATION BUILD","Lantern-2 will be serviced and refitted with a 2,000 m pressure baseline, then lowered to the cave anchor at about 1,200 m. This build contains only the entry chamber and one sealed passage: there are no objectives, records or story yet. The cave anchor returns you to Halcyon.","Descend (foundation build)",descend_caves,&"BeginCaves")
+	(scene.revision.ui.find_child("StoryBack",true,false) as Button).text = "Stay at Halcyon"
+func descend_caves() -> void:
+	if not caves_entry_available(): return
+	await _transfer("caves",true)
 func offer_return() -> void:
 	if not near_tether(): return
-	_show("ASCENT TETHER / HALCYON TRANSFER","Return to Halcyon for repair, supplies and research refitting. Resume from this deployment pocket afterward; expedition records remain intact.","Return to Halcyon",return_to_station,&"ReturnHalcyon")
+	var title: String = "CAVE ANCHOR / HALCYON TRANSFER" if caves() else "ASCENT TETHER / HALCYON TRANSFER"
+	_show(title,"Return to Halcyon for repair, supplies and research refitting. Resume from this deployment pocket afterward; expedition records remain intact.","Return to Halcyon",return_to_station,&"ReturnHalcyon")
 	(scene.revision.ui.find_child("StoryBack",true,false) as Button).text = "Stay here"
 func return_to_station() -> void:
 	if not near_tether(): return
@@ -116,6 +146,8 @@ func return_to_station() -> void:
 func resume_expedition() -> void:
 	if not at_station(): return
 	await _transfer("twilight",false)
+func _arrival_notice(phase: String) -> void:
+	if phase=="caves": scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. This foundation build has only the entry chamber and a sealed passage. Nothing here is required; the anchor returns to Halcyon.","Wick")
 func _transfer(phase: String,restock: bool) -> void:
 	if transitioning: return
 	var first_deployment: bool = phase=="twilight" and not state.commissioned
@@ -131,6 +163,7 @@ func _transfer(phase: String,restock: bool) -> void:
 	if at_station(): show_station()
 	else:
 		scene.resume_route()
+		_arrival_notice(phase)
 		if first_deployment: scene.revision.ui.notifications.enqueue("twilight-arrival","Lantern-2 is commissioned for the deeper shelf. The ascent tether is behind us. The eastern cable is broken; the western gallery holds older wrecks. Investigate either approach, keep the records and return here for Halcyon.","Wick")
 func show_station() -> void:
 	scene.station.interact(scene.submarine)
@@ -138,15 +171,16 @@ func show_station() -> void:
 	scene.revision.ui.show_dock()
 func prepare(value: Dictionary) -> void:
 	state = value.duplicate(true)
-	scene.exploration_map.presentation_name = "TWILIGHT SHELF" if active() else "CONTINENTAL SHELF"
-	scene.chapter._activate(not active() and state.phase!="prototype")
+	scene.exploration_map.presentation_name = "TWILIGHT SHELF" if active() else ("DROWNED CAVES" if caves() else "CONTINENTAL SHELF")
+	scene.chapter._activate(not in_field() and state.phase!="prototype")
 	layout.set_enabled(active())
+	caves_layout.set_enabled(caves())
 	habitat.set_enabled(active())
 	tunnels.set_enabled(active())
 	hunt.set_enabled(active())
 	expedition.set_enabled(active())
 	var pools: SubmarineResourceSystem = scene.submarine.resource_system
-	var profile: SubmarineResourceConfig = preload("res://resources/balance/twilight_resources.tres") if active() else _shallow_resources
+	var profile: SubmarineResourceConfig = preload("res://resources/balance/twilight_resources.tres") if in_field() else _shallow_resources
 	if pools.configuration!=profile:
 		var battery: float = pools.battery
 		var oxygen: float = pools.oxygen
@@ -155,15 +189,28 @@ func prepare(value: Dictionary) -> void:
 	if not ACTION_COSTS.is_valid():
 		push_error("Invalid Twilight action costs")
 		return
-	var ping_result: Error = scene.submarine.sonar.set_battery_cost(ACTION_COSTS.ping_battery if active() else _shallow_ping_cost)
-	var torpedo_result: Error = scene.torpedoes.set_battery_cost(ACTION_COSTS.torpedo_battery if active() else _shallow_torpedo_cost)
+	var ping_result: Error = scene.submarine.sonar.set_battery_cost(ACTION_COSTS.ping_battery if in_field() else _shallow_ping_cost)
+	var torpedo_result: Error = scene.torpedoes.set_battery_cost(ACTION_COSTS.torpedo_battery if in_field() else _shallow_torpedo_cost)
 	if ping_result!=OK or torpedo_result!=OK: push_error("Regional action cost selection failed")
-	scene.chapter.dressing.set_legacy_hidden(active() or scene.chapter.active)
-	if not active():
+	scene.chapter.dressing.set_legacy_hidden(in_field() or scene.chapter.active)
+	if not in_field():
 		scene.exploration_map.canvas.chart_caption = ""
 		scene.exploration_map.canvas.public_anchor = Vector2.INF
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
-	if title!=null: title.text = "TWILIGHT SHELF / PAUSED" if active() else _pause_title
+	if title!=null: title.text = "TWILIGHT SHELF / PAUSED" if active() else ("DROWNED CAVES / PAUSED" if caves() else _pause_title)
+	if caves():
+		(scene.route_menu.get_node("%Brief") as Label).text = "Foundation build: the entry chamber and one sealed passage only. Nothing here is required. Return through the cave anchor for Halcyon."
+		(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2"
+		scene.region.spawn.position = DrownedCavesLayout.SPAWN
+		scene.region.camera_bounds = DrownedCavesLayout.CAMERA
+		scene.region.configure_camera(scene.submarine.get_node("Camera2D") as Camera2D)
+		scene.missions.progress_filter = func(id: StringName) -> bool: return id==TwilightShelfData.MISSION
+		scene.narrative.entries_provider = entries
+		scene.narrative.conclusion_provider = func() -> bool: return false
+		scene.narrative.debrief_ready_provider = func() -> bool: return false
+		scene.narrative.guidance_provider = caves_guidance
+	elif scene.narrative.guidance_provider==caves_guidance:
+		scene.narrative.guidance_provider = expedition.guidance
 	if active():
 		(scene.route_menu.get_node("%Brief") as Label).text = "Trace the severed line, recover Mara's field log, inspect the western whaler and resolve the trapped contact in either order. Optional loggers are not required. Return through the ascent tether for Halcyon refit and debrief."
 		(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2"
@@ -177,7 +224,15 @@ func prepare(value: Dictionary) -> void:
 		scene.narrative.guidance_provider = expedition.guidance
 	refresh()
 func refresh() -> void:
-	if active():
+	if caves():
+		scene.exploration_map.presentation_bounds = Rect2(DrownedCavesLayout.CAMERA)
+		scene.exploration_map.canvas.has_report = false
+		scene.exploration_map.canvas.survey_enabled = false
+		scene.exploration_map.canvas.chart_caption = "DROWNED CAVES / SURVEYED EXTENT"
+		scene.exploration_map.canvas.public_anchor = DrownedCavesLayout.SPAWN
+		(scene.exploration_map.find_child("Legend",true,false) as Label).text = "▲ YOU / vessel position\n◇ CAVE ANCHOR / Halcyon access\n— Surveyed extent"
+		scene.exploration_map.refresh()
+	elif active():
 		scene.exploration_map.presentation_bounds = Rect2(TwilightShelfLayout.CAMERA)
 		scene.exploration_map.canvas.has_report = false
 		scene.exploration_map.canvas.survey_enabled = false

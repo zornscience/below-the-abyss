@@ -1,8 +1,9 @@
 # The Drowned Caves (Zone 3) — chapter brief
 
-**Status: DRAFT FOR USER APPROVAL. No implementation is authorised by this document.**
-Each numbered issue below becomes one issue and one PR after the user approves this brief and
-answers the open decisions in §4. All numbers are provisional and live in Resources, never constants.
+**Status: decisions A–D approved by the designer on 2026-11-21 ("go with your recommended defaults");
+E–G stand at their recommended defaults. DC-1 is authorised. DC-2 to DC-6 each start after the previous
+one merges with green CI.**
+Each numbered issue below becomes one issue and one PR. All numbers are provisional and live in Resources, never constants.
 Issue numbers (DC-1…DC-6) are placeholders; real BTA numbers are assigned on approval.
 
 ## 1. Why this exists
@@ -107,6 +108,6 @@ packages smoked in CI.
 
 ## 6. What approval means
 
-Approving this brief authorises DC-1 only, once decisions A–D have answers. Each later issue starts after the
+Approval authorises DC-1 only (decisions A–D answered with the recommended defaults). Each later issue starts after the
 previous one merges and its CI is green. Nothing here changes `GDD.md`, the save schema, the Story Bible or
 any existing record ID.

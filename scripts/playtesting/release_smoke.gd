@@ -379,6 +379,8 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 		return false
 	if not _verify_caves_guide(game):
 		return false
+	if not await _verify_caves_site(game):
+		return false
 	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
 	if not stored is Dictionary or stored.get("region_id")!=ExpeditionJourneyState.CAVES:
 		push_error("RELEASE_CAVES_WIRING_FAIL checkpoint region")
@@ -446,4 +448,37 @@ func _verify_caves_guide(game: ShelfPrototype) -> bool:
 			push_error("RELEASE_CAVES_GUIDE_WIRING_FAIL light in rock "+str(light))
 			return false
 	print("RELEASE_CAVES_GUIDE_WIRING_PASS")
+	return true
+
+## DC-4 in this exact binary: the first-contact records are in the research catalog and the save validator's
+## allowed list, their scan targets exist and are live in the caves, and a real scan of the required record
+## completes, delivers its authored text and commits a checkpoint the schema accepts. Plain statements only.
+func _verify_caves_site(game: ShelfPrototype) -> bool:
+	if OS.get_cmdline_user_args().has("--break-caves-site-wiring"): game.journey.caves_site.set_enabled(false)
+	var vessel: SubmarineController = game.submarine
+	var ids: Array[StringName] = DrownedCavesData.ids()
+	if ids.size()!=4:
+		push_error("RELEASE_CAVES_SITE_WIRING_FAIL records")
+		return false
+	for id: StringName in ids:
+		var target: ScientificScanTarget = game.region.get_node_or_null(String(id)) as ScientificScanTarget
+		if game.research.definition(id)==null or target==null or not target.scan_enabled or not game.journey.caves_site.enabled:
+			push_error("RELEASE_CAVES_SITE_WIRING_FAIL target "+String(id))
+			return false
+	var required: StringName = DrownedCavesData.REQUIRED
+	vessel.global_position = DrownedCavesData.record(required).at-Vector2(90,0)
+	vessel.velocity = Vector2.ZERO
+	vessel.set_simulation_enabled(true)
+	await get_tree().physics_frame
+	var requested: Error = vessel.scanner.request_scan(required)
+	var advanced: Error = vessel.scanner.advance(5.0)
+	vessel.set_simulation_enabled(false)
+	var text: String = String(game.revision.ui.notifications.texts.get(String(required),""))
+	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
+	var decoded: Error = ExpeditionSchema.decode(stored.duplicate(true)).error if stored is Dictionary else ERR_INVALID_DATA
+	var saved: bool = stored is Dictionary and String(required) in stored.progress.research
+	if requested!=OK or advanced!=OK or not game.research.is_completed(required) or text!=String(DrownedCavesData.record(required).text) or not saved or decoded!=OK:
+		push_error("RELEASE_CAVES_SITE_WIRING_FAIL scan requested=%s completed=%s text=%s saved=%s decoded=%s" % [error_string(requested),game.research.is_completed(required),text==String(DrownedCavesData.record(required).text),saved,error_string(decoded)])
+		return false
+	print("RELEASE_CAVES_SITE_WIRING_PASS")
 	return true

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone3-crystal-leave"
+encounter_id = &"zone3-memory-crystal"
+resonance_delta = 15
+flags = Array[StringName]([&"zone3-crystal-left", &"zone3-listeners-noticed"])
+action_text = "Leave the crystal in its niche"
+response_text = "You leave the crystal where it rests. The light inside it steadies, as if something had noticed.\n\nWick: The marks in the crystal changed once, then went still. Something is listening now. I do not think it minds.\n\nOkafor: Thank you."

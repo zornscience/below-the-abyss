@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChoiceData" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/story/choice_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+stable_id = &"zone3-crystal-take"
+encounter_id = &"zone3-memory-crystal"
+resonance_delta = -15
+flags = Array[StringName]([&"zone3-crystal-taken", &"zone3-keepers-cold"])
+action_text = "Take the crystal for Tethys"
+response_text = "The crystal comes free with a sound like a long breath. Behind you the stone of the niche gives way and the shrine closes over with rubble.\n\nWick: The light in the crystal has gone out. Tethys's calibration is aboard: sonar range +200 units, once. Something that was warm in this water is not warm now.\n\nOkafor: I hope it was worth it.\n\nCrane: It was."

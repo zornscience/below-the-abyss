@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StoryChoiceCatalog" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="StoryChoiceCatalog" load_steps=10 format=3]
 [ext_resource type="Script" path="res://scripts/story/story_choice_catalog.gd" id="1"]
 [ext_resource type="Resource" path="res://resources/story/light_bloom_observe.tres" id="2"]
 [ext_resource type="Resource" path="res://resources/story/light_bloom_collect.tres" id="3"]
@@ -6,7 +6,9 @@
 [ext_resource type="Resource" path="res://resources/story/sentinel_release.tres" id="release"]
 [ext_resource type="Resource" path="res://resources/story/sentinel_capture.tres" id="capture"]
 [ext_resource type="Resource" path="res://resources/story/sentinel_lost.tres" id="lost"]
+[ext_resource type="Resource" path="res://resources/story/crystal_leave.tres" id="crystal_leave"]
+[ext_resource type="Resource" path="res://resources/story/crystal_take.tres" id="crystal_take"]
 [resource]
 script = ExtResource("1")
 extra_flags = Array[StringName]([&"zone2-released-sentinel-lost"])
-choices = Array[ExtResource("4_choice")]([ExtResource("2"), ExtResource("3"), ExtResource("release"), ExtResource("capture"), ExtResource("lost")])
+choices = Array[ExtResource("4_choice")]([ExtResource("2"), ExtResource("3"), ExtResource("release"), ExtResource("capture"), ExtResource("lost"), ExtResource("crystal_leave"), ExtResource("crystal_take")])

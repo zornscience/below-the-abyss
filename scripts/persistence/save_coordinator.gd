@@ -392,6 +392,13 @@ func commit_story(value: Dictionary, choice_id: StringName) -> Error:
 			if not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) or _scene.submarine.hull_system.hull<=0 or _scene.journey.unsafe_at(_scene.submarine.global_position): return ERR_UNAVAILABLE
 			candidate.player = snapshot().player
 			candidate.route = snapshot().route
+		if choice.encounter_id==DrownedCavesData.CRYSTAL_ENCOUNTER:
+			# The shrine decision: only in the caves, only beside the shrine, only in clear water.
+			if _scene.journey==null or not _scene.journey.caves(): return ERR_UNAVAILABLE
+			if not _scene.journey.caves_shrine.near_shrine(): return ERR_UNAUTHORIZED
+			if not position_clear(_scene.submarine.global_position,_scene.submarine.rotation) or _scene.submarine.hull_system.hull<=0: return ERR_UNAVAILABLE
+			candidate.player = snapshot().player
+			candidate.route = snapshot().route
 		if choice.research_record_id!=&"" and String(choice.research_record_id) not in candidate.progress.research:
 			candidate.progress.research.append(String(choice.research_record_id))
 			candidate.progress.research.sort()

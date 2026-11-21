@@ -23,6 +23,7 @@ var caves_layout: DrownedCavesLayout
 var caves_tunnels: TwilightTunnels
 var caves_guide: DrownedCavesGuide
 var caves_site: DrownedCavesSite
+var caves_shrine: DrownedCavesShrine
 ## DC-1 foundation: the Drowned Caves hold only an entry chamber, so the descent is offered
 ## only when a developer launches with --drowned-caves (tests and release smoke set it directly).
 var caves_entry_enabled: bool = OS.get_cmdline_user_args().has("--drowned-caves")
@@ -84,6 +85,9 @@ func setup(game: ShelfPrototype) -> void:
 	caves_site = DrownedCavesSite.new()
 	caves_layout.add_child(caves_site)
 	caves_site.setup(scene,self)
+	caves_shrine = DrownedCavesShrine.new()
+	caves_layout.add_child(caves_shrine)
+	caves_shrine.setup(scene,self)
 	state = scene.saves._state.journey.duplicate(true)
 	scene.expedition_log.finish_available = can_finish
 	scene.expedition_log.finish_requested.connect(offer_finish)
@@ -111,6 +115,7 @@ func caves_entry_available() -> bool:
 func refresh_caves_guide() -> void:
 	caves_guide.set_enabled(caves() and DrownedCavesGuide.available(scene.story))
 func caves_guidance() -> String:
+	if caves_site.is_required_done() and not caves_shrine.resolved(): return "✓ Mara's log recorded · the paintings, glyph wall and a crystal shrine are optional · return to the anchor when ready"
 	if caves_site.is_required_done(): return "✓ Mara's log recorded · the paintings and glyph wall are optional · return to the anchor when ready"
 	if DrownedCavesGuide.available(scene.story): return "◇ Follow the freed animal's lights east, or not · reach the far chamber and scan Mara's recorder · watch oxygen"
 	return "◇ Follow the passage east · reach the far chamber and scan Mara's recorder · squeeze through or blast the shortcut · watch oxygen"
@@ -203,6 +208,7 @@ func prepare(value: Dictionary) -> void:
 	caves_layout.set_enabled(caves())
 	caves_tunnels.set_enabled(caves())
 	caves_site.set_enabled(caves())
+	caves_shrine.set_enabled(caves())
 	refresh_caves_guide()
 	habitat.set_enabled(active())
 	tunnels.set_enabled(active())

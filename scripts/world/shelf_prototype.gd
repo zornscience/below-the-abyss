@@ -613,7 +613,7 @@ func _physics_process(delta: float) -> void:
 	if submarine.is_physics_processing():
 		_station_failure_remaining = maxf(0.0,_station_failure_remaining-delta)
 		if chapter!=null and chapter.active: chapter.guide.ambient.advance(delta)
-		elif journey==null or not journey.active(): ambient.advance(delta)
+		elif journey==null or not journey.in_field(): ambient.advance(delta)
 		route_check.sample(region.base_zone.contains_world_position(submarine.global_position),
 			region.point_of_interest_zone.contains_world_position(submarine.global_position), delta)
 		_refresh_route_status()

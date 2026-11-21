@@ -81,6 +81,7 @@ func entry(id: StringName) -> NarrativeEntry:
 	return null
 func primary_title() -> String:
 	if scene.journey!=null and scene.journey.state.phase=="prototype": return "Continue prototype expedition"
+	if scene.journey!=null and scene.journey.caves(): return "Continue The Drowned Caves"
 	if scene.journey!=null and scene.journey.state.phase!="sunlit": return "Continue The Twilight Shelf"
 	return "Begin The Sunlit Shallows" if state()=="available" else "Continue The Sunlit Shallows"
 func start() -> void:

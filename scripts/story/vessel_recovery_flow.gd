@@ -95,11 +95,11 @@ func accept_ready() -> bool:
 	return pending and _shown_seconds >= FADE_SECONDS + ACCEPT_DELAY_SECONDS
 
 
-## Sunlit chapter or the Twilight expedition. Legacy prototype modes keep no failure flow.
+## Sunlit chapter, the Twilight expedition or the Drowned Caves. Legacy prototype modes keep no failure flow.
 func campaign_active() -> bool:
 	if scene == null or scene.journey == null:
 		return false
-	return scene.journey.active() or (scene.chapter != null and scene.chapter.active)
+	return scene.journey.in_field() or (scene.chapter != null and scene.chapter.active)
 
 
 func _physics_process(delta: float) -> void:

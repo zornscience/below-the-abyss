@@ -81,6 +81,13 @@ Merged since:
   not re-verified here.
 - No local full run was made while updating this file. Claude's last own full verification is older (`c773f4d`) and is superseded by the CI run above.
 - No human playtest of the combat test box exists. No human has played the oxygen recovery flow.
+- **Drowned Caves (Zone 3), in progress.** `docs/design/drowned-caves-brief.md` (decisions A–D approved
+  2026-11-21) splits the chapter into DC-1…DC-6. **DC-1 (region foundation, PR #60)** adds journey phase
+  `caves`, a 2,000 m pressure fit, a graybox chamber with one sealed passage, entry from Halcyon after the
+  Twilight debrief is claimed, anchor return and recovery. It is **hidden behind `--drowned-caves`** and has no
+  objectives or story; evidence in `docs/testing/dc-1/README.md`. DC-2 to DC-6 are not started. Known hazard:
+  a release export segfaults if a scene change lands in the same frame as a simulation toggle (deferred
+  `_layout_tutorial` / `gui_get_focus_owner` reach a null viewport); only the release smoke reaches it.
 
 ## 5. Design direction and decisions (designer-approved unless marked)
 

@@ -228,6 +228,7 @@ func show_dock(tab: String = "home") -> void:
 		_button(row,"Research technology",func() -> void: show_dock("technology")).name = "Technology"
 		_button(row,"Expedition log" if canonical else "Expedition logs",func() -> void: show_dock("logs")).name = "DockLogs"
 		if revision.scene.journey!=null and revision.scene.journey.at_station(): _button(_dock_body,"Twilight expedition debrief",revision.scene.journey.expedition.show_debrief).name = "TwilightDebrief"
+		if revision.scene.journey!=null and revision.scene.journey.caves_entry_available(): _button(_dock_body,"Descend to the Drowned Caves (foundation build)",revision.scene.journey.offer_caves).name = "CavesDescent"
 		elif canonical: _button(_dock_body,"First expedition debrief",revision.scene.chapter.show_debrief).name = "ChapterDebrief"
 		_button(row,"Radio archive",func() -> void: show_dock("radio"))
 		if canonical and revision.scene.chapter.concluded() and revision.scene.journey!=null and not revision.scene.journey.at_station():

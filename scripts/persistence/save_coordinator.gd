@@ -411,7 +411,7 @@ func commit_research_checkpoint(proposed: Array[StringName]) -> Error:
 	candidate.progress.research = _strings(proposed)
 	if not ExpeditionSchema.valid_progress(candidate.progress): return ERR_INVALID_DATA
 	var awards: Array[StringName] = []
-	if (_scene.chapter!=null and _scene.chapter.active) or (_scene.journey!=null and _scene.journey.active()):
+	if (_scene.chapter!=null and _scene.chapter.active) or (_scene.journey!=null and _scene.journey.in_field()):
 		for id: StringName in proposed:
 			if not _scene.research.is_completed(id):
 				if not _scene.submarine.scanner.eligible(id): return ERR_UNAUTHORIZED
@@ -509,10 +509,12 @@ func finish_sunlit_return() -> Error:
 	return result
 
 func transfer_chapter(phase: String,restock: bool) -> Error:
-	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing() or phase not in ["twilight","refit"]: return ERR_UNAVAILABLE
+	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing() or phase not in ["twilight","refit","caves"]: return ERR_UNAVAILABLE
 	var old: Dictionary = journey_snapshot()
 	if phase=="refit" and (not _scene.journey.near_tether() or not restock): return ERR_UNAVAILABLE
 	if phase=="twilight" and (old.phase not in ["sunlit","refit"] or restock==old.commissioned): return ERR_UNAVAILABLE
+	# The Drowned Caves: only from Halcyon, only after the Twilight debrief is claimed, fully supplied.
+	if phase=="caves" and (old.phase!="refit" or not restock or not _scene.journey.caves_unlocked()): return ERR_UNAVAILABLE
 	if not _scene.chapter.concluded(): return ERR_UNAVAILABLE
 	var service: Dictionary = _scene.station.quote_arrival_service(_scene.submarine) if phase=="refit" else {}
 	if phase=="refit" and not service.has("after"): return service.error
@@ -526,7 +528,7 @@ func transfer_chapter(phase: String,restock: bool) -> Error:
 		var twilight_record: Dictionary = candidate.progress.missions[String(TwilightShelfData.MISSION)]
 		if twilight_record.state=="available": twilight_record.state = "accepted"
 		candidate.region_id = ExpeditionJourneyState.region(candidate.journey)
-		_transfer_player(candidate,TwilightShelfLayout.SPAWN,restock)
+		_transfer_player(candidate,DrownedCavesLayout.SPAWN if phase=="caves" else TwilightShelfLayout.SPAWN,restock)
 	var completed_now: bool = phase=="refit" and _refit_completes(candidate)
 	var result: Error = _write(candidate,"Chapter transfer committed; expedition progress preserved.")
 	if result!=OK: return result
@@ -560,7 +562,7 @@ func _refit_completes(candidate: Dictionary) -> bool:
 ## vessel to the Halcyon berth. Written through the atomic checkpoint path, then applied.
 func recover_vessel() -> Error:
 	if _scene.journey==null or _busy or not _ready_to_write or _scene.submarine.is_physics_processing(): return ERR_UNAVAILABLE
-	var twilight: bool = _scene.journey.active()
+	var twilight: bool = _scene.journey.in_field()
 	if not twilight and (_scene.chapter==null or not _scene.chapter.active): return ERR_UNAVAILABLE
 	var candidate: Dictionary
 	var completed_now: bool = false

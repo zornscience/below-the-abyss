@@ -75,7 +75,7 @@ static func decode(value: Variant) -> Dictionary:
 	if version<9:
 		if data.has("journey"): return {"error":ERR_INVALID_DATA}
 		data.journey = ExpeditionJourneyState.fresh()
-	if data.size() != 12 or not StoryState.valid_snapshot(data.get("story")) or not valid_prototype(data.get("prototype")) or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id not in [REGION,ExpeditionJourneyState.TWILIGHT] \
+	if data.size() != 12 or not StoryState.valid_snapshot(data.get("story")) or not valid_prototype(data.get("prototype")) or not data.get("legacy_conclusion") is bool or not ExcavationState.valid(data.get("terrain")) or not data.get("format") is String or data.format != "bta-expedition" or not data.get("region_id") is String or data.region_id not in [REGION,ExpeditionJourneyState.TWILIGHT,ExpeditionJourneyState.CAVES] \
 		or not data.get("legacy_imported") is bool or data.legacy_imported != true or not data.get("player") is Dictionary \
 		or not data.get("route") is Dictionary or not valid_progress(data.get("progress")):
 		return {"error": ERR_INVALID_DATA}

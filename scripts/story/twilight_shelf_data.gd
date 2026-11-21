@@ -38,10 +38,18 @@ static func record(id: StringName) -> Dictionary:
 	return {}
 static func knows(id: StringName) -> bool:
 	return not record(id).is_empty()
+## Every scan record in the shared catalogs: Twilight's plus the Drowned Caves' (DC-4). The save
+## validator derives its allowed ids from these catalogs, so a cave record is valid in a checkpoint.
+## all_records() stays Twilight-only: its callers build Twilight subjects, echoes and log entries.
+static func catalog_records() -> Array[Dictionary]:
+	var result: Array[Dictionary] = all_records()
+	result.append_array(DrownedCavesData.records())
+	return result
 static func discoveries() -> DiscoveryCatalog:
 	var catalog: DiscoveryCatalog = ShelfChapterData.discoveries(true)
-	catalog.survey_bounds = Rect2(0,0,39000,5200)
-	for item: Dictionary in all_records():
+	# Wide enough for the Drowned Caves' records (x to about 56,000, y to 8,000 at 0.25 m per unit).
+	catalog.survey_bounds = Rect2(0,0,57000,8200)
+	for item: Dictionary in catalog_records():
 		var point: PointOfInterest = PointOfInterest.new()
 		point.stable_id = StringName(item.id+"-poi")
 		point.sonar_target_id = StringName(item.id+"-echo")
@@ -51,7 +59,7 @@ static func discoveries() -> DiscoveryCatalog:
 	return catalog
 static func research() -> ResearchCatalog:
 	var catalog: ResearchCatalog = ShelfChapterData.research(true)
-	for item: Dictionary in all_records():
+	for item: Dictionary in catalog_records():
 		var definition: ScanDefinition = ScanDefinition.new()
 		definition.stable_id = StringName(item.id)
 		definition.required_poi_id = StringName(item.id+"-poi")

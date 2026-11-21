@@ -415,6 +415,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				journey.offer_return()
 			elif journey!=null and journey.expedition.interact():
 				pass
+			elif journey!=null and journey.caves_shrine.interact():
+				pass
 			elif station.is_in_range(submarine.global_position):
 				open_station()
 			elif chapter!=null and chapter.can_review_buoy():

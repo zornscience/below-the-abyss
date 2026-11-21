@@ -63,7 +63,7 @@ func setup(owner_scene: ShelfPrototype) -> void:
 func can_write() -> bool:
 	return scene.saves!=null and scene.saves.can_write()
 func capabilities() -> Dictionary:
-	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)]+(100.0 if "twilight-specimen" in campaign.awards else 0.0),"hull":tree.hull_ratings[int(campaign.ranks.hull)]+((scene.journey.pressure_fit() if scene.journey!=null else ChapterJourney.PRESSURE_FIT).baseline_safe_depth_m-tree.hull_ratings[0] if scene.journey!=null and scene.journey.state.commissioned else 0.0),"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
+	return {"sonar":tree.sonar_radii[int(campaign.ranks.sonar)]+(100.0 if "twilight-specimen" in campaign.awards else 0.0)+(DrownedCavesData.CALIBRATION.sonar_range_bonus if scene.story!=null and scene.story.has_decision(DrownedCavesData.CRYSTAL_TAKE) else 0.0),"hull":tree.hull_ratings[int(campaign.ranks.hull)]+((scene.journey.pressure_fit() if scene.journey!=null else ChapterJourney.PRESSURE_FIT).baseline_safe_depth_m-tree.hull_ratings[0] if scene.journey!=null and scene.journey.state.commissioned else 0.0),"torpedo_acceleration":tree.torpedo_accelerations[int(campaign.ranks.torpedo_acceleration)],"torpedo_area":tree.torpedo_radii[int(campaign.ranks.torpedo_area)],"engine":tree.engine_accelerations[int(campaign.ranks.engine)]}
 func snapshot() -> Dictionary:
 	return {"ammunition":scene.torpedoes.ammunition,"campaign":campaign.duplicate(true)}
 func restore(value: Dictionary) -> void:

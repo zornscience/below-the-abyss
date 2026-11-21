@@ -381,6 +381,8 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 		return false
 	if not await _verify_caves_site(game):
 		return false
+	if not _verify_caves_shrine(game):
+		return false
 	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
 	if not stored is Dictionary or stored.get("region_id")!=ExpeditionJourneyState.CAVES:
 		push_error("RELEASE_CAVES_WIRING_FAIL checkpoint region")
@@ -481,4 +483,42 @@ func _verify_caves_site(game: ShelfPrototype) -> bool:
 		push_error("RELEASE_CAVES_SITE_WIRING_FAIL scan requested=%s completed=%s text=%s saved=%s decoded=%s" % [error_string(requested),game.research.is_completed(required),text==String(DrownedCavesData.record(required).text),saved,error_string(decoded)])
 		return false
 	print("RELEASE_CAVES_SITE_WIRING_PASS")
+	return true
+
+## DC-5 in this exact binary: the shrine is live in the caves, the two choices are in the story catalog,
+## and taking the crystal through the real page buttons scores its resonance, commits a checkpoint the
+## schema accepts and adds the authored calibration to the sonar range. Plain statements only.
+func _verify_caves_shrine(game: ShelfPrototype) -> bool:
+	if OS.get_cmdline_user_args().has("--break-caves-shrine-wiring"): game.journey.caves_shrine.set_enabled(false)
+	var vessel: SubmarineController = game.submarine
+	var shrine: DrownedCavesShrine = game.journey.caves_shrine
+	var take: ChoiceData = game.story.definition(DrownedCavesData.CRYSTAL_TAKE)
+	if take==null or game.story.definition(DrownedCavesData.CRYSTAL_LEAVE)==null or not DrownedCavesData.CALIBRATION.is_valid():
+		push_error("RELEASE_CAVES_SHRINE_WIRING_FAIL catalog")
+		return false
+	vessel.global_position = DrownedCavesData.shrine_at()+Vector2(-100,0)
+	vessel.velocity = Vector2.ZERO
+	vessel.set_simulation_enabled(false)
+	var before_sonar: float = vessel.sonar.maximum_radius()
+	var before_resonance: int = game.story.resonance()
+	var ui: Node = game.revision.ui
+	if not shrine.interact() or ui.find_child("TakeCrystal",true,false)==null:
+		push_error("RELEASE_CAVES_SHRINE_WIRING_FAIL interact")
+		return false
+	(ui.find_child("TakeCrystal",true,false) as Button).pressed.emit()
+	if ui.find_child("ConfirmTake",true,false)==null:
+		push_error("RELEASE_CAVES_SHRINE_WIRING_FAIL confirm")
+		return false
+	(ui.find_child("ConfirmTake",true,false) as Button).pressed.emit()
+	var stored: Variant = JSON.parse_string(FileAccess.get_file_as_string(game.saves.store.path))
+	var saved: bool = stored is Dictionary and String(DrownedCavesData.CRYSTAL_TAKE) in stored.story.decisions
+	var decoded: Error = ExpeditionSchema.decode(stored.duplicate(true)).error if stored is Dictionary else ERR_INVALID_DATA
+	var expected_sonar: float = before_sonar+DrownedCavesData.CALIBRATION.sonar_range_bonus
+	if not game.story.has_decision(DrownedCavesData.CRYSTAL_TAKE) or game.story.resonance()!=before_resonance+take.resonance_delta or not is_equal_approx(vessel.sonar.maximum_radius(),expected_sonar) or not saved or decoded!=OK or not shrine.taken():
+		push_error("RELEASE_CAVES_SHRINE_WIRING_FAIL take decision=%s resonance=%d sonar=%s saved=%s decoded=%s" % [game.story.has_decision(DrownedCavesData.CRYSTAL_TAKE),game.story.resonance(),vessel.sonar.maximum_radius(),saved,error_string(decoded)])
+		return false
+	var done: Button = ui.find_child("ReturnFromShrine",true,false) as Button
+	if done!=null: done.pressed.emit()
+	vessel.set_simulation_enabled(false)
+	print("RELEASE_CAVES_SHRINE_WIRING_PASS")
 	return true

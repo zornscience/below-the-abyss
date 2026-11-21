@@ -14,6 +14,21 @@ const PAINTINGS: StringName = &"caves-paintings"
 const GLYPH_WALL: StringName = &"caves-glyph-wall"
 ## The only required record. The others are optional codex entries.
 const REQUIRED: StringName = MARA_LOG_ONE
+## DC-5: the Vael memory crystal in the shrine (Story Bible p. 6). Leave it: +15 resonance and the
+## Listeners notice. Take it for Tethys: -15, a one-time calibration, the shrine collapses (a visual only,
+## so nothing can be blocked) and the Keepers turn cold. The flags change words and later zones; here they
+## change nothing hostile. DRAFT TEXT AND THE UPGRADE AWAIT THE DESIGNER: the Bible says "a major upgrade"
+## without naming it, so +200 sonar range is a placeholder default, authored in one Resource.
+const CRYSTAL_ENCOUNTER: StringName = &"zone3-memory-crystal"
+const CRYSTAL_LEAVE: StringName = &"zone3-crystal-leave"
+const CRYSTAL_TAKE: StringName = &"zone3-crystal-take"
+const CALIBRATION: CapabilityBonus = preload("res://resources/campaign/tethys_calibration.tres")
+const SHRINE_RADIUS: float = 240.0
+const SHRINE_TITLE: String = "THE SHRINE / A VAEL MEMORY CRYSTAL"
+const SHRINE_TEXT: String = "A crystal the length of your forearm rests in a niche cut into the wall, held in a lattice of living stone. Light moves inside it slowly, in the same three marks as the glyph wall. It is warm.\n\nWick: This is not a record. I think it is a memory, kept by the people who made the wall. I cannot tell what it would do if it were moved.\n\nOkafor: Whatever you do, do it deliberately. We cannot undo it.\n\nCrane: Tethys would pay a great deal for that crystal. Bring it back."
+const TAKE_CONFIRM_TEXT: String = "Lifting the crystal will free it from its niche, and the shrine's stone will not hold. Tethys will give Lantern-2 a one-time acoustic calibration for it: sonar range +%.0f units. The shrine cannot be restored. You may still leave the crystal."
+static func shrine_at() -> Vector2:
+	return DrownedCavesLayout.FAR_CHAMBER+Vector2(-150,850)
 static func records() -> Array[Dictionary]:
 	var profile: TunnelProfile = DrownedCavesLayout.TUNNELS.systems[0] as TunnelProfile
 	var far: Vector2 = DrownedCavesLayout.FAR_CHAMBER

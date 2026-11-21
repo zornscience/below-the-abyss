@@ -96,6 +96,8 @@ static func decode(value: Variant) -> Dictionary:
 	var capture: bool = String(TwilightShelfData.CAPTURE) in data.story.decisions
 	var awards: Array = data.prototype.campaign.awards
 	if ("twilight-expedition" in awards)!=claimed or ("twilight-specimen" in awards)!=(claimed and capture): return {"error":ERR_INVALID_DATA}
+	# The shrine decision exists only after the Twilight debrief, which is what unlocks the caves.
+	if (String(DrownedCavesData.CRYSTAL_LEAVE) in data.story.decisions or String(DrownedCavesData.CRYSTAL_TAKE) in data.story.decisions) and not claimed: return {"error":ERR_INVALID_DATA}
 	if not twilight.is_empty():
 		for objective: MissionObjective in TwilightShelfData.missions().definition(TwilightShelfData.MISSION).objectives:
 			if String(objective.stable_id) not in twilight.objectives: continue

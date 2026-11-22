@@ -50,6 +50,16 @@ keeps edits, Return discards unsaved edits. Fixed menu controls remain available
 for recovery. Read long records using the focused reading pane, Page keys, wheel or scrollbar. Unplugging the active
 controller should pause movement; keyboard recovery remains available.
 
+## After Twilight: the Drowned Caves (optional, unfinished)
+
+When you have claimed the Twilight debrief at Halcyon, the dock also offers **Descend to the Drowned Caves**. This
+chapter is newer than the rest and has had no stranger playtest. Oxygen is the pressure: the tank lasts about
+five and a half minutes there, and running out only returns you to Halcyon. A flooded squeeze is too narrow for
+the hull; you can break it open with two torpedoes or fly the longer route. If you released the Twilight sentinel,
+it may light a way. Scan the records in the far chamber and the shrine decision are yours to make. Back at the
+dock, **Drowned Caves expedition debrief** summarises what you did. The last line mentions the next region; it is
+not playable. All text and art in this chapter are drafts. Say plainly where you were confused, bored or stuck.
+
 ## Comfort, saves and leaving
 
 Pause → Help & tutorials lets you reread mechanic explanations or disable tutorial

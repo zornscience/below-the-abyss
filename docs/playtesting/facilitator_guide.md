@@ -27,6 +27,20 @@ or the developer narrative walkthrough. Use the same neutral briefing each time:
 > may pause, change settings, stop, or ask for technical help. Feedback is useful
 > even if you do not finish. Optional local reporting can be declined.
 
+### Session scope: Twilight only, or the Drowned Caves too
+
+Finishing the Twilight debrief now makes the Halcyon dock offer the Drowned Caves (a newer, unplaytested chapter).
+Decide before the session whether it is in scope. To stop a session at Twilight, pass the switch after the
+engine's `--` separator, so the game (not the engine) reads it:
+
+```sh
+./below-the-abyss.x86_64 -- --no-drowned-caves
+```
+
+On Windows use `below-the-abyss.exe -- --no-drowned-caves`. Without it, a participant who finishes Twilight may
+descend; note in the worksheet whether they did, how long the oxygen tank felt, and where they were stuck. The
+caves debrief's last line mentions a region that is not playable; record any confusion about that.
+
 ## Consistent observation
 
 1. Give the participant the build and spoiler-free player guide, with no walkthrough.

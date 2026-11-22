@@ -377,7 +377,7 @@ func debrief_text() -> String:
 	if scene.story.has_flag(&"zone2-released-sentinel-lost"): outcome = "Okafor: The released animal was subsequently killed. Record the loss; it cannot be our future guide. No specimen allowance is due."
 	elif scene.story.has_decision(TwilightShelfData.CAPTURE): outcome = "Crane: The living cradle has reached Halcyon. The specimen allowance is 1 research point; the unique sonar calibration adds 100 units of range. Ping cost and cooldown remain unchanged."
 	elif scene.story.has_decision(TwilightShelfData.LOST): outcome = "Okafor: The animal died. Archive the loss with the evidence. There is no live specimen allowance or calibration."
-	return "Wick: Sensor cuts, Mara's instrument log and the whaler's markings are archived. They suggest a pattern; they do not explain it.\n\n"+outcome+"\n\nOkafor: Mara was watching the line, not just listening to it. The Drowned Caves are the next place to investigate.\n\nCrane: Prepare the evidence before another descent.\n\nChapter acknowledgement: 2 research points, once. The Drowned Caves are not playable in this build."
+	return "Wick: Sensor cuts, Mara's instrument log and the whaler's markings are archived. They suggest a pattern; they do not explain it.\n\n"+outcome+"\n\nOkafor: Mara was watching the line, not just listening to it. The Drowned Caves are the next place to investigate.\n\nCrane: Prepare the evidence before another descent.\n\nChapter acknowledgement: 2 research points, once. The Drowned Caves are open: descend from the Halcyon dock whenever you are ready."
 
 func log_text() -> String:
 	var parts: PackedStringArray = []

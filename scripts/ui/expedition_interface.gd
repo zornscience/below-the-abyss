@@ -228,8 +228,9 @@ func show_dock(tab: String = "home") -> void:
 		_button(row,"Research technology",func() -> void: show_dock("technology")).name = "Technology"
 		_button(row,"Expedition log" if canonical else "Expedition logs",func() -> void: show_dock("logs")).name = "DockLogs"
 		if revision.scene.journey!=null and revision.scene.journey.at_station(): _button(_dock_body,"Twilight expedition debrief",revision.scene.journey.expedition.show_debrief).name = "TwilightDebrief"
-		if revision.scene.journey!=null and revision.scene.journey.caves_entry_available(): _button(_dock_body,"Descend to the Drowned Caves (foundation build)",revision.scene.journey.offer_caves).name = "CavesDescent"
 		elif canonical: _button(_dock_body,"First expedition debrief",revision.scene.chapter.show_debrief).name = "ChapterDebrief"
+		if revision.scene.journey!=null and revision.scene.journey.caves_debrief_available(): _button(_dock_body,"Drowned Caves expedition debrief",revision.scene.journey.show_caves_debrief).name = "CavesDebrief"
+		if revision.scene.journey!=null and revision.scene.journey.caves_entry_available(): _button(_dock_body,"Descend to the Drowned Caves",revision.scene.journey.offer_caves).name = "CavesDescent"
 		_button(row,"Radio archive",func() -> void: show_dock("radio"))
 		if canonical and revision.scene.chapter.concluded() and revision.scene.journey!=null and not revision.scene.journey.at_station():
 			_button(_dock_body,"Begin The Twilight Shelf",revision.scene.journey.offer_deploy).name = "TwilightPreview"
@@ -273,12 +274,12 @@ func show_dock(tab: String = "home") -> void:
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	elif tab=="logs":
 		if revision.scene.journey!=null and revision.scene.journey.at_station():
-			_label(_dock_body,revision.scene.journey.expedition.log_text(),&"body")
+			_label(_dock_body,revision.scene.journey.log_text(),&"body")
 		else:
 			_label(_dock_body,revision.scene.chapter.log_text() if canonical else (revision.decoded_text() if revision.campaign.decoded else "No decoded expedition recorder. Recover the encrypted logs with a scientific scan, then return to base. Your other research remains in Map → Research."),&"body")
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	else:
-		_label(_dock_body,revision.scene.journey.expedition.log_text() if revision.scene.journey!=null and revision.scene.journey.at_station() else (revision.scene.chapter.log_text() if canonical else revision.archive_text()),&"body")
+		_label(_dock_body,revision.scene.journey.log_text() if revision.scene.journey!=null and revision.scene.journey.at_station() else (revision.scene.chapter.log_text() if canonical else revision.archive_text()),&"body")
 		_button(_dock_body,"Back to operations",func() -> void: show_dock()).name = "BackOperations"
 	_focus()
 func _assign(branch: String, difference: int) -> void:

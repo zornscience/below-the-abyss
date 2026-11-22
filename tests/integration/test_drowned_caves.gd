@@ -58,6 +58,11 @@ func _claim_twilight() -> void:
 func _descend() -> void:
 	game.submarine.set_simulation_enabled(false)
 	assert_eq(game.saves.transfer_chapter("caves",true),OK)
+## The dock hides replaced buttons and queues them for deletion; only a button not queued for deletion is the player's.
+func _live_dock_button(button_name: String) -> Button:
+	for found: Node in game.revision.ui.find_children(button_name,"Button",true,false):
+		if not found.is_queued_for_deletion(): return found as Button
+	return null
 func _journey_data(phase: String,twilight_state: String) -> Dictionary:
 	var progress: Dictionary = game.saves.progress_snapshot()
 	progress.missions[String(TwilightShelfData.MISSION)].state = twilight_state
@@ -72,17 +77,18 @@ func test_descent_is_refused_until_the_twilight_debrief_is_claimed() -> void:
 	assert_eq(game.saves.transfer_chapter("refit",true),OK)
 	assert_eq(game.saves.transfer_chapter("caves",true),ERR_UNAVAILABLE,"returned but the debrief is unclaimed")
 	assert_true(game.journey.at_station())
-func test_descent_needs_a_full_restock_and_halcyon_and_the_dock_offer_needs_the_developer_flag() -> void:
+func test_descent_needs_a_full_restock_and_halcyon_and_the_dock_offer_follows_the_switch() -> void:
 	await _claim_twilight()
 	assert_true(game.journey.caves_unlocked())
-	assert_false(game.journey.caves_entry_available(),"hidden unless a developer enables it")
-	game.revision.ui.show_dock()
-	assert_null(game.revision.ui.find_child("CavesDescent",true,false),"no dock button without the flag")
-	assert_eq(game.saves.transfer_chapter("caves",false),ERR_UNAVAILABLE,"arrival is fully supplied")
-	game.journey.caves_entry_enabled = true
+	assert_true(game.journey.caves_entry_enabled,"on by default since DC-6; --no-drowned-caves turns it off")
 	assert_true(game.journey.caves_entry_available())
 	game.revision.ui.show_dock()
-	assert_not_null(game.revision.ui.find_child("CavesDescent",true,false),"the flagged dock offers the descent")
+	assert_not_null(_live_dock_button("CavesDescent"),"the dock offers the descent")
+	assert_eq(game.saves.transfer_chapter("caves",false),ERR_UNAVAILABLE,"arrival is fully supplied")
+	game.journey.caves_entry_enabled = false
+	assert_false(game.journey.caves_entry_available())
+	game.revision.ui.show_dock()
+	assert_null(_live_dock_button("CavesDescent"),"no dock button when switched off")
 # ---------------------------------------------------------------- phase and save
 func test_descent_commits_a_valid_caves_checkpoint_pressure_fit_and_region() -> void:
 	await _claim_twilight()

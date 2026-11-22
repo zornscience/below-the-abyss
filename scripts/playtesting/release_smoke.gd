@@ -360,7 +360,7 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 	if game.saves.transfer_chapter("refit",true)!=OK or game.missions.claim(TwilightShelfData.MISSION)!=OK or not game.journey.caves_unlocked():
 		push_error("RELEASE_CAVES_WIRING_FAIL debrief claim save_status="+game.saves.status)
 		return false
-	game.journey.caves_entry_enabled = true
+	# Not set here: the descent must be on by default in this exact export (DC-6).
 	if not game.journey.caves_entry_available():
 		push_error("RELEASE_CAVES_WIRING_FAIL entry offer")
 		return false
@@ -389,9 +389,12 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 		return false
 	vessel.global_position = DrownedCavesLayout.SPAWN
 	vessel.set_simulation_enabled(false)
+	if args.has("--break-caves-debrief-wiring"): game.journey.caves_debrief_enabled = false
 	await game.journey.return_to_station()
 	if not game.journey.at_station() or game.journey.caves():
 		push_error("RELEASE_CAVES_WIRING_FAIL anchor return save_status="+game.saves.status)
+		return false
+	if not _verify_caves_debrief(game):
 		return false
 	# Leave Halcyon exactly as the oxygen check does, so the scene change that follows
 	# does not free a scene with an open dock interaction.
@@ -521,4 +524,30 @@ func _verify_caves_shrine(game: ShelfPrototype) -> bool:
 	if done!=null: done.pressed.emit()
 	vessel.set_simulation_enabled(false)
 	print("RELEASE_CAVES_SHRINE_WIRING_PASS")
+	return true
+
+## DC-6 in this exact binary: back at Halcyon, with Mara's required log recorded, the dock offers the caves
+## debrief through its real button, the page shows the derived text with the Zone 4 teaser, and showing it
+## changes no saved file. The smoke took the crystal, so the text must name the calibration. Plain statements only.
+func _verify_caves_debrief(game: ShelfPrototype) -> bool:
+	var ui: Node = game.revision.ui
+	var button: Button = ui.find_child("CavesDebrief",true,false) as Button
+	if button==null or not game.journey.caves_debrief_available() or ui.find_child("ChapterDebrief",true,false)!=null:
+		push_error("RELEASE_CAVES_DEBRIEF_WIRING_FAIL dock button")
+		return false
+	var before: String = FileAccess.get_file_as_string(game.saves.store.path)
+	button.pressed.emit()
+	var shown: PackedStringArray = []
+	for node: Node in game.revision.ui.radio_page.find_children("*","Label",true,false): shown.append((node as Label).text)
+	var text: String = game.journey.caves_debrief_text()
+	var page: String = "\n".join(shown)
+	var calibration: String = "%.0f units farther" % DrownedCavesData.CALIBRATION.sonar_range_bonus
+	if not text.contains("The Furnace Vents are the next investigation") or not text.contains(calibration) or ui.find_child("CavesDebriefBack",true,false)==null or not page.contains(text.substr(0,40)):
+		push_error("RELEASE_CAVES_DEBRIEF_WIRING_FAIL page")
+		return false
+	(ui.find_child("CavesDebriefBack",true,false) as Button).pressed.emit()
+	if FileAccess.get_file_as_string(game.saves.store.path)!=before:
+		push_error("RELEASE_CAVES_DEBRIEF_WIRING_FAIL wrote a checkpoint")
+		return false
+	print("RELEASE_CAVES_DEBRIEF_WIRING_PASS")
 	return true

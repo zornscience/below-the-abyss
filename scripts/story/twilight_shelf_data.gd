@@ -89,7 +89,7 @@ static func missions() -> MissionCatalog:
 	mission.title = "The Severed Line"
 	mission.description = "Investigate the broken sensor line, recover Mara's first field log, record the old whaler's marking and resolve the trapped animal encounter. Return through the ascent tether for a Halcyon debrief. Optional observations and loggers are not required."
 	mission.acknowledgement_id = &"twilight-expedition-acknowledged"
-	mission.acknowledgement = "Halcyon has archived the evidence. The Drowned Caves are the next investigation; that region is not playable."
+	mission.acknowledgement = "Halcyon has archived the evidence. The Drowned Caves are the next investigation; descend from the Halcyon dock."
 	for id: StringName in [&"twilight-severed-cable",&"twilight-mara-log-one",&"twilight-whaler-marking",&"twilight-net-survey",ENCOUNTER,&"twilight-mara-log-one"]:
 		var objective: MissionObjective = MissionObjective.new()
 		var returned: bool = mission.objectives.size()==5

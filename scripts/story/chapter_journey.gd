@@ -24,9 +24,11 @@ var caves_tunnels: TwilightTunnels
 var caves_guide: DrownedCavesGuide
 var caves_site: DrownedCavesSite
 var caves_shrine: DrownedCavesShrine
-## DC-1 foundation: the Drowned Caves hold only an entry chamber, so the descent is offered
-## only when a developer launches with --drowned-caves (tests and release smoke set it directly).
-var caves_entry_enabled: bool = OS.get_cmdline_user_args().has("--drowned-caves")
+## The descent is offered at the Halcyon dock once the Twilight debrief is claimed (DC-6). A facilitator can
+## launch with --no-drowned-caves to hide it, for a session that should stop at Twilight.
+var caves_entry_enabled: bool = not OS.get_cmdline_user_args().has("--no-drowned-caves")
+## Smoke-test seam: the release smoke clears this to prove the debrief button is the debrief's only way in.
+var caves_debrief_enabled: bool = true
 var state: Dictionary = ExpeditionJourneyState.fresh()
 signal camera_settled
 var transitioning: bool = false
@@ -112,6 +114,38 @@ func caves_unlocked() -> bool:
 	return scene.missions.snapshot().get(String(TwilightShelfData.MISSION),{}).get("state")=="claimed"
 func caves_entry_available() -> bool:
 	return caves_entry_enabled and at_station() and caves_unlocked()
+## The Halcyon debrief for the caves: derived, never saved, offered once Mara's required log is recorded.
+func caves_debrief_available() -> bool:
+	return caves_debrief_enabled and at_station() and caves_unlocked() and scene.research.is_completed(DrownedCavesData.REQUIRED)
+func caves_debrief_text() -> String:
+	var parts: PackedStringArray = []
+	parts.append("Wick: Mara's recorder is archived. The wall in the far chamber describes a meeting between two peoples that ended in violence on both sides, and a vow made afterwards.\n\nOkafor: She was right. The Choir is a language.")
+	match DrownedCavesGuide.variant(scene.story):
+		&"guide": parts.append("Okafor: The animal you freed kept its distance and lit the way. We owe it more than a line in a report.")
+		&"guide_lost": parts.append("Okafor: The animal that would have gone first is dead. We found the way ourselves.")
+		&"captured": parts.append("Crane: The specimen is safe aboard. The caves were quiet; I would not read much into that.")
+		&"lost": parts.append("Okafor: The animal died in the net, and the caves answered with silence. Record both.")
+	if scene.story.has_decision(DrownedCavesData.CRYSTAL_LEAVE): parts.append("Okafor: You left the crystal in its niche. Something there noticed. I do not think it minded.")
+	elif scene.story.has_decision(DrownedCavesData.CRYSTAL_TAKE): parts.append("Crane: Tethys has the crystal, and Lantern-2's sonar reaches %.0f units farther for it.\n\nOkafor: Write down what you took." % DrownedCavesData.CALIBRATION.sonar_range_bonus)
+	else: parts.append("Okafor: The shrine is still there for anyone who goes back.")
+	var recorded: int = 0
+	for id: StringName in DrownedCavesData.ids():
+		if scene.research.is_completed(id): recorded += 1
+	parts.append("Archived from the site: %d of %d records. Nothing is awarded for this debrief." % [recorded,DrownedCavesData.ids().size()])
+	parts.append("Okafor: Mara's trail goes deeper. The Furnace Vents are the next investigation; that region is not playable in this build.")
+	return "\n\n".join(parts)
+func show_caves_debrief() -> void:
+	if not caves_debrief_available(): return
+	scene.revision.ui.dock_page.hide()
+	scene.revision.ui.show_story_page("HALCYON / THE DROWNED CAVES",caves_debrief_text(),"Return to operations",_back_to_dock,&"CavesDebriefBack",_back_to_dock)
+func _back_to_dock() -> void:
+	scene.revision.ui.radio_page.hide()
+	scene.revision.ui.show_dock()
+## The dock expedition log: Twilight's entries, then any recorded cave records.
+func log_text() -> String:
+	var parts: PackedStringArray = [expedition.log_text()]
+	for entry: NarrativeEntry in caves_site.entries(): parts.append(entry.title+"\n"+entry.text)
+	return "\n\n".join(parts)
 func refresh_caves_guide() -> void:
 	caves_guide.set_enabled(caves() and DrownedCavesGuide.available(scene.story))
 func caves_guidance() -> String:
@@ -157,7 +191,8 @@ func deploy() -> void:
 	await _transfer("twilight",not state.commissioned)
 func offer_caves() -> void:
 	if not caves_entry_available(): return
-	_show("THE DROWNED CAVES / FOUNDATION BUILD","Lantern-2 will be serviced and refitted with a 2,000 m pressure baseline, then lowered to the cave anchor at about 1,200 m. This build has an entry chamber, a flooded squeeze with a gated shortcut and a far chamber that holds a first-contact site: scan Mara\'s recorder there. There is no mission or story page yet. Oxygen drains much faster here. The cave anchor returns you to Halcyon.","Descend (foundation build)",descend_caves,&"BeginCaves")
+	var minutes: String = "%.0f" % (CAVES_RESOURCES.max_oxygen/CAVES_RESOURCES.oxygen_drain_per_second/60.0)
+	_show("THE DROWNED CAVES / DESCENT","Lantern-2 will be serviced and refitted with a 2,000 m pressure baseline, then lowered to the cave anchor at about 1,200 m. A flooded passage leads east to a far chamber where Mara's trail ends. Oxygen drains much faster here: a full tank lasts about "+minutes+" minutes. The cave anchor returns you to Halcyon, and you may come back.","Descend",descend_caves,&"BeginCaves")
 	(scene.revision.ui.find_child("StoryBack",true,false) as Button).text = "Stay at Halcyon"
 func descend_caves() -> void:
 	if not caves_entry_available(): return
@@ -175,7 +210,7 @@ func resume_expedition() -> void:
 	await _transfer("twilight",false)
 func _arrival_notice(phase: String) -> void:
 	if phase!="caves": return
-	scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. This foundation build has a chamber, a flooded squeeze with a gated shortcut and a far chamber with a first-contact site. Scan Mara\'s recorder there. Oxygen is the clock here; the anchor returns to Halcyon.","Wick")
+	scene.revision.ui.notifications.enqueue("caves-arrival","Lantern-2 is at the cave anchor. A flooded passage leads east to the far chamber where Mara's trail ends. Oxygen is the clock here; the anchor returns to Halcyon.","Wick")
 	# One text-only line for how the Twilight sentinel choice reads here (DC-3). No variant is hostile.
 	var reaction: String = DrownedCavesGuide.reaction(scene.story)
 	if not reaction.is_empty(): scene.revision.ui.notifications.enqueue("caves-sentinel",reaction,"Wick")
@@ -234,7 +269,7 @@ func prepare(value: Dictionary) -> void:
 	var title: Label = scene.route_menu.find_child("Title",true,false) as Label
 	if title!=null: title.text = "TWILIGHT SHELF / PAUSED" if active() else ("DROWNED CAVES / PAUSED" if caves() else _pause_title)
 	if caves():
-		(scene.route_menu.get_node("%Brief") as Label).text = "Foundation build: a chamber, a flooded squeeze with a gated shortcut and a far chamber with a first-contact site. Scan Mara\'s recorder there; the rest is optional. Oxygen drains much faster here. Return through the cave anchor for Halcyon."
+		(scene.route_menu.get_node("%Brief") as Label).text = "The Drowned Caves: follow the flooded passage east to the far chamber and scan Mara's recorder; the rest is optional. Oxygen drains much faster here. Return through the cave anchor for Halcyon."
 		(scene.hud.identity_container().get_node("Vessel") as Label).text = "LANTERN-2"
 		scene.region.spawn.position = DrownedCavesLayout.SPAWN
 		scene.region.camera_bounds = DrownedCavesLayout.CAMERA

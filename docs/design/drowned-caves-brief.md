@@ -1,8 +1,8 @@
 # The Drowned Caves (Zone 3) — chapter brief
 
 **Status: decisions A–D approved by the designer on 2026-11-21 ("go with your recommended defaults");
-E–G stand at their recommended defaults. DC-1 is authorised. DC-2 to DC-6 each start after the previous
-one merges with green CI.**
+E–G stand at their recommended defaults. DC-1 to DC-5 are merged; DC-6 (debrief, descent on by default) is in
+review. The chapter has had no human playtest. Evidence per issue: `docs/testing/dc-1` to `dc-6`.**
 Each numbered issue below becomes one issue and one PR. All numbers are provisional and live in Resources, never constants.
 Issue numbers (DC-1…DC-6) are placeholders; real BTA numbers are assigned on approval.
 

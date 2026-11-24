@@ -107,6 +107,8 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
   second in Sunlit (`prototype_resources.tres`) and 0.03 per second in Twilight (`twilight_resources.tres`).
   The save schema stays at 10 with twelve top-level fields (`ExpeditionSchema.VERSION`, size check in
   `expedition_schema.gd`). Evidence and limits: `docs/testing/oxygen-recovery/README.md`.
+  Restock cost (decided 2026-11-24): recovery stays a free full restock with no cost for now. The designer
+  accepts that running out of oxygen works as a free refuel. Revisit only after a playtest shows it matters.
 - Decisions the designer owns and has NOT made: boss concept for the slice; what the darker ending costs;
   Story Bible canon for alien technology; whether the combat direction survives the playtest.
 
@@ -120,14 +122,13 @@ NOT yet updated), `twilight-redesign-brief.md` (executed through BTA-061), `comb
   and dated tool terms. Hand-finish identity assets; use CC0/libraries for effects. Get legal advice.
 - **Market:** nearest comparable (Depths of Sanity) has 72 reviews. Plan for the low case. Controls and
   dynamic music are the named reasons small Metroidvanias are punished. Figures are provisional.
-- Recovery after oxygen or hull failure has no penalty beyond the vessel's position (by design).
+- Recovery after oxygen or hull failure has no penalty beyond the vessel's position, so suffocation is a
+  free refuel. Kept on purpose for now (decided 2026-11-24, see §5). Watch for it in playtests.
 - Open items owned by the designer (not decisions):
   - The repo is public and has no `LICENSE` file (the README says the license decision is pending).
     License choice and repo visibility are the designer's call.
   - The Windows exe was only run on a CI runner (`windows-latest`). Windows 11 Smart App Control may block
     unsigned builds. It is unverified on a real machine.
-  - A free full restock means suffocation works as a refuel shortcut. The designer has not decided whether
-    that needs a cost.
   - The tow cutscene was deferred until the designer has seen the recovery card in play. Any new Wick or
     Okafor lines are proposals needing approval.
   - No human has played the recovery flow.

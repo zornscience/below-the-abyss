@@ -8,8 +8,23 @@ var path: String
 var pools: SubmarineResourceSystem
 var flow: VesselRecoveryFlow
 var _blocker: String = ""
-## Longest frame seen since the failure was triggered (see the accept-delay test).
-var _longest_frame_seconds: float = 0.0
+var clock: GameClock
+
+
+## Game time since the recovery card appeared, in the flow's own time base: the sum of
+## the engine's per-frame process delta. Started by recovery_started, which the flow
+## emits in the same call that zeroes its accept-delay timer, so both sum the same deltas.
+## Wall-clock time is not this. Summed process deltas are not guaranteed to match elapsed
+## wall time: on a CI runner they reached 1.0 s after 867 ms of wall time (PR #67), so a
+## wall-clock bound on this gate is flaky. The cause inside the engine was not isolated.
+class GameClock extends Node:
+	var seconds: float = 0.0
+	var running: bool = false
+	func start(_cause: StringName) -> void:
+		seconds = 0.0
+		running = true
+	func _process(delta: float) -> void:
+		if running: seconds += delta
 
 
 func before_each() -> void:
@@ -25,6 +40,9 @@ func before_each() -> void:
 	game.submarine.set_simulation_enabled(false)
 	pools = game.submarine.resource_system
 	flow = game.journey.recovery
+	clock = GameClock.new()
+	game.add_child(clock)
+	flow.recovery_started.connect(clock.start)
 
 
 func after_each() -> void:
@@ -66,8 +84,13 @@ func _send(event: InputEvent) -> void:
 	await get_tree().process_frame
 
 
-func _wait(seconds: float) -> void:
-	await get_tree().create_timer(seconds).timeout
+## Bounded wait for `seconds` of game time on the card. False if the card goes away.
+func _until_game_seconds(seconds: float) -> bool:
+	for frame: int in range(600):
+		if clock.seconds >= seconds: return true
+		if not flow.pending: return false
+		await get_tree().process_frame
+	return false
 
 
 ## Bounded wait: false (a test failure, never a hang) if the card is gone or never ready.
@@ -76,14 +99,7 @@ func _until_ready() -> bool:
 		if flow.accept_ready(): return true
 		if not flow.pending: return false
 		await get_tree().process_frame
-		_note_frame()
 	return false
-
-
-## The test resumes on process_frame before nodes process, so this is the delta the
-## flow is about to add in the same frame.
-func _note_frame() -> void:
-	_longest_frame_seconds = maxf(_longest_frame_seconds,get_process_delta_time())
 
 
 ## Sunlit hull failure through the real damage path. Returns the trigger time in ms.
@@ -94,11 +110,9 @@ func _sunlit_hull_failure() -> int:
 	_hide_pages()
 	game.resume_route()
 	var started: int = Time.get_ticks_msec()
-	_longest_frame_seconds = 0.0
 	game.submarine.hull_system.apply_damage(game.submarine.hull_system.hull,&"collision")
 	for frame: int in range(10):
 		await get_tree().process_frame
-		_note_frame()
 		if flow.pending: break
 	assert_true(flow.pending,"hull failure shows the recovery card")
 	assert_true(flow.committed)
@@ -151,19 +165,32 @@ func test_space_and_gamepad_a_are_ignored_early_and_accepted_after_the_fade_plus
 	assert_true(InputMap.event_is_action(_button_a(true),&"ui_accept"),"gamepad A is ui_accept")
 	for controller: bool in [false,true]:
 		var started: int = await _sunlit_hull_failure()
-		await _wait(0.1)
+		assert_true(await _until_game_seconds(0.1),"0.1 s of game time passes on the card")
 		assert_false(flow.accept_ready(),"not ready at 0.1 s")
 		await _send(_button_a(true) if controller else _space(true))
 		await _send(_button_a(false) if controller else _space(false))
 		assert_true(flow.pending,"accept at 0.1 s is ignored, controller=%s" % controller)
 		assert_true(flow.panel.visible)
-		assert_true(await _until_ready(),"card becomes ready for accept")
+		# Checked at each frame start, before nodes process, when the flow and the clock
+		# hold the same sum: ready exactly when the fade plus the delay have passed in game
+		# time. Never earlier (a frame-count or fade-only gate fails), never later.
+		var threshold: float = VesselRecoveryFlow.FADE_SECONDS+VesselRecoveryFlow.ACCEPT_DELAY_SECONDS
+		var mismatches: Array[String] = []
+		var became_ready: bool = false
+		for frame: int in range(600):
+			if flow.accept_ready()!=(clock.seconds>=threshold):
+				mismatches.append("ready=%s at %.4f s" % [flow.accept_ready(),clock.seconds])
+			if flow.accept_ready():
+				became_ready = true
+				break
+			if not flow.pending: break
+			await get_tree().process_frame
+		assert_true(became_ready,"card becomes ready for accept")
+		assert_true(mismatches.is_empty(),"ready only once %.1f s of game time has passed, controller=%s: %s" % [threshold,controller,str(mismatches)])
+		assert_gte(clock.seconds,threshold,"ready only after the fade plus the delay: %.4f s of game time" % clock.seconds)
+		# Wall-clock floor as a gross check only (game time led wall time by 133 ms on CI).
 		var ready_ms: int = Time.get_ticks_msec()-started
-		# The flow sums engine frame deltas. The first summed frame began before `started`
-		# was read, so real time can trail the summed time by up to one frame. Allow the
-		# longest frame actually measured (plus 1 ms tick rounding), not a guessed length.
-		var slack_ms: int = ceili(_longest_frame_seconds*1000.0)+1
-		assert_gte(ready_ms,int((VesselRecoveryFlow.FADE_SECONDS+VesselRecoveryFlow.ACCEPT_DELAY_SECONDS)*1000.0)-slack_ms,"ready only after the fade plus the delay: %d ms, longest frame %d ms" % [ready_ms,slack_ms-1])
+		assert_gte(ready_ms,500,"not ready implausibly early in wall time: %d ms" % ready_ms)
 		assert_eq(flow.backdrop.color.a,1.0,"the fade has finished before accept is allowed")
 		await _send(_button_a(true) if controller else _space(true))
 		assert_false(flow.pending,"accept after the delay continues, controller=%s" % controller)

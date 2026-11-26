@@ -28,9 +28,11 @@ Events contain only kind, allowlisted authored detail, relative seconds and nume
 amount. See PlaytestReport.DETAILS for the complete allowlist. Counts cover accepted
 active pings, started/completed scans, actual new discoveries, mission acceptance/
 completion/claims, base returns, route stages, resource warning episodes/depletion,
-actual hull loss by source and one chapter conclusion. Existing hull/oxygen depletion
-is reported as a **failure threshold**, not an implemented death/respawn mechanic.
-No new failure gameplay is added. Low means ≤20%; an already-low/depleted restored
+actual hull loss by source and one chapter conclusion. Hull or oxygen reaching zero
+is a `resource_warning` (`hull_depleted`, `oxygen_depleted`) only. A `failure` event
+fires once when Halcyon recovery actually starts: `life_support_expired` when the
+60 s life-support countdown ends, `hull_destroyed` when the hull fails. Older reports
+may still contain the earlier `oxygen_depleted` failure detail. Low means ≤20%; an already-low/depleted restored
 resource is baseline, not a new warning. Pressure warning transitions remain the
 existing damage API's thresholds. Damage counts are actual applied hull changes,
 so pressure can count multiple physics applications; damage_total is more useful

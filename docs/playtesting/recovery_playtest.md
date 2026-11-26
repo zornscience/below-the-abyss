@@ -38,9 +38,15 @@ about 5.6 minutes (0.3 per second). In Sunlit it takes about 35 minutes of play 
 56, so this script uses the caves. Wick's "oxygen is the clock" hint appears in the caves once oxygen
 drops below 80%. It mentions the anchor refill and the countdown. Note whether the participant reads it.
 
-The hull-failure card is tested in Twilight's optional basin, directly below the ascent tether. It is
-1,120 m deep. Hull rank 2 is rated for it. Lower ranks take pressure damage after a short grace, and a
-full hull lasts roughly half a minute there.
+The hull-failure card is tested in Twilight's optional basin, which is 1,120 m deep. Hull rank 2 is
+rated for it. Lower ranks take pressure damage after a short grace, and a full hull lasts roughly half a
+minute there. The basin is **not** reachable straight down from the ascent tether, because a rock
+gallery sits directly below it. The open route is the lower western loop:
+1. west from the tether along the upper shelf;
+2. down the western side;
+3. back east along the lower passage to the basin opening.
+The depth readout switches to `<depth> m / BASIN 1120 m` and Wick's pressure-margin card appears near the
+opening. This is the route the automated depth-gate check flies (`tests/fixtures/drive_depth_gate.gd`).
 
 ## Before the first participant: prepare one profile
 
@@ -55,7 +61,8 @@ once yourself into a template profile, then give each participant a copy.
    ```
 
 2. Play Sunlit and Twilight and claim the Twilight debrief at the Halcyon dock. Do not enter the caves.
-3. **Do not buy hull rank 2 or higher** in Research technology. Part C needs the basin to damage the hull.
+3. Note the hull rank in Research technology. It can be reassigned for free while docked, and Part C
+   needs it at 0 or 1 (step in Part C).
 4. Write down your story choices: the light bloom (collect or observe) and the sentinel (release,
    capture or lost). They carry into every participant's run. A released sentinel lights a path in
    the caves, which changes how long the caves take. Keep the same template for everyone.
@@ -128,15 +135,19 @@ Do not hint at either strategy. If they ask whether running out is bad, answer: 
 
 ## Part C: hull failure (directed, about 4 minutes, optional)
 
-This is a directed task, so it measures the card, not discovery. From the Halcyon dock, have them choose
-**Resume Twilight Shelf**. Then say:
+This is a directed task, so it measures the card, not discovery. At the Halcyon dock, open Research
+technology and check the hull rank. If it is 2 or higher, reassign it to 0 or 1 (free while docked).
+Otherwise the basin is safe and nothing will happen. Then have them choose **Resume Twilight Shelf**
+and say:
 
-> Go straight down from where you start, into the deep basin, and stay at the bottom until something
-> happens.
+> Fly west along the upper shelf, follow the passage down the western side, then come back east along
+> the lower passage until the depth readout says BASIN. Go down into the basin and stay at the bottom
+> until something happens.
 
-Record: did they read the pressure warning? Did they understand that the hull failed rather than the
-oxygen? Did the `HULL FAILURE` card make clear what happened? If their hull rank is 2 or higher (check
-Research technology), nothing will happen. Record that and skip Part C.
+Repeat the route directions if they get lost. Route-finding is not what Part C measures, so note the
+help and move on. Record: did they read the pressure warning and Wick's pressure-margin card? Did they
+understand that the hull failed rather than the oxygen? Did the `HULL FAILURE` card make clear what
+happened?
 
 ## Questions afterwards (about 5 minutes)
 

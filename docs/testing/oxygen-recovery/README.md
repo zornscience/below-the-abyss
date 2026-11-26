@@ -112,6 +112,9 @@ at normal speed.
 
 ## Manual playtest steps (not yet run by a person)
 
+These are developer verification steps. The script for an outside playtest is
+`docs/playtesting/recovery_playtest.md`.
+
 1. `godot --path .`, New Expedition, launch the Sunlit chapter. Pause, open Accessibility, keep defaults.
 2. Wait out the drain (about 35 min of Sunlit simulation time at full travel). Confirm the border,
    the text line under the oxygen gauge and the alarm at 0.

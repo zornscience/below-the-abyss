@@ -7,6 +7,7 @@ people, run the protocol, then evaluate their actual feedback before closing tha
 - [Build/package instructions](build.md)
 - [Spoiler-free playtester guide](playtester_guide.md)
 - [Facilitator protocol and blank worksheet](facilitator_guide.md)
+- [Recovery flow playtest script (oxygen countdown, recovery card, free refuel watch)](recovery_playtest.md)
 - [Five-minute anonymous questionnaire](feedback_form.md)
 - [Opt-in local telemetry and privacy specification](telemetry.md)
 - [Empty results template](results_template.json)

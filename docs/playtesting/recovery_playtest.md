@@ -50,8 +50,34 @@ opening. This is the route the automated depth-gate check flies (`tests/fixtures
 
 ## Before the first participant: prepare one profile
 
-Reaching the caves normally needs Sunlit, Twilight and the Twilight debrief (an hour or more). Play that
-once yourself into a template profile, then give each participant a copy.
+Reaching the caves normally needs Sunlit, Twilight and the Twilight debrief (an hour or more). Build a
+template profile once, then give each participant a copy. There are two ways to build it.
+
+### Option A: build it with the script (about 2 minutes, Linux)
+
+Needs a source checkout at the **same commit as the playtest package** and the Godot 4.6.3 editor binary
+(`docs/HANDOFF.md` §3). The script plays Sunlit and Twilight through the CI route with scripted
+controller input, claims the debrief, returns to Halcyon and leaves the last checkpoint at the dock:
+
+```sh
+export GODOT_BIN=/path/to/Godot_v4.6.3-stable_linux.x86_64
+python3 tools/build_playtest_profile.py --bloom collect --sentinel release --out "$PWD/recovery-template"
+```
+
+- `--bloom` is `collect` or `observe`. `--sentinel` is `release` or `capture`. The lost sentinel outcome
+  is not supported. Play the template yourself (Option B) if you need it.
+- The script refuses to write into a folder that is not empty.
+- It checks its own result: a separate launch on a throwaway copy must Continue to the dock with
+  **Descend to the Drowned Caves** offered.
+- `recovery-template/PROFILE.json` records the choices, the research ranks and the completed records.
+  Copy the choices into each worksheet. The scripted route gives hull rank 0, so Part C needs no
+  reassignment. It completes the required records and one optional Mara log. It is not a human
+  playthrough: no extra exploration and no optional Sunlit studies.
+- No settings are included, so the game starts with its default accessibility, audio and controls.
+- The script runs the editor binary, not the export. Still do step 6 below once with the playtest
+  package. That is the only check in the exact build participants will play.
+
+### Option B: play it yourself (an hour or more)
 
 1. Launch the verified playtest package into an empty template folder, stored privately and outside
    the repository:
@@ -79,7 +105,9 @@ XDG_DATA_HOME="$PWD/P01/data" XDG_CONFIG_HOME="$PWD/P01/config" XDG_CACHE_HOME="
 ```
 
 On Windows, copy the `Below the Abyss` folder under `%APPDATA%\Godot\app_userdata\` instead, and
-restore it before each participant. This path has not been verified on a real Windows machine.
+restore it before each participant. A template from Option A has that folder at
+`recovery-template/data/godot/app_userdata/Below the Abyss`. This path has not been verified on a real
+Windows machine.
 
 ## Setup with the participant (about 3 minutes)
 

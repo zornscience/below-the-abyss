@@ -93,6 +93,9 @@ jobs:
       - name: Verify optional Twilight survey circuit, chapter and Continue
         run: python3 tools/verify_twilight_survey.py
 
+      - name: Build a caves-ready playtest profile and check Continue lands at the dock
+        run: python3 tools/build_playtest_profile.py --bloom observe --sentinel capture --out "$RUNNER_TEMP/playtest-profile"
+
       - name: Test playtest analysis tooling
         run: python3 -m unittest discover -s tests/python -v
 

@@ -113,10 +113,14 @@ func _focus() -> void:
 	if _response: _queue_read_scroll.call_deferred()
 func _queue_read_scroll() -> void:
 	# Bound one-shot connections are disconnected if this panel is freed.
+	# Deferred and one-shot callbacks can run after a scene change has taken this node out of
+	# the tree, where get_tree() and get_viewport() are null (a segfault in release exports).
+	if not is_inside_tree(): return
 	if not get_tree().process_frame.is_connected(_reset_read_scroll):
 		get_tree().process_frame.connect(_reset_read_scroll,CONNECT_ONE_SHOT)
 func _reset_read_scroll() -> void:
 	# Accessibility font reflow and focus-follow finish after the initial layout.
+	if not is_inside_tree(): return
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if page.visible and _response and focus!=null and focus==scroll:
 		scroll.scroll_vertical = 0

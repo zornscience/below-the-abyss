@@ -331,8 +331,12 @@ func add_story_notice(text: String) -> void:
 	_label(_radio_body,text)
 
 func _queue_story_read() -> void:
+	# Deferred and one-shot callbacks can run after a scene change has taken this node out of
+	# the tree, where get_tree() and get_viewport() are null (a segfault in release exports).
+	if not is_inside_tree(): return
 	if not get_tree().process_frame.is_connected(_reset_story_read): get_tree().process_frame.connect(_reset_story_read,CONNECT_ONE_SHOT)
 func _reset_story_read() -> void:
+	if not is_inside_tree(): return
 	var focus: Control = get_viewport().gui_get_focus_owner()
 	if radio_page.visible and _story_back.is_valid() and focus!=null and focus==_scrolls[radio_page]:
 		(_scrolls[radio_page] as ScrollContainer).scroll_vertical = 0

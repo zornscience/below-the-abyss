@@ -1,4 +1,4 @@
-# Handoff brief: Below the Abyss (written 2026-11-10, state refreshed 2026-11-20)
+# Handoff brief: Below the Abyss (written 2026-11-10, state refreshed 2026-11-27)
 
 For a model taking over. Read this first, then `AGENTS.md`, `GDD.md`, `TDD.md`, `CODEX_PLAN.md`.
 Everything here is checked against the repo or marked as unverified.
@@ -25,7 +25,7 @@ Everything here is checked against the repo or marked as unverified.
   (Twilight sonar/discovery wiring). `tools/lint_release_safety.py` enforces it.
 - **Debug-only tests prove nothing about release builds.** Every new wiring needs a `ReleaseSmoke` check
   (`scripts/playtesting/release_smoke.gd`, playtest export only) AND a negative `--break-*-wiring`
-  case that must fail. CI runs all of them (19 negatives per PR #48's report).
+  case that must fail. CI runs all of them (26 negatives as of PR #69).
 - **Do not weaken assertions or raise timeouts to pass.** If a behaviour changes on purpose, say so in
   the commit (see the radio id test change).
 - **Wait for the PR's own CI to be green before merging.** PR #43 merged 30 s after a failed run.
@@ -59,7 +59,7 @@ python3 tools/smoke_playtest.py <zip> --log /tmp/x.log --break-<name>-wiring   #
 
 ## 4. State of the code (verify before relying)
 
-`main` is at the merge of **PR #57** (`eb83d8c`). Merged before PR #50: BTA-057 sonar-driven Twilight
+`main` is at the merge of **PR #69** (`7ba6d5c`). Merged before PR #50: BTA-057 sonar-driven Twilight
 visibility, 058 resource tension, 059 depth gate + respawn flow + research economy, 060 Rift Stalker, 061
 tunnels and excavation gates, step-1 UX (quiet HUD, radio dismiss and hints, guidance cards), radio id-shape
 fix, audio audit, combat-direction drafts, **PR #48 combat test box**, and **PR #49** (the documentation
@@ -74,23 +74,54 @@ Merged since:
 - **#56** Recovery card test: wall-clock slack bounded by the measured frame instead of 50 ms (test only).
 - **#57** Fix casualty deadlock when the hull is destroyed during recovery (a pending Twilight casualty is
   now carried inside the recovery checkpoint, and a released sentinel's death is announced).
-- Latest full CI verification: GitHub Actions run 43795056128 on `df3025d` (PR #57 head, green in all four jobs).
-  `eb83d8c` has the identical tree (`git diff df3025d eb83d8c` is empty). That run's GUT step reports
-  **837 of 837 tests passing in 102 scripts**. The `workflow_dispatch` run 128 on `eb83d8c` was still
-  in progress when this was written, so its result is not recorded here. Release smoke counts are
-  not re-verified here.
-- No local full run was made while updating this file. Claude's last own full verification is older (`c773f4d`) and is superseded by the CI run above.
-- No human playtest of the combat test box exists. No human has played the oxygen recovery flow.
-- **Drowned Caves (Zone 3), in progress.** `docs/design/drowned-caves-brief.md` (decisions A–D approved
-  2026-11-21) splits the chapter into DC-1…DC-6. **DC-1 (region foundation, PR #60)** adds journey phase
-  `caves`, a 2,000 m pressure fit, a graybox chamber with one sealed passage, entry from Halcyon after the
-  Twilight debrief is claimed, anchor return and recovery. It is **hidden behind `--drowned-caves`** and has no
-  objectives or story; evidence in `docs/testing/dc-1/README.md`. **DC-2 (cave navigation and oxygen, PR pending)** adds a flooded squeeze with a torpedo-gated shortcut, a far chamber and a 0.3/s oxygen rate (`docs/testing/dc-2/README.md`). **DC-3 (sentinel payoff, PR pending)** adds optional guide lights for a living released sentinel and one text-only line for every outcome, derived from story flags with no save change (`docs/testing/dc-3/README.md`). **DC-4 (first-contact site, PR pending)** adds four scan records in the far chamber (Mara's required log, the paintings, the glyph wall with the Vow of Silence, one optional Mara log) with placeholder art and draft text for the designer to edit (`docs/testing/dc-4/README.md`). **DC-5 (memory crystal choice, PR pending)** adds the shrine decision (leave +15, take -15) with a placeholder one-time +200 sonar calibration for taking, derived from the saved decision with no new award (`docs/testing/dc-5/README.md`). The upgrade is a default the designer has not named. **DC-6 (debrief and chapter close, PR pending)** turns the descent on by default (`-- --no-drowned-caves` hides it), adds a derived Halcyon caves debrief with a one-line not-playable Zone 4 teaser, and fixes a DC-1 dock-button bug (`docs/testing/dc-6/README.md`). The chapter is built end to end but **no human has played it**. Fixed hazard
-  (2026-11-27): a release export segfaulted when a scene change landed in the same frame as deferred UI
-  callbacks (tutorial layout, accessibility reflow, story-read reset, recovery trigger), which reached a
-  null tree or viewport. Those callbacks now return when their node has left the tree, and the release
-  smoke arms all of them in the frame of its combat-box scene change (`_arm_scene_change_hazards`).
-  Evidence: `tests/integration/test_scene_change_hazards.gd`.
+- **#58** Docs: HANDOFF and README brought in line with `main` through PR #57.
+- **#59** Docs: Drowned Caves (Zone 3) chapter brief, `docs/design/drowned-caves-brief.md`.
+- **#60 to #65** Drowned Caves DC-1 to DC-6 (details below).
+- **#66** Docs: the designer's decision to keep the free recovery restock (§5).
+- **#67** Docs: recovery-flow facilitator script, `docs/playtesting/recovery_playtest.md`.
+- **#68** Recovery card test: the accept delay is measured in game time, not wall time (test only). It fixed
+  a flaky failure where summed process deltas led the wall clock on CI.
+- **#69** Fix a release segfault when a scene change lands in the same frame as deferred UI callbacks
+  (details below).
+
+**Drowned Caves (Zone 3).** The brief (decisions A to D approved 2026-11-21) splits the chapter into six
+PRs, all merged:
+- **DC-1 (#60)** region foundation: journey phase `caves`, a 2,000 m pressure fit, a graybox chamber with
+  one sealed passage, entry from Halcyon after the Twilight debrief is claimed, anchor return and recovery.
+- **DC-2 (#61)** cave navigation and oxygen: a flooded squeeze with a torpedo-gated shortcut, a far chamber
+  and a 0.3/s oxygen rate (about 5.6 minutes per tank).
+- **DC-3 (#62)** sentinel payoff: optional guide lights for a living released sentinel and one text-only
+  line for every outcome, derived from story flags with no save change.
+- **DC-4 (#63)** first-contact site: four scan records in the far chamber (Mara's required log, the
+  paintings, the glyph wall with the Vow of Silence, one optional Mara log). The art is placeholder and
+  the text is a draft for the designer to edit.
+- **DC-5 (#64)** memory crystal choice: the shrine decision (leave +15, take -15). Taking it gives a
+  placeholder one-time +200 sonar calibration, derived from the saved decision with no new award. The
+  upgrade is a default the designer has not named.
+- **DC-6 (#65)** debrief and chapter close: the descent is **on by default** (`-- --no-drowned-caves`
+  hides it), a derived Halcyon caves debrief with a one-line Zone 4 teaser (not playable), and a fix for
+  a DC-1 dock-button bug.
+
+Evidence for each is in `docs/testing/dc-1/` to `docs/testing/dc-6/`. The chapter is built end to end
+but **no human has played it**.
+
+**Fixed hazard (2026-11-27, PR #69).** A release export segfaulted when a scene change landed in the same
+frame as deferred UI callbacks (tutorial layout, accessibility reflow, story-read reset, recovery
+trigger), which reached a null tree or viewport. Those callbacks now return when their node has left the
+tree. The release smoke arms all of them in the frame of its combat-box scene change
+(`_arm_scene_change_hazards`, token `RELEASE_SCENE_CHANGE_HAZARDS_ARMED`). Evidence:
+`tests/integration/test_scene_change_hazards.gd`. There is no `--break-*` negative for it, because a
+segfault prints no token. The proof is that the unguarded build crashes under the same smoke stage.
+
+**Verification.**
+- Latest full CI: GitHub Actions run 45928891621 on `a55293c` (PR #69 head) passed validate, the Linux
+  package with its negatives and the Windows package with its smoke and negatives. Publish was skipped,
+  as on every PR. `7ba6d5c` has the identical tree (`git diff a55293c 7ba6d5c` is empty).
+- Claude's last local full run, on `a55293c` in a Linux container: GUT **908 of 908**, the release-safety
+  lint, the Linux export smoke and **26 of 26** `--break-*-wiring` negatives failing as required. The
+  Windows export was not built locally.
+- No human playtest of the combat test box exists. No human has played the oxygen recovery flow or the
+  Drowned Caves. The script for the recovery playtest is ready (#67) and has not been run.
 
 ## 5. Design direction and decisions (designer-approved unless marked)
 

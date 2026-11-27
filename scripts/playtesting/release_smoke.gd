@@ -134,6 +134,7 @@ func _verify_depth_gate(game: ShelfPrototype) -> void:
 	if not await _verify_caves(game):
 		get_tree().quit(1)
 		return
+	_arm_scene_change_hazards(game)
 	var proof: CombatBoxReleaseProof = CombatBoxReleaseProof.new()
 	get_tree().root.add_child(proof)
 	proof.start(game)
@@ -401,10 +402,6 @@ func _verify_caves(game: ShelfPrototype) -> bool:
 	game.revision.ui.dock_page.hide()
 	game.station.end_interaction()
 	game.station_menu.hide()
-	# Flush deferred UI calls queued by the toggles above: the combat-box proof that follows
-	# changes scene, and a call that lands after the scene left the tree dereferences a null
-	# viewport (a segfault in a release export, a script error in a debug one).
-	for frame: int in range(2): await get_tree().process_frame
 	print("RELEASE_CAVES_WIRING_PASS")
 	return true
 
@@ -551,3 +548,19 @@ func _verify_caves_debrief(game: ShelfPrototype) -> bool:
 		return false
 	print("RELEASE_CAVES_DEBRIEF_WIRING_PASS")
 	return true
+
+
+## Queue, in the same frame as the combat-box scene change that follows, every deferred UI
+## callback that once reached a null tree or viewport after the scene left the tree (a
+## segfault in this release binary, a script error in a debug one): the tutorial layout and
+## accessibility reflow on a simulation toggle, the story-page read reset, and a deferred
+## recovery trigger after hull failure. Surviving into the combat box (its ENTRY proof and a
+## zero exit status) proves the guards in this exact binary. No flush frames on purpose.
+func _arm_scene_change_hazards(game: ShelfPrototype) -> void:
+	game.submarine.set_simulation_enabled(true)
+	game.submarine.set_simulation_enabled(false)
+	game.accessibility_service.queue_apply()
+	game.revision.ui.show_story_page("RELEASE SMOKE","Scene-change hazard check.","Continue",func() -> void: pass,&"ReleaseSmokeHazard",func() -> void: pass)
+	game.revision.ui.radio_page.hide()
+	game.submarine.hull_system.apply_damage(game.submarine.hull_system.hull,&"collision")
+	print("RELEASE_SCENE_CHANGE_HAZARDS_ARMED")

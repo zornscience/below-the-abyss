@@ -66,6 +66,11 @@ printed `SCRIPT ERROR`. The stage now flushes two frames before the scene change
 fragility in `ShelfPrototype._layout_tutorial` and the UI focus calls was **not** changed here, because
 only this harness reaches it; it is recorded as a known hazard.
 
+**Update 2026-11-27: fixed.** The deferred callbacks now return when their node has left the tree, the
+two-frame flush is gone, and the release smoke deliberately arms every such callback in the frame of
+the scene change (`ReleaseSmoke._arm_scene_change_hazards`). Without the guards that stage segfaults
+a real Linux export (exit 139).
+
 ## Manual route
 
 Launch a playtest build with `--drowned-caves`, finish the Twilight debrief, open the Halcyon dock and

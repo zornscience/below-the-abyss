@@ -74,6 +74,10 @@ def main():
         for wiring in ['GEOMETRY','GATES','VENTS']:
             if f'RELEASE_TUNNEL_{wiring}_WIRING_PASS' not in output:
                 raise SystemExit('Missing exported tunnel '+wiring+' wiring proof')
+        # The same-frame scene-change hazards must have been armed. A crash would also drop
+        # every later token and the exit status, so a missing ENTRY proof fails below too.
+        if 'RELEASE_SCENE_CHANGE_HAZARDS_ARMED' not in output:
+            raise SystemExit('Missing scene-change hazard stage before the combat box')
         for wiring in ['ENTRY','REGISTRATION','STALKER_REGISTRATION','STUN','HANDLING','WEIGHTY_HANDLING']:
             if f'RELEASE_COMBAT_{wiring}_WIRING_PASS' not in output:
                 raise SystemExit('Missing combat test-box '+wiring+' proof')

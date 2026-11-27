@@ -686,7 +686,9 @@ func _new_expedition() -> void:
 
 
 func _layout_tutorial() -> void:
-	if tutorial_card == null: return
+	# Deferred and one-shot callbacks can run after a scene change has taken this node out of
+	# the tree, where get_tree() and get_viewport() are null (a segfault in release exports).
+	if tutorial_card == null or not is_inside_tree(): return
 	var width: float = get_viewport().get_visible_rect().size.x
 	tutorial_card.size = Vector2(minf(340.0,width*0.32),0.0)
 	tutorial_card.custom_minimum_size.x = minf(280.0,width*0.32)

@@ -163,7 +163,9 @@ func card_text(failure: StringName) -> String:
 
 
 func trigger(failure: StringName) -> void:
-	if pending or not campaign_active():
+	# Hull destruction defers this call. If a scene change took the flow out of the tree in
+	# the meantime, there is no scene left to recover (and _center() needs the viewport).
+	if pending or not campaign_active() or not is_inside_tree():
 		return
 	pending = true
 	committed = false

@@ -66,7 +66,9 @@ func tight_hud() -> bool:
 
 func apply() -> void:
 	_queued = false
-	if not is_instance_valid(_scene):
+	# Deferred and one-shot callbacks can run after a scene change has taken this node out of
+	# the tree, where get_tree() and get_viewport() are null (a segfault in release exports).
+	if not is_instance_valid(_scene) or not _scene.is_inside_tree():
 		return
 	_preferences = _scene.settings.snapshot().accessibility
 	var focus: Control = _scene.get_viewport().gui_get_focus_owner()
@@ -224,7 +226,7 @@ func _wrap_screen(screen: Control) -> void:
 
 func _fit_hud() -> void:
 	_fit_queued = false
-	if not is_instance_valid(_scene):
+	if not is_instance_valid(_scene) or not _scene.is_inside_tree():
 		return
 	var guide: Control = _scene.get_node("UI/RouteGuide") as Control
 	var threat: Control = _scene.hud.get_node("%ThreatIndicator") as Control
